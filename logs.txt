@@ -1,105 +1,44 @@
-"C:\Program Files\Zulu\zulu-21\bin\java.exe" -Dmaven.multiModuleProjectDirectory=C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services -Djansi.passthrough=true "-Dmaven.home=C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2025.1.3/plugins/maven/lib/maven3" "-Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\bin\m2.conf" "-Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven-event-listener.jar" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=54367" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds-2.8.0.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds.license" org.codehaus.classworlds.Launcher -Didea.version=2025.1.3 clean install
-[INFO] Scanning for projects...
-[INFO] 
-[INFO] --< br.com.experian.bfm:experian-pme-bfm-receivables-anticipation-domain-services >--
-[INFO] Building experian-pme-bfm-receivables-anticipation-domain-services 0.0.1
-[INFO]   from pom.xml
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO] 
-[INFO] --- clean:3.2.0:clean (default-clean) @ experian-pme-bfm-receivables-anticipation-domain-services ---
-[INFO] Deleting C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target
-[INFO] 
-[INFO] --- resources:3.3.1:copy-resources (copy) @ experian-pme-bfm-receivables-anticipation-domain-services ---
-[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\main\resources\docs
-[INFO] 
-[INFO] --- openapi-generator:7.6.0:generate (open-banking) @ experian-pme-bfm-receivables-anticipation-domain-services ---
-[INFO] Generating with dryRun=false
-[INFO] Output directory (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi) does not exist, or is inaccessible. No file (.openapi-generator-ignore) will be evaluated.
-[INFO] OpenAPI Generator: spring (server)
-[INFO] Generator 'spring' is considered stable.
-[INFO] ----------------------------------
-[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
-[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
-[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.antecipa
-[WARNING] Empty operationId found for path: GET /Originators/Anticipation/Assets/{SupplierDocument}/CardReceivables. Renamed to auto-generated operationId: originatorsAnticipationAssetsSupplierDocumentCardReceivablesGET
-[WARNING] Empty operationId found for path: GET /Originators/Anticipation/Assets/{SupplierDocument}/CardReceivables/{Id}. Renamed to auto-generated operationId: originatorsAnticipationAssetsSupplierDocumentCardReceivablesIdGET
-[WARNING] Empty operationId found for path: GET /Originators/Anticipation/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsAnticipationCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGET
-[WARNING] Empty operationId found for path: POST /Originators/Anticipation/Suppliers. Renamed to auto-generated operationId: originatorsAnticipationSuppliersPOST
-[WARNING] Empty operationId found for path: GET /Originators/Anticipation/{SupplierDocument}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentGET
-[WARNING] Empty operationId found for path: POST /Originators/Anticipation/{SupplierDocument}/Simulate. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentSimulatePOST
-[WARNING] Empty operationId found for path: POST /Originators/Anticipation/{SupplierDocument}/{CapitalSourceDocument}/Execute/{OfferId}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentCapitalSourceDocumentExecuteOfferIdPOST
-[WARNING] Empty operationId found for path: GET /Originators/Anticipation/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentIdGET
-[WARNING] Empty operationId found for path: POST /Webhook. Renamed to auto-generated operationId: webhookPOST
-[INFO] Processing operation null
-[INFO] Processing operation null
-[INFO] Processing operation null
-[INFO] Processing operation null
-[INFO] Processing operation null
-[INFO] Processing operation null
-[INFO] Processing operation null
-[INFO] Processing operation null
-[INFO] Processing operation null
-[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
-[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationAssetDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationListDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationListDtoPagedCollectionItems.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationStatus.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AssetCardReceivableAnticipationSimulationDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AssetCardReceivableDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AssetCardReceivableListDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AssetCardReceivableListDtoPagedCollectionItems.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AssetOrdernation.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AssetStatus.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\BankAccountDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\BasicResultDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\OfferAnnticipationDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SimulateAnticipationCommandViewModel.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SimulationAnticipationAssetDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SimulationAnticipationDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierAddCommandViewModel.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierAddressViewModel.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierBankAccountViewModel.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierPartnerDto.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierPartnerViewModel.java
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierRegistrationDto.java
-[WARNING] Empty operationId found for path: get /Originators/Anticipation/Assets/{SupplierDocument}/CardReceivables. Renamed to auto-generated operationId: originatorsAnticipationAssetsSupplierDocumentCardReceivablesGet
-[WARNING] Empty operationId found for path: get /Originators/Anticipation/Assets/{SupplierDocument}/CardReceivables/{Id}. Renamed to auto-generated operationId: originatorsAnticipationAssetsSupplierDocumentCardReceivablesIdGet
-[WARNING] Empty operationId found for path: get /Originators/Anticipation/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsAnticipationCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGet
-[WARNING] Empty operationId found for path: post /Originators/Anticipation/Suppliers. Renamed to auto-generated operationId: originatorsAnticipationSuppliersPost
-[WARNING] Empty operationId found for path: get /Originators/Anticipation/{SupplierDocument}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentGet
-[WARNING] Empty operationId found for path: post /Originators/Anticipation/{SupplierDocument}/Simulate. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentSimulatePost
-[WARNING] Empty operationId found for path: post /Originators/Anticipation/{SupplierDocument}/{CapitalSourceDocument}/Execute/{OfferId}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentCapitalSourceDocumentExecuteOfferIdPost
-[WARNING] Empty operationId found for path: get /Originators/Anticipation/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentIdGet
-[WARNING] Empty operationId found for path: post /Webhook. Renamed to auto-generated operationId: webhookPost
-[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\org\openapitools\api\AnticipationApi.java
-[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
-[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\org\openapitools\api\WebhookApi.java
-[INFO] Skipping generation of Webhooks.
-[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
-[INFO] Skipping generation of supporting files.
-################################################################################
-# Thanks for using OpenAPI Generator.                                          #
-# Please consider donation to help us maintain this project 🙏                 #
-# https://opencollective.com/openapi_generator/donate                          #
-################################################################################
-[INFO] 
-[INFO] --- resources:3.3.1:resources (default-resources) @ experian-pme-bfm-receivables-anticipation-domain-services ---
-[INFO] Copying 5 resources from src\main\resources to target\classes
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  26.593 s
-[INFO] Finished at: 2025-07-29T16:45:04-03:00
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-resources-plugin:3.3.1:resources (default-resources) on project experian-pme-bfm-receivables-anticipation-domain-services: filtering C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\main\resources\application-default.properties to C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes\application-default.properties failed with MalformedInputException: Input length = 1 -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+# SERASA EXPERIAN FLAG CONFIG
+feature.flag.apikey=0af7582d-dccf-45c4-a770-ff19f9ef822e
 
-Process finished with exit code 1
+# EXPERIAN SECURITY CONFIG
+api.iam.uri=https://uat-api.serasaexperian.com.br/security/iam/v1
+api.iam.client.id=${IAM_CLIENT_ID:}
+api.iam.client.secret=${IAM_CLIENT_SECRET:}
+
+# FEIGN PROXY CONFIG
+experian.openfeign.client.config.proxy.enable=false
+feign.httpclient.disableSslValidation=true
+feign.httpclient.enabled=false
+feign.okhttp.enabled=true
+
+# URL base da API Antecipa
+api.antecipa.uri=https://api.anticipation.sand.antecipa.com/v1
+
+# CIRCUIT BREAKER
+resilience4j.circuitbreaker.instances.BuzzAboutClient.sliding-window-type=COUNT_BASED
+resilience4j.circuitbreaker.instances.BuzzAboutClient.sliding-window-size=5
+resilience4j.circuitbreaker.instances.BuzzAboutClient.minimum-number-of-calls=5
+resilience4j.circuitbreaker.instances.BuzzAboutClient.failure-rate-threshold=50
+resilience4j.circuitbreaker.instances.BuzzAboutClient.slowCallRateThreshold=50
+resilience4j.circuitbreaker.instances.BuzzAboutClient.slowCallDurationThreshold=3000
+resilience4j.circuitbreaker.instances.BuzzAboutClient.wait-duration-in-open-state=20s
+resilience4j.circuitbreaker.instances.BuzzAboutClient.automatic-transition-from-open-to-half-open-enabled=true
+resilience4j.circuitbreaker.instances.BuzzAboutClient.permitted-number-of-calls-in-half-open-state=3
+resilience4j.circuitbreaker.instances.BuzzAboutClient.recordExceptions=br.com.experian.exception.InternalServerErrorException,feign.FeignException.FeignServerException
+
+resilience4j.circuitbreaker.instances.AntecipaClient.sliding-window-type=COUNT_BASED
+resilience4j.circuitbreaker.instances.AntecipaClient.sliding-window-size=5
+resilience4j.circuitbreaker.instances.AntecipaClient.minimum-number-of-calls=5
+resilience4j.circuitbreaker.instances.AntecipaClient.failure-rate-threshold=50
+resilience4j.circuitbreaker.instances.AntecipaClient.slowCallRateThreshold=50
+resilience4j.circuitbreaker.instances.AntecipaClient.slowCallDurationThreshold=3000
+resilience4j.circuitbreaker.instances.AntecipaClient.wait-duration-in-open-state=20s
+resilience4j.circuitbreaker.instances.AntecipaClient.automatic-transition-from-open-to-half-open-enabled=true
+resilience4j.circuitbreaker.instances.AntecipaClient.permitted-number-of-calls-in-half-open-state=3
+resilience4j.circuitbreaker.instances.AntecipaClient.recordExceptions=br.com.experian.exception.InternalServerErrorException,feign.FeignException.FeignServerException
+
+# RETRY CONFIGURATION
+resilience4j.retry.instances.AntecipaClient.max-attempts=3
+resilience4j.retry.instances.AntecipaClient.wait-duration=500ms
+resilience4j.retry.instances.AntecipaClient.retry-exceptions=feign.FeignException$ServiceUnavailable,feign.FeignException$InternalServerError,java.io.IOException
