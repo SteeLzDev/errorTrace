@@ -1,0 +1,25 @@
+Rodrigues, Danilo commented on a file2 hours ago
+src/main/java/br/com/experian/buzz/infrastructure/service/AntecipaServiceImpl.java
+package br.com.experian.buzz.infrastructure.service;
+Rodrigues, Danilo
+Rodrigues, Danilo
+2 hours ago
+
+New
+Em todos os métodos dessa classe já vale implementar um "@Retry" do Resilience4j e tambem utilizar o try/catch para interceptar e tratar os erros retornando um FailedDependency (Status code 424)
+
+Reply
+
+Resolve
+
+
+​
+import br.com.experian.antecipa.model.*;
+import br.com.experian.buzz.domain.service.AntecipaService;
+import br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+​
+@Service
+@RequiredArgsConstructor
+public class AntecipaServiceImpl implements AntecipaService {
