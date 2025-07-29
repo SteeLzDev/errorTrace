@@ -1,25 +1,7 @@
-Rodrigues, Danilo commented on a file2 hours ago
-src/main/java/br/com/experian/buzz/infrastructure/service/AntecipaServiceImpl.java
-package br.com.experian.buzz.infrastructure.service;
-Rodrigues, Danilo
-Rodrigues, Danilo
-2 hours ago
-
-New
-Em todos os métodos dessa classe já vale implementar um "@Retry" do Resilience4j e tambem utilizar o try/catch para interceptar e tratar os erros retornando um FailedDependency (Status code 424)
-
-Reply
-
-Resolve
-
-
-​
-import br.com.experian.antecipa.model.*;
-import br.com.experian.buzz.domain.service.AntecipaService;
-import br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-​
-@Service
-@RequiredArgsConstructor
-public class AntecipaServiceImpl implements AntecipaService {
+Empty operationId found for path: GET /Originators/Anticipation/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsAnticipationCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGET
+Empty operationId found for path: POST /Originators/Anticipation/Suppliers. Renamed to auto-generated operationId: originatorsAnticipationSuppliersPOST
+Empty operationId found for path: GET /Originators/Anticipation/{SupplierDocument}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentGET
+Empty operationId found for path: POST /Originators/Anticipation/{SupplierDocument}/Simulate. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentSimulatePOST
+Empty operationId found for path: POST /Originators/Anticipation/{SupplierDocument}/{CapitalSourceDocument}/Execute/{OfferId}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentCapitalSourceDocumentExecuteOfferIdPOST
+Empty operationId found for path: GET /Originators/Anticipation/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsAnticipationSupplierDocumentIdGET
+Empty operationId found for path: POST /Webhook. Renamed to auto-generated operationId: webhookPOST
