@@ -1,44 +1,18 @@
-# SERASA EXPERIAN FLAG CONFIG
-feature.flag.apikey=0af7582d-dccf-45c4-a770-ff19f9ef822e
+Disponibilizar endpoint para o front-end consultar o status de onboarding do cliente:
 
-# EXPERIAN SECURITY CONFIG
-api.iam.uri=https://uat-api.serasaexperian.com.br/security/iam/v1
-api.iam.client.id=${IAM_CLIENT_ID:}
-api.iam.client.secret=${IAM_CLIENT_SECRET:}
+GET /onboarding
+    Response: 204 No Content
+    Response: 200 OK
+    Body: {
+        "status" : "PENDING" #Enum [ "STARTED", "PENDING", "APPROVED", "REJECTED" ]
+    }
 
-# FEIGN PROXY CONFIG
-experian.openfeign.client.config.proxy.enable=false
-feign.httpclient.disableSslValidation=true
-feign.httpclient.enabled=false
-feign.okhttp.enabled=true
+Obs: Iremos confirmar os status com o time da antecipa.
 
-# URL base da API Antecipa
-api.antecipa.uri=https://api.anticipation.sand.antecipa.com/v1
+Fluxo para consulta de status de onboarding:
 
-# CIRCUIT BREAKER
-resilience4j.circuitbreaker.instances.BuzzAboutClient.sliding-window-type=COUNT_BASED
-resilience4j.circuitbreaker.instances.BuzzAboutClient.sliding-window-size=5
-resilience4j.circuitbreaker.instances.BuzzAboutClient.minimum-number-of-calls=5
-resilience4j.circuitbreaker.instances.BuzzAboutClient.failure-rate-threshold=50
-resilience4j.circuitbreaker.instances.BuzzAboutClient.slowCallRateThreshold=50
-resilience4j.circuitbreaker.instances.BuzzAboutClient.slowCallDurationThreshold=3000
-resilience4j.circuitbreaker.instances.BuzzAboutClient.wait-duration-in-open-state=20s
-resilience4j.circuitbreaker.instances.BuzzAboutClient.automatic-transition-from-open-to-half-open-enabled=true
-resilience4j.circuitbreaker.instances.BuzzAboutClient.permitted-number-of-calls-in-half-open-state=3
-resilience4j.circuitbreaker.instances.BuzzAboutClient.recordExceptions=br.com.experian.exception.InternalServerErrorException,feign.FeignException.FeignServerException
-
-resilience4j.circuitbreaker.instances.AntecipaClient.sliding-window-type=COUNT_BASED
-resilience4j.circuitbreaker.instances.AntecipaClient.sliding-window-size=5
-resilience4j.circuitbreaker.instances.AntecipaClient.minimum-number-of-calls=5
-resilience4j.circuitbreaker.instances.AntecipaClient.failure-rate-threshold=50
-resilience4j.circuitbreaker.instances.AntecipaClient.slowCallRateThreshold=50
-resilience4j.circuitbreaker.instances.AntecipaClient.slowCallDurationThreshold=3000
-resilience4j.circuitbreaker.instances.AntecipaClient.wait-duration-in-open-state=20s
-resilience4j.circuitbreaker.instances.AntecipaClient.automatic-transition-from-open-to-half-open-enabled=true
-resilience4j.circuitbreaker.instances.AntecipaClient.permitted-number-of-calls-in-half-open-state=3
-resilience4j.circuitbreaker.instances.AntecipaClient.recordExceptions=br.com.experian.exception.InternalServerErrorException,feign.FeignException.FeignServerException
-
-# RETRY CONFIGURATION
-resilience4j.retry.instances.AntecipaClient.max-attempts=3
-resilience4j.retry.instances.AntecipaClient.wait-duration=500ms
-resilience4j.retry.instances.AntecipaClient.retry-exceptions=feign.FeignException$ServiceUnavailable,feign.FeignException$InternalServerError,java.io.IOException
+Disponibilizar endpoint GET /onboarding para o front-end;
+Consultar se já existe status de onboarding no nosso banco de dados;
+Consultar status do onboarding na Antecipa (CERC);
+Atualizar o status no banco de dados dependendo da resposta no passo 3;
+Retornar a resposta para o front-end;
