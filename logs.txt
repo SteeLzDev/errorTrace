@@ -1,9 +1,5 @@
 Field 'jpaRepository' might not have been initialized
-Cannot resolve method 'getId' in 'OnboardingEntity'
-Cannot resolve method 'getSupplierDicument' in 'OnboardingEntity'
-Cannot resolve method 'getCreatedAt' in 'OnboardingEntity'
-Cannot resolve method 'getUpdatetAt' in 'OnboardingEntity'
-Cannot resolve method 'builder' in 'OnboardingEntity'
+
 
 
 package br.com.experian.buzz.infrastructure.adapter;
@@ -21,7 +17,7 @@ import java.util.Optional;
 //Implementa o port OnboardingRepositoryPort, converte entre o modelo de domínio e a entidade JPA.
 @Component
 @RequiredArgsConstructor
-public class OnboardingRepositoryAdapter implements OnboardingRepositoryPort  {
+public class OnboardingRepositoryAdapter implements OnboardingRepositoryPort {
 
     private final OnboardingJpaRepository jpaRepository;
 
@@ -41,20 +37,21 @@ public class OnboardingRepositoryAdapter implements OnboardingRepositoryPort  {
     private OnboardingStatusModel entityToModel(OnboardingEntity entity) {
         return new OnboardingStatusModel(
                 entity.getId(),
-                entity.getSupplierDicument(),
+                entity.getSupplierDocument(),
+                entity.getStatus(),
                 entity.getCreatedAt(),
-                entity.getUpdatetAt()
+                entity.getUpdatedAt()
         );
     }
 
     private OnboardingEntity modelToEntity(OnboardingStatusModel model) {
-        return OnboardingEntity.builder()
-                .id(model.getId())
-                .supplierDocument(model.getSupplierDocument())
-                .status(model.getStatus())
-                .createdAt(model.getUpdateAt())
-                .updatedAt(model.getUpdateAt())
-                .build();
+         OnboardingEntity entity = new OnboardingEntity();
+                entity.setId(model.getId());
+                entity.setSupplierDocument(model.getSupplierDocument());
+                entity.setStatus(model.getStatus());
+                entity.setCreatedAt(model.getUpdatedAt());
+                entity.setUpdatedAt(model.getUpdatedAt());
+                return entity;
     }
 
 
@@ -62,123 +59,5 @@ public class OnboardingRepositoryAdapter implements OnboardingRepositoryPort  {
 
 
 }
-
-
-package br.com.experian.buzz.domain.model;
-
-import br.com.experian.buzz.domain.enums.OnboardingStatus;
-
-import java.time.LocalDateTime;
-
-public class OnboardingStatusModel {
-
-    private Long id;
-    private String supplierDocument;
-    private OnboardingStatus status;
-    private LocalDateTime createaAt;
-    private LocalDateTime updateAt;
-
-    private OnboardingStatusModel(){
-
-    }
-
-    public OnboardingStatusModel(String supplierDocument, OnboardingStatus status) {
-        this.supplierDocument = supplierDocument;
-        this.status = status;
-        LocalDateTime now = LocalDateTime.now();
-        this.createaAt = now;
-        this.updateAt = now;
-    }
-
-    public OnboardingStatusModel(Long id, String supplierDocument, OnboardingStatus status, LocalDateTime createaAt, LocalDateTime updateAt) {
-        this.id = id;
-        this.supplierDocument = supplierDocument;
-        this.status = status;
-        this.createaAt = createaAt;
-        this.updateAt = updateAt;
-    }
-
-    public void updateStatus(OnboardingStatus newStatus) {
-        if (newStatus != null && !newStatus.equals(this.status)) {
-            this.status = newStatus;
-            this.updateAt = LocalDateTime.now();
-        }
-
-    }
-
-    public boolean hasStatus(){
-        return this.status != null;
-    }
-
-    public boolean isStatusDifferent(OnboardingStatus otherStatus){
-        return !this.status.equals(otherStatus);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getSupplierDocument() {
-        return supplierDocument;
-    }
-
-    public void setSupplierDocument(String supplierDocument) {
-        this.supplierDocument = supplierDocument;
-    }
-
-    public OnboardingStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OnboardingStatus status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getLocalDateTime() {
-        return createaAt;
-    }
-
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.createaAt = localDateTime;
-    }
-
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    @Override
-    public boolean equals (Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OnboardingStatusModel that = (OnboardingStatusModel) o;
-        return supplierDocument != null ? supplierDocument.equals(that.supplierDocument)
-                : that.supplierDocument == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return supplierDocument != null ? supplierDocument.hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return "OnboardingStatusModel{" +
-        "id=" +  id +
-        ", supplierDocument='" + supplierDocument + '\'' +
-        ", status=" + status +
-        ", createdAt=" + createaAt +
-        ", updatedAt=" + updateAt +
-        '}';
-    }
-}
-
 
 
