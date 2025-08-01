@@ -1,18 +1,6 @@
-Disponibilizar endpoint para o front-end consultar o status de onboarding do cliente:
-
-GET /onboarding
-    Response: 204 No Content
-    Response: 200 OK
-    Body: {
-        "status" : "PENDING" #Enum [ "STARTED", "PENDING", "APPROVED", "REJECTED" ]
-    }
-
-Obs: Iremos confirmar os status com o time da antecipa.
-
-Fluxo para consulta de status de onboarding:
-
-Disponibilizar endpoint GET /onboarding para o front-end;
-Consultar se já existe status de onboarding no nosso banco de dados;
-Consultar status do onboarding na Antecipa (CERC);
-Atualizar o status no banco de dados dependendo da resposta no passo 3;
-Retornar a resposta para o front-end;
+Field 'jpaRepository' might not have been initialized
+Cannot resolve method 'getId' in 'OnboardingEntity'
+Cannot resolve method 'getSupplierDicument' in 'OnboardingEntity'
+Cannot resolve method 'getCreatedAt' in 'OnboardingEntity'
+Cannot resolve method 'getUpdatetAt' in 'OnboardingEntity'
+Cannot resolve method 'builder' in 'OnboardingEntity'
