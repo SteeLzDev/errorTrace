@@ -1,46 +1,193 @@
-package br.com.experian.buzz.infrastructure.integration.feign.client.antecipa;
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>br.com.experian</groupId>
+        <artifactId>experian-pme-starter-parent</artifactId>
+        <version>1.5.0</version>
+    </parent>
 
-import br.com.experian.antecipa.model.*;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+    <groupId>br.com.experian.bfm</groupId>
+    <artifactId>experian-pme-bfm-receivables-anticipation-domain-services</artifactId>
+    <version>0.0.1</version>
+    <name>experian-pme-bfm-receivables-anticipation-domain-services</name>
+    <description>PME BFM Receivables Anticipation Domain Services</description>
 
-@CircuitBreaker(name = "AntecipaClient")
-@FeignClient(name = "AntecipaClient", url = "${api.antecipa.uri}", configuration = FeignClient.class)
-public interface AntecipaClient {
+    <scm>
+        <url>scm:git:https://code.experian.local/scm/pmbf/experian-pme-bfm-open-banking-domain-services.git</url>
+        <connection>scm:git:https://code.experian.local/scm/pmbf/experian-pme-bfm-open-banking-domain-services.git
+        </connection>
+    </scm>
 
-    @PostMapping(value = "/Originators/Anticipation/{SupplierDocument}/Simulate")
-    SimulationAnticipationDto simulate (
-            @PathVariable("SupplierDocument") String supplierDocument,
-            @RequestBody SimulateAnticipationCommandViewModel command);
+    <properties>
+        <spring.cloud.aws.version>3.4.0</spring.cloud.aws.version>
 
+        <gearr.id>26042</gearr.id>
+        <sonar.token>sqb_44cc59eb97162de09600d31ed08c4f619f04840d</sonar.token>
+        <sonar.coverage.exclusions>
+            src/main/java/br/com/experian/openbanking/infrastructure/config/*.java,
+            src/main/java/br/com/experian/openbanking/infrastructure/integration/feign/client/pagueveloz/auth/*Config.java
+        </sonar.coverage.exclusions>
 
-    @PostMapping(value = "/Originators/Anticipation/{SupplierDocument}/{CapitalSourceDocument}/Execute/{OfferId}")
-    void execute (@PathVariable("SupplierDocument") String supplierDocument,
-                  @PathVariable("CapitalSourceDocument") String capitalSourceDocument,
-                  @PathVariable("OfferId") String OfferId);
+        <sonar.exclusions>
+            src/main/java/br/com/experian/openbanking/application/rest/BaseController.java,
+            src/main/java/br/com/experian/openbanking/domain/exception/BadRequestException.java,
+            src/main/java/br/com/experian/openbanking/ExperianOpenBankingApplication.java
+        </sonar.exclusions>
+    </properties>
 
-    @GetMapping(value = "/Originators/Anticipation/{SupplierDocument}")
-    AnticipationListDtoPagedCollectionItems getAnticipations(
-            @PathVariable("SupplierDocument") String supplierDocument,
-            @RequestParam(value = "CapitalSourceDocument", required = false) String capitalSourceDocument,
-            @RequestParam(value = "AnticipationDate", required = false) String anticipationDate,
-            @RequestParam(value = "StatusId", required = false) Integer statusId,
-            @RequestParam(value = "PageId", required = false) String pageId,
-            @RequestParam(value = "PageSize", required = false) Integer pageSize);
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.awspring.cloud</groupId>
+                <artifactId>spring-cloud-aws-dependencies</artifactId>
+                <version>${spring.cloud.aws.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-    @GetMapping(value = "/Originators/Anticipation/{SupplierDocument}/{id}")
-    AnticipationDto getAnticipationById(
-            @PathVariable("SupplierDocument") String suplierDocument,
-            @PathVariable("Id") String id);
+    <dependencies>
+        <dependency>
+            <groupId>br.com.experian</groupId>
+            <artifactId>experian-pme-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>br.com.experian</groupId>
+            <artifactId>experian-pme-starter-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>br.com.experian</groupId>
+            <artifactId>experian-pme-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8-standalone</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.parser.v3</groupId>
+            <artifactId>swagger-parser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+        </dependency>
+    </dependencies>
 
-    @GetMapping(value = "/Originators/Anticipation/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}")
-    SupplierRegistrationDto getSupplier(
-            @PathVariable("CapitalSourceDocument") String capitalSourceDocument,
-            @PathVariable("SupplierDocument") String supplierDocument);
-
-    @PostMapping(value = "/Originators/Anticipation/Suppliers")
-    BasicResultDto addSupplier(@RequestBody SupplierAddCommandViewModel command);
-
-}
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <configuration>
+                    <generatorName>spring</generatorName>
+                    <generateAliasAsModel>true</generateAliasAsModel>
+                    <generateApiDocumentation>false</generateApiDocumentation>
+                    <generateSupportingFiles>false</generateSupportingFiles>
+                    <configOptions>
+                        <useSpringBoot3>true</useSpringBoot3>
+                        <useJakartaEe>true</useJakartaEe>
+                        <useTags>true</useTags>
+                        <delegatePattern>false</delegatePattern>
+                        <serializableModel>true</serializableModel>
+                        <useBeanValidation>true</useBeanValidation>
+                        <interfaceOnly>true</interfaceOnly>
+                        <skipDefaultInterface>true</skipDefaultInterface>
+                        <sourceFolder>gen</sourceFolder>
+                        <dateLibrary>java8-localdatetime</dateLibrary>
+                    </configOptions>
+                    <generateApis>true</generateApis>
+                    <generateModels>true</generateModels>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>open-banking</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/client/Receivables-Anticipation.yaml</inputSpec>
+                            <skipValidateSpec>true</skipValidateSpec>
+                            <modelPackage>br.com.experian.antecipa.model</modelPackage>
+                            <modelNamePrefix></modelNamePrefix>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>${project.reporting.outputEncoding}</encoding>
+                            <outputDirectory>${basedir}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/src/main/resources/docs</directory>
+                                    <includes>
+                                        <include>README.md</include>
+                                    </includes>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
