@@ -1,7 +1,1 @@
-# Teste 1: Documento existente (deve retornar 200)
-curl -X GET http://localhost:8080/onboarding \
-  -H "X-Supplier-Document: 12345678000195"
-
-# Teste 2: Documento não existente (deve retornar 204)
-curl -X GET http://localhost:8080/onboarding \
-  -H "X-Supplier-Document: 99999999000199"
+.
