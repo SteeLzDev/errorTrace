@@ -1,6 +1,1 @@
--- Dados iniciais para teste
-INSERT INTO onboarding_status (supplier_document, status, created_at, updated_at) 
-VALUES ('12345678000195', 'PENDING', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-
-INSERT INTO onboarding_status (supplier_document, status, created_at, updated_at) 
-VALUES ('98765432000123', 'APPROVED', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+.
