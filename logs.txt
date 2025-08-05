@@ -1,70 +1,18 @@
-2025-08-05 08:02:29.826  INFO [experian-pme-bfm-receivables-anticipation-domain-services,0958ae773f3a94d5e6533c57ae7b7c53,8ddda1c81e294680,] 25896 --- [nio-8080-exec-4] b.c.e.b.a.r.OnboardingController         : Recebida requisição para consultar status de onboarding do documento: 11111111000111
-2025-08-05 08:02:29.827  INFO [experian-pme-bfm-receivables-anticipation-domain-services,0958ae773f3a94d5e6533c57ae7b7c53,8ddda1c81e294680,] 25896 --- [nio-8080-exec-4] b.c.e.b.i.s.OnboardingServiceImpl        : Consultando statos de onboarding para coumento: 11111111000111
-2025-08-05 08:02:29.836  INFO [experian-pme-bfm-receivables-anticipation-domain-services,0958ae773f3a94d5e6533c57ae7b7c53,8ddda1c81e294680,] 25896 --- [nio-8080-exec-4] b.c.e.b.i.s.OnboardingServiceImpl        : Status de onboarding encontrado: PENDING para documento: 11111111000111
-2025-08-05 08:02:29.837  INFO [experian-pme-bfm-receivables-anticipation-domain-services,0958ae773f3a94d5e6533c57ae7b7c53,8ddda1c81e294680,] 25896 --- [nio-8080-exec-4] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.buzz.infrastructure.service.OnboardingServiceImpl","method_name":"getOnboardingStatus(java.lang.String supplierDocument)"},"entry_parameters":{"supplierDocument":"11111111000111"},"return_object":{"optional":true,"return_value":"{\"status\":\"PENDING\"}"},"truncated":false}
-2025-08-05 08:02:29.839  INFO [experian-pme-bfm-receivables-anticipation-domain-services,0958ae773f3a94d5e6533c57ae7b7c53,8ddda1c81e294680,] 25896 --- [nio-8080-exec-4] b.c.e.b.a.r.OnboardingController         : Status de onboarding retornado: PENDING para documento: 11111111000111
-2025-08-05 08:02:29.842  INFO [experian-pme-bfm-receivables-anticipation-domain-services,0958ae773f3a94d5e6533c57ae7b7c53,8ddda1c81e294680,] 25896 --- [nio-8080-exec-4] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/onboarding" destination.address="0:0:0:0:0:0:0:1" destination.port="62457" http.request.method="GET" http.request.referrer="/onboarding" http.response.status_code="200" server.address="*********"
-2025-08-05 08:02:29.844  INFO [experian-pme-bfm-receivables-anticipation-domain-services,0958ae773f3a94d5e6533c57ae7b7c53,8ddda1c81e294680,] 25896 --- [nio-8080-exec-4] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/onboarding","http_method":"GET","http_status_response":200,"application_structure":{"class_name":"br.com.experian.buzz.application.rest.OnboardingController","method_name":"getOnboardingStatus(java.lang.String supplierDocument)"},"headers":{"postman-token":"c891b015-852e-4125-812a-eabf0475d6ec","host":"localhost:8080","connection":"keep-alive","x-supplier-document":"11111111000111","accept-encoding":"gzip, deflate, br","user-agent":"PostmanRuntime/7.44.1","accept":"*/*"},"truncated":false}
-2025-08-05 08:02:33.706 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 25896 --- [alhost:4317/...] i.o.e.i.h.HttpExporter                   : Failed to export spans. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4317
+Disponibilizar endpoint para o front-end consultar o status de onboarding do cliente:
 
-java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4317
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:4317
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-		at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Caused by: java.net.ConnectException: Connection refused: getsockopt
-		at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-		at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-		... 18 more
-Caused by: java.net.ConnectException: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-	at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-	... 18 more
+GET /onboarding
+    Response: 204 No Content
+    Response: 200 OK
+    Body: {
+        "status" : "PENDING" #Enum [ "STARTED", "PENDING", "APPROVED", "REJECTED" ]
+    }
 
+Obs: Iremos confirmar os status com o time da antecipa.
+
+Fluxo para consulta de status de onboarding:
+
+Disponibilizar endpoint GET /onboarding para o front-end;
+Consultar se já existe status de onboarding no nosso banco de dados;
+Consultar status do onboarding na Antecipa (CERC);
+Atualizar o status no banco de dados dependendo da resposta no passo 3;
+Retornar a resposta para o front-end;
