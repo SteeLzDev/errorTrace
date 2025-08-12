@@ -1,8 +1,146 @@
-Tarde turma! Espero que todos estejam bem  
-Oliveira, Davi e Rodrigues, Danilo... precisamos estimar os itens que são de back de Antecipação de Recebíveis. O épico é esse: https://agile.experian.com/browse/GEFI-4125 
-Itens necessários:
-1) validar se as histórias de back existentes no épico todas ainda fazem sentido - se alguma não fizer temos que cancelar
-2) validar se há alguma atividade que não existe que deve ser criada
-3) para todas atividades que serão executadas, já existentes ou não, definir pontuação e estimar +- quantidade de dias necessários para atuar em cada uma 
+GEFI-4170
+[Back] Onboarding - Webhook
+
+Descrição:
+
+Objetivos
+
+Construir webhook para recepcionar todas alterações de cadastros de CNPJs da CERC
+Definir em arquitetura - Ideia: Receberemos o dado e mandaremos a uma fila
+Definir com a CERC quais dados podem ser recebidos.
+
+Retorno: CNPJ do cliente + CNPJ do financiador + status no Antecipa (não avaliado, aprovado, reprovado, cancelado, em análise)
+
+
+Consulta se cliente está onbordado na pags
+
+I.GET/Originators/Anticipation/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}
+
+II.Webhook de envio (Antecipa 🡪SERASA)
+
+
+GEFI-4269
+[Back] Onboarding - Implementação da fila de status
+
+Descrição:
+
+Objetivos
+
+Criação e consumo da fila para receber dados de status;
+Persistir dados no banco
+
+
+
+GEFI-4267
+[Back] Onboarding na solução via CTA
+
+Descrição:
+COMO Serasa Experian
+QUERO possibilitar uma jornada de onboarding para a solução de Antecipação de Recebíveis
+PARA que os usuários possam ser pré-analisados pelo parceiro financiador e habilitados para utilizar essa solução
+PORQUE as ofertas de URs antecipáveis e taxas aplicáveis só são disponibilizadas após esse fluxo de análise
+
+
+Critérios de Aceite
+
+Orquestra comunicações com Antecipa;
+Retorno de status das cadastros (não avaliado, aprovado, reprovado, cancelado, em análise)
+Retorna URL de redirect para o front
+
+
+Figma: Pendente revisão por UX -https://www.figma.com/proto/y9rVOjFfNOy4Vv0iYSaRf4/Plataforma-Serasa--Vis%C3%A3o-futura--FY29?page-id=1%3A979&node-id=4016-3117&viewport=663%2C2024%2C0.27&t=LUl0QgAufqDIwhJF-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=4016%3A3117&hide-ui=1 
+
  
-Davi, o Danilo tá bem focado na resolução do Open Finance, vc acredita que consegue fazer esse exercício sem apoio dele?
+
+DoD
+
+ 
+
+Criação/atualização/validação dos Swaggers
+Test end-to-end (Postman)
+Score DevSecOPS >= 80%
+Veracode
+Cenários de testes listados e check OK/NOK de execução e resultado
+Desk e Mobile
+Evidências de testes anexadas a história
+Acompanhar a homologação e suportar a comunicação com o time dos ajustes
+PenTest (se o domain for entregue por completo nesta história)
+Realizar Review com PO e Time em ambiente de UAT/PRD
+Código e testes entregues em ambiente de UAT > PRD
+Caso ocorram impedimentos externos ao time, executamos a subida de PRD na próxima Sprint
+
+
+
+GEFI-4268
+[Back] Chamada de Disponibilidade de Mercado
+
+Descrição.
+
+Consultar Antecipa para confirmar se o mercado está aberto para realizar ofertas de antecipação.
+
+
+
+GEFI-4130
+[Back] Chamada de Antecipação de Recebíveis
+
+Descrição:
+
+Consulta de recebíveis com taxa
+
+GET/Originators/Anticipation/Assets/{SupplierDocument}/CardReceivables
+
+
+
+Execução do contrato:
+
+POST/Originators/Anticipation/{SupplierDocument}/{CapitalSourceDocument}/Execute/{OfferId}
+
+
+
+
+GEFI-4282
+[Back] Webhook - Status da Antecipação
+
+Descrição:
+
+COMO Serasa Experian
+QUERO criar uma tela para acompanhamento das solicitações de Antecipação de Recebíveis
+PARA que os usuários possam verificar o que solicitaram e o que receberam
+PORQUE nem toda antecipação será cumprida em totalidade como solicitado, uma vez que algumas URs podem não estar mais disponíveis no momento da efetivação
+
+
+Critérios de Aceite
+
+Reaproveitar o webhook criado no onboarding e criar novo endpoint para status das solicitações;
+
+Receber o payload do Antecipa, adaptar (se necessário) e repassar para a fila
+
+
+
+Consulta do contrato
+
+GET/Originators/Anticipation/{SupplierDocument}/{Id}
+
+
+
+Figma
+https://www.figma.com/design/T8pWGtWNqJZKJ6NUCNEvax/Plataforma-Serasa--Vis%C3%A3o-futura--FY29?node-id=744-3038&t=igDjYvavFEPW6kuZ-4 
+
+DoD
+
+
+
+Criação/atualização/validação dos Swaggers
+Test end-to-end (Postman)
+Score DevSecOPS >= 80%
+Veracode
+Cenários de testes listados e check OK/NOK de execução e resultado
+Desk e Mobile
+Evidências de testes anexadas a história
+Acompanhar a homologação e suportar a comunicação com o time dos ajustes
+PenTest (se o domain for entregue por completo nesta história)
+Realizar Review com PO e Time em ambiente de UAT/PRD
+Código e testes entregues em ambiente de UAT > PRD
+Caso ocorram impedimentos externos ao time, executamos a subida de PRD na próxima Sprint
+
+ 
