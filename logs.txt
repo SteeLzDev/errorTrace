@@ -1,121 +1,217 @@
-# ==========================================
-# 🏢 APLICAÇÃO SPRING BOOT
-# ==========================================
-spring.application.name=experian-pme-bfm-receivables-anticipation-domain-services
-spring.main.allow-bean-definition-overriding=true
-spring.cloud.compatibility-verifier.enabled=false
+2025-08-16 01:12:14.219  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 26512 --- [           main] b.c.e.b.ApplicationMain                  : Starting ApplicationMain using Java 21.0.7 with PID 26512 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
+2025-08-16 01:12:14.275  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 26512 --- [           main] b.c.e.b.ApplicationMain                  : No active profile set, falling back to 1 default profile: "default"
+2025-08-16 01:12:32.148  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 26512 --- [           main] b.c.e.b.c.OnboardingBeansConfig          : Criando OnboardingRepositoryPort para Mongo DB
+2025-08-16 01:12:33.010  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 26512 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name '********************' defined in file [C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes\br\com\experian\buzz\application\rest\OnboardingController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name '*****************' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'onboardingService' parameter 1: Error creating bean with name '**********************' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'antecipaOnboardingPort' parameter 0: Error creating bean with name '**.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
+2025-08-16 01:12:33.012  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 26512 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception thrown from ApplicationListener handling ContextClosedEvent
 
-# 🔧 CORREÇÃO DEFINITIVA: Desabilitar completamente observabilidade
-spring.application.admin.enabled=false
+org.springframework.beans.factory.BeanCreationNotAllowedException: Error creating bean with name 'applicationTaskExecutor': Singleton bean creation not allowed while singletons of this factory are in destruction (Do not request a bean from a BeanFactory in a destroy method implementation!)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:220) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:205) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.context.event.AbstractApplicationEventMulticaster.retrieveApplicationListeners(AbstractApplicationEventMulticaster.java:265) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.event.AbstractApplicationEventMulticaster.getApplicationListeners(AbstractApplicationEventMulticaster.java:222) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:145) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:452) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:458) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:385) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1139) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1102) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.cloud.context.named.NamedContextFactory.destroy(NamedContextFactory.java:114) ~[spring-cloud-context-4.3.0.jar:4.3.0]
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:559) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1207) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:520) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1195) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:638) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:755) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1364) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1353) ~[spring-boot-3.3.11.jar:3.3.11]
+	at br.com.experian.buzz.ApplicationMain.main(ApplicationMain.java:24) ~[classes/:?]
 
-# ==========================================
-# 🌐 CONFIGURAÇÕES API ANTECIPA
-# ==========================================
-api.antecipa.uri=https://api.anticipation.sand.antecipa.com/v1
-api.antecipa.auth.uri=https://api.auth.sand.antecipa.com/v1
-api.antecipa.auth.basic=MjM2Y2VhOGEtNzBlMS03MGMzLWM1OGQtODRiMTFmNTI3NmNhOjI5NGZmMzAwLTIyMTAtNDU3YS1iODIyLWJkNGM1ZDIwY2ZmZA==
-api.antecipa.default-capital-source=58408679000132
+2025-08-16 01:12:33.215 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 26512 --- [           main] o.s.b.SpringApplication                  : Application run failed
 
-# ==========================================
-# 🗄️ CONFIGURAÇÕES MONGODB
-# ==========================================
-spring.data.mongodb.uri=mongodb://localhost:27017/buzz_onboarding_test
-spring.data.mongodb.database=buzz_onboarding_test
-spring.data.mongodb.auto-index-creation=true
-spring.data.mongodb.connection-timeout=10000
-spring.data.mongodb.socket-timeout=10000
-spring.data.mongodb.server-selection-timeout=10000
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'onboardingController' defined in file [C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes\br\com\experian\buzz\application\rest\OnboardingController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'onboardingService' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'onboardingService' parameter 1: Error creating bean with name 'antecipaOnboardingPort' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'antecipaOnboardingPort' parameter 0: Error creating bean with name 'br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.19.jar:6.1.19]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:755) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1364) ~[spring-boot-3.3.11.jar:3.3.11]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1353) ~[spring-boot-3.3.11.jar:3.3.11]
+	at br.com.experian.buzz.ApplicationMain.main(ApplicationMain.java:24) ~[classes/:?]
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'onboardingService' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'onboardingService' parameter 1: Error creating bean with name 'antecipaOnboardingPort' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'antecipaOnboardingPort' parameter 0: Error creating bean with name 'br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	... 19 more
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'antecipaOnboardingPort' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'antecipaOnboardingPort' parameter 0: Error creating bean with name 'br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	... 19 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
+	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.doGetObjectFromFactoryBean(FactoryBeanRegistrySupport.java:188) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:124) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance(AbstractBeanFactory.java:1867) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getObjectForBeanInstance(AbstractAutowireCapableBeanFactory.java:1296) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:347) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	... 19 more
+Caused by: java.lang.IllegalStateException: Body parameters cannot be used with form parameters.
+Warnings:
+- 
+	at feign.Util.checkState(Util.java:140) ~[feign-core-13.4.jar:?]
+	at feign.Contract$BaseContract.parseAndValidateMetadata(Contract.java:145) ~[feign-core-13.4.jar:?]
+	at org.springframework.cloud.openfeign.support.SpringMvcContract.parseAndValidateMetadata(SpringMvcContract.java:198) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at feign.Contract$BaseContract.parseAndValidateMetadata(Contract.java:65) ~[feign-core-13.4.jar:?]
+	at feign.ReflectiveFeign$ParseHandlersByName.apply(ReflectiveFeign.java:137) ~[feign-core-13.4.jar:?]
+	at feign.ReflectiveFeign.newInstance(ReflectiveFeign.java:56) ~[feign-core-13.4.jar:?]
+	at feign.ReflectiveFeign.newInstance(ReflectiveFeign.java:48) ~[feign-core-13.4.jar:?]
+	at feign.Feign$Builder.target(Feign.java:201) ~[feign-core-13.4.jar:?]
+	at org.springframework.cloud.openfeign.DefaultTargeter.target(DefaultTargeter.java:30) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getTarget(FeignClientFactoryBean.java:504) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getObject(FeignClientFactoryBean.java:456) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.doGetObjectFromFactoryBean(FactoryBeanRegistrySupport.java:182) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:124) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance(AbstractBeanFactory.java:1867) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getObjectForBeanInstance(AbstractAutowireCapableBeanFactory.java:1296) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:347) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.19.jar:6.1.19]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.19.jar:6.1.19]
+	... 19 more
 
-# Desabilitar JPA
-spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:47 min
+[INFO] Finished at: 2025-08-16T01:12:33-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.3.11:run (default-cli) on project experian-pme-bfm-receivables-anticipation-domain-services: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
 
-# ==========================================
-# 🔒 CONFIGURAÇÕES DE SEGURANÇA (DESABILITADAS)
-# ==========================================
-spring.security.enabled=false
-experian.security.enabled=false
-experian.iam.enabled=false
-
-# ==========================================
-# 🖥️ CONFIGURAÇÕES DO SERVIDOR
-# ==========================================
-server.tomcat.mbeanregistry.enabled=true
-server.tomcat.threads.max=200
-
-# ==========================================
-# 📊 CONFIGURAÇÕES ACTUATOR (SEM OBSERVABILIDADE)
-# ==========================================
-management.endpoints.web.exposure.include=health,info
-management.endpoint.health.show-details=ALWAYS
-
-# 🔧 CORREÇÃO DEFINITIVA: Desabilitar COMPLETAMENTE tracing e observabilidade
-management.tracing.enabled=false
-management.otlp.tracing.enabled=false
-management.zipkin.tracing.enabled=false
-management.otlp.metrics.export.enabled=false
-management.metrics.export.otlp.enabled=false
-management.observations.enabled=false
-management.metrics.enabled=false
-
-# 🔧 CORREÇÃO DEFINITIVA: OpenTelemetry completamente desabilitado
-otel.sdk.disabled=true
-otel.javaagent.enabled=false
-otel.instrumentation.spring-boot.enabled=false
-otel.instrumentation.spring-webmvc.enabled=false
-otel.instrumentation.feign.enabled=false
-otel.instrumentation.micrometer.enabled=false
-otel.traces.exporter=none
-otel.metrics.exporter=none
-otel.logs.exporter=none
-
-# ==========================================
-# 🔄 CIRCUIT BREAKER
-# ==========================================
-resilience4j.circuitbreaker.instances.AntecipaAuthClient.sliding-window-type=COUNT_BASED
-resilience4j.circuitbreaker.instances.AntecipaAuthClient.sliding-window-size=5
-resilience4j.circuitbreaker.instances.AntecipaAuthClient.minimum-number-of-calls=3
-resilience4j.circuitbreaker.instances.AntecipaAuthClient.failure-rate-threshold=60
-resilience4j.circuitbreaker.instances.AntecipaAuthClient.wait-duration-in-open-state=30s
-
-resilience4j.circuitbreaker.instances.AntecipaClient.sliding-window-type=COUNT_BASED
-resilience4j.circuitbreaker.instances.AntecipaClient.sliding-window-size=5
-resilience4j.circuitbreaker.instances.AntecipaClient.minimum-number-of-calls=5
-resilience4j.circuitbreaker.instances.AntecipaClient.failure-rate-threshold=50
-resilience4j.circuitbreaker.instances.AntecipaClient.wait-duration-in-open-state=20s
-
-# ==========================================
-# 🔁 RETRY
-# ==========================================
-resilience4j.retry.instances.AntecipaAuthClient.max-attempts=3
-resilience4j.retry.instances.AntecipaAuthClient.wait-duration=1000ms
-resilience4j.retry.instances.AntecipaAuthClient.retry-exceptions=feign.FeignException$ServiceUnavailable,feign.FeignException$InternalServerError,java.io.IOException
-
-resilience4j.retry.instances.AntecipaClient.max-attempts=3
-resilience4j.retry.instances.AntecipaClient.wait-duration=500ms
-resilience4j.retry.instances.AntecipaClient.retry-exceptions=feign.FeignException$ServiceUnavailable,feign.FeignException$InternalServerError,java.io.IOException
-
-# ==========================================
-# 🌐 CONFIGURAÇÕES FEIGN
-# ==========================================
-feign.httpclient.enabled=false
-feign.okhttp.enabled=true
-feign.client.config.default.connect-timeout=10000
-feign.client.config.default.read-timeout=30000
-
-# ==========================================
-# 📝 CONFIGURAÇÕES DE LOGGING
-# ==========================================
-logging.level.org.springframework.data.mongodb=INFO
-logging.level.com.mongodb=WARN
-logging.level.io.opentelemetry=OFF
-logging.level.io.micrometer=OFF
-logging.level.br.com.experian.observability=OFF
-logging.level.br.com.experian.spring.security=OFF
-logging.level.br.com.experian.pme.logging=WARN
-logging.level.br.com.experian.buzz.infrastructure.adapter.AntecipaAuthAdapter=INFO
-logging.level.br.com.experian.buzz.infrastructure.adapter.AntecipaOnboardingAdapter=INFO
-
-# ==========================================
-# 🔧 CONFIGURAÇÕES ADICIONAIS
-# ==========================================
-api.wikipedia.uri=https://pt.wikipedia.org
+Process finished with exit code 1
