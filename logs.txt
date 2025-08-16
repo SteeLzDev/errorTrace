@@ -1,4 +1,4 @@
-"C:\Program Files\Zulu\zulu-21\bin\java.exe" -Dmaven.multiModuleProjectDirectory=C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services -Djansi.passthrough=true "-Dmaven.home=C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2025.1.3/plugins/maven/lib/maven3" "-Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\bin\m2.conf" "-Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven-event-listener.jar" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=60222" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds-2.8.0.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds.license" org.codehaus.classworlds.Launcher -Didea.version=2025.1.3 -DskipTests=true spring-boot:run
+"C:\Program Files\Zulu\zulu-21\bin\java.exe" -Dmaven.multiModuleProjectDirectory=C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services -Djansi.passthrough=true "-Dmaven.home=C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2025.1.3/plugins/maven/lib/maven3" "-Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\bin\m2.conf" "-Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven-event-listener.jar" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=51173" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds-2.8.0.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds.license" org.codehaus.classworlds.Launcher -Didea.version=2025.1.3 -DskipTests=true spring-boot:run
 [INFO] Scanning for projects...
 [INFO] 
 [INFO] --< br.com.experian.bfm:experian-pme-bfm-receivables-anticipation-domain-services >--
@@ -132,74 +132,11 @@
 
  :: Spring Boot ::               (v3.3.11)
 
-2025-08-15 17:34:33.598  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] b.c.e.b.ApplicationMain                  : Starting ApplicationMain using Java 21.0.7 with PID 17808 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
-2025-08-15 17:34:33.626  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] b.c.e.b.ApplicationMain                  : No active profile set, falling back to 1 default profile: "default"
-2025-08-15 17:34:48.640  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] b.c.e.b.c.OnboardingBeansConfig          : Criando OnboardingRepositoryPort para Mongo DB
-2025-08-15 17:34:48.961 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [alhost:4318/...] i.o.e.i.h.HttpExporter                   : Failed to export spans. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
-
-java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:4318
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-		at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Caused by: java.net.ConnectException: Connection refused: getsockopt
-		at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-		at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-		... 18 more
-Caused by: java.net.ConnectException: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-	at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-	... 18 more
-
-2025-08-15 17:34:49.778  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name '********************' defined in file [C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes\br\com\experian\buzz\application\rest\OnboardingController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name '*****************' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'onboardingService' parameter 1: Error creating bean with name '**********************' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'antecipaOnboardingPort' parameter 0: Error creating bean with name '**.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
-2025-08-15 17:34:49.780  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception thrown from ApplicationListener handling ContextClosedEvent
+2025-08-16 00:46:25.681  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] b.c.e.b.ApplicationMain                  : Starting ApplicationMain using Java 21.0.7 with PID 39496 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
+2025-08-16 00:46:25.723  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] b.c.e.b.ApplicationMain                  : No active profile set, falling back to 1 default profile: "default"
+2025-08-16 00:46:36.389  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] b.c.e.b.c.OnboardingBeansConfig          : Criando OnboardingRepositoryPort para Mongo DB
+2025-08-16 00:46:36.815  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name '********************' defined in file [C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes\br\com\experian\buzz\application\rest\OnboardingController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name '*****************' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'onboardingService' parameter 1: Error creating bean with name '**********************' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'antecipaOnboardingPort' parameter 0: Error creating bean with name '**.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
+2025-08-16 00:46:36.815  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] s.c.a.AnnotationConfigApplicationContext : Exception thrown from ApplicationListener handling ContextClosedEvent
 
 org.springframework.beans.factory.BeanCreationNotAllowedException: Error creating bean with name 'applicationTaskExecutor': Singleton bean creation not allowed while singletons of this factory are in destruction (Do not request a bean from a BeanFactory in a destroy method implementation!)
 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:220) ~[spring-beans-6.1.19.jar:6.1.19]
@@ -230,7 +167,7 @@ org.springframework.beans.factory.BeanCreationNotAllowedException: Error creatin
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1353) ~[spring-boot-3.3.11.jar:3.3.11]
 	at br.com.experian.buzz.ApplicationMain.main(ApplicationMain.java:24) ~[classes/:?]
 
-2025-08-15 17:34:49.838 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [alhost:4318/...] i.o.e.i.h.HttpExporter                   : Failed to export spans. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
+2025-08-16 00:46:36.957 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [alhost:4318/...] i.o.e.i.h.HttpExporter                   : Failed to export metrics. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
 
 java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
 	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
@@ -293,7 +230,7 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
 	... 18 more
 
-2025-08-15 17:34:49.894 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [alhost:4318/...] i.o.e.i.h.HttpExporter                   : Failed to export metrics. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
+2025-08-16 00:46:36.957 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [alhost:4318/...] i.o.e.i.h.HttpExporter                   : Failed to export spans. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
 
 java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
 	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
@@ -356,10 +293,10 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
 	... 18 more
 
-2025-08-15 17:34:49.952  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] o.a.c.l.WebappClassLoaderBase            : The web application [ROOT] appears to have started a thread named [BatchSpanProcessor_WorkerThread-1] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:\n java.base/jdk.internal.misc.Unsafe.park(Native Method)\n java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)\n java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1763)\n java.base/java.util.concurrent.ArrayBlockingQueue.poll(ArrayBlockingQueue.java:435)\n io.opentelemetry.sdk.trace.export.BatchSpanProcessor$Worker.run(BatchSpanProcessor.java:266)\n java.base/java.lang.Thread.run(Thread.java:1583)
-2025-08-15 17:34:49.953  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] o.a.c.l.WebappClassLoaderBase            : The web application [ROOT] appears to have started a thread named [BatchLogRecordProcessor_WorkerThread-1] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:\n java.base/jdk.internal.misc.Unsafe.park(Native Method)\n java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)\n java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1763)\n java.base/java.util.concurrent.ArrayBlockingQueue.poll(ArrayBlockingQueue.java:435)\n io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor$Worker.run(BatchLogRecordProcessor.java:246)\n java.base/java.lang.Thread.run(Thread.java:1583)
-2025-08-15 17:34:49.954  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] o.a.c.l.WebappClassLoaderBase            : The web application [ROOT] appears to have started a thread named [Okio Watchdog] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:\n java.base/jdk.internal.misc.Unsafe.park(Native Method)\n java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)\n java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1852)\n okio.AsyncTimeout$Companion.awaitTimeout(AsyncTimeout.kt:370)\n okio.AsyncTimeout$Watchdog.run(AsyncTimeout.kt:211)
-2025-08-15 17:34:50.231 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 17808 --- [           main] o.s.b.SpringApplication                  : Application run failed
+2025-08-16 00:46:36.982  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] o.a.c.l.WebappClassLoaderBase            : The web application [ROOT] appears to have started a thread named [BatchSpanProcessor_WorkerThread-1] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:\n java.base/jdk.internal.misc.Unsafe.park(Native Method)\n java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)\n java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1763)\n java.base/java.util.concurrent.ArrayBlockingQueue.poll(ArrayBlockingQueue.java:435)\n io.opentelemetry.sdk.trace.export.BatchSpanProcessor$Worker.run(BatchSpanProcessor.java:266)\n java.base/java.lang.Thread.run(Thread.java:1583)
+2025-08-16 00:46:36.984  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] o.a.c.l.WebappClassLoaderBase            : The web application [ROOT] appears to have started a thread named [BatchLogRecordProcessor_WorkerThread-1] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:\n java.base/jdk.internal.misc.Unsafe.park(Native Method)\n java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)\n java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1763)\n java.base/java.util.concurrent.ArrayBlockingQueue.poll(ArrayBlockingQueue.java:435)\n io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor$Worker.run(BatchLogRecordProcessor.java:246)\n java.base/java.lang.Thread.run(Thread.java:1583)
+2025-08-16 00:46:36.984  WARN [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] o.a.c.l.WebappClassLoaderBase            : The web application [ROOT] appears to have started a thread named [Okio Watchdog] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:\n java.base/jdk.internal.misc.Unsafe.park(Native Method)\n java.base/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:269)\n java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:1852)\n okio.AsyncTimeout$Companion.awaitTimeout(AsyncTimeout.kt:370)\n okio.AsyncTimeout$Watchdog.run(AsyncTimeout.kt:211)
+2025-08-16 00:46:37.074 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 39496 --- [           main] o.s.b.SpringApplication                  : Application run failed
 
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'onboardingController' defined in file [C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes\br\com\experian\buzz\application\rest\OnboardingController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'onboardingService' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'onboardingService' parameter 1: Error creating bean with name 'antecipaOnboardingPort' defined in class path resource [br/com/experian/buzz/config/OnboardingBeansConfig.class]: Unsatisfied dependency expressed through method 'antecipaOnboardingPort' parameter 0: Error creating bean with name 'br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
 	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.19.jar:6.1.19]
@@ -529,8 +466,8 @@ Warnings:
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  01:26 min
-[INFO] Finished at: 2025-08-15T17:34:50-03:00
+[INFO] Total time:  01:06 min
+[INFO] Finished at: 2025-08-16T00:46:37-03:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.3.11:run (default-cli) on project experian-pme-bfm-receivables-anticipation-domain-services: Process terminated with exit code: 1 -> [Help 1]
 [ERROR] 
