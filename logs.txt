@@ -1,2 +1,9 @@
-Veja se as datas que colocamos no nosso planejamento (Cronograma Antecipação.xlsx) estão condizentes, ou se temos que esperar até 1/9 pra começar a desenvolver. 
-Na agenda de hoje da antecipa eles falaram algo sobre o desenvolvimento? Ainda, avalie, se há algum risco com os itens que deixei em branco na coluna de riscos ou dependência... por exemplo, se tiver algum item que depende da IF ou possa sofrer risco se a IF for por um caminho A ou B, devemos mencionar como risco
+Teste 1 - Documento que deve funcionar:
+curl -H "X-Supplier-Document: 12345678000195" http://localhost:8080/onboarding
+
+Teste 2 - Documento que deve retornar "não encontrado":
+curl -H "X-Supplier-Document: 00000000000000" http://localhost:8080/onboarding
+
+
+Teste 3 - Sem header (deve dar erro):
+curl http://localhost:8080/onboarding
