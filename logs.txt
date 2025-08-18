@@ -1,1 +1,152 @@
-'setHttpClient(org.apache.hc.client5.http.classic.HttpClient)' in 'org.springframework.http.client.HttpComponentsClientHttpRequestFactory' cannot be applied to '(org.apache.http.impl.client.CloseableHttpClient)'
+package br.com.experian.buzz.config;
+
+import br.com.experian.buzz.infrastructure.adapter.AntecipaAuthAdapterDebug;
+import br.com.experian.buzz.domain.port.AuthenticationPort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+
+import javax.annotation.PostConstruct;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.HostnameVerifier;
+import java.security.cert.X509Certificate;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * 🔍 Configuração para modo debug.
+ * Desabilita SSL globalmente e configura RestTemplate com logs detalhados.
+ */
+@Configuration
+@Profile("debug")
+public class DebugConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(DebugConfig.class);
+
+    /**
+     * 🔍 Desabilita SSL globalmente na inicialização.
+     */
+    @PostConstruct
+    public void disableSSLValidation() {
+        try {
+            log.info("🔍 DEBUG: Desabilitando validação SSL globalmente...");
+            
+            // Criar TrustManager que aceita todos os certificados
+            TrustManager[] trustAllCerts = new TrustManager[]{
+                new X509TrustManager() {
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return new X509Certificate[0];
+                    }
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                        // Aceita todos os certificados
+                    }
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                        // Aceita todos os certificados
+                    }
+                }
+            };
+
+            // Instalar o TrustManager que aceita todos
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            // Criar HostnameVerifier que aceita todos os hostnames
+            HostnameVerifier allHostsValid = (hostname, session) -> {
+                log.debug("🔍 DEBUG: Aceitando hostname: {}", hostname);
+                return true;
+            };
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+
+            // Definir propriedades do sistema para SSL
+            System.setProperty("com.sun.net.ssl.checkRevocation", "false");
+            System.setProperty("sun.security.ssl.allowUnsafeRenegotiation", "true");
+            System.setProperty("sun.security.ssl.allowLegacyHelloMessages", "true");
+
+            log.info("🔍 DEBUG: ✅ SSL desabilitado globalmente com sucesso!");
+
+        } catch (Exception e) {
+            log.error("🔍 DEBUG: ❌ Erro ao desabilitar SSL globalmente", e);
+            throw new RuntimeException("Falha ao configurar SSL para debug", e);
+        }
+    }
+
+    /**
+     * 🔍 RestTemplate configurado para debug com logs detalhados.
+     */
+    @Bean
+    @Primary
+    public RestTemplate debugRestTemplate() {
+        log.info("🔍 DEBUG: Configurando RestTemplate com logs detalhados...");
+        
+        // Usar SimpleClientHttpRequestFactory com timeouts
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(30000); // 30 segundos
+        factory.setReadTimeout(60000);    // 60 segundos
+        
+        RestTemplate restTemplate = new RestTemplate(factory);
+        
+        // Adicionar interceptor para logs detalhados
+        restTemplate.getInterceptors().add(debugInterceptor());
+        
+        log.info("🔍 DEBUG: ✅ RestTemplate configurado com logs detalhados!");
+        return restTemplate;
+    }
+
+    /**
+     * 🔍 Interceptor para logs detalhados das requisições HTTP.
+     */
+    private ClientHttpRequestInterceptor debugInterceptor() {
+        return (request, body, execution) -> {
+            long startTime = System.currentTimeMillis();
+            
+            log.info("🔍 DEBUG REST REQUEST: {} {}", request.getMethod(), request.getURI());
+            log.info("🔍 DEBUG REST HEADERS: {}", request.getHeaders());
+            
+            if (body.length > 0) {
+                String bodyStr = new String(body, StandardCharsets.UTF_8);
+                // Mascarar dados sensíveis nos logs
+                if (bodyStr.contains("password") || bodyStr.contains("secret")) {
+                    log.info("🔍 DEBUG REST BODY: [DADOS SENSÍVEIS MASCARADOS]");
+                } else {
+                    log.info("🔍 DEBUG REST BODY: {}", bodyStr);
+                }
+            } else {
+                log.info("🔍 DEBUG REST BODY: [VAZIO]");
+            }
+            
+            try {
+                var response = execution.execute(request, body);
+                long duration = System.currentTimeMillis() - startTime;
+                
+                log.info("🔍 DEBUG REST RESPONSE STATUS: {} ({}ms)", response.getStatusCode(), duration);
+                log.info("🔍 DEBUG REST RESPONSE HEADERS: {}", response.getHeaders());
+                
+                return response;
+                
+            } catch (Exception e) {
+                long duration = System.currentTimeMillis() - startTime;
+                log.error("🔍 DEBUG REST ERROR: {} ({}ms)", e.getMessage(), duration);
+                throw e;
+            }
+        };
+    }
+
+    /**
+     * 🔍 Usar o adapter debug como primário.
+     */
+    @Bean
+    @Primary
+    public AuthenticationPort debugAuthenticationPort(AntecipaAuthAdapterDebug debugAdapter) {
+        log.info("🔍 DEBUG: Usando AntecipaAuthAdapterDebug para debug detalhado");
+        return debugAdapter;
+    }
+}
