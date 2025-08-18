@@ -1,188 +1,132 @@
-2025-08-18 16:19:59.763  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [           main] b.c.e.b.ApplicationMain                  : Starting ApplicationMain using Java 21.0.7 with PID 38072 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
-2025-08-18 16:19:59.782  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [           main] b.c.e.b.ApplicationMain                  : No active profile set, falling back to 1 default profile: "default"
-2025-08-18 16:20:09.112  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando OnboardingRepositoryPort para Mongo DB
-2025-08-18 16:20:10.438  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando AntecipaOnboardingPort
-2025-08-18 16:20:10.445  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Configurando para usar API Antecipa com CapitalSource padrão: 5840679000132
-2025-08-18 16:20:10.499  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando OnboardingService com integração API Antecipa
-SSL Desativado para desenvolvimento
-2025-08-18 16:20:17.771  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [           main] b.c.e.b.ApplicationMain                  : Started ApplicationMain in 19.962 seconds (process running for 22.64)
-Collection possui 5 documentos!
-2025-08-18 16:20:49.195  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [nio-8080-exec-2] b.c.e.b.a.r.OnboardingController         : Recebida requisição para consultar status de onboarding do documento: 12345678000195
-2025-08-18 16:20:49.195  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [nio-8080-exec-2] b.c.e.b.i.r.i.OnboardingServiceImpl      : Consultando status de onboarding para coumento: 12345678000195
-2025-08-18 16:20:49.377  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [nio-8080-exec-2] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Token inválido ou expirado, renovando...
-2025-08-18 16:20:49.378  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [nio-8080-exec-2] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Renovando token de autenticação
-2025-08-18 16:20:59.799 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [nio-8080-exec-2] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Erro ao renovar token de autenticação
+package br.com.experian.buzz.infrastructure.adapter;
 
-br.com.experian.buzz.domain.exeption.AuthenticationException: Resposta de autenticação inválida
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:88) ~[classes/:?]
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.refreshToken(AntecipaAuthAdapter.java:61) ~[classes/:?]
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.getValidToken(AntecipaAuthAdapter.java:49) ~[classes/:?]
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter.getOnboardingStatus(AntecipaOnboardingAdapter.java:42) ~[classes/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.19.jar:6.1.19]
-	at io.github.resilience4j.retry.Retry.lambda$decorateCheckedSupplier$1(Retry.java:135) ~[resilience4j-retry-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.retry.Retry.executeCheckedSupplier(Retry.java:350) ~[resilience4j-retry-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.retry.configure.RetryAspect.handleDefaultJoinPoint(RetryAspect.java:175) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.retry.configure.RetryAspect.proceed(RetryAspect.java:132) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.retry.configure.RetryAspect.lambda$retryAroundAdvice$0(RetryAspect.java:116) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.fallback.FallbackExecutor.execute(FallbackExecutor.java:37) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.retry.configure.RetryAspect.retryAroundAdvice(RetryAspect.java:117) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.19.jar:6.1.19]
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter$$SpringCGLIB$$0.getOnboardingStatus(<generated>) ~[classes/:?]
-	at br.com.experian.buzz.infrastructure.repository.impl.OnboardingServiceImpl.getOnboardingStatus(OnboardingServiceImpl.java:37) ~[classes/:?]
-	at br.com.experian.buzz.application.rest.OnboardingController.getOnboardingStatus(OnboardingController.java:31) ~[classes/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
+import br.com.experian.buzz.domain.dto.AuthenticationResponseDto;
+import br.com.experian.buzz.domain.exeption.AuthenticationException;
+import br.com.experian.buzz.domain.port.AuthenticationPort;
+import br.com.experian.buzz.infrastructure.integration.feign.client.auth.AntecipaAuthClient;
+import feign.FeignException;
+import feign.Response;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
-2025-08-18 16:20:59.838 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 38072 --- [nio-8080-exec-2] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: br.com.experian.buzz.domain.exeption.AuthenticationException: Falha na autenticação com API Antecipa] with root cause
+import java.time.LocalDateTime;
+import java.util.Base64;
 
-br.com.experian.buzz.domain.exeption.AuthenticationException: Resposta de autenticação inválida
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:88) ~[classes/:?]
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.refreshToken(AntecipaAuthAdapter.java:61) ~[classes/:?]
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.getValidToken(AntecipaAuthAdapter.java:49) ~[classes/:?]
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter.getOnboardingStatus(AntecipaOnboardingAdapter.java:42) ~[classes/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.19.jar:6.1.19]
-	at io.github.resilience4j.retry.Retry.lambda$decorateCheckedSupplier$1(Retry.java:135) ~[resilience4j-retry-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.retry.Retry.executeCheckedSupplier(Retry.java:350) ~[resilience4j-retry-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.retry.configure.RetryAspect.handleDefaultJoinPoint(RetryAspect.java:175) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.retry.configure.RetryAspect.proceed(RetryAspect.java:132) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.retry.configure.RetryAspect.lambda$retryAroundAdvice$0(RetryAspect.java:116) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.fallback.FallbackExecutor.execute(FallbackExecutor.java:37) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at io.github.resilience4j.spring6.retry.configure.RetryAspect.retryAroundAdvice(RetryAspect.java:117) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.19.jar:6.1.19]
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter$$SpringCGLIB$$0.getOnboardingStatus(<generated>) ~[classes/:?]
-	at br.com.experian.buzz.infrastructure.repository.impl.OnboardingServiceImpl.getOnboardingStatus(OnboardingServiceImpl.java:37) ~[classes/:?]
-	at br.com.experian.buzz.application.rest.OnboardingController.getOnboardingStatus(OnboardingController.java:31) ~[classes/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.19.jar:6.1.19]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
+/**
+ * 🔍 VERSÃO DEBUG DO ADAPTER DE AUTENTICAÇÃO
+ * Para investigar problemas de autenticação
+ */
+@Component
+@Profile({"debug", "dev"})
+public class AntecipaAuthAdapterDebug implements AuthenticationPort {
+
+    private final AntecipaAuthClient authClient;
+    private final String clientId;
+    private final String clientSecret;
+    private final String basicAuth;
+
+    private String currentToken;
+    private LocalDateTime tokenExpiry;
+
+    public AntecipaAuthAdapterDebug(
+            AntecipaAuthClient authClient,
+            @Value("${antecipa.auth.client-id}") String clientId,
+            @Value("${antecipa.auth.client-secret}") String clientSecret) {
+        
+        this.authClient = authClient;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        this.basicAuth = Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes());
+        
+        System.out.println("🔍 DEBUG AUTH ADAPTER INICIALIZADO");
+        System.out.println("Client ID: " + clientId);
+        System.out.println("Client Secret: " + clientSecret.substring(0, 8) + "...");
+        System.out.println("Basic Auth: " + basicAuth.substring(0, 20) + "...");
+    }
+
+    @Override
+    public String getValidToken() {
+        System.out.println("🔍 [DEBUG] Verificando token válido...");
+        
+        if (currentToken == null || tokenExpiry == null || LocalDateTime.now().isAfter(tokenExpiry)) {
+            System.out.println("🔍 [DEBUG] Token inválido ou expirado, renovando...");
+            return refreshToken();
+        }
+        
+        System.out.println("🔍 [DEBUG] Token ainda válido");
+        return currentToken;
+    }
+
+    @Override
+    public String refreshToken() {
+        System.out.println("🔍 [DEBUG] Iniciando renovação de token...");
+        
+        try {
+            System.out.println("🔍 [DEBUG] Fazendo chamada para API de autenticação...");
+            System.out.println("🔍 [DEBUG] URL: https://api.auth.sand.antecipa.com/v1/authentication/signin");
+            System.out.println("🔍 [DEBUG] Authorization: Basic " + basicAuth.substring(0, 20) + "...");
+            
+            Response response = authClient.signin("Basic " + basicAuth);
+            
+            System.out.println("🔍 [DEBUG] Resposta recebida:");
+            System.out.println("🔍 [DEBUG] Status: " + response.status());
+            System.out.println("🔍 [DEBUG] Headers: " + response.headers());
+            
+            if (response.body() != null) {
+                try {
+                    String responseBody = new String(response.body().asInputStream().readAllBytes());
+                    System.out.println("🔍 [DEBUG] Body: " + responseBody);
+                    
+                    if (response.status() == 200) {
+                        // Tentar parsear manualmente
+                        if (responseBody.contains("access_token")) {
+                            String token = extractTokenFromJson(responseBody);
+                            if (token != null) {
+                                currentToken = token;
+                                tokenExpiry = LocalDateTime.now().plusHours(1);
+                                System.out.println("🔍 [DEBUG] Token extraído com sucesso: " + token.substring(0, 20) + "...");
+                                return token;
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    System.err.println("🔍 [DEBUG] Erro ao ler body: " + e.getMessage());
+                }
+            }
+            
+            throw new AuthenticationException("Resposta de autenticação inválida - Status: " + response.status());
+            
+        } catch (FeignException e) {
+            System.err.println("🔍 [DEBUG] FeignException:");
+            System.err.println("🔍 [DEBUG] Status: " + e.status());
+            System.err.println("🔍 [DEBUG] Message: " + e.getMessage());
+            System.err.println("🔍 [DEBUG] Content: " + e.contentUTF8());
+            
+            throw new AuthenticationException("Erro na comunicação com serviço de autenticação: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("🔍 [DEBUG] Exception geral: " + e.getMessage());
+            e.printStackTrace();
+            
+            throw new AuthenticationException("Erro inesperado na autenticação: " + e.getMessage());
+        }
+    }
+
+    private String extractTokenFromJson(String json) {
+        try {
+            // Extração simples do token do JSON
+            String searchFor = "\"access_token\":\"";
+            int startIndex = json.indexOf(searchFor);
+            if (startIndex != -1) {
+                startIndex += searchFor.length();
+                int endIndex = json.indexOf("\"", startIndex);
+                if (endIndex != -1) {
+                    return json.substring(startIndex, endIndex);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("🔍 [DEBUG] Erro ao extrair token: " + e.getMessage());
+        }
+        return null;
+    }
+}
