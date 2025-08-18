@@ -1,1 +1,224 @@
-Incompatible types. Found: 'br.com.experian.buzz.domain.dto.response.AuthenticationResponseDto', required: 'feign.Response'
+package br.com.experian.buzz.infrastructure.adapter;
+
+import br.com.experian.buzz.domain.dto.AuthenticationResponseDto;
+import br.com.experian.buzz.domain.port.AuthenticationPort;
+import br.com.experian.buzz.exception.AuthenticationException;
+import feign.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.*;
+
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * 🔍 DEBUG: Adapter para autenticação com logs detalhados.
+ * Usa RestTemplate para debug mais fácil.
+ */
+@Component
+public class AntecipaAuthAdapterDebug implements AuthenticationPort {
+
+    private static final Logger log = LoggerFactory.getLogger(AntecipaAuthAdapterDebug.class);
+
+    private final String basicAuthHeader;
+    private final String authUrl;
+    private final RestTemplate restTemplate;
+    private final ReentrantLock lock = new ReentrantLock();
+
+    // Cache do token atual
+    private volatile AuthenticationResponseDto currentToken;
+
+    public AntecipaAuthAdapterDebug(
+            @Value("${api.antecipa.auth.basic:MjM2Y2VhOGEtNzBlMS03MGMzLWM1OGQtODRiMTFmNTI3NmNhOjI5NGZmMzAwLTIyMTAtNDU3YS1iODIyLWJkNGM1ZDIwY2ZmZA==}") String basicAuth,
+            @Value("${api.antecipa.auth.uri:https://api.auth.sand.antecipa.com/v1}") String baseUrl) {
+        this.basicAuthHeader = "Basic " + basicAuth;
+        this.authUrl = baseUrl + "/authentication/signin";
+        this.restTemplate = new RestTemplate();
+        
+        log.info("🔍 DEBUG: AntecipaAuthAdapterDebug inicializado");
+        log.info("🔍 DEBUG: Auth URL: {}", authUrl);
+        log.info("🔍 DEBUG: Basic Auth Header: {}", basicAuthHeader.substring(0, 20) + "...");
+    }
+
+    @Override
+    public String getValidToken() {
+        // Verificação rápida sem lock
+        if (isCurrentTokenValid()) {
+            log.debug("🔍 DEBUG: Token atual ainda válido");
+            return currentToken.getAccessToken();
+        }
+
+        // Verificação com lock para thread safety
+        lock.lock();
+        try {
+            // Double-check: outro thread pode ter renovado
+            if (isCurrentTokenValid()) {
+                return currentToken.getAccessToken();
+            }
+
+            log.info("🔍 DEBUG: Token inválido ou expirado, renovando...");
+            return refreshToken();
+
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public String refreshToken() {
+        lock.lock();
+        try {
+            log.info("🔍 DEBUG: Renovando token de autenticação...");
+
+            AuthenticationResponseDto newToken = performAuthentication();
+            this.currentToken = newToken;
+
+            log.info("🔍 DEBUG: Token renovado com sucesso. Expira em: {} segundos", newToken.getExpiresIn());
+            return newToken.getAccessToken();
+
+        } catch (Exception e) {
+            log.error("🔍 DEBUG: Erro ao renovar token de autenticação", e);
+            throw new AuthenticationException("Falha na autenticação com API Antecipa", e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public boolean isTokenValid() {
+        return isCurrentTokenValid();
+    }
+
+    /**
+     * 🔍 DEBUG: Realiza chamada de autenticação com logs detalhados.
+     */
+    private AuthenticationResponseDto performAuthentication() {
+        try {
+            log.info("🔍 DEBUG: Realizando POST para: {}", authUrl);
+            log.info("🔍 DEBUG: Authorization header: {}", basicAuthHeader.substring(0, 20) + "...");
+            
+            // Configurar headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", basicAuthHeader);
+            headers.set("Content-Type", "application/json");
+            headers.set("Accept", "application/json");
+            
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            
+            log.info("🔍 DEBUG: Enviando requisição...");
+            
+            ResponseEntity<String> response = restTemplate.exchange(
+                authUrl, 
+                HttpMethod.POST, 
+                entity, 
+                String.class
+            );
+            
+            log.info("🔍 DEBUG: Status Code: {}", response.getStatusCode());
+            log.info("🔍 DEBUG: Response Headers: {}", response.getHeaders());
+            log.info("🔍 DEBUG: Response Body: {}", response.getBody());
+            
+            if (response.getStatusCode() == HttpStatus.OK) {
+                String responseBody = response.getBody();
+                
+                if (responseBody == null || responseBody.trim().isEmpty()) {
+                    log.error("🔍 DEBUG: Resposta vazia da API");
+                    throw new AuthenticationException("Resposta vazia da API de autenticação");
+                }
+                
+                // Parse manual simples para debug
+                AuthenticationResponseDto authResponse = parseAuthResponse(responseBody);
+                
+                if (authResponse.getAccessToken() == null) {
+                    log.error("🔍 DEBUG: Access token não encontrado na resposta");
+                    throw new AuthenticationException("Access token não encontrado na resposta");
+                }
+                
+                log.info("🔍 DEBUG: Token extraído com sucesso: {}...", 
+                    authResponse.getAccessToken().substring(0, Math.min(20, authResponse.getAccessToken().length())));
+                
+                return authResponse;
+            } else {
+                log.error("🔍 DEBUG: Status HTTP inválido: {}", response.getStatusCode());
+                throw new AuthenticationException("Status HTTP inválido: " + response.getStatusCode());
+            }
+
+        } catch (Exception e) {
+            log.error("🔍 DEBUG: Erro na chamada de autenticação", e);
+            throw new AuthenticationException("Erro na comunicação com serviço de autenticação", e);
+        }
+    }
+
+    /**
+     * 🔍 DEBUG: Parse manual da resposta JSON.
+     */
+    private AuthenticationResponseDto parseAuthResponse(String jsonResponse) {
+        log.info("🔍 DEBUG: Fazendo parse da resposta JSON...");
+        
+        try {
+            // Parse manual simples - em produção usar Jackson
+            String accessToken = extractJsonValue(jsonResponse, "access_token");
+            String tokenType = extractJsonValue(jsonResponse, "token_type");
+            String expiresInStr = extractJsonValue(jsonResponse, "expires_in");
+            String scope = extractJsonValue(jsonResponse, "scope");
+            
+            Integer expiresIn = null;
+            if (expiresInStr != null && !expiresInStr.isEmpty()) {
+                try {
+                    expiresIn = Integer.parseInt(expiresInStr);
+                } catch (NumberFormatException e) {
+                    log.warn("🔍 DEBUG: Não foi possível converter expires_in: {}", expiresInStr);
+                    expiresIn = 3600; // Default 1 hora
+                }
+            }
+            
+            log.info("🔍 DEBUG: Valores extraídos - access_token: {}, token_type: {}, expires_in: {}, scope: {}", 
+                accessToken != null ? "PRESENTE" : "AUSENTE",
+                tokenType,
+                expiresIn,
+                scope);
+            
+            return new AuthenticationResponseDto(accessToken, tokenType, expiresIn);
+            
+        } catch (Exception e) {
+            log.error("🔍 DEBUG: Erro ao fazer parse da resposta JSON", e);
+            throw new AuthenticationException("Erro ao fazer parse da resposta de autenticação", e);
+        }
+    }
+
+    /**
+     * 🔍 DEBUG: Extrai valor de campo JSON simples.
+     */
+    private String extractJsonValue(String json, String fieldName) {
+        try {
+            String pattern = "\"" + fieldName + "\"\\s*:\\s*\"?([^,}\"]+)\"?";
+            java.util.regex.Pattern p = java.util.regex.Pattern.compile(pattern);
+            java.util.regex.Matcher m = p.matcher(json);
+            
+            if (m.find()) {
+                String value = m.group(1).trim();
+                // Remove aspas se existirem
+                if (value.startsWith("\"") && value.endsWith("\"")) {
+                    value = value.substring(1, value.length() - 1);
+                }
+                return value;
+            }
+            return null;
+        } catch (Exception e) {
+            log.warn("🔍 DEBUG: Erro ao extrair campo {}: {}", fieldName, e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 🔍 Verifica se token atual é válido.
+     */
+    private boolean isCurrentTokenValid() {
+        return currentToken != null && 
+               currentToken.getAccessToken() != null && 
+               !currentToken.isExpired() && 
+               !currentToken.isExpiringSoon();
+    }
+}
