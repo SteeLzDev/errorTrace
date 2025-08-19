@@ -1,71 +1,117 @@
-package br.com.experian.buzz.infrastructure.repository.adapter;
+package br.com.experian.buzz.infrastructure.adapter;
 
-import br.com.experian.buzz.domain.dto.response.AuthenticationResponseDto;
-import br.com.experian.buzz.domain.exeption.AuthenticationException;
+import br.com.experian.buzz.domain.dto.AuthenticationResponseDto;
 import br.com.experian.buzz.domain.port.AuthenticationPort;
-import br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.auth.AntecipaAuthClient;
+import br.com.experian.buzz.exception.AuthenticationException;
+import br.com.experian.buzz.infrastructure.integration.feign.client.auth.AntecipaAuthClient;
 import feign.FeignException;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-
+/**
+ * 🔧 Adapter de autenticação com DEBUG detalhado.
+ * 
+ * Versão especial para debugging com logs extensivos e bypass SSL.
+ */
 @Component
-public class AntecipaAuthAdapter implements AuthenticationPort {
+@Profile("debug")
+public class AntecipaAuthAdapterDebug implements AuthenticationPort {
 
-    private static final Logger log = LoggerFactory.getLogger(AntecipaAuthAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(AntecipaAuthAdapterDebug.class);
 
     private final AntecipaAuthClient authClient;
-    private final String basicAuthHeader;
-    private final  ReentrantLock lock = new ReentrantLock();
+    private final String basicAuthCredentials;
+    private final ReentrantLock lock = new ReentrantLock();
 
-    //Cache token atual
+    @Autowired
+    private RestTemplate restTemplate;
+
+    // Cache do token atual
     private volatile AuthenticationResponseDto currentToken;
 
-    public AntecipaAuthAdapter(AntecipaAuthClient authClient,
-                               @Value("${api.antecipa.auth.basic:MjM2Y2VhOGEtNzBlMS03MGMzLWM1OGQtODRiMTFmNTI3NmNhOjI5NGZmMzAwLTIyMTAtNDU3YS1iODIyLWJkNGM1ZDIwY2ZmZA==}")
-                               String basicAuth){
-        this.authClient= authClient;
-        this.basicAuthHeader = "Basic " + basicAuth;
+    public AntecipaAuthAdapterDebug(
+            AntecipaAuthClient authClient,
+            @Value("${api.antecipa.auth.basic:MjM2Y2VhOGEtNzBlMS03MGMzLWM1OGQtODRiMTFmNTI3NmNhOjI5NGZmMzAwLTIyMTAtNDU3YS1iODIyLWJkNGM1ZDIwY2ZmZA==}") String basicAuth) {
+        this.authClient = authClient;
+        this.basicAuthCredentials = basicAuth;
+        log.info("🔧 AntecipaAuthAdapterDebug inicializado");
+    }
+
+    @PostConstruct
+    public void init() {
+        try {
+            log.info("🔧 Inicializando AntecipaAuthAdapterDebug...");
+            
+            // Decodifica e exibe credenciais (apenas para debug)
+            String credentials = new String(java.util.Base64.getDecoder().decode(basicAuthCredentials));
+            String[] parts = credentials.split(":");
+            log.info("🔑 Client ID: {}", parts.length > 0 ? parts[0] : "N/A");
+            log.info("🔑 Client Secret: {}***", parts.length > 1 ? parts[1].substring(0, Math.min(8, parts[1].length())) : "N/A");
+            
+            log.info("🌐 RestTemplate configurado: {}", restTemplate.getClass().getSimpleName());
+            log.info("✅ AntecipaAuthAdapterDebug inicializado com sucesso");
+            
+        } catch (Exception e) {
+            log.error("❌ Erro na inicialização do AntecipaAuthAdapterDebug", e);
+        }
     }
 
     @Override
-    public String getValidToken(){
-        //Verificação rápida sem lock
-        if(isCurrentTokenValid()) {
+    public String getValidToken() {
+        log.debug("🔍 Verificando token válido...");
+        
+        // Verificação rápida sem lock
+        if (isCurrentTokenValid()) {
+            log.debug("✅ Token atual ainda é válido");
             return currentToken.getAccessToken();
         }
-        //verificação com lock para thread safety
+
+        // Verificação com lock para thread safety
         lock.lock();
         try {
+            log.debug("🔒 Lock adquirido para verificação de token");
+            
+            // Double-check: outro thread pode ter renovado
             if (isCurrentTokenValid()) {
+                log.debug("✅ Token foi renovado por outro thread");
                 return currentToken.getAccessToken();
             }
 
-            log.info("Token inválido ou expirado, renovando...");
+            log.info("🔄 Token inválido ou expirado, renovando...");
             return refreshToken();
+
         } finally {
             lock.unlock();
+            log.debug("🔓 Lock liberado");
         }
     }
 
     @Override
-    public String refreshToken(){
+    public String refreshToken() {
         lock.lock();
         try {
-            log.info("Renovando token de autenticação");
+            log.info("🔄 Iniciando renovação de token...");
 
             AuthenticationResponseDto newToken = performAuthentication();
             this.currentToken = newToken;
 
-            log.info("Token renovado com sucesso. Expira em: {} segundos",
-                    newToken.getExpiresIn());
+            log.info("✅ Token renovado com sucesso!");
+            log.info("📊 Token type: {}", newToken.getTokenType());
+            log.info("⏰ Expira em: {} segundos", newToken.getExpiresIn());
+            log.info("🎯 Scope: {}", newToken.getScope());
+            
             return newToken.getAccessToken();
+
         } catch (Exception e) {
-            log.error("Erro ao renovar token de autenticação", e);
+            log.error("❌ Erro ao renovar token de autenticação", e);
             throw new AuthenticationException("Falha na autenticação com API Antecipa", e);
         } finally {
             lock.unlock();
@@ -73,48 +119,86 @@ public class AntecipaAuthAdapter implements AuthenticationPort {
     }
 
     @Override
-    public boolean isTokenValid(){
-        return isCurrentTokenValid();
+    public boolean isTokenValid() {
+        boolean valid = isCurrentTokenValid();
+        log.debug("🔍 Token válido: {}", valid);
+        return valid;
     }
 
-    //Realiza chamada de autenticação na API
-    private AuthenticationResponseDto performAuthentication(){
+    /**
+     * 🔒 Realiza chamada de autenticação na API com logs detalhados.
+     */
+    private AuthenticationResponseDto performAuthentication() {
         try {
-            log.debug("Realizando signin na API de autenticação...");
-
-            AuthenticationResponseDto response = authClient.signinDto(basicAuthHeader);
-
-            if (response == null || response.getAccessToken() == null) {
-                throw new AuthenticationException("Resposta de autenticação inválida");
+            log.info("🌐 Realizando signin na API de autenticação...");
+            log.debug("🔗 URL base do cliente: {}", authClient.getClass().getSimpleName());
+            
+            String authHeader = "Basic " + basicAuthCredentials;
+            log.debug("🔑 Authorization header preparado");
+            
+            AuthenticationResponseDto response = authClient.signin(authHeader);
+            
+            if (response == null) {
+                log.error("❌ Resposta de autenticação é null");
+                throw new AuthenticationException("Resposta de autenticação é null");
+            }
+            
+            if (response.getAccessToken() == null) {
+                log.error("❌ Access token na resposta é null");
+                throw new AuthenticationException("Access token na resposta é null");
             }
 
-            log.debug("Autenticação realizada com sucesso. Token type: {}",
-                    response.getTokenType());
+            log.info("✅ Autenticação realizada com sucesso!");
+            log.debug("📊 Resposta completa: {}", response);
+            
             return response;
-        } catch (FeignException e) {
-            log.error("Erro na chamada de autenticação. Status: {}, Body: {}", e.status(), e.contentUTF8());
 
+        } catch (FeignException e) {
+            log.error("❌ Erro Feign na chamada de autenticação");
+            log.error("📊 Status: {}", e.status());
+            log.error("📄 Body: {}", e.contentUTF8());
+            log.error("🔗 Request: {}", e.request());
+            
             if (e.status() == 401) {
                 throw new AuthenticationException("Credenciais de autenticação inválidas", e);
+            } else if (e.status() == 403) {
+                throw new AuthenticationException("Acesso negado pela API de autenticação", e);
+            } else if (e.status() >= 500) {
+                throw new AuthenticationException("Erro interno do servidor de autenticação", e);
             } else {
                 throw new AuthenticationException("Erro na comunicação com serviço de autenticação", e);
             }
+        } catch (Exception e) {
+            log.error("❌ Erro inesperado na autenticação", e);
+            throw new AuthenticationException("Erro inesperado na autenticação", e);
         }
     }
 
-    //Verifica se token atual é válido
+    /**
+     * 🔍 Verifica se token atual é válido com logs detalhados.
+     */
     private boolean isCurrentTokenValid() {
-        return currentToken != null &&
-                currentToken.getAccessToken() != null &&
-                !currentToken.isExpired() &&
-                !currentToken.isExpiringSoon();
+        if (currentToken == null) {
+            log.debug("❌ Nenhum token em cache");
+            return false;
+        }
+        
+        if (currentToken.getAccessToken() == null) {
+            log.debug("❌ Access token é null");
+            return false;
+        }
+        
+        if (currentToken.isExpired()) {
+            log.debug("❌ Token expirado");
+            return false;
+        }
+        
+        if (currentToken.isExpiringSoon()) {
+            log.debug("⚠️ Token expirando em breve");
+            return false;
+        }
+        
+        log.debug("✅ Token atual é válido");
+        return true;
     }
-
 }
-
-
-Class 'AntecipaAuthAdapter' must either be declared abstract or implement abstract method 'authenticate()' in 'AuthenticationPort'
-
-Cannot resolve method 'isExpired' in 'AuthenticationResponseDto'
-
-Cannot resolve method 'isExpiringSoon' in 'AuthenticationResponseDto'
