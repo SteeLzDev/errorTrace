@@ -82,7 +82,7 @@ public class AntecipaAuthAdapter implements AuthenticationPort {
         try {
             log.debug("Realizando signin na API de autenticação...");
 
-            AuthenticationResponseDto response = authClient.signin(basicAuthHeader);
+            AuthenticationResponseDto response = authClient.signin();
 
             if (response == null || response.getAccessToken() == null) {
                 throw new AuthenticationException("Resposta de autenticação inválida");
@@ -111,3 +111,758 @@ public class AntecipaAuthAdapter implements AuthenticationPort {
     }
 
 }
+
+
+
+package br.com.experian.buzz.infrastructure.integration.feign.client.antecipa;
+
+import br.com.experian.antecipa.model.*;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+
+@FeignClient(name = "AntecipaClient", url ="${api.antecipa.base.uri}")
+public interface AntecipaClient {
+
+    //Consulta registro do fornecedor por CapitalSource
+    @GetMapping("/Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}")
+    @CircuitBreaker(name = "AntecipaClient")
+    @Retry(name = "AntecipaClient")
+    SupplierRegistrationDto getSupplierRegistration(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("CapitalSourceDocument") String capitalSourceDocument,
+            @PathVariable("SupplierDocument") String supplierDocument);
+
+    //Adiciona novo fornecedor
+    @PostMapping("/Originators/CapitalSources/{CapitalSourceDocument}/Suppliers")
+    @CircuitBreaker(name = "AntecipaClient")
+    @Retry(name = "AntecipaClient")
+    BasicResultDto addSupplier(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("CapitalSourceDocument") String capitalSourceDocument,
+            @RequestBody SupplierAddCommandViewModel supplierAddCommand);
+
+    //Listar Recebíveis de cartão com filtros
+    @GetMapping("/Originators/CardReceivables/{SupplierDocument}")
+    @CircuitBreaker(name = "AntecipaClient")
+    @Retry(name = "AntecipaClient")
+    CardReceivableListDtoPagedCollectionItems getCardReceivables(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @RequestParam(value = "StatusId", required = false) String statusId,
+            @RequestParam(value = "AccreditingInstitutionDocument", required = false) String accreditingInstitutionDocument,
+            @RequestParam(value = "CapitalSourceDocument", required = false) String capitalSourceDocument,
+            @RequestParam(value = "StartDueDate", required = false) String startDueDate,
+            @RequestParam(value = "EndDueDate", required = false) String endDueDate,
+            @RequestParam(value = "OrderedBy", required = false) String orderedBy,
+            @RequestParam(value = "PageId", required = false) String pageId,
+            @RequestParam(value = "PageSize", required = false) Integer pageSize);
+
+
+    //Busca recebível específico por ID
+    @GetMapping("/Originators/CardReceivables/{SupplierDocument}/{Id}")
+    @CircuitBreaker(name = "AntecipaClient")
+    @Retry(name = "AntecipaClient")
+    CardReceivableDto getCardReceivableById(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @PathVariable("Id") String id);
+
+    //Simula antecipação de recebíveis
+    @PostMapping("/Originators/CardReceivables/Anticipations/Simulate/{SupplierDocument}")
+    @CircuitBreaker(name = "AntecipaClient")
+    @Retry(name = "AntecipaClient")
+    SimulationAnticipationCardReceivableDto simulate(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @RequestBody SimulateAnticipationCommandViewModel simulateAnticipationCommand);
+
+    //Executa antecipação de recebíveis
+    @PostMapping("/Originators/CardReceivables/Anticipations/Execute/{SupplierDocument}/{CapitalSourceDocument/{OfferId}")
+    @CircuitBreaker(name = "AntecipaClient")
+    @Retry(name = "AntecipaClient")
+    void execute(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @PathVariable("CapitalSourceDocument") String capitalSourceDocument,
+            @PathVariable("OfferId") String offerId);
+
+
+    //Lista Antecipações com filtro
+    @PostMapping("/Originators/CardReceivables/Anticipations/{SupplierDocument}")
+    @CircuitBreaker(name = "AntecipaClient")
+    @Retry(name = "AntecipaClient")
+    AnticipationCardReceivableListDtoPagedCollectionItems getAnticipations(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @RequestParam(value = "CapitalSourceDocument", required = false) String capitalSourceDocument,
+            @RequestParam(value = "AnticipationDate", required = false) String anticipationDate,
+            @RequestParam(value = "StatusId", required = false) String statusId,
+            @RequestParam(value = "PageId", required = false) String pageId,
+            @RequestParam(value = "PageSize", required = false) Integer pageSize);
+
+    //Busca antecipação específica por ID
+    @GetMapping("/Originators/CardReceivables/Anticipations/{SupplierDocument}/{Id}")
+    @CircuitBreaker(name = "AntecipaClient")
+    @Retry(name = "AntecipaClient")
+    AnticipationCardReceivableDto getAnticipationById(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @PathVariable("Id") String id);
+
+}
+
+
+package br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.auth;
+
+import br.com.experian.buzz.domain.dto.response.AuthenticationResponseDto;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+
+@FeignClient(name = "AntecipaAuthClient", url = "${api.antecipa.auth.uri}")
+public interface AntecipaAuthClient {
+
+
+
+    @PostMapping("/authentication/signin")
+    AuthenticationResponseDto signin();
+}
+
+
+package br.com.experian.buzz.infrastructure.repository.adapter;
+
+import br.com.experian.buzz.domain.dto.response.AuthenticationResponseDto;
+import br.com.experian.buzz.domain.exeption.AuthenticationException;
+import br.com.experian.buzz.domain.port.AuthenticationPort;
+import br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.auth.AntecipaAuthClient;
+import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.util.concurrent.locks.ReentrantLock;
+
+
+@Component
+public class AntecipaAuthAdapter implements AuthenticationPort {
+
+    private static final Logger log = LoggerFactory.getLogger(AntecipaAuthAdapter.class);
+
+    private final AntecipaAuthClient authClient;
+    private final String basicAuthHeader;
+    private final  ReentrantLock lock = new ReentrantLock();
+
+    //Cache token atual
+    private volatile AuthenticationResponseDto currentToken;
+
+    public AntecipaAuthAdapter(AntecipaAuthClient authClient,
+                               @Value("${api.antecipa.auth.basic:MjM2Y2VhOGEtNzBlMS03MGMzLWM1OGQtODRiMTFmNTI3NmNhOjI5NGZmMzAwLTIyMTAtNDU3YS1iODIyLWJkNGM1ZDIwY2ZmZA==}")
+                               String basicAuth){
+        this.authClient= authClient;
+        this.basicAuthHeader = "Basic " + basicAuth;
+    }
+
+    @Override
+    public String getValidToken(){
+        //Verificação rápida sem lock
+        if(isCurrentTokenValid()) {
+            return currentToken.getAccessToken();
+        }
+        //verificação com lock para thread safet
+        lock.lock();
+        try {
+            if (isCurrentTokenValid()) {
+                return currentToken.getAccessToken();
+            }
+
+            log.info("Token inválido ou expirado, renovando...");
+            return refreshToken();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public String refreshToken(){
+        lock.lock();
+        try {
+            log.info("Renovando token de autenticação");
+
+            AuthenticationResponseDto newToken = performAuthentication();
+            this.currentToken = newToken;
+
+            log.info("Token renovado com sucesso. Expira em: {} segundos",
+                    newToken.getExpiresIn());
+            return newToken.getAccessToken();
+        } catch (Exception e) {
+            log.error("Erro ao renovar token de autenticação", e);
+            throw new AuthenticationException("Falha na autenticação com API Antecipa", e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public boolean isTokenValid(){
+        return isCurrentTokenValid();
+    }
+
+    //Realiza chamada de autenticação na API
+    private AuthenticationResponseDto performAuthentication(){
+        try {
+            log.debug("Realizando signin na API de autenticação...");
+
+            AuthenticationResponseDto response = authClient.signin();
+
+            if (response == null || response.getAccessToken() == null) {
+                throw new AuthenticationException("Resposta de autenticação inválida");
+            }
+
+            log.debug("Autenticação realizada com sucesso. Token type: {}",
+                    response.getTokenType());
+            return response;
+        } catch (FeignException e) {
+            log.error("Erro na chamada de autenticação. Status: {}, Body: {}", e.status(), e.contentUTF8());
+
+            if (e.status() == 401) {
+                throw new AuthenticationException("Credenciais de autenticação inválidas", e);
+            } else {
+                throw new AuthenticationException("Erro na comunicação com serviço de autenticação", e);
+            }
+        }
+    }
+
+    //Verifica se token atual é válido
+    private boolean isCurrentTokenValid() {
+        return currentToken != null &&
+                currentToken.getAccessToken() != null &&
+                !currentToken.isExpired() &&
+                !currentToken.isExpiringSoon();
+    }
+
+}
+
+
+
+
+package br.com.experian.buzz.infrastructure.config;
+
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MapPropertySource;
+
+import java.util.Map;
+
+@Configuration
+@Profile("default")
+public class LocalSecretsConfig {
+
+    public LocalSecretsConfig(ConfigurableEnvironment env) {
+        //Credenciais de testes remover em produção
+        var props = Map.<String, Object>of(
+                "api.antecipa.auth.username", "236cea8a-70e1-70c3-c58d-84b11f5276ca",
+                "api.antecipa.auth.password", "294ff300-2210-457a-b822-bd4c5d20cffd",
+                //Usar o BASIC se preciso
+                //"api.antecipa.auth.basic", "Basic <base64(user:senha)>",
+
+                //garantir a URL do sandbox
+                "api.antecipa.auth.uri", "https://api.auth.sand.antecipa.com/v1",
+                "api.antecipa.base.uri", "https://api.anticipation.sand.antecipa.com/v1"
+        );
+        env.getPropertySources().addFirst(new MapPropertySource("localSecrets", props));
+    }
+}
+
+package br.com.experian.buzz.domain.port;
+
+import br.com.experian.buzz.domain.dto.response.AuthenticationResponseDto;
+
+public interface AuthenticationPort {
+
+
+    String getValidToken();
+
+
+    String refreshToken();
+
+    boolean isTokenValid();
+
+
+}
+
+
+package br.com.experian.buzz.domain.dto.response;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.LocalDateTime;
+
+public class AuthenticationResponseDto {
+
+    @JsonProperty("acessToken")
+    @JsonAlias({"acess_token"})
+    private String accessToken;
+
+    @JsonProperty("tokenType")
+    @JsonAlias({"token_type"})
+    private String tokenType;
+
+    @JsonProperty("expiresIn")
+    @JsonAlias({"expires_in"})
+    private Integer expiresIn;
+
+    @JsonProperty("scope")
+    private String scope;
+
+    //Calculado para controle interno de expiração
+    private LocalDateTime expiresAt;
+
+    public  AuthenticationResponseDto(){
+
+    }
+
+    public AuthenticationResponseDto(String accessToken, String tokenType, Integer expiresIn) {
+        this.accessToken = accessToken;
+        this.tokenType = tokenType;
+        this.expiresIn = expiresIn;
+        this.expiresAt = LocalDateTime.now().plusSeconds(expiresIn != null ? expiresIn : 3600);
+    }
+
+    public boolean isExpired() {
+        return expiresAt != null && LocalDateTime.now().isAfter(expiresAt);
+    }
+
+    public boolean isExpiringSoon() {
+        return expiresAt != null && LocalDateTime.now().plusMinutes(5).isAfter(expiresAt);
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String acsessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public Integer getExpiresIn() {
+        return expiresIn;
+    }
+
+    public void setExpiresIn(Integer expiresIn) {
+        this.expiresIn = expiresIn;
+        this.expiresAt = LocalDateTime.now().plusSeconds(expiresIn != null ? expiresIn : 3600);
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(LocalDateTime expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    @Override
+    public String toString() {
+        return "AuthenticationResponseDto{" +
+                "accessToken='" + (accessToken != null ? "***PRESENTE***" : "null") + '\'' +
+                "tokenType'" + tokenType + '\'' +
+                ", expiresIn=" + expiresIn +
+                ", scope='" + scope + '\'' +
+                ", expiresAt='" + expiresAt + '\'' +
+                '}';
+    }
+}
+
+
+"C:\Program Files\Zulu\zulu-21\bin\java.exe" -Dmaven.multiModuleProjectDirectory=C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services -Djansi.passthrough=true "-Dmaven.home=C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2025.1.3/plugins/maven/lib/maven3" "-Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\bin\m2.conf" "-Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven-event-listener.jar" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=52395" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds-2.8.0.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds.license" org.codehaus.classworlds.Launcher -Didea.version=2025.1.3 spring-boot:run
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< br.com.experian.bfm:experian-pme-bfm-receivables-anticipation-domain-services >--
+[INFO] Building experian-pme-bfm-receivables-anticipation-domain-services 0.0.1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.11:run (default-cli) > test-compile @ experian-pme-bfm-receivables-anticipation-domain-services >>>
+[INFO] 
+[INFO] --- openapi-generator:7.6.0:generate (open-banking) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.antecipa
+[WARNING] Empty operationId found for path: GET /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGET
+[WARNING] Empty operationId found for path: POST /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentIdGET
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Anticipations/Simulate/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSimulateSupplierDocumentPOST
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Anticipations/Execute/{SupplierDocument}/{CapitalSourceDocument}/{OfferId}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsExecuteSupplierDocumentCapitalSourceDocumentOfferIdPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Anticipations/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Anticipations/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSupplierDocumentIdGET
+[WARNING] Empty operationId found for path: POST /Webhook. Renamed to auto-generated operationId: webhookPOST
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AccreditingInstitutionAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AccreditingInstitutionCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AntecipaUserIdentity.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\AnticipationCardReceivabletDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\BankAccountDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\BasicResultDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\CapitalSourceAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\CapitalSourceCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\CardReceivableAnticipationSimulationDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\CardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\CardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\CardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\OfferAnnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SimulateAnticipationCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SimulationAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SimulationAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierAddCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierAddressViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierBankAccountViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierPartnerDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierPartnerViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\antecipa\model\SupplierRegistrationDto.java
+[WARNING] Empty operationId found for path: get /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGet
+[WARNING] Empty operationId found for path: post /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersPost
+[WARNING] Empty operationId found for path: get /Originators/CardReceivables/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentGet
+[WARNING] Empty operationId found for path: get /Originators/CardReceivables/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentIdGet
+[WARNING] Empty operationId found for path: post /Originators/CardReceivables/Anticipations/Simulate/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSimulateSupplierDocumentPost
+[WARNING] Empty operationId found for path: post /Originators/CardReceivables/Anticipations/Execute/{SupplierDocument}/{CapitalSourceDocument}/{OfferId}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsExecuteSupplierDocumentCapitalSourceDocumentOfferIdPost
+[WARNING] Empty operationId found for path: get /Originators/CardReceivables/Anticipations/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSupplierDocumentGet
+[WARNING] Empty operationId found for path: get /Originators/CardReceivables/Anticipations/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSupplierDocumentIdGet
+[WARNING] Empty operationId found for path: post /Webhook. Renamed to auto-generated operationId: webhookPost
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\org\openapitools\api\CapitalSourcesApi.java
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\org\openapitools\api\CardReceivablesApi.java
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\org\openapitools\api\WebhookApi.java
+[INFO] Skipping generation of Webhooks.
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Copying 8 resources from src\main\resources to target\classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.12.0:compile (default-compile) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 63 source files with javac [debug target 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.12.0:testCompile (default-testCompile) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug target 21] to target\test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] <<< spring-boot:3.3.11:run (default-cli) < test-compile @ experian-pme-bfm-receivables-anticipation-domain-services <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.11:run (default-cli) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.3.11)
+
+2025-08-19 11:09:00.100  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [           main] b.c.e.b.ApplicationMain                  : Starting ApplicationMain using Java 21.0.7 with PID 22588 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
+2025-08-19 11:09:00.139  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [           main] b.c.e.b.ApplicationMain                  : No active profile set, falling back to 1 default profile: "default"
+2025-08-19 11:09:21.111  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando OnboardingRepositoryPort para Mongo DB
+2025-08-19 11:09:24.127  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando AntecipaOnboardingPort
+2025-08-19 11:09:24.133  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Configurando para usar API Antecipa com CapitalSource padrão: 5840679000132
+2025-08-19 11:09:24.224  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando OnboardingService com integração API Antecipa
+SSL Desativado para desenvolvimento
+2025-08-19 11:09:35.005  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [           main] b.c.e.b.ApplicationMain                  : Started ApplicationMain in 38.775 seconds (process running for 45.789)
+Collection possui 5 documentos!
+2025-08-19 11:09:56.479  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [nio-8080-exec-2] b.c.e.b.a.r.OnboardingController         : Recebida requisição para consultar status de onboarding do documento: 00000000000000
+2025-08-19 11:09:56.479  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [nio-8080-exec-2] b.c.e.b.i.r.i.OnboardingServiceImpl      : Consultando status de onboarding para documento: 00000000000000
+2025-08-19 11:09:56.827  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [nio-8080-exec-2] b.c.e.b.i.r.a.AntecipaOnboardingAdapter  : Consultando status de onboarding na API Antecipa para documento: 00000000000000
+2025-08-19 11:09:56.828  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [nio-8080-exec-2] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Token inválido ou expirado, renovando...
+2025-08-19 11:09:56.828  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [nio-8080-exec-2] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Renovando token de autenticação
+2025-08-19 11:10:00.485 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [nio-8080-exec-2] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Erro na chamada de autenticação. Status: 400, Body: {"traceId":"Root=1-68a485b5-6709e2552d593bcc07ba0715;Parent=057faea98c80fcae;Sampled=0;Lineage=1:5357dbbd:0","message":"One or more validation errors occurred.","code":null,"detail":[{"property":"viewModel","errors":["The viewModel field is required."]}]}
+2025-08-19 11:10:00.486 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [nio-8080-exec-2] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Erro ao renovar token de autenticação
+
+br.com.experian.buzz.domain.exeption.AuthenticationException: Erro na comunicação com serviço de autenticação
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:100) ~[classes/:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.refreshToken(AntecipaAuthAdapter.java:61) ~[classes/:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.getValidToken(AntecipaAuthAdapter.java:49) ~[classes/:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter.getOnboardingStatus(AntecipaOnboardingAdapter.java:43) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.19.jar:6.1.19]
+	at io.github.resilience4j.retry.Retry.lambda$decorateCheckedSupplier$1(Retry.java:135) ~[resilience4j-retry-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.retry.Retry.executeCheckedSupplier(Retry.java:350) ~[resilience4j-retry-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.handleDefaultJoinPoint(RetryAspect.java:175) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.proceed(RetryAspect.java:132) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.lambda$retryAroundAdvice$0(RetryAspect.java:116) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.fallback.FallbackExecutor.execute(FallbackExecutor.java:37) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.retryAroundAdvice(RetryAspect.java:117) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.19.jar:6.1.19]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter$$SpringCGLIB$$0.getOnboardingStatus(<generated>) ~[classes/:?]
+	at br.com.experian.buzz.infrastructure.repository.impl.OnboardingServiceImpl.getOnboardingStatus(OnboardingServiceImpl.java:37) ~[classes/:?]
+	at br.com.experian.buzz.application.rest.OnboardingController.getOnboardingStatus(OnboardingController.java:27) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
+Caused by: feign.FeignException$BadRequest: [400 Bad Request] during [POST] to [https://api.auth.sand.antecipa.com/v1/authentication/signin] [AntecipaAuthClient#signin()]: [{"traceId":"Root=1-68a485b5-6709e2552d593bcc07ba0715;Parent=057faea98c80fcae;Sampled=0;Lineage=1:5357dbbd:0","message":"One or more validation errors occurred.","code":null,"detail":[{"property":"viewModel","errors":["The viewModel field is required."]}]}]
+	at feign.FeignException.clientErrorStatus(FeignException.java:222) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:203) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:194) ~[feign-core-13.4.jar:?]
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:103) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.decodeError(InvocationContext.java:126) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.proceed(InvocationContext.java:72) ~[feign-core-13.4.jar:?]
+	at feign.ResponseHandler.handleResponse(ResponseHandler.java:63) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:98) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:48) ~[feign-core-13.4.jar:?]
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:99) ~[feign-core-13.4.jar:?]
+	at jdk.proxy2/jdk.proxy2.$Proxy147.signin(Unknown Source) ~[?:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:85) ~[classes/:?]
+	... 83 more
+
+2025-08-19 11:10:00.536 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 22588 --- [nio-8080-exec-2] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: br.com.experian.buzz.domain.exeption.AuthenticationException: Falha na autenticação com API Antecipa] with root cause
+
+feign.FeignException$BadRequest: [400 Bad Request] during [POST] to [https://api.auth.sand.antecipa.com/v1/authentication/signin] [AntecipaAuthClient#signin()]: [{"traceId":"Root=1-68a485b5-6709e2552d593bcc07ba0715;Parent=057faea98c80fcae;Sampled=0;Lineage=1:5357dbbd:0","message":"One or more validation errors occurred.","code":null,"detail":[{"property":"viewModel","errors":["The viewModel field is required."]}]}]
+	at feign.FeignException.clientErrorStatus(FeignException.java:222) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:203) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:194) ~[feign-core-13.4.jar:?]
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:103) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.decodeError(InvocationContext.java:126) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.proceed(InvocationContext.java:72) ~[feign-core-13.4.jar:?]
+	at feign.ResponseHandler.handleResponse(ResponseHandler.java:63) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:98) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:48) ~[feign-core-13.4.jar:?]
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:99) ~[feign-core-13.4.jar:?]
+	at jdk.proxy2/jdk.proxy2.$Proxy147.signin(Unknown Source) ~[?:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:85) ~[classes/:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.refreshToken(AntecipaAuthAdapter.java:61) ~[classes/:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.getValidToken(AntecipaAuthAdapter.java:49) ~[classes/:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter.getOnboardingStatus(AntecipaOnboardingAdapter.java:43) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.19.jar:6.1.19]
+	at io.github.resilience4j.retry.Retry.lambda$decorateCheckedSupplier$1(Retry.java:135) ~[resilience4j-retry-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.retry.Retry.executeCheckedSupplier(Retry.java:350) ~[resilience4j-retry-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.handleDefaultJoinPoint(RetryAspect.java:175) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.proceed(RetryAspect.java:132) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.lambda$retryAroundAdvice$0(RetryAspect.java:116) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.fallback.FallbackExecutor.execute(FallbackExecutor.java:37) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.retryAroundAdvice(RetryAspect.java:117) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.19.jar:6.1.19]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.19.jar:6.1.19]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter$$SpringCGLIB$$0.getOnboardingStatus(<generated>) ~[classes/:?]
+	at br.com.experian.buzz.infrastructure.repository.impl.OnboardingServiceImpl.getOnboardingStatus(OnboardingServiceImpl.java:37) ~[classes/:?]
+	at br.com.experian.buzz.application.rest.OnboardingController.getOnboardingStatus(OnboardingController.java:27) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.19.jar:6.1.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.19.jar:6.1.19]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1740) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  06:54 min
+[INFO] Finished at: 2025-08-19T11:14:22-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.3.11:run (default-cli) on project experian-pme-bfm-receivables-anticipation-domain-services: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+
+Process finished with exit code 1
+
+
+
+
+
+
+
+
