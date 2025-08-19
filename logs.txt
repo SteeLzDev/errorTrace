@@ -1,1 +1,140 @@
-'HttpComponentsClientHttpRequestFactory(org.apache.hc.client5.http.classic.HttpClient)' in 'org.springframework.http.client.HttpComponentsClientHttpRequestFactory' cannot be applied to '(org.apache.http.impl.client.CloseableHttpClient)'
+package br.com.experian.buzz.config;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
+
+import javax.net.ssl.*;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+
+/**
+ * Configuração de debug que desabilita SSL completamente.
+ * ⚠️ APENAS PARA DESENVOLVIMENTO - NÃO USAR EM PRODUÇÃO!
+ */
+@Configuration
+@Profile("debug")
+public class DebugConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(DebugConfig.class);
+
+    /**
+     * RestTemplate com SSL desabilitado para debugging.
+     */
+    @Bean
+    public RestTemplate restTemplate() {
+        try {
+            log.warn("⚠️ Configurando RestTemplate com SSL DESABILITADO para DEBUG");
+            
+            // Desabilitar SSL globalmente
+            disableSSLValidation();
+            
+            // Criar RestTemplate com factory customizada
+            RestTemplate restTemplate = new RestTemplate(new SSLDisabledClientHttpRequestFactory());
+            
+            log.info("✅ RestTemplate configurado com SSL desabilitado");
+            return restTemplate;
+            
+        } catch (Exception e) {
+            log.error("❌ Erro ao configurar RestTemplate com SSL desabilitado", e);
+            throw new RuntimeException("Falha na configuração do RestTemplate", e);
+        }
+    }
+
+    /**
+     * Desabilita validação SSL globalmente.
+     */
+    private void disableSSLValidation() throws NoSuchAlgorithmException, KeyManagementException {
+        // Criar TrustManager que aceita todos os certificados
+        TrustManager[] trustAllCerts = new TrustManager[]{
+            new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    // Aceita todos
+                }
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    // Aceita todos
+                }
+            }
+        };
+
+        // Configurar SSL Context
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(null, trustAllCerts, new SecureRandom());
+        
+        // Definir como padrão
+        HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+        
+        // Desabilitar verificação de hostname
+        HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
+            }
+        });
+
+        log.debug("🔍 SSL validation desabilitada globalmente");
+    }
+
+    /**
+     * Factory customizada que desabilita SSL para cada conexão.
+     */
+    private static class SSLDisabledClientHttpRequestFactory extends SimpleClientHttpRequestFactory {
+        
+        private static final Logger log = LoggerFactory.getLogger(SSLDisabledClientHttpRequestFactory.class);
+
+        public SSLDisabledClientHttpRequestFactory() {
+            super();
+            setConnectTimeout(10000); // 10 segundos
+            setReadTimeout(30000);    // 30 segundos
+            log.debug("🔧 SSLDisabledClientHttpRequestFactory criada");
+        }
+
+        @Override
+        protected void prepareConnection(HttpURLConnection connection, String httpMethod) throws IOException {
+            super.prepareConnection(connection, httpMethod);
+            
+            if (connection instanceof HttpsURLConnection) {
+                HttpsURLConnection httpsConnection = (HttpsURLConnection) connection;
+                
+                try {
+                    // Criar TrustManager para esta conexão
+                    TrustManager[] trustAllCerts = new TrustManager[]{
+                        new X509TrustManager() {
+                            public X509Certificate[] getAcceptedIssuers() {
+                                return new X509Certificate[0];
+                            }
+                            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                                // Aceita todos
+                            }
+                            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                                // Aceita todos
+                            }
+                        }
+                    };
+
+                    SSLContext sslContext = SSLContext.getInstance("TLS");
+                    sslContext.init(null, trustAllCerts, new SecureRandom());
+                    
+                    httpsConnection.setSSLSocketFactory(sslContext.getSocketFactory());
+                    httpsConnection.setHostnameVerifier((hostname, session) -> true);
+                    
+                    log.debug("🔧 SSL bypass aplicado para: {}", connection.getURL());
+                    
+                } catch (Exception e) {
+                    log.error("❌ Erro ao aplicar SSL bypass", e);
+                    throw new IOException("Erro ao configurar SSL bypass", e);
+                }
+            }
+        }
+    }
+}
