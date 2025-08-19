@@ -1,213 +1,216 @@
-package br.com.experian.buzz.config;
-
-import br.com.experian.buzz.infrastructure.adapter.AntecipaAuthAdapterDebug;
-import br.com.experian.buzz.domain.port.AuthenticationPort;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-
-import javax.annotation.PostConstruct;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.HostnameVerifier;
-import java.security.cert.X509Certificate;
-import java.nio.charset.StandardCharsets;
-import java.net.HttpURLConnection;
-
-/**
- * 🔍 Configuração para modo debug.
- * Desabilita SSL completamente e configura RestTemplate personalizado.
- */
-@Configuration
-@Profile("debug")
-public class DebugConfig {
-
-    private static final Logger log = LoggerFactory.getLogger(DebugConfig.class);
-
-    /**
-     * 🔍 Desabilita SSL globalmente na inicialização.
-     */
-    @PostConstruct
-    public void disableSSLValidation() {
+@PostConstruct
+    public void init() {
+        log.info("🔍 DEBUG: AntecipaAuthAdapterDebug inicializado");
+        log.info("🔍 DEBUG: Auth URL: {}", authUrl);
+        log.info("🔍 DEBUG: Basic Auth Header: {}...", basicAuthHeader.substring(0, Math.min(20, basicAuthHeader.length())));
+        log.info("🔍 DEBUG: RestTemplate class: {}", restTemplate.getClass().getSimpleName());
+        log.info("🔍 DEBUG: RequestFactory class: {}", restTemplate.getRequestFactory().getClass().getSimpleName());
+        
+        // Decodificar e mostrar credenciais para debug
         try {
-            log.info("🔍 DEBUG: Desabilitando validação SSL globalmente...");
-            
-            // Criar TrustManager que aceita todos os certificados
-            TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    public X509Certificate[] getAcceptedIssuers() {
-                        return new X509Certificate[0];
-                    }
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                        // Aceita todos os certificados
-                    }
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                        // Aceita todos os certificados
-                    }
-                }
-            };
-
-            // Instalar o TrustManager que aceita todos
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-            // Criar HostnameVerifier que aceita todos os hostnames
-            HostnameVerifier allHostsValid = (hostname, session) -> {
-                log.debug("🔍 DEBUG: Aceitando hostname: {}", hostname);
-                return true;
-            };
-            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-
-            // Definir propriedades do sistema para SSL
-            System.setProperty("com.sun.net.ssl.checkRevocation", "false");
-            System.setProperty("sun.security.ssl.allowUnsafeRenegotiation", "true");
-            System.setProperty("sun.security.ssl.allowLegacyHelloMessages", "true");
-            System.setProperty("javax.net.ssl.trustStore", "");
-            System.setProperty("javax.net.ssl.trustStorePassword", "");
-            System.setProperty("javax.net.ssl.keyStore", "");
-            System.setProperty("javax.net.ssl.keyStorePassword", "");
-
-            log.info("🔍 DEBUG: ✅ SSL desabilitado globalmente com sucesso!");
-
+            String credentials = new String(java.util.Base64.getDecoder().decode(basicAuth));
+            String[] parts = credentials.split(":");
+            if (parts.length == 2) {
+                log.info("🔍 DEBUG: Client ID: {}", parts[0]);
+                log.info("🔍 DEBUG: Client Secret: {}...", parts[1].substring(0, Math.min(8, parts[1].length())));
+            }
         } catch (Exception e) {
-            log.error("🔍 DEBUG: ❌ Erro ao desabilitar SSL globalmente", e);
-            throw new RuntimeException("Falha ao configurar SSL para debug", e);
+            log.warn("🔍 DEBUG: Não foi possível decodificar credenciais para debug", e);
         }
     }
 
-    /**
-     * 🔍 RestTemplate configurado com SSL completamente desabilitado.
-     */
-    @Bean
-    @Primary
-    public RestTemplate debugRestTemplate() {
-        log.info("🔍 DEBUG: Configurando RestTemplate com SSL completamente desabilitado...");
+    @Override
+    public String getValidToken() {
+        log.info("🔍 DEBUG: Solicitando token válido...");
+        
+        if (isTokenValid()) {
+            log.info("🔍 DEBUG: ✅ Token atual ainda é válido até: {}", 
+                tokenExpiry.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            return currentToken;
+        }
+        
+        log.info("🔍 DEBUG: Token inválido ou expirado, renovando...");
+        return refreshToken();
+    }
+
+    @Override
+    public String refreshToken() {
+        log.info("🔍 DEBUG: Renovando token de autenticação...");
         
         try {
-            // Criar factory customizada que ignora SSL
-            CustomHttpRequestFactory factory = new CustomHttpRequestFactory();
-            factory.setConnectTimeout(30000); // 30 segundos
-            factory.setReadTimeout(60000);    // 60 segundos
+            AuthenticationResponseDto response = performAuthentication();
             
-            RestTemplate restTemplate = new RestTemplate(factory);
+            this.currentToken = response.getAccessToken();
+            // Token válido por 1 hora (padrão) menos 5 minutos de margem
+            this.tokenExpiry = LocalDateTime.now().plusMinutes(55);
             
-            // Adicionar interceptor para logs detalhados
-            restTemplate.getInterceptors().add(debugInterceptor());
+            log.info("🔍 DEBUG: ✅ Token renovado com sucesso!");
+            log.info("🔍 DEBUG: Token expira em: {}", tokenExpiry.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            log.info("🔍 DEBUG: Token (primeiros 20 chars): {}...", 
+                currentToken.substring(0, Math.min(20, currentToken.length())));
             
-            log.info("🔍 DEBUG: ✅ RestTemplate configurado com SSL completamente desabilitado!");
-            return restTemplate;
+            return currentToken;
             
         } catch (Exception e) {
-            log.error("🔍 DEBUG: ❌ Erro ao configurar RestTemplate", e);
-            throw new RuntimeException("Falha ao configurar RestTemplate para debug", e);
+            log.error("🔍 DEBUG: ❌ Erro ao renovar token de autenticação", e);
+            throw new AuthenticationException("Falha na autenticação com API Antecipa", e);
         }
     }
 
-    /**
-     * 🔍 Interceptor para logs detalhados das requisições HTTP.
-     */
-    private ClientHttpRequestInterceptor debugInterceptor() {
-        return (request, body, execution) -> {
+    @Override
+    public boolean isTokenValid() {
+        return isCurrentTokenValid();
+    }
+
+    private AuthenticationResponseDto performAuthentication() {
+        log.info("🔍 DEBUG: Realizando POST para: {}", authUrl);
+        log.info("🔍 DEBUG: Verificando se é HTTPS: {}", authUrl.startsWith("https"));
+        log.info("🔍 DEBUG: Usando RestTemplate customizado com SSL bypass");
+        
+        // Preparar headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", basicAuthHeader);
+        headers.set("User-Agent", "Experian-BFM-Debug/1.0");
+        headers.set("Accept", "application/json");
+        headers.set("Cache-Control", "no-cache");
+        
+        log.info("🔍 DEBUG: Headers configurados:");
+        log.info("🔍 DEBUG:   - Content-Type: {}", headers.getContentType());
+        log.info("🔍 DEBUG:   - Authorization: {}...", basicAuthHeader.substring(0, Math.min(30, basicAuthHeader.length())));
+        log.info("🔍 DEBUG:   - User-Agent: {}", headers.get("User-Agent"));
+        
+        // Preparar request entity (sem body para Basic Auth)
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        
+        log.info("🔍 DEBUG: Enviando requisição POST...");
+        log.info("🔍 DEBUG: RequestFactory: {}", restTemplate.getRequestFactory().getClass().getSimpleName());
+        
+        try {
             long startTime = System.currentTimeMillis();
             
-            log.info("🔍 DEBUG REST REQUEST: {} {}", request.getMethod(), request.getURI());
-            log.info("🔍 DEBUG REST HEADERS: {}", request.getHeaders());
+            ResponseEntity<String> response = restTemplate.exchange(
+                authUrl,
+                HttpMethod.POST,
+                requestEntity,
+                String.class
+            );
             
-            if (body.length > 0) {
-                String bodyStr = new String(body, StandardCharsets.UTF_8);
-                // Mascarar dados sensíveis nos logs
-                if (bodyStr.contains("password") || bodyStr.contains("secret")) {
-                    log.info("🔍 DEBUG REST BODY: [DADOS SENSÍVEIS MASCARADOS]");
-                } else {
-                    log.info("🔍 DEBUG REST BODY: {}", bodyStr);
-                }
-            } else {
-                log.info("🔍 DEBUG REST BODY: [VAZIO]");
+            long endTime = System.currentTimeMillis();
+            long duration = endTime - startTime;
+            
+            log.info("🔍 DEBUG: ✅ Resposta recebida em {}ms!", duration);
+            log.info("🔍 DEBUG: Status: {}", response.getStatusCode());
+            log.info("🔍 DEBUG: Headers de resposta: {}", response.getHeaders());
+            
+            String responseBody = response.getBody();
+            log.info("🔍 DEBUG: Body length: {}", responseBody != null ? responseBody.length() : 0);
+            log.info("🔍 DEBUG: Body content: {}", responseBody);
+            
+            if (responseBody == null || responseBody.trim().isEmpty()) {
+                throw new AuthenticationException("Resposta vazia da API de autenticação");
             }
             
-            try {
-                var response = execution.execute(request, body);
-                long duration = System.currentTimeMillis() - startTime;
-                
-                log.info("🔍 DEBUG REST RESPONSE STATUS: {} ({}ms)", response.getStatusCode(), duration);
-                log.info("🔍 DEBUG REST RESPONSE HEADERS: {}", response.getHeaders());
-                
-                return response;
-                
-            } catch (Exception e) {
-                long duration = System.currentTimeMillis() - startTime;
-                log.error("🔍 DEBUG REST ERROR: {} ({}ms)", e.getMessage(), duration);
-                throw e;
-            }
-        };
-    }
-
-    /**
-     * 🔍 Usar o adapter debug como primário.
-     */
-    @Bean
-    @Primary
-    public AuthenticationPort debugAuthenticationPort(AntecipaAuthAdapterDebug debugAdapter) {
-        log.info("🔍 DEBUG: Usando AntecipaAuthAdapterDebug para debug detalhado");
-        return debugAdapter;
-    }
-
-    /**
-     * 🔍 Factory customizada que ignora SSL completamente.
-     */
-    public static class CustomHttpRequestFactory extends org.springframework.http.client.SimpleClientHttpRequestFactory {
-        
-        private static final Logger log = LoggerFactory.getLogger(CustomHttpRequestFactory.class);
-        
-        @Override
-        protected void prepareConnection(HttpURLConnection connection, String httpMethod) {
-            super.prepareConnection(connection, httpMethod);
+            return parseAuthenticationResponse(responseBody);
             
-            if (connection instanceof HttpsURLConnection) {
-                HttpsURLConnection httpsConnection = (HttpsURLConnection) connection;
-                
-                try {
-                    log.debug("🔍 DEBUG: Configurando conexão HTTPS para ignorar SSL");
-                    
-                    // Criar TrustManager que aceita todos os certificados
-                    TrustManager[] trustAllCerts = new TrustManager[]{
-                        new X509TrustManager() {
-                            public X509Certificate[] getAcceptedIssuers() {
-                                return new X509Certificate[0];
-                            }
-                            public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                                // Aceita todos
-                            }
-                            public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                                // Aceita todos
-                            }
-                        }
-                    };
-
-                    // Configurar SSL Context
-                    SSLContext sslContext = SSLContext.getInstance("TLS");
-                    sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-                    
-                    httpsConnection.setSSLSocketFactory(sslContext.getSocketFactory());
-                    httpsConnection.setHostnameVerifier((hostname, session) -> {
-                        log.debug("🔍 DEBUG: Ignorando verificação de hostname: {}", hostname);
-                        return true;
-                    });
-                    
-                    log.debug("🔍 DEBUG: ✅ Conexão HTTPS configurada para ignorar SSL");
-                    
-                } catch (Exception e) {
-                    log.error("🔍 DEBUG: ❌ Erro ao configurar SSL na conexão", e);
-                }
+        } catch (Exception e) {
+            log.error("🔍 DEBUG: ❌ Erro na chamada de autenticação", e);
+            
+            if (e.getMessage().contains("SSL") || e.getMessage().contains("certificate") || e.getMessage().contains("X509TrustManager")) {
+                log.error("🔍 DEBUG: ❌ ERRO SSL DETECTADO - SSL não foi desabilitado corretamente");
+                log.error("🔍 DEBUG: ❌ Tipo do erro: {}", e.getClass().getSimpleName());
+                log.error("🔍 DEBUG: ❌ Mensagem: {}", e.getMessage());
+                log.error("🔍 DEBUG: ❌ Verificar se CustomHttpRequestFactory está sendo usada");
             }
+            
+            if (e.getMessage().contains("401") || e.getMessage().contains("403")) {
+                log.error("🔍 DEBUG: ❌ ERRO DE CREDENCIAIS - Verificar Basic Auth");
+                log.error("🔍 DEBUG: ❌ Basic Auth usado: {}...", basicAuthHeader.substring(0, Math.min(50, basicAuthHeader.length())));
+            }
+            
+            if (e.getMessage().contains("timeout") || e.getMessage().contains("connect")) {
+                log.error("🔍 DEBUG: ❌ ERRO DE CONECTIVIDADE - Verificar rede/firewall");
+            }
+            
+            throw new AuthenticationException("Erro na comunicação com serviço de autenticação", e);
         }
     }
-}
+
+    private AuthenticationResponseDto parseAuthenticationResponse(String responseBody) {
+        log.info("🔍 DEBUG: Fazendo parse da resposta de autenticação...");
+        
+        try {
+            JsonNode jsonNode = objectMapper.readTree(responseBody);
+            log.info("🔍 DEBUG: JSON parseado com sucesso");
+            
+            // Listar todos os campos disponíveis
+            log.info("🔍 DEBUG: Campos disponíveis na resposta:");
+            jsonNode.fieldNames().forEachRemaining(field -> 
+                log.info("🔍 DEBUG:   - {}: {}", field, jsonNode.get(field).asText())
+            );
+            
+            // Tentar diferentes campos possíveis para o token
+            String accessToken = null;
+            String tokenType = "Bearer";
+            Integer expiresIn = 3600;
+            
+            if (jsonNode.has("access_token")) {
+                accessToken = jsonNode.get("access_token").asText();
+                log.info("🔍 DEBUG: Token encontrado no campo 'access_token'");
+            } else if (jsonNode.has("accessToken")) {
+                accessToken = jsonNode.get("accessToken").asText();
+                log.info("🔍 DEBUG: Token encontrado no campo 'accessToken'");
+            } else if (jsonNode.has("token")) {
+                accessToken = jsonNode.get("token").asText();
+                log.info("🔍 DEBUG: Token encontrado no campo 'token'");
+            } else {
+                log.error("🔍 DEBUG: ❌ Token não encontrado na resposta");
+                throw new AuthenticationException("Token não encontrado na resposta da API");
+            }
+            
+            if (jsonNode.has("token_type")) {
+                tokenType = jsonNode.get("token_type").asText();
+            } else if (jsonNode.has("tokenType")) {
+                tokenType = jsonNode.get("tokenType").asText();
+            }
+            
+            if (jsonNode.has("expires_in")) {
+                expiresIn = jsonNode.get("expires_in").asInt();
+            } else if (jsonNode.has("expiresIn")) {
+                expiresIn = jsonNode.get("expiresIn").asInt();
+            }
+            
+            if (accessToken == null || accessToken.trim().isEmpty()) {
+                throw new AuthenticationException("Token vazio retornado pela API");
+            }
+            
+            log.info("🔍 DEBUG: ✅ Token extraído com sucesso!");
+            log.info("🔍 DEBUG: Token length: {}", accessToken.length());
+            log.info("🔍 DEBUG: Token type: {}", tokenType);
+            log.info("🔍 DEBUG: Expires in: {} segundos", expiresIn);
+            log.info("🔍 DEBUG: Token preview: {}...", accessToken.substring(0, Math.min(30, accessToken.length())));
+            
+            return new AuthenticationResponseDto(accessToken, tokenType, expiresIn);
+            
+        } catch (Exception e) {
+            log.error("🔍 DEBUG: ❌ Erro ao fazer parse da resposta", e);
+            throw new AuthenticationException("Erro ao processar resposta de autenticação", e);
+        }
+    }
+
+    private boolean isCurrentTokenValid() {
+        if (currentToken == null || currentToken.trim().isEmpty()) {
+            log.debug("🔍 DEBUG: Token é null ou vazio");
+            return false;
+        }
+        
+        if (tokenExpiry == null) {
+            log.debug("🔍 DEBUG: Data de expiração é null");
+            return false;
+        }
+        
+        boolean valid = LocalDateTime.now().isBefore(tokenExpiry);
+        log.debug("🔍 DEBUG: Token válido: {} (expira em: {})", valid, tokenExpiry);
+        
+        return valid;
+    }
