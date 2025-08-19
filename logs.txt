@@ -1,12 +1,23 @@
-2025-08-19 09:19:30.685  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 35896 --- [nio-8080-exec-6] b.c.e.b.a.r.OnboardingController         : Recebida requisição para consultar status de onboarding do documento: 00000000000000
-2025-08-19 09:19:30.685  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 35896 --- [nio-8080-exec-6] b.c.e.b.i.r.i.OnboardingServiceImpl      : Consultando status de onboarding para coumento: 00000000000000
-2025-08-19 09:19:30.698  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 35896 --- [nio-8080-exec-6] b.c.e.b.i.r.a.AntecipaOnboardingAdapter  : Consultando status de onboarding na API Antecipa para documento: 00000000000000
-2025-08-19 09:19:30.698  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 35896 --- [nio-8080-exec-6] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Token inválido ou expirado, renovando...
-2025-08-19 09:19:30.698  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 35896 --- [nio-8080-exec-6] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Renovando token de autenticação
-2025-08-19 09:19:31.520 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 35896 --- [nio-8080-exec-6] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Erro ao renovar token de autenticação
+2025-08-19 10:01:40.764  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [           main] b.c.e.b.ApplicationMain                  : Starting ApplicationMain using Java 21.0.7 with PID 29368 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
+2025-08-19 10:01:40.800  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [           main] b.c.e.b.ApplicationMain                  : No active profile set, falling back to 1 default profile: "default"
+2025-08-19 10:02:01.668  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando OnboardingRepositoryPort para Mongo DB
+2025-08-19 10:02:04.335  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando AntecipaOnboardingPort
+2025-08-19 10:02:04.343  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Configurando para usar API Antecipa com CapitalSource padrão: 5840679000132
+2025-08-19 10:02:04.416  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [           main] b.c.e.b.i.c.OnboardingBeansConfig        : Criando OnboardingService com integração API Antecipa
+SSL Desativado para desenvolvimento
+2025-08-19 10:02:15.510  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [           main] b.c.e.b.ApplicationMain                  : Started ApplicationMain in 37.904 seconds (process running for 44.603)
+Collection possui 5 documentos!
+2025-08-19 10:02:51.235  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] b.c.e.b.a.r.OnboardingController         : Recebida requisição para consultar status de onboarding do documento: 00000000000000
+2025-08-19 10:02:51.235  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] b.c.e.b.i.r.i.OnboardingServiceImpl      : Consultando status de onboarding para coumento: 00000000000000
+2025-08-19 10:02:51.578  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] b.c.e.b.i.r.a.AntecipaOnboardingAdapter  : Consultando status de onboarding na API Antecipa para documento: 00000000000000
+2025-08-19 10:02:51.579  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Token inválido ou expirado, renovando...
+2025-08-19 10:02:51.579  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Renovando token de autenticação
+2025-08-19 10:02:51.581 DEBUG [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] f.t.Template                             : Explicit slash decoding specified, decoding all slashes in uri
+2025-08-19 10:02:55.627 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Erro na chamada de autenticação. Status: 400, Body: {"traceId":"Root=1-68a475fc-63a53570129ec2975e575c55;Parent=96749b95c9ecd741;Sampled=0;Lineage=1:5357dbbd:0","message":"One or more validation errors occurred.","code":null,"detail":[{"property":"viewModel","errors":["The viewModel field is required."]}]}
+2025-08-19 10:02:55.627 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] b.c.e.b.i.r.a.AntecipaAuthAdapter        : Erro ao renovar token de autenticação
 
-br.com.experian.buzz.domain.exeption.AuthenticationException: Resposta de autenticação inválida
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:88) ~[classes/:?]
+br.com.experian.buzz.domain.exeption.AuthenticationException: Erro na comunicação com serviço de autenticação
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:100) ~[classes/:?]
 	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.refreshToken(AntecipaAuthAdapter.java:61) ~[classes/:?]
 	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.getValidToken(AntecipaAuthAdapter.java:49) ~[classes/:?]
 	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter.getOnboardingStatus(AntecipaOnboardingAdapter.java:43) ~[classes/:?]
@@ -90,11 +101,36 @@ br.com.experian.buzz.domain.exeption.AuthenticationException: Resposta de autent
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
+Caused by: feign.FeignException$BadRequest: [400 Bad Request] during [POST] to [https://api.auth.sand.antecipa.com/v1/Authentication/SignIn] [AntecipaAuthClient#signin(String)]: [{"traceId":"Root=1-68a475fc-63a53570129ec2975e575c55;Parent=96749b95c9ecd741;Sampled=0;Lineage=1:5357dbbd:0","message":"One or more validation errors occurred.","code":null,"detail":[{"property":"viewModel","errors":["The viewModel field is required."]}]}]
+	at feign.FeignException.clientErrorStatus(FeignException.java:222) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:203) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:194) ~[feign-core-13.4.jar:?]
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:103) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.decodeError(InvocationContext.java:126) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.proceed(InvocationContext.java:72) ~[feign-core-13.4.jar:?]
+	at feign.ResponseHandler.handleResponse(ResponseHandler.java:63) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:98) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:48) ~[feign-core-13.4.jar:?]
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:99) ~[feign-core-13.4.jar:?]
+	at jdk.proxy2/jdk.proxy2.$Proxy147.signin(Unknown Source) ~[?:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:85) ~[classes/:?]
+	... 83 more
 
-2025-08-19 09:19:31.523 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 35896 --- [nio-8080-exec-6] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: br.com.experian.buzz.domain.exeption.AuthenticationException: Falha na autenticação com API Antecipa] with root cause
+2025-08-19 10:02:55.703 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 29368 --- [nio-8080-exec-1] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: br.com.experian.buzz.domain.exeption.AuthenticationException: Falha na autenticação com API Antecipa] with root cause
 
-br.com.experian.buzz.domain.exeption.AuthenticationException: Resposta de autenticação inválida
-	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:88) ~[classes/:?]
+feign.FeignException$BadRequest: [400 Bad Request] during [POST] to [https://api.auth.sand.antecipa.com/v1/Authentication/SignIn] [AntecipaAuthClient#signin(String)]: [{"traceId":"Root=1-68a475fc-63a53570129ec2975e575c55;Parent=96749b95c9ecd741;Sampled=0;Lineage=1:5357dbbd:0","message":"One or more validation errors occurred.","code":null,"detail":[{"property":"viewModel","errors":["The viewModel field is required."]}]}]
+	at feign.FeignException.clientErrorStatus(FeignException.java:222) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:203) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:194) ~[feign-core-13.4.jar:?]
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:103) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.decodeError(InvocationContext.java:126) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.proceed(InvocationContext.java:72) ~[feign-core-13.4.jar:?]
+	at feign.ResponseHandler.handleResponse(ResponseHandler.java:63) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:98) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:48) ~[feign-core-13.4.jar:?]
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:99) ~[feign-core-13.4.jar:?]
+	at jdk.proxy2/jdk.proxy2.$Proxy147.signin(Unknown Source) ~[?:?]
+	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.performAuthentication(AntecipaAuthAdapter.java:85) ~[classes/:?]
 	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.refreshToken(AntecipaAuthAdapter.java:61) ~[classes/:?]
 	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaAuthAdapter.getValidToken(AntecipaAuthAdapter.java:49) ~[classes/:?]
 	at br.com.experian.buzz.infrastructure.repository.adapter.AntecipaOnboardingAdapter.getOnboardingStatus(AntecipaOnboardingAdapter.java:43) ~[classes/:?]
@@ -178,4 +214,3 @@ br.com.experian.buzz.domain.exeption.AuthenticationException: Resposta de autent
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.40.jar:10.1.40]
 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-
