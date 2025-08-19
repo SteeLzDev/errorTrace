@@ -1,17 +1,120 @@
-Incompatible types. Found: 'java.util.Optional<br.com.experian.buzz.domain.dto.response.OnboardingStatusResponseDto>', required: 'br.com.experian.buzz.domain.dto.response.OnboardingStatusResponseDto'
+package br.com.experian.buzz.infrastructure.repository.adapter;
 
-package br.com.experian.buzz.domain.service;
+import br.com.experian.buzz.domain.dto.response.AuthenticationResponseDto;
+import br.com.experian.buzz.domain.exeption.AuthenticationException;
+import br.com.experian.buzz.domain.port.AuthenticationPort;
+import br.com.experian.buzz.infrastructure.integration.feign.client.antecipa.auth.AntecipaAuthClient;
+import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import br.com.experian.buzz.domain.dto.response.OnboardingStatusResponseDto;
-
-import java.util.Optional;
-
-public interface OnboardingService {
-
-    Optional<OnboardingStatusResponseDto>getOnboardingStatus(String supplierDocument);
+import java.util.concurrent.locks.ReentrantLock;
 
 
+@Component
+public class AntecipaAuthAdapter implements AuthenticationPort {
 
+    private static final Logger log = LoggerFactory.getLogger(AntecipaAuthAdapter.class);
 
+    private final AntecipaAuthClient authClient;
+    private final String basicAuthHeader;
+    private final  ReentrantLock lock = new ReentrantLock();
+
+    //Cache token atual
+    private volatile AuthenticationResponseDto currentToken;
+
+    public AntecipaAuthAdapter(AntecipaAuthClient authClient,
+                               @Value("${api.antecipa.auth.basic:MjM2Y2VhOGEtNzBlMS03MGMzLWM1OGQtODRiMTFmNTI3NmNhOjI5NGZmMzAwLTIyMTAtNDU3YS1iODIyLWJkNGM1ZDIwY2ZmZA==}")
+                               String basicAuth){
+        this.authClient= authClient;
+        this.basicAuthHeader = "Basic " + basicAuth;
+    }
+
+    @Override
+    public String getValidToken(){
+        //Verificação rápida sem lock
+        if(isCurrentTokenValid()) {
+            return currentToken.getAccessToken();
+        }
+        //verificação com lock para thread safety
+        lock.lock();
+        try {
+            if (isCurrentTokenValid()) {
+                return currentToken.getAccessToken();
+            }
+
+            log.info("Token inválido ou expirado, renovando...");
+            return refreshToken();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public String refreshToken(){
+        lock.lock();
+        try {
+            log.info("Renovando token de autenticação");
+
+            AuthenticationResponseDto newToken = performAuthentication();
+            this.currentToken = newToken;
+
+            log.info("Token renovado com sucesso. Expira em: {} segundos",
+                    newToken.getExpiresIn());
+            return newToken.getAccessToken();
+        } catch (Exception e) {
+            log.error("Erro ao renovar token de autenticação", e);
+            throw new AuthenticationException("Falha na autenticação com API Antecipa", e);
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public boolean isTokenValid(){
+        return isCurrentTokenValid();
+    }
+
+    //Realiza chamada de autenticação na API
+    private AuthenticationResponseDto performAuthentication(){
+        try {
+            log.debug("Realizando signin na API de autenticação...");
+
+            AuthenticationResponseDto response = authClient.signinDto(basicAuthHeader);
+
+            if (response == null || response.getAccessToken() == null) {
+                throw new AuthenticationException("Resposta de autenticação inválida");
+            }
+
+            log.debug("Autenticação realizada com sucesso. Token type: {}",
+                    response.getTokenType());
+            return response;
+        } catch (FeignException e) {
+            log.error("Erro na chamada de autenticação. Status: {}, Body: {}", e.status(), e.contentUTF8());
+
+            if (e.status() == 401) {
+                throw new AuthenticationException("Credenciais de autenticação inválidas", e);
+            } else {
+                throw new AuthenticationException("Erro na comunicação com serviço de autenticação", e);
+            }
+        }
+    }
+
+    //Verifica se token atual é válido
+    private boolean isCurrentTokenValid() {
+        return currentToken != null &&
+                currentToken.getAccessToken() != null &&
+                !currentToken.isExpired() &&
+                !currentToken.isExpiringSoon();
+    }
 
 }
+
+
+Class 'AntecipaAuthAdapter' must either be declared abstract or implement abstract method 'authenticate()' in 'AuthenticationPort'
+
+Cannot resolve method 'isExpired' in 'AuthenticationResponseDto'
+
+Cannot resolve method 'isExpiringSoon' in 'AuthenticationResponseDto'
