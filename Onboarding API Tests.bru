@@ -1,0 +1,59 @@
+meta {
+  name: Onboarding API Tests
+  type: http
+  seq: 1
+}
+
+vars {
+  baseUrl: http://localhost:8080
+  supplierDocument: 12345678000195
+}
+
+---
+
+get {
+  url: {{baseUrl}}/actuator/health
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+---
+
+get {
+  url: {{baseUrl}}/onboarding
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  X-Supplier-Document: {{supplierDocument}}
+}
+
+---
+
+get {
+  url: {{baseUrl}}/onboarding?supplierDocument={{supplierDocument}}
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+---
+
+get {
+  url: {{baseUrl}}/onboarding/{{supplierDocument}}
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
