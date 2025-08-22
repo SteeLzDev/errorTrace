@@ -1,18 +1,26 @@
-Disponibilizar endpoint para o front-end consultar o status de onboarding do cliente:
+C:\Users\C18132Q>keytool -import -alias uat_1 -keystore "/Users/C18132Q/Library/Java/JavaVirtualMachines/azul-21.0.8/Contents/Home/lib/security/cacerts" -file "/Users/C18132Q/Documents/developer/cert/antecipa-uat-2.crt"
+Informe a senha da área de armazenamento de chaves:
+A senha da área de armazenamento de chaves é muito curta - ela deve ter, no mínimo, 6 caracteres
+Informe a senha da área de armazenamento de chaves:
+C:\Users\C18132Q>keytool -import -alias uat_1 -keystore "/Users/C18132Q/Library/Java/JavaVirtualMachines/azul-21.0.8/Contents/Home/lib/security/cacerts" -file "/Users/C18132Q/Documents/developer/cert/uat_1.crt"
+Informe a senha da área de armazenamento de chaves:
 
-GET /onboarding
-    Response: 204 No Content
-    Response: 200 OK
-    Body: {
-        "status" : "PENDING" #Enum [ "STARTED", "REVIEW", "PENDING", "APPROVED", "REJECTED" ]
-    }
+Informe novamente a nova senha:
 
-Obs: Iremos confirmar os status com o time da antecipa.
+erro de keytool: java.io.FileNotFoundException: \Users\C18132Q\Documents\developer\cert\uat_1.crt (O sistema não pode encontrar o caminho especificado)
 
-Fluxo para consulta de status de onboarding:
+C:\Users\C18132Q>keytool -import -alias uat_1 -keystore "/Users/C18132Q/Library/Java/JavaVirtualMachines/azul-21.0.8/Contents/Home/lib/security/cacerts" -file "/Users/C18132Q/Documents/developer/cert/uat_1.crt"
+Informe a senha da área de armazenamento de chaves:
 
-Disponibilizar endpoint GET /onboarding para o front-end;
-Consultar se já existe status de onboarding no nosso banco de dados;
-Consultar status do onboarding na Antecipa (CERC);
-Atualizar o status no banco de dados dependendo da resposta no passo 3;
-Retornar a resposta para o front-end;
+Informe novamente a nova senha:
+
+erro de keytool: java.io.FileNotFoundException: \Users\C18132Q\Documents\developer\cert\uat_1.crt (O sistema não pode encontrar o caminho especificado)
+
+C:\Users\C18132Q>keytool -import -alias uat_1 -keystore "\Users\C18132Q\Library\Java\JavaVirtualMachines\azul-21.0.8\Contents\Home\lib\security\cacerts" -file "\Users\C18132Q\Documents\developer\cert\uat_1.crt"
+Informe a senha da área de armazenamento de chaves:
+
+Informe novamente a nova senha:
+
+erro de keytool: java.io.FileNotFoundException: \Users\C18132Q\Documents\developer\cert\uat_1.crt (O sistema não pode encontrar o caminho especificado)
+
+C:\Users\C18132Q>
