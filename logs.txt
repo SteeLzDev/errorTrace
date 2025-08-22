@@ -1,26 +1,30 @@
-C:\Users\C18132Q>keytool -import -alias uat_1 -keystore "/Users/C18132Q/Library/Java/JavaVirtualMachines/azul-21.0.8/Contents/Home/lib/security/cacerts" -file "/Users/C18132Q/Documents/developer/cert/antecipa-uat-2.crt"
-Informe a senha da área de armazenamento de chaves:
-A senha da área de armazenamento de chaves é muito curta - ela deve ter, no mínimo, 6 caracteres
-Informe a senha da área de armazenamento de chaves:
-C:\Users\C18132Q>keytool -import -alias uat_1 -keystore "/Users/C18132Q/Library/Java/JavaVirtualMachines/azul-21.0.8/Contents/Home/lib/security/cacerts" -file "/Users/C18132Q/Documents/developer/cert/uat_1.crt"
-Informe a senha da área de armazenamento de chaves:
 
-Informe novamente a nova senha:
+C:\Users\C18132Q>"%JAVA_HOME%\bin\keytool.exe" -importcert ^ -alias uat_1 ^ -keystore "%JAVA_HOME%\lib\security\cacerts"-file "C:\Users\C18132Q\Documents\ANTECIPA\cert\uat_1.crt" -storepass changeit -trustcacerts -noprompt
+Opção inválida:  C:\Users\C18132Q\Documents\ANTECIPA\cert\uat_1.crt
+keytool -importcert [OPTION]...
 
-erro de keytool: java.io.FileNotFoundException: \Users\C18132Q\Documents\developer\cert\uat_1.crt (O sistema não pode encontrar o caminho especificado)
+Importa um certificado ou uma cadeia de certificados
 
-C:\Users\C18132Q>keytool -import -alias uat_1 -keystore "/Users/C18132Q/Library/Java/JavaVirtualMachines/azul-21.0.8/Contents/Home/lib/security/cacerts" -file "/Users/C18132Q/Documents/developer/cert/uat_1.crt"
-Informe a senha da área de armazenamento de chaves:
+Opções:
 
-Informe novamente a nova senha:
+ -noprompt               não perguntar
+ -trustcacerts           certificados confiáveis do cacerts
+ -protected              senha por meio de mecanismo protegido
+ -alias <alias>          nome do alias da entrada a ser processada
+ -file <file>            nome do arquivo de entrada
+ -keypass <arg>          senha da chave
+ -keystore <keystore>    nome da área de armazenamento de chaves
+ -cacerts                acessar a área de armazenamento de chaves cacerts
+ -storepass <arg>        senha da área de armazenamento de chaves
+ -storetype <type>       tipo de área de armazenamento de chaves
+ -providername <name>    nome do fornecedor
+ -addprovider <name>     adicionar provedor de segurança por nome (por exemplo, SunPKCS11)
+   [-providerarg <arg>]    configurar argumento para -addprovider
+ -providerclass <class>  adicionar provedor de segurança por nome de classe totalmente qualificado
+   [-providerarg <arg>]    configurar argumento para -providerclass
+ -providerpath <list>    classpath do fornecedor
+ -v                      saída detalhada
 
-erro de keytool: java.io.FileNotFoundException: \Users\C18132Q\Documents\developer\cert\uat_1.crt (O sistema não pode encontrar o caminho especificado)
-
-C:\Users\C18132Q>keytool -import -alias uat_1 -keystore "\Users\C18132Q\Library\Java\JavaVirtualMachines\azul-21.0.8\Contents\Home\lib\security\cacerts" -file "\Users\C18132Q\Documents\developer\cert\uat_1.crt"
-Informe a senha da área de armazenamento de chaves:
-
-Informe novamente a nova senha:
-
-erro de keytool: java.io.FileNotFoundException: \Users\C18132Q\Documents\developer\cert\uat_1.crt (O sistema não pode encontrar o caminho especificado)
+Use "keytool -help" para todos os comandos disponíveis
 
 C:\Users\C18132Q>
