@@ -1,30 +1,21 @@
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.12.0:testCompile (default-testCompile) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  34.617 s
+[INFO] Finished at: 2025-08-22T16:40:31-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.12.0:testCompile (default-testCompile) on project experian-pme-bfm-receivables-anticipation-domain-services: Fatal error compiling: basedir C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-test-sources\test-annotations does not exist -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
 
-C:\Users\C18132Q>"%JAVA_HOME%\bin\keytool.exe" -importcert ^ -alias uat_1 ^ -keystore "%JAVA_HOME%\lib\security\cacerts"-file "C:\Users\C18132Q\Documents\ANTECIPA\cert\uat_1.crt" -storepass changeit -trustcacerts -noprompt
-Opção inválida:  C:\Users\C18132Q\Documents\ANTECIPA\cert\uat_1.crt
-keytool -importcert [OPTION]...
-
-Importa um certificado ou uma cadeia de certificados
-
-Opções:
-
- -noprompt               não perguntar
- -trustcacerts           certificados confiáveis do cacerts
- -protected              senha por meio de mecanismo protegido
- -alias <alias>          nome do alias da entrada a ser processada
- -file <file>            nome do arquivo de entrada
- -keypass <arg>          senha da chave
- -keystore <keystore>    nome da área de armazenamento de chaves
- -cacerts                acessar a área de armazenamento de chaves cacerts
- -storepass <arg>        senha da área de armazenamento de chaves
- -storetype <type>       tipo de área de armazenamento de chaves
- -providername <name>    nome do fornecedor
- -addprovider <name>     adicionar provedor de segurança por nome (por exemplo, SunPKCS11)
-   [-providerarg <arg>]    configurar argumento para -addprovider
- -providerclass <class>  adicionar provedor de segurança por nome de classe totalmente qualificado
-   [-providerarg <arg>]    configurar argumento para -providerclass
- -providerpath <list>    classpath do fornecedor
- -v                      saída detalhada
-
-Use "keytool -help" para todos os comandos disponíveis
-
-C:\Users\C18132Q>
+Process finished with exit code 1
