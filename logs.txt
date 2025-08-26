@@ -128,3 +128,42 @@ public interface OnboardingApi {
     );
 
 }
+
+
+
+package br.com.experian.anticipation.application.rest;
+
+import br.com.experian.anticipation.domain.dto.response.OnboardingStatusResponseDto;
+import br.com.experian.anticipation.domain.exception.AuthenticationException;
+import br.com.experian.anticipation.domain.service.OnboardingService;
+import br.com.experian.observability.annotation.LogMethod;
+import br.com.experian.swagger.anticipation.api.OnboardingApi;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class OnboardingController extends BaseController implements OnboardingApi {
+
+
+    private final OnboardingApi onboardingApi;
+
+    public OnboardingController(OnboardingApi onboardingApi) {
+        this.onboardingApi = onboardingApi;
+    }
+
+    @Override
+    @PreAuthorize(HAS_RULES)
+    @LogMethod(LogMethod.LogType.FULL)
+    public ResponseEntity<List<OnboardingStatusResponseDto>> getOnboardingStatus (
+            @RequestHeader(value = "X-Supplier-Document", required = false) String supplierDocumentHeader,
+            @RequestParam(value = "supplierDocument", required = false) String supplierDocumentParam) {
+    }
+}
+
+
+
