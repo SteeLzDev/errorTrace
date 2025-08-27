@@ -1,66 +1,32 @@
-2025-08-26 02:33:11.987  INFO [experian-pme-bfm-receivables-anticipation-domain-services,256ef8c4934410ea15ce3f6cb8b41886,3e9ff4c962ad87c3,] 33000 --- [io-8080-exec-10] c.e.h.RestResponseEntityExceptionHandler : http.response.body.content_json="[{code=401, message=Unauthorized}]" http.response.status_code="401" message="Access Denied"
-2025-08-26 02:33:11.992  INFO [experian-pme-bfm-receivables-anticipation-domain-services,256ef8c4934410ea15ce3f6cb8b41886,3e9ff4c962ad87c3,] 33000 --- [io-8080-exec-10] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/onboarding" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_BUSINESS, ROLE_CLI-AUTH-IDENTIFIED, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="644817dcb5430d6708103a1f" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="73217" custom.experian.http.request.token.exp="1756189780" custom.experian.http.request.token.iat="1756186180" custom.experian.http.request.token.iss="http://experian-dp-iam-authorization-server-service.digital-identity-services-uat.svc" custom.experian.http.request.token.jti="a3660ba6-9fbd-48c1-8d2a-a779c348a7c2" custom.experian.http.request.token.nbf="1756186180" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="d319b199-c6fd-4d22-8932-249928d38bae" custom.experian.http.request.token.sub="644817dcb5430d6708103a20" custom.experian.http.request.token.user_id="644817dcb5430d6708103a20" destination.address="0:0:0:0:0:0:0:1" destination.port="59467" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/onboarding" http.response.body.content_json="[{code=401, message=Unauthorized}]" http.response.status_code="401" server.address="*********"
-2025-08-26 02:33:11.996  INFO [experian-pme-bfm-receivables-anticipation-domain-services,256ef8c4934410ea15ce3f6cb8b41886,3e9ff4c962ad87c3,] 33000 --- [io-8080-exec-10] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"644817dcb5430d6708103a1f","user_id":"644817dcb5430d6708103a20","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"73217","requester":"USER"},"operation_status":{"status":"FAIL_400"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/onboarding","http_method":"GET","http_status_response":401,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.OnboardingController","method_name":"retrieveStatus()"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-08-26T03:29:40","iat":"2025-08-26T02:29:40","authorities":["ROLE_BUSINESSADMIN","ROLE_BUSINESS","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiI2NDQ4MTdkY2I1NDMwZDY3MDgxMDNhMjAiLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwic2Vzc2lvbl9pZCI6ImQzMTliMTk5LWM2ZmQtNGQyMi04OTMyLTI0OTkyOGQzOGJhZSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQlVTSU5FU1NBRE1JTiIsIlJPTEVfQlVTSU5FU1MiLCJST0xFX0NMSS1BVVRILUlERU5USUZJRUQiLCJST0xFX0NMSS0xU1RQQVJUWSIsIlJPTEVfVVNFUiIsIlJPTEVfQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLTNSRFBBUlRZIiwiUk9MRV9QRVJTT04iLCJST0xFX0JVU0lORVNTVVNFUiIsIlJPTEVfQVVUSC1JREVOVElGSUVEIl0sImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwibmJmIjoxNzU2MTg2MTgwLCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3IiwidXNlcl9pZCI6IjY0NDgxN2RjYjU0MzBkNjcwODEwM2EyMCIsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwic2VydmljZV9pZCI6IjYwMDVlYWM2OWZmN2MwM2I1NjNkYjVlYiIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImV4cCI6MTc1NjE4OTc4MCwiY3VzdG9tZXJfaWQiOjczMjE3LCJpYXQiOjE3NTYxODYxODAsImJ1c2luZXNzX2lkIjoiNjQ0ODE3ZGNiNTQzMGQ2NzA4MTAzYTFmIiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwianRpIjoiYTM2NjBiYTYtOWZiZC00OGMxLThkMmEtYTc3OWMzNDhhN2MyIn0.ZHaP1STjNkuPPA1T487SwjBmgHxdRB5n9QWCJN9FA_zvHBeuGF0Lxe3_69XRRynbsGsvvl-uo_BMIFX6WW1rHWI-qRG6ENtoXJmgnNgW9bOZCmluaxH4RPya0O6u5oOurna_a4Lf4KU7iAJRoY5a9JMNDZ9sXsqwPaRxQiKzKRp_L_qSoMMI8VPaKY4bKdkIMrf7f_OT6JJ-em6HyNIfK-_B1j8nKBiqLVCYzDYRAW149SmeJRfN2E0PrBfFlZpce6PdQo52FzPipil5dApmyjAVvCJZdX4K5EQ_pmEvXYv4jszIjRZdSyj-URyTeqHrdusiwKJIjFFa7MFXPTAK7A","host":"localhost:8080","request-start-time":"1756186391934","content-type":"application/json","connection":"keep-alive","x-supplier-document":"45181802000183","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
-2025-08-26 02:33:16.779 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 33000 --- [alhost:4317/...] i.o.e.i.h.HttpExporter                   : Failed to export spans. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4317
+DoD:
 
-java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4317
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:4317
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-		at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Caused by: java.net.ConnectException: Connection refused: getsockopt
-		at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-		at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-		... 18 more
-Caused by: java.net.ConnectException: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-	at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-	... 18 more
-
+Mapear endpoint GET /receivables no swagger e disponibilizar para o frontend;
+Implementar endpoint GET /receivables;
+Integração com endpoint da Antecipa que irá retornar os recebíveis antecipáveis (Integração já foi mapeada);
+Ex:
+GET /receivables?limit=10&offset=1
+    Response: 200 OK
+    Body: {
+        "content": [
+            {
+                "id": "f63985b1-619d-4514-ab19-bd1ec6f69ab0",
+                "paymentDate": "2025-07-22",
+                "nationalRegistrationId": "18772021000190",
+                "accreditingInstitutionName": "Cielo",
+                "paymentType": "CREDIT_SINGLE", #Enum [ "CREDIT_SINGLE", "CREDIT_INSTALLMENT"  ]
+                "installment": {
+                    "count" : 3,
+                    "number": 1,
+                    "amount": 1534.45
+                },
+                "discount": 50.00,
+                "amountToReceive": 1484.45
+            }
+        ],
+        "page": {
+            "size": 10,
+            "totalElements": 50,
+            "totalPages": 5,
+            "number": 1
+        }
+    }
