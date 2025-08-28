@@ -1,78 +1,57 @@
-package br.com.experian.anticipation.application.adapter;
+package br.com.experian.swagger.anticipation.model;
+
+import java.net.URI;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonValue;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.io.Serializable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
-import br.com.experian.anticipation.domain.enums.PaymentType;
-import br.com.experian.anticipation.domain.model.*;
-import br.com.experian.swagger.anticipation.model.*;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import java.util.*;
+import jakarta.annotation.Generated;
 
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ReceivablesMapper {
+/**
+ * Gets or Sets PaymentType
+ */
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-26T12:42:13.977779100-03:00[America/Sao_Paulo]", comments = "Generator version: 7.11.0")
+public enum PaymentTypeTO {
+  
+  CREDIT_SINGLE("CREDIT_SINGLE"),
+  
+  CREDIT_INSTALLMENT("CREDIT_INSTALLMENT");
 
-    public static ReceivableResponseTO toReceivableResponse(ReceivablesModel receivables) {
-        if (receivables == null) {
-            return null;
-        }
-        List<ReceivableDataTO> content = receivables.getContent().stream()
-                .map(ReceivablesMapper::mapToReceivableData)
-                .collect(Collectors.toList());
-        PaginationTO pagination = mapToPagination(receivables.getPage());
+  private String value;
 
-        return new ReceivableResponseTO()
-                .content(content)
-                .page(pagination);
+  PaymentTypeTO(String value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public String getValue() {
+    return value;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
+
+  @JsonCreator
+  public static PaymentTypeTO fromValue(String value) {
+    for (PaymentTypeTO b : PaymentTypeTO.values()) {
+      if (b.value.equals(value)) {
+        return b;
+      }
     }
-
-    private static ReceivableDataTO mapToReceivableData(ReceivableModel model) {
-        return new ReceivableDataTO()
-                .id(model.getId())
-                .paymentDate(model.getPaymentDate() != null ? model.getPaymentDate().format(DATE_FORMATTER) : null)
-                .nationalRegistrationId(model.getNationalRegistrationId())
-                .accreditingInstitutionName(model.getAccreditingInstitutionName())
-                .paymentType(mapToPaymentTypeTO(model.getPaymentType()))
-                .installment(mapToInstallmentData(model.getInstallment()))
-                .discount(model.getDiscount())
-                .amountToReceive(model.getAmountToReceive());
-    }
-
-    private static PaymentTypeTO mapToPaymentTypeTO(PaymentType paymentType) {
-        if (paymentType == null) {
-            return null;
-        }
-        switch (paymentType) {
-            case CREDIT_SINGLE: 
-                return PaymentTypeTO.CREDIT_SINGLE;
-            case CREDIT_INSTALLMENT:
-                return PaymentTypeTO.CREDIT_INSTALLMENT;
-            default:
-                throw new IllegalArgumentException("Unknown  PaymentType: " + paymentType);
-        }
-    }
-
-    private static InstallmentDataTO mapToInstallmentData(InstallmentModel model) {
-        if (model == null) {
-            return null;
-        }
-        return new InstallmentDataTO()
-                .count(model.getCount())
-                .number(model.getNumber())
-                .amount(model.getAmount());
-    }
-
-    private static PaginationTO mapToPagination(PaginationModel model) {
-        return new PaginationTO()
-                .size(model.getSize())
-                .totalElements(model.getTotalElements().intValue())
-                .totalPages(model.getTotalPages())
-                .number(model.getNumber());
-    }
-
-
+    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+  }
 }
+
