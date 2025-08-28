@@ -1,8 +1,16 @@
-package br.com.experian.swagger.anticipation.model;
+package br.com.experian.swagger.antecipa.model;
 
 import java.net.URI;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonValue;
+import br.com.experian.swagger.antecipa.model.AntecipaAccreditingInstitutionCardReceivableDto;
+import br.com.experian.swagger.antecipa.model.AntecipaCardReceivableAnticipationSimulationDto;
+import br.com.experian.swagger.antecipa.model.AntecipaSupplierCardReceivableDto;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
@@ -14,44 +22,328 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.*;
 import jakarta.annotation.Generated;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
 /**
- * Gets or Sets PaymentType
+ * AntecipaCardReceivableListDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-26T12:42:13.977779100-03:00[America/Sao_Paulo]", comments = "Generator version: 7.11.0")
-public enum PaymentTypeTO {
-  
-  CREDIT_SINGLE("CREDIT_SINGLE"),
-  
-  CREDIT_INSTALLMENT("CREDIT_INSTALLMENT");
+@JsonTypeName("CardReceivableListDto")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-26T12:42:16.063481200-03:00[America/Sao_Paulo]", comments = "Generator version: 7.11.0")
+public class AntecipaCardReceivableListDto implements Serializable {
 
-  private String value;
+  private static final long serialVersionUID = 1L;
 
-  PaymentTypeTO(String value) {
+  private String id;
+
+  private AntecipaAccreditingInstitutionCardReceivableDto accreditingInstitution;
+
+  private AntecipaSupplierCardReceivableDto supplier;
+
+  private @Nullable Double value;
+
+  private @Nullable String formattedValue;
+
+  private @Nullable Integer statusId;
+
+  private String status;
+
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private @Nullable LocalDateTime dueDate;
+
+  private @Nullable Integer daysToDue;
+
+  private @Nullable String paymentDate;
+
+  private @Nullable AntecipaCardReceivableAnticipationSimulationDto anticipationSimulation;
+
+  public AntecipaCardReceivableListDto() {
+    super();
+  }
+
+  /**
+   * Constructor with only required parameters
+   */
+  public AntecipaCardReceivableListDto(String id, AntecipaAccreditingInstitutionCardReceivableDto accreditingInstitution, AntecipaSupplierCardReceivableDto supplier, String status) {
+    this.id = id;
+    this.accreditingInstitution = accreditingInstitution;
+    this.supplier = supplier;
+    this.status = status;
+  }
+
+  public AntecipaCardReceivableListDto id(String id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+   */
+  @NotNull 
+  @Schema(name = "id", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("id")
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public AntecipaCardReceivableListDto accreditingInstitution(AntecipaAccreditingInstitutionCardReceivableDto accreditingInstitution) {
+    this.accreditingInstitution = accreditingInstitution;
+    return this;
+  }
+
+  /**
+   * Get accreditingInstitution
+   * @return accreditingInstitution
+   */
+  @NotNull @Valid 
+  @Schema(name = "accreditingInstitution", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("accreditingInstitution")
+  public AntecipaAccreditingInstitutionCardReceivableDto getAccreditingInstitution() {
+    return accreditingInstitution;
+  }
+
+  public void setAccreditingInstitution(AntecipaAccreditingInstitutionCardReceivableDto accreditingInstitution) {
+    this.accreditingInstitution = accreditingInstitution;
+  }
+
+  public AntecipaCardReceivableListDto supplier(AntecipaSupplierCardReceivableDto supplier) {
+    this.supplier = supplier;
+    return this;
+  }
+
+  /**
+   * Get supplier
+   * @return supplier
+   */
+  @NotNull @Valid 
+  @Schema(name = "supplier", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("supplier")
+  public AntecipaSupplierCardReceivableDto getSupplier() {
+    return supplier;
+  }
+
+  public void setSupplier(AntecipaSupplierCardReceivableDto supplier) {
+    this.supplier = supplier;
+  }
+
+  public AntecipaCardReceivableListDto value(Double value) {
+    this.value = value;
+    return this;
+  }
+
+  /**
+   * Get value
+   * @return value
+   */
+  
+  @Schema(name = "value", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("value")
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
     this.value = value;
   }
 
-  @JsonValue
-  public String getValue() {
-    return value;
+  public AntecipaCardReceivableListDto formattedValue(String formattedValue) {
+    this.formattedValue = formattedValue;
+    return this;
+  }
+
+  /**
+   * Get formattedValue
+   * @return formattedValue
+   */
+  
+  @Schema(name = "formattedValue", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("formattedValue")
+  public String getFormattedValue() {
+    return formattedValue;
+  }
+
+  public void setFormattedValue(String formattedValue) {
+    this.formattedValue = formattedValue;
+  }
+
+  public AntecipaCardReceivableListDto statusId(Integer statusId) {
+    this.statusId = statusId;
+    return this;
+  }
+
+  /**
+   * Get statusId
+   * @return statusId
+   */
+  
+  @Schema(name = "statusId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("statusId")
+  public Integer getStatusId() {
+    return statusId;
+  }
+
+  public void setStatusId(Integer statusId) {
+    this.statusId = statusId;
+  }
+
+  public AntecipaCardReceivableListDto status(String status) {
+    this.status = status;
+    return this;
+  }
+
+  /**
+   * Get status
+   * @return status
+   */
+  @NotNull 
+  @Schema(name = "status", requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty("status")
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public AntecipaCardReceivableListDto dueDate(LocalDateTime dueDate) {
+    this.dueDate = dueDate;
+    return this;
+  }
+
+  /**
+   * Get dueDate
+   * @return dueDate
+   */
+  @Valid 
+  @Schema(name = "dueDate", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("dueDate")
+  public LocalDateTime getDueDate() {
+    return dueDate;
+  }
+
+  public void setDueDate(LocalDateTime dueDate) {
+    this.dueDate = dueDate;
+  }
+
+  public AntecipaCardReceivableListDto daysToDue(Integer daysToDue) {
+    this.daysToDue = daysToDue;
+    return this;
+  }
+
+  /**
+   * Get daysToDue
+   * @return daysToDue
+   */
+  
+  @Schema(name = "daysToDue", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("daysToDue")
+  public Integer getDaysToDue() {
+    return daysToDue;
+  }
+
+  public void setDaysToDue(Integer daysToDue) {
+    this.daysToDue = daysToDue;
+  }
+
+  public AntecipaCardReceivableListDto paymentDate(String paymentDate) {
+    this.paymentDate = paymentDate;
+    return this;
+  }
+
+  /**
+   * Get paymentDate
+   * @return paymentDate
+   */
+  
+  @Schema(name = "paymentDate", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("paymentDate")
+  public String getPaymentDate() {
+    return paymentDate;
+  }
+
+  public void setPaymentDate(String paymentDate) {
+    this.paymentDate = paymentDate;
+  }
+
+  public AntecipaCardReceivableListDto anticipationSimulation(AntecipaCardReceivableAnticipationSimulationDto anticipationSimulation) {
+    this.anticipationSimulation = anticipationSimulation;
+    return this;
+  }
+
+  /**
+   * Get anticipationSimulation
+   * @return anticipationSimulation
+   */
+  @Valid 
+  @Schema(name = "anticipationSimulation", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("anticipationSimulation")
+  public AntecipaCardReceivableAnticipationSimulationDto getAnticipationSimulation() {
+    return anticipationSimulation;
+  }
+
+  public void setAnticipationSimulation(AntecipaCardReceivableAnticipationSimulationDto anticipationSimulation) {
+    this.anticipationSimulation = anticipationSimulation;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AntecipaCardReceivableListDto cardReceivableListDto = (AntecipaCardReceivableListDto) o;
+    return Objects.equals(this.id, cardReceivableListDto.id) &&
+        Objects.equals(this.accreditingInstitution, cardReceivableListDto.accreditingInstitution) &&
+        Objects.equals(this.supplier, cardReceivableListDto.supplier) &&
+        Objects.equals(this.value, cardReceivableListDto.value) &&
+        Objects.equals(this.formattedValue, cardReceivableListDto.formattedValue) &&
+        Objects.equals(this.statusId, cardReceivableListDto.statusId) &&
+        Objects.equals(this.status, cardReceivableListDto.status) &&
+        Objects.equals(this.dueDate, cardReceivableListDto.dueDate) &&
+        Objects.equals(this.daysToDue, cardReceivableListDto.daysToDue) &&
+        Objects.equals(this.paymentDate, cardReceivableListDto.paymentDate) &&
+        Objects.equals(this.anticipationSimulation, cardReceivableListDto.anticipationSimulation);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, accreditingInstitution, supplier, value, formattedValue, statusId, status, dueDate, daysToDue, paymentDate, anticipationSimulation);
   }
 
   @Override
   public String toString() {
-    return String.valueOf(value);
+    StringBuilder sb = new StringBuilder();
+    sb.append("class AntecipaCardReceivableListDto {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    accreditingInstitution: ").append(toIndentedString(accreditingInstitution)).append("\n");
+    sb.append("    supplier: ").append(toIndentedString(supplier)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    formattedValue: ").append(toIndentedString(formattedValue)).append("\n");
+    sb.append("    statusId: ").append(toIndentedString(statusId)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
+    sb.append("    daysToDue: ").append(toIndentedString(daysToDue)).append("\n");
+    sb.append("    paymentDate: ").append(toIndentedString(paymentDate)).append("\n");
+    sb.append("    anticipationSimulation: ").append(toIndentedString(anticipationSimulation)).append("\n");
+    sb.append("}");
+    return sb.toString();
   }
 
-  @JsonCreator
-  public static PaymentTypeTO fromValue(String value) {
-    for (PaymentTypeTO b : PaymentTypeTO.values()) {
-      if (b.value.equals(value)) {
-        return b;
-      }
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+    if (o == null) {
+      return "null";
     }
-    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+    return o.toString().replace("\n", "\n    ");
   }
 }
 
