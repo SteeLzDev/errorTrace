@@ -1,197 +1,21 @@
-package br.com.experian.swagger.antecipa.model;
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.12.0:testCompile (default-testCompile) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:08 min
+[INFO] Finished at: 2025-08-28T15:21:17-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.12.0:testCompile (default-testCompile) on project experian-pme-bfm-receivables-anticipation-domain-services: Fatal error compiling: basedir C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-test-sources\test-annotations does not exist -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
 
-import java.net.URI;
-import java.util.Objects;
-import br.com.experian.swagger.antecipa.model.AntecipaCapitalSourceCardReceivableDto;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import org.springframework.lang.Nullable;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.io.Serializable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
-import jakarta.annotation.Generated;
-
-/**
- * AntecipaCardReceivableAnticipationSimulationDto
- */
-
-@JsonTypeName("CardReceivableAnticipationSimulationDto")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-08-26T12:42:16.063481200-03:00[America/Sao_Paulo]", comments = "Generator version: 7.11.0")
-public class AntecipaCardReceivableAnticipationSimulationDto implements Serializable {
-
-  private static final long serialVersionUID = 1L;
-
-  private AntecipaCapitalSourceCardReceivableDto capitalSource;
-
-  private @Nullable Double rate;
-
-  private @Nullable String formattedRate;
-
-  private @Nullable Double discount;
-
-  private @Nullable String formattedDiscount;
-
-  public AntecipaCardReceivableAnticipationSimulationDto() {
-    super();
-  }
-
-  /**
-   * Constructor with only required parameters
-   */
-  public AntecipaCardReceivableAnticipationSimulationDto(AntecipaCapitalSourceCardReceivableDto capitalSource) {
-    this.capitalSource = capitalSource;
-  }
-
-  public AntecipaCardReceivableAnticipationSimulationDto capitalSource(AntecipaCapitalSourceCardReceivableDto capitalSource) {
-    this.capitalSource = capitalSource;
-    return this;
-  }
-
-  /**
-   * Get capitalSource
-   * @return capitalSource
-   */
-  @NotNull @Valid 
-  @Schema(name = "capitalSource", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("capitalSource")
-  public AntecipaCapitalSourceCardReceivableDto getCapitalSource() {
-    return capitalSource;
-  }
-
-  public void setCapitalSource(AntecipaCapitalSourceCardReceivableDto capitalSource) {
-    this.capitalSource = capitalSource;
-  }
-
-  public AntecipaCardReceivableAnticipationSimulationDto rate(Double rate) {
-    this.rate = rate;
-    return this;
-  }
-
-  /**
-   * Get rate
-   * @return rate
-   */
-  
-  @Schema(name = "rate", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("rate")
-  public Double getRate() {
-    return rate;
-  }
-
-  public void setRate(Double rate) {
-    this.rate = rate;
-  }
-
-  public AntecipaCardReceivableAnticipationSimulationDto formattedRate(String formattedRate) {
-    this.formattedRate = formattedRate;
-    return this;
-  }
-
-  /**
-   * Get formattedRate
-   * @return formattedRate
-   */
-  
-  @Schema(name = "formattedRate", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("formattedRate")
-  public String getFormattedRate() {
-    return formattedRate;
-  }
-
-  public void setFormattedRate(String formattedRate) {
-    this.formattedRate = formattedRate;
-  }
-
-  public AntecipaCardReceivableAnticipationSimulationDto discount(Double discount) {
-    this.discount = discount;
-    return this;
-  }
-
-  /**
-   * Get discount
-   * @return discount
-   */
-  
-  @Schema(name = "discount", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("discount")
-  public Double getDiscount() {
-    return discount;
-  }
-
-  public void setDiscount(Double discount) {
-    this.discount = discount;
-  }
-
-  public AntecipaCardReceivableAnticipationSimulationDto formattedDiscount(String formattedDiscount) {
-    this.formattedDiscount = formattedDiscount;
-    return this;
-  }
-
-  /**
-   * Get formattedDiscount
-   * @return formattedDiscount
-   */
-  
-  @Schema(name = "formattedDiscount", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("formattedDiscount")
-  public String getFormattedDiscount() {
-    return formattedDiscount;
-  }
-
-  public void setFormattedDiscount(String formattedDiscount) {
-    this.formattedDiscount = formattedDiscount;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    AntecipaCardReceivableAnticipationSimulationDto cardReceivableAnticipationSimulationDto = (AntecipaCardReceivableAnticipationSimulationDto) o;
-    return Objects.equals(this.capitalSource, cardReceivableAnticipationSimulationDto.capitalSource) &&
-        Objects.equals(this.rate, cardReceivableAnticipationSimulationDto.rate) &&
-        Objects.equals(this.formattedRate, cardReceivableAnticipationSimulationDto.formattedRate) &&
-        Objects.equals(this.discount, cardReceivableAnticipationSimulationDto.discount) &&
-        Objects.equals(this.formattedDiscount, cardReceivableAnticipationSimulationDto.formattedDiscount);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(capitalSource, rate, formattedRate, discount, formattedDiscount);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class AntecipaCardReceivableAnticipationSimulationDto {\n");
-    sb.append("    capitalSource: ").append(toIndentedString(capitalSource)).append("\n");
-    sb.append("    rate: ").append(toIndentedString(rate)).append("\n");
-    sb.append("    formattedRate: ").append(toIndentedString(formattedRate)).append("\n");
-    sb.append("    discount: ").append(toIndentedString(discount)).append("\n");
-    sb.append("    formattedDiscount: ").append(toIndentedString(formattedDiscount)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
-}
-
+Process finished with exit code 1
