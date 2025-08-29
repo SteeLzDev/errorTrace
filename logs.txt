@@ -1,21 +1,45 @@
-[INFO] 
-[INFO] --- resources:3.3.1:testResources (default-testResources) @ experian-pme-bfm-receivables-anticipation-domain-services ---
-[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\test\resources
-[INFO] 
-[INFO] --- compiler:3.12.0:testCompile (default-testCompile) @ experian-pme-bfm-receivables-anticipation-domain-services ---
-[INFO] Recompiling the module because of changed dependency.
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  01:08 min
-[INFO] Finished at: 2025-08-28T15:21:17-03:00
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.12.0:testCompile (default-testCompile) on project experian-pme-bfm-receivables-anticipation-domain-services: Fatal error compiling: basedir C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-test-sources\test-annotations does not exist -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+Classe: OnboardingServiceImpl
+Desc: Essa classe deveria estar dentro da estrutura "domain" dentro do package "service.impl". A implementação do service e as regras de negócio do produto precisam estar dento da domain.
+ 
+Desc2: Qual o objetivo do @Transactional no método getOnboardingStatus ?
+ 
+Desc3: Aqui é mais uma questão de clean code, o nome do método está redundante. Por exemplo, sua classe já se chama onboarding logo o nome do método não precisa mais refletir o nome da classe e sim apenas o que ele realmente vai fazer. 
 
-Process finished with exit code 1
+package br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa;
+
+
+import br.com.experian.anticipation.domain.dto.response.OnboardingStatusResponseDto;
+import br.com.experian.anticipation.domain.enums.OnboardingStatus;
+import br.com.experian.anticipation.domain.port.OnboardingPort;
+import br.com.experian.anticipation.domain.service.OnboardingService;
+import br.com.experian.observability.annotation.LogMethod;
+import lombok.extern.log4j.Log4j2;
+
+import java.util.Optional;
+
+@Log4j2
+public class OnboardingServiceImpl implements OnboardingService {
+
+
+    private final OnboardingPort onboardingPort;
+
+    public OnboardingServiceImpl(OnboardingPort onboardingPort) {
+        this.onboardingPort = onboardingPort;
+    }
+
+    @Override
+    @LogMethod()
+    public Optional<OnboardingStatusResponseDto> getOnboardingStatus(String supplierDocument) {
+
+        OnboardingStatus apiStatus = onboardingPort.getOnboardingStatus(supplierDocument);
+
+        if (apiStatus == null) {
+            log.info("API return 204 (no content) for document: {}", supplierDocument);
+            return Optional.empty();
+        }
+
+        return Optional.of(new OnboardingStatusResponseDto(apiStatus));
+
+
+    }
+}
