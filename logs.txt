@@ -1,45 +1,11 @@
-Classe: OnboardingServiceImpl
-Desc: Essa classe deveria estar dentro da estrutura "domain" dentro do package "service.impl". A implementação do service e as regras de negócio do produto precisam estar dento da domain.
+Pacote "repository":
+Desc: Conforme conversamos anteriormente o pacote repository utilizamos para tratar especificamente de classes que fazem uso do banco de dados (SQL, NoSQL, etc)
  
-Desc2: Qual o objetivo do @Transactional no método getOnboardingStatus ?
  
-Desc3: Aqui é mais uma questão de clean code, o nome do método está redundante. Por exemplo, sua classe já se chama onboarding logo o nome do método não precisa mais refletir o nome da classe e sim apenas o que ele realmente vai fazer. 
-
-package br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa;
-
-
-import br.com.experian.anticipation.domain.dto.response.OnboardingStatusResponseDto;
-import br.com.experian.anticipation.domain.enums.OnboardingStatus;
-import br.com.experian.anticipation.domain.port.OnboardingPort;
-import br.com.experian.anticipation.domain.service.OnboardingService;
-import br.com.experian.observability.annotation.LogMethod;
-import lombok.extern.log4j.Log4j2;
-
-import java.util.Optional;
-
-@Log4j2
-public class OnboardingServiceImpl implements OnboardingService {
-
-
-    private final OnboardingPort onboardingPort;
-
-    public OnboardingServiceImpl(OnboardingPort onboardingPort) {
-        this.onboardingPort = onboardingPort;
-    }
-
-    @Override
-    @LogMethod()
-    public Optional<OnboardingStatusResponseDto> getOnboardingStatus(String supplierDocument) {
-
-        OnboardingStatus apiStatus = onboardingPort.getOnboardingStatus(supplierDocument);
-
-        if (apiStatus == null) {
-            log.info("API return 204 (no content) for document: {}", supplierDocument);
-            return Optional.empty();
-        }
-
-        return Optional.of(new OnboardingStatusResponseDto(apiStatus));
-
-
-    }
-}
+Classe: AntecipaAuthAdapter
+Desc: Pela implementação me parece ser muito mais um service exclusivo da Atecipa e que não será utilizado por nenhum outro service. Cabe uma avaliação de onde essa classe realmente deveria ficar.
+ 
+Classe: OnboardingAdapter
+Desc: Pela implementação a classe carrega muitas regras exclusivas da antecipa, cabe avaliar de levar essa implementação para dentro do AntecipaServiceImpl e adequar os métodos.
+ 
+Obs: Novamente peço para dar uma olhada no projeto experian-pme-bfm-credit-offers-domain-services para analisar como toda a estrutura funciona.
