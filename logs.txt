@@ -1,1 +1,130 @@
-'parseDueDate(java.lang.String)' in 'br.com.experian.anticipation.infrastructure.repository.adapter.ReceivablesAdapter' cannot be applied to '(java.time.@jakarta.validation.Valid LocalDateTime)'
+{
+  "content": [
+    {
+      "id": "b01c1866-4d3a-4330-abca-5c000c52fed5",
+      "paymentDate": "2024-11-25",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 45098
+      },
+      "amountToReceive": 45098
+    },
+    {
+      "id": "44cf5b43-663e-46e0-a4d5-a64b90284715",
+      "paymentDate": "2024-11-26",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 70000
+      },
+      "amountToReceive": 70000
+    },
+    {
+      "id": "bf10a576-a854-488c-b772-0333e106badb",
+      "paymentDate": "2024-11-27",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 70954
+      },
+      "amountToReceive": 70954
+    },
+    {
+      "id": "58b81e69-deb0-467e-9d63-fb76ec0685a5",
+      "paymentDate": "2024-11-28",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 84306
+      },
+      "amountToReceive": 84306
+    },
+    {
+      "id": "f31efe91-1b2e-4b55-aedb-485d2bd43f51",
+      "paymentDate": "2024-11-29",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 100000
+      },
+      "amountToReceive": 100000
+    },
+    {
+      "id": "ddcd7f10-2fe8-41fc-a77d-a3457372d61f",
+      "paymentDate": "2024-12-23",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 43292
+      },
+      "amountToReceive": 43292
+    },
+    {
+      "id": "94096c00-ed78-4cce-bf39-79bc9a0ade0a",
+      "paymentDate": "2024-12-23",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 43292
+      },
+      "amountToReceive": 43292
+    },
+    {
+      "id": "c4c75623-249d-4857-a1fe-511a59f54c25",
+      "paymentDate": "2024-12-23",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 43292
+      },
+      "amountToReceive": 43292
+    },
+    {
+      "id": "ff8c1460-5be1-4889-894c-46d12c77ad66",
+      "paymentDate": "2024-12-23",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 43292
+      },
+      "amountToReceive": 43292
+    },
+    {
+      "id": "b14feb27-f150-4a3d-a245-146b229941e0",
+      "paymentDate": "2024-12-23",
+      "nationalRegistrationId": "45181802000183",
+      "accreditingInstitutionName": "CONSORCIO MIRAI",
+      "installment": {
+        "count": 1,
+        "number": 1,
+        "amount": 43292
+      },
+      "amountToReceive": 43292
+    }
+  ],
+  "page": {
+    "size": 10,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 1
+  }
+}
