@@ -1,11 +1,1 @@
-{
-  "content": [],
-  "page": {
-    "size": 10,
-    "totalElements": 0,
-    "totalPages": 0,
-    "number": 1
-  }
-}
-
-'toReceivableResponse(br.com.experian.anticipation.domain.model.ReceivablesModel)' in 'br.com.experian.anticipation.application.adapter.ReceivablesMapper' cannot be applied to '(br.com.experian.anticipation.domain.dto.response.ReceivablesResponseDto)'
+'map(java.util.function.Function<? super br.com.experian.anticipation.domain.dto.response.@org.jetbrains.annotations.NotNull ReceivablesResponseDto,? extends U>)' in 'java.util.Optional' cannot be applied to '(<method reference>)'
