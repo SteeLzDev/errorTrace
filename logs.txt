@@ -1,70 +1,9 @@
 {
-  "content": [
-    {
-      "id": "3477973d-d1e9-4eef-8142-15f66c526617",
-      "paymentDate": "2025-08-24",
-      "nationalRegistrationId": "33074241800505",
-      "accreditingInstitutionName": "Credenciadora 9",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 18000
-      },
-      "amountToReceive": 17450
-    },
-    {
-      "id": "d067c6c0-c112-44a7-ab0d-db49ef6e98f4",
-      "paymentDate": "2025-08-26",
-      "nationalRegistrationId": "71252017580083",
-      "accreditingInstitutionName": "Credenciadora 7",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 16000
-      },
-      "amountToReceive": 15550
-    },
-    {
-      "id": "b6c318fb-c0b1-4ba7-ac8f-c25584269075",
-      "paymentDate": "2025-08-28",
-      "nationalRegistrationId": "11316272177399",
-      "accreditingInstitutionName": "Credenciadora 5",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 14000
-      },
-      "amountToReceive": 13650
-    },
-    {
-      "id": "04c87674-e681-45aa-aa97-352e234717d7",
-      "paymentDate": "2025-08-30",
-      "nationalRegistrationId": "81525318615656",
-      "accreditingInstitutionName": "Credenciadora 3",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 12000
-      },
-      "amountToReceive": 11750
-    },
-    {
-      "id": "f160cd71-6c7e-4363-a0ba-248656f5c475",
-      "paymentDate": "2025-09-01",
-      "nationalRegistrationId": "37034678074646",
-      "accreditingInstitutionName": "Credenciadora 1",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 10000
-      },
-      "amountToReceive": 9850
-    }
-  ],
+  "content": [],
   "page": {
     "size": 10,
-    "totalElements": 5,
-    "totalPages": 1,
+    "totalElements": 0,
+    "totalPages": 0,
     "number": 1
   }
 }
