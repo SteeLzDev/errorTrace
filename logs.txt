@@ -7,3 +7,5 @@
     "number": 1
   }
 }
+
+'toReceivableResponse(br.com.experian.anticipation.domain.model.ReceivablesModel)' in 'br.com.experian.anticipation.application.adapter.ReceivablesMapper' cannot be applied to '(br.com.experian.anticipation.domain.dto.response.ReceivablesResponseDto)'
