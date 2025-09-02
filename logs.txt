@@ -1,174 +1,211 @@
-'findAvailables(LocalDate, Integer, Integer)' in 'br.com.experian.anticipation.application.rest.ReceivablesController' clashes with 'findAvailables(LocalDate, Integer, Integer)' in 'br.com.experian.swagger.anticipation.api.ReceivablesApi'; incompatible return type
+"C:\Program Files\Zulu\zulu-21\bin\java.exe" -Dmaven.multiModuleProjectDirectory=C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services -Djansi.passthrough=true "-Dmaven.home=C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2025.1.3/plugins/maven/lib/maven3" "-Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\bin\m2.conf" "-Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven-event-listener.jar" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=60378" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds-2.8.0.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds.license" org.codehaus.classworlds.Launcher -Didea.version=2025.1.3 -DskipTests=true clean compile
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< br.com.experian.bfm:experian-pme-bfm-receivables-anticipation-domain-services >--
+[INFO] Building experian-pme-bfm-receivables-anticipation-domain-services 0.0.1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] 
+[INFO] --- resources:3.3.1:copy-resources (copy) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\main\resources\docs
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (anticipation) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Generating with dryRun=false
+[INFO] Output directory (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi) does not exist, or is inaccessible. No file (.openapi-generator-ignore) will be evaluated.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from api package name: br.com.experian.swagger.anticipation
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[INFO] Processing operation retrieveStatus
+[INFO] Processing operation accept
+[INFO] Processing operation findAvailables
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\InstallmentDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingStatusTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\PaginationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\PaymentTypeTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableGroupTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableGroupedResponseTO.java
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[WARNING] #/components/schemas/ReceivableResponse is not defined
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\OnboardingApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\ReceivablesApi.java
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (antecipa-cerc) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.antecipa
+[WARNING] Empty operationId found for path: GET /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGET
+[WARNING] Empty operationId found for path: POST /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentIdGET
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Anticipations/Simulate/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSimulateSupplierDocumentPOST
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Anticipations/Execute/{SupplierDocument}/{CapitalSourceDocument}/{OfferId}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsExecuteSupplierDocumentCapitalSourceDocumentOfferIdPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Anticipations/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Anticipations/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSupplierDocumentIdGET
+[WARNING] Empty operationId found for path: POST /Webhook. Renamed to auto-generated operationId: webhookPOST
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAccreditingInstitutionAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAccreditingInstitutionCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAntecipaUserIdentity.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivabletDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaBankAccountDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaBasicResultDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCapitalSourceAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCapitalSourceCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableAnticipationSimulationDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaOfferAnnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulateAnticipationCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAddCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAddressViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierBankAccountViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierPartnerDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierPartnerViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierRegistrationDto.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (digital-account) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.digital.account
+[WARNING] Failed to get the schema name: null
+[INFO] Inline schema created as ErrorModel_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ErrorModel_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ErrorModel_inner=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation admFindBusinessById
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalActivityAreaTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalBusinessAccountTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalBusinessAddressTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalBusinessPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalCompanySizeTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalErrorModelInnerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalNewBusinessDocumentTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalOwnerNameTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Copying 7 resources from src\main\resources to target\classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.12.0:compile (default-compile) @ experian-pme-bfm-receivables-anticipation-domain-services ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 91 source files with javac [debug target 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/Users/C18132Q/Documents/Workspace-experian/experian-pme-bfm-receivables-anticipation-domain-services/target/generated-sources/openapi/gen/br/com/experian/swagger/anticipation/api/ReceivablesApi.java:[11,50] cannot find symbol
+  symbol:   class ReceivableResponseTO
+  location: package br.com.experian.swagger.anticipation.model
+[ERROR] /C:/Users/C18132Q/Documents/Workspace-experian/experian-pme-bfm-receivables-anticipation-domain-services/target/generated-sources/openapi/gen/br/com/experian/swagger/anticipation/api/ReceivablesApi.java:[90,20] cannot find symbol
+  symbol:   class ReceivableResponseTO
+  location: interface br.com.experian.swagger.anticipation.api.ReceivablesApi
+[ERROR] /C:/Users/C18132Q/Documents/Workspace-experian/experian-pme-bfm-receivables-anticipation-domain-services/target/generated-sources/openapi/gen/br/com/experian/swagger/anticipation/api/ReceivablesApi.java:[64,92] cannot find symbol
+  symbol:   class ReceivableResponseTO
+  location: interface br.com.experian.swagger.anticipation.api.ReceivablesApi
+[INFO] 3 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  36.706 s
+[INFO] Finished at: 2025-09-02T09:20:40-03:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.12.0:compile (default-compile) on project experian-pme-bfm-receivables-anticipation-domain-services: Compilation failure: Compilation failure: 
+[ERROR] /C:/Users/C18132Q/Documents/Workspace-experian/experian-pme-bfm-receivables-anticipation-domain-services/target/generated-sources/openapi/gen/br/com/experian/swagger/anticipation/api/ReceivablesApi.java:[11,50] cannot find symbol
+[ERROR]   symbol:   class ReceivableResponseTO
+[ERROR]   location: package br.com.experian.swagger.anticipation.model
+[ERROR] /C:/Users/C18132Q/Documents/Workspace-experian/experian-pme-bfm-receivables-anticipation-domain-services/target/generated-sources/openapi/gen/br/com/experian/swagger/anticipation/api/ReceivablesApi.java:[90,20] cannot find symbol
+[ERROR]   symbol:   class ReceivableResponseTO
+[ERROR]   location: interface br.com.experian.swagger.anticipation.api.ReceivablesApi
+[ERROR] /C:/Users/C18132Q/Documents/Workspace-experian/experian-pme-bfm-receivables-anticipation-domain-services/target/generated-sources/openapi/gen/br/com/experian/swagger/anticipation/api/ReceivablesApi.java:[64,92] cannot find symbol
+[ERROR]   symbol:   class ReceivableResponseTO
+[ERROR]   location: interface br.com.experian.swagger.anticipation.api.ReceivablesApi
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
 
-/**
- * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech) (7.11.0).
- * https://openapi-generator.tech
- * Do not edit the class manually.
- */
-package br.com.experian.swagger.anticipation.api;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import br.com.experian.swagger.anticipation.model.ErrorModelTO;
-import java.time.LocalDate;
-import br.com.experian.swagger.anticipation.model.ReceivableResponseTO;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import jakarta.annotation.Generated;
-
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-02T01:09:20.596991400-03:00[America/Sao_Paulo]", comments = "Generator version: 7.11.0")
-@Validated
-@Tag(name = "Receivables", description = "the Receivables API")
-public interface ReceivablesApi {
-
-    /**
-     * GET /receivables : Retrieve available receivables
-     * Retrieve available receivables
-     *
-     * @param date Payment date to filter receivables (format YYYY-MM-DD). Defaults to today&#39;s date if not provided. (optional)
-     * @param limit Maximum number of receivables to return (optional, default to 10)
-     * @param offset Number of receivables to skip for pagination (optional, default to 0)
-     * @return The request was successful (status code 200)
-     *         or Bad Request (status code 400)
-     *         or Unauthorized (status code 401)
-     *         or Failed Dependency (status code 424)
-     *         or Internal Server Error (status code 500)
-     *         or Unexpected Error (status code 200)
-     */
-    @Operation(
-        operationId = "findAvailables",
-        summary = "Retrieve available receivables",
-        description = "Retrieve available receivables",
-        tags = { "Receivables" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "The request was successful", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ReceivableResponseTO.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModelTO.class))
-            }),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModelTO.class))
-            }),
-            @ApiResponse(responseCode = "424", description = "Failed Dependency", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModelTO.class))
-            }),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModelTO.class))
-            }),
-            @ApiResponse(responseCode = "default", description = "Unexpected Error")
-        },
-        security = {
-            @SecurityRequirement(name = "OauthSecurityUser", scopes={ "read" })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/receivables",
-        produces = { "application/json" }
-    )
-    
-    ResponseEntity<ReceivableResponseTO> findAvailables(
-        @Parameter(name = "date", description = "Payment date to filter receivables (format YYYY-MM-DD). Defaults to today's date if not provided.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-        @Min(1) @Max(100) @Parameter(name = "limit", description = "Maximum number of receivables to return", in = ParameterIn.QUERY) @Valid @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
-        @Min(0) @Parameter(name = "offset", description = "Number of receivables to skip for pagination", in = ParameterIn.QUERY) @Valid @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset
-    );
-
-}
-
-
-package br.com.experian.anticipation.application.rest;
-
-import br.com.experian.anticipation.application.adapter.ReceivablesMapper;
-import br.com.experian.anticipation.domain.dto.response.ReceivablesGroupedResponseDto;
-import br.com.experian.anticipation.domain.dto.response.ReceivablesResponseDto;
-import br.com.experian.anticipation.domain.model.ReceivablesModel;
-import br.com.experian.anticipation.domain.service.ReceivablesService;
-import br.com.experian.observability.annotation.LogMethod;
-import br.com.experian.swagger.anticipation.api.ReceivablesApi;
-import br.com.experian.swagger.anticipation.model.ReceivableResponseTO;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Optional;
-
-
-@RestController
-public class ReceivablesController extends  BaseController implements ReceivablesApi {
-
-    private final ReceivablesService receivablesService;
-    private final HttpServletRequest request;
-
-    public ReceivablesController(ReceivablesService receivablesService, HttpServletRequest request) {
-        this.receivablesService = receivablesService;
-        this.request = request;
-    }
-
-    @Override
-    @PreAuthorize(HAS_RULES)
-    @LogMethod(LogMethod.LogType.FULL)
-    public ResponseEntity<ReceivablesGroupedResponseDto> findAvailables(LocalDate date, Integer limit, Integer offset) {
-        final String supplierDocument = extractSupplierDocument();
-
-        final int pageLimit = limit != null ? limit : 10;
-        final int pageOffset = offset != null ? offset : 0;
-
-        Optional<ReceivablesResponseDto> receivablesOptional = receivablesService.getReceivables(supplierDocument, pageLimit, pageOffset);
-                if(receivablesOptional.isEmpty()) {
-                    return ResponseEntity.ok(createEmptyGroupedResponse());
-                }
-                ReceivablesModel receivablesModel = receivablesOptional.get().getReceivables();
-
-                ReceivablesGroupedResponseDto response = ReceivablesMapper.toGroupedResponse(receivablesModel);
-                return ResponseEntity.ok(response);
-        }
-
-
-    private String extractSupplierDocument() {
-        String header = request.getHeader("X-Supplier-Document");
-        if (header != null && !header.isBlank()) {
-            return header.trim();
-        }
-        throw new IllegalArgumentException("Supplier document is required (header X-Supplier-Document)");
-    }
-
-    private ReceivablesGroupedResponseDto createEmptyGroupedResponse() {
-     ReceivablesGroupedResponseDto.PaginationDto page = ReceivablesGroupedResponseDto.PaginationDto.builder()
-             .size(10)
-             .totalElements(0)
-             .totalPages(0)
-             .number(1)
-             .build();
-
-        return ReceivablesGroupedResponseDto.builder()
-                .groups(Collections.emptyList())
-                .page(page)
-                .build();
-    }
-}
-
+Process finished with exit code 1
