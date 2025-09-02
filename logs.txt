@@ -1,271 +1,174 @@
-2025-09-02 00:38:34.429  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.a.r.ReceivablesController        : custom.experian.java.method.args="{date=null, offset=1, limit=10}" custom.experian.java.method.args_count="3" log.origin.function="findAvailables" message="Init method"
-2025-09-02 00:38:34.431  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.i.i.f.c.a.ReceivablesServiceImpl : log.origin.function="getReceivables" message="Init method"
-2025-09-02 00:38:34.431  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.i.i.f.c.a.ReceivablesServiceImpl : Getting receivables for supplier document: 45181802000183 with limit: 10 and offset: 1 
-2025-09-02 00:38:34.432  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.i.r.a.ReceivablesAdapter         : Consulting receivables in the API for document: 45181802000183 with limit: 10 and offset: 1
-2025-09-02 00:38:36.180 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 26036 --- [alhost:4317/...] i.o.e.i.h.HttpExporter                   : Failed to export spans. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4317
+'findAvailables(LocalDate, Integer, Integer)' in 'br.com.experian.anticipation.application.rest.ReceivablesController' clashes with 'findAvailables(LocalDate, Integer, Integer)' in 'br.com.experian.swagger.anticipation.api.ReceivablesApi'; incompatible return type
 
-java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4317
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:4317
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-		at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Caused by: java.net.ConnectException: Connection refused: getsockopt
-		at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-		at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-		... 18 more
-Caused by: java.net.ConnectException: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-	at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-	... 18 more
+/**
+ * NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech) (7.11.0).
+ * https://openapi-generator.tech
+ * Do not edit the class manually.
+ */
+package br.com.experian.swagger.anticipation.api;
 
-2025-09-02 00:38:38.513  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/45181802000183?StatusId=1&CapitalSourceDocument=17250006000110&PageId=1&PageSize=10","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiIzY2M1YzEzYS1jMWEwLTRjYjUtOWViMS0wYTVmM2EwNDgzNmMiLCJldmVudF9pZCI6IjkzNmMyOWQ0LThmODctNDdhNS1hNWFjLTkwYmNhMDExZjNkZiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTY3ODQxNTAsImV4cCI6MTc1Njc5MTM1MCwiaWF0IjoxNzU2Nzg0MTUwLCJqdGkiOiIxNTVlN2MzMi1mMzFjLTRmYWItOTliMy1jMjRjNjgxNWQ3ZTAiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.HEO-AHrFL_R3MZabScV8ndpgW6H1TW-ONEE3V8bdmlofxN1RGlHqiYw09jrTDgR_y6KTWNddFk97xIE-02X3rciuFBPPpx2MsBK9r_uIzFEqC3d-XTd4Mbj-JLoYL3VflJ68Sh3NTgRYGFazD7CfPR4Udr4FqaBGKR-2P5lJRJ6KZz2gs4pkWfCaj2brTM1E8C3ZBm7efU6ODPymASJtPYcSfuypLwxANCJc_629l6HD3msoWYThX73mju7ynkT5gxTzsNKFylJSzf820GYB9UnXCW4hYYBM1sI5oOiw2t8ksaGo_Cit9cCygXwCt2VS9-bOXc2jWe_1XgJcf_IzUQ"]},"execution_time":4074,"response":"{\"items\":[{\"id\":\"ddcd7f10-2fe8-41fc-a77d-a3457372d61f\",\"accreditingInstitution\":{\"id\":\"20f02f4d-27f2-4a0b-9e73-1dc68dbee37e\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"af81ec06-4e35-4b67-8a21-c869cb79f2cb\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":43292,\"formattedValue\":\"R$ 43.292,00\",\"statusId\":3,\"status\":\"Antecipado\",\"dueDate\":\"2024-12-23T00:00:00\",\"daysToDue\":0,\"paymentDate\":null,\"anticipationSimulation\":null},{\"id\":\"94096c00-ed78-4cce-bf39-79bc9a0ade0a\",\"accreditingInstitution\":{\"id\":\"3d711f1b-791d-491f-b951-8bcc5eaa4fc2\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"17b14775-7e33-43db-b651-7104c3508c2c\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":43292,\"formattedValue\":\"R$ 43.292,00\",\"statusId\":3,\"status\":\"Antecipado\",\"dueDate\":\"2024-12-23T00:00:00\",\"daysToDue\":0,\"paymentDate\":null,\"anticipationSimulation\":null},{\"id\":\"c4c75623-249d-4857-a1fe-511a59f54c25\",\"accreditingInstitution\":{\"id\":\"25c589bb-32fb-4e49-bfab-9d4f977a44e9\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"0bd828bb-a151-476f-a4e9-5bd9edb3cdbc\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":43292,\"formattedValue\":\"R$ 43.292,00\",\"statusId\":3,\"status\":\"Antecipado\",\"dueDate\":\"2024-12-23T00:00:00\",\"daysToDue\":0,\"paymentDate\":null,\"anticipationSimulation\":null},{\"id\":\"ff8c1460-5be1-4889-894c-46d12c77ad66\",\"accreditingInstitution\":{\"id\":\"7181f01b-cb40-42ca-949b-defabc9dd86c\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"cab6ec32-9c87-4f48-88bb-37cc9051938b\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":43292,\"formattedValue\":\"R$ 43.292,00\",\"statusId\":3,\"status\":\"Antecipado\",\"dueDate\":\"2024-12-23T00:00:00\",\"daysToDue\":0,\"paymentDate\":null,\"anticipationSimulation\":null},{\"id\":\"b14feb27-f150-4a3d-a245-146b229941e0\",\"accreditingInstitution\":{\"id\":\"c4dc894c-6239-4b61-a8ba-0657a24222b5\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"b4c7851e-bd62-42bd-adc9-c082950d553c\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":43292,\"formattedValue\":\"R$ 43.292,00\",\"statusId\":3,\"status\":\"Antecipado\",\"dueDate\":\"2024-12-23T00:00:00\",\"daysToDue\":0,\"paymentDate\":null,\"anticipationSimulation\":null},{\"id\":\"f31efe91-1b2e-4b55-aedb-485d2bd43f51\",\"accreditingInstitution\":{\"id\":\"a311c837-c69d-4517-afb7-50613a12b5d6\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"dfb87368-166f-4214-a8b6-8dbc725cc40f\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":100000,\"formattedValue\":\"R$ 100.000,00\",\"statusId\":1,\"status\":\"Não Antecipável\",\"dueDate\":\"2024-11-29T00:00:00\",\"daysToDue\":0,\"paymentDate\":null,\"anticipationSimulation\":null},{\"id\":\"58b81e69-deb0-467e-9d63-fb76ec0685a5\",\"accreditingInstitution\":{\"id\":\"d3169df1-23ba-47e8-b7ca-33bf9129ee39\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"ed73a3d2-3e37-411d-b1b2-56c71fdb0b99\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":84306,\"formattedValue\":\"R$ 84.306,00\",\"statusId\":3,\"status\":\"Antecipado\",\"dueDate\":\"2024-11-28T00:00:00\",\"daysToDue\":0,\"paymentDate\":null,\"anticipationSimulation\":null},{\"id\":\"bf10a576-a854-488c-b772-0333e106badb\",\"accreditingInstitution\":{\"id\":\"c3fece21-8187-4d03-91a7-ce721c27ee16\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"d1bca5b4-76eb-44d5-b2da-7bd639690377\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":70954,\"formattedValue\":\"R$ 70.954,00\",\"statusId\":3,\"status\":\"Antecipado\",\"dueDate\":\"2024-11-27T00:00:00\",\"daysToDue\":0,\"paymentDate\":null,\"anticipationSimulation\":null},{\"id\":\"44cf5b43-663e-46e0-a4d5-a64b90284715\",\"accreditingInstitution\":{\"id\":\"65c5d247-cd1d-4c56-8aea-61f52826354a\",\"name\":\"***************\",\"document\":\"07295221000183\",\"formattedDocument\":\"07.295.221/0001-83\"},\"supplier\":{\"id\":\"d2331d75-7046-4db3-a64c-9892391b4b06\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"value\":70000,\"formattedValue\":\"R$ 70.000,00\",\"s","application_structure":{"class_name":"AntecipaClient","method_name":"getCardReceivables(String,String,String,String,String,String,String,String,String,Integer)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-02T02:35:50","iat":"2025-09-02T00:35:50"}},"truncated":true}
-2025-09-02 00:38:38.516  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.i.r.a.ReceivablesAdapter         : Grouped receivables into 6 different payment dates
-2025-09-02 00:38:38.518  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.i.r.a.ReceivablesAdapter         : Successfully retrieved 10 receivables for document: 45181802000183
-2025-09-02 00:38:38.518  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.i.i.f.c.a.ReceivablesServiceImpl : Successfully retrieved receivables for supplier document: 45181802000183
-2025-09-02 00:38:38.518  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.i.i.f.c.a.ReceivablesServiceImpl : custom.experian.java.method.duration="4087" log.origin.function="getReceivables" message="Finish method"
-2025-09-02 00:38:38.518  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.ReceivablesServiceImpl","method_name":"getReceivables(java.lang.String supplierDocument, java.lang.Integer limit, java.lang.Integer offset)"},"entry_parameters":{"offset":1,"supplierDocument":"45181802000183","limit":10},"return_object":{"optional":true,"return_value":"{\"receivables\":{\"groups\":[{\"date\":\"2024-11-25\",\"receivables\":[{\"id\":\"b01c1866-4d3a-4330-abca-5c000c52fed5\",\"paymentDate\":\"2024-11-25\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":45098.0},\"amountToReceive\":45098.0}],\"count\":1,\"totalAmountToReceive\":45098.0},{\"date\":\"2024-11-26\",\"receivables\":[{\"id\":\"44cf5b43-663e-46e0-a4d5-a64b90284715\",\"paymentDate\":\"2024-11-26\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":70000.0},\"amountToReceive\":70000.0}],\"count\":1,\"totalAmountToReceive\":70000.0},{\"date\":\"2024-11-27\",\"receivables\":[{\"id\":\"bf10a576-a854-488c-b772-0333e106badb\",\"paymentDate\":\"2024-11-27\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":70954.0},\"amountToReceive\":70954.0}],\"count\":1,\"totalAmountToReceive\":70954.0},{\"date\":\"2024-11-28\",\"receivables\":[{\"id\":\"58b81e69-deb0-467e-9d63-fb76ec0685a5\",\"paymentDate\":\"2024-11-28\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":84306.0},\"amountToReceive\":84306.0}],\"count\":1,\"totalAmountToReceive\":84306.0},{\"date\":\"2024-11-29\",\"receivables\":[{\"id\":\"f31efe91-1b2e-4b55-aedb-485d2bd43f51\",\"paymentDate\":\"2024-11-29\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":100000.0},\"amountToReceive\":100000.0}],\"count\":1,\"totalAmountToReceive\":100000.0},{\"date\":\"2024-12-23\",\"receivables\":[{\"id\":\"ddcd7f10-2fe8-41fc-a77d-a3457372d61f\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"amountToReceive\":43292.0},{\"id\":\"94096c00-ed78-4cce-bf39-79bc9a0ade0a\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"amountToReceive\":43292.0},{\"id\":\"c4c75623-249d-4857-a1fe-511a59f54c25\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"amountToReceive\":43292.0},{\"id\":\"ff8c1460-5be1-4889-894c-46d12c77ad66\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"amountToReceive\":43292.0},{\"id\":\"b14feb27-f150-4a3d-a245-146b229941e0\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentTypeTO\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"amountToReceive\":43292.0}],\"count\":5,\"totalAmountToReceive\":216460.0}],\"page\":{\"size\":10,\"totalElements\":10,\"totalPages\":1,\"number\":1}}}"},"truncated":false}
-2025-09-02 00:38:38.520  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.a.a.r.ReceivablesController        : custom.experian.java.method.duration="4091" custom.experian.java.method.result="{\"headers\":{},\"body\":{\"content\":[{\"id\":\"b01c1866-4d3a-4330-abca-5c000c52fed5\",\"paymentDate\":\"2024-11-25\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":45098.0},\"discount\":null,\"amountToReceive\":45098.0},{\"id\":\"44cf5b43-663e-46e0-a4d5-a64b90284715\",\"paymentDate\":\"2024-11-26\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":70000.0},\"discount\":null,\"amountToReceive\":70000.0},{\"id\":\"bf10a576-a854-488c-b772-0333e106badb\",\"paymentDate\":\"2024-11-27\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":70954.0},\"discount\":null,\"amountToReceive\":70954.0},{\"id\":\"58b81e69-deb0-467e-9d63-fb76ec0685a5\",\"paymentDate\":\"2024-11-28\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":84306.0},\"discount\":null,\"amountToReceive\":84306.0},{\"id\":\"f31efe91-1b2e-4b55-aedb-485d2bd43f51\",\"paymentDate\":\"2024-11-29\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":100000.0},\"discount\":null,\"amountToReceive\":100000.0},{\"id\":\"ddcd7f10-2fe8-41fc-a77d-a3457372d61f\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"discount\":null,\"amountToReceive\":43292.0},{\"id\":\"94096c00-ed78-4cce-bf39-79bc9a0ade0a\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"discount\":null,\"amountToReceive\":43292.0},{\"id\":\"c4c75623-249d-4857-a1fe-511a59f54c25\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"discount\":null,\"amountToReceive\":43292.0},{\"id\":\"ff8c1460-5be1-4889-894c-46d12c77ad66\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"discount\":null,\"amountToReceive\":43292.0},{\"id\":\"b14feb27-f150-4a3d-a245-146b229941e0\",\"paymentDate\":\"2024-12-23\",\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"***************\",\"paymentType\":null,\"installment\":{\"count\":1,\"number\":1,\"amount\":43292.0},\"discount\":null,\"amountToReceive\":43292.0}],\"page\":{\"size\":10,\"totalElements\":10,\"totalPages\":1,\"number\":1}},\"statusCode\":\"OK\",\"statusCodeValue\":200}" log.origin.function="findAvailables" message="Finish method"
-2025-09-02 00:38:38.522  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/receivables" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_BUSINESS, ROLE_CLI-AUTH-IDENTIFIED, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="644817dcb5430d6708103a1f" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="73217" custom.experian.http.request.token.exp="1756787738" custom.experian.http.request.token.iat="1756784138" custom.experian.http.request.token.iss="http://experian-dp-iam-authorization-server-service.digital-identity-services-uat.svc" custom.experian.http.request.token.jti="80179618-3655-4f7b-a73f-2d5e11b54307" custom.experian.http.request.token.nbf="1756784138" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="f6eda951-608e-4b1d-ab8c-b7a101a6c549" custom.experian.http.request.token.sub="644817dcb5430d6708103a20" custom.experian.http.request.token.user_id="644817dcb5430d6708103a20" destination.address="0:0:0:0:0:0:0:1" destination.port="61855" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/receivables" http.response.status_code="200" server.address="*********"
-2025-09-02 00:38:38.524  INFO [experian-pme-bfm-receivables-anticipation-domain-services,26d8b977c69a8d787d7f89e2ab3f7a3c,3706e6fc02f17b9c,] 26036 --- [nio-8080-exec-9] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"644817dcb5430d6708103a1f","user_id":"644817dcb5430d6708103a20","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"73217","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/receivables","http_method":"GET","http_status_response":200,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.ReceivablesController","method_name":"findAvailables(java.time.LocalDate date, java.lang.Integer limit, java.lang.Integer offset)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-09-02T01:35:38","iat":"2025-09-02T00:35:38","authorities":["ROLE_BUSINESSADMIN","ROLE_BUSINESS","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJzdWIiOiI2NDQ4MTdkY2I1NDMwZDY3MDgxMDNhMjAiLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwic2Vzc2lvbl9pZCI6ImY2ZWRhOTUxLTYwOGUtNGIxZC1hYjhjLWI3YTEwMWE2YzU0OSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQlVTSU5FU1NBRE1JTiIsIlJPTEVfQlVTSU5FU1MiLCJST0xFX0NMSS1BVVRILUlERU5USUZJRUQiLCJST0xFX0NMSS0xU1RQQVJUWSIsIlJPTEVfVVNFUiIsIlJPTEVfQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLTNSRFBBUlRZIiwiUk9MRV9QRVJTT04iLCJST0xFX0JVU0lORVNTVVNFUiIsIlJPTEVfQVVUSC1JREVOVElGSUVEIl0sImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwibmJmIjoxNzU2Nzg0MTM4LCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3IiwidXNlcl9pZCI6IjY0NDgxN2RjYjU0MzBkNjcwODEwM2EyMCIsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwic2VydmljZV9pZCI6IjYwMDVlYWM2OWZmN2MwM2I1NjNkYjVlYiIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImV4cCI6MTc1Njc4NzczOCwiY3VzdG9tZXJfaWQiOjczMjE3LCJpYXQiOjE3NTY3ODQxMzgsImJ1c2luZXNzX2lkIjoiNjQ0ODE3ZGNiNTQzMGQ2NzA4MTAzYTFmIiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwianRpIjoiODAxNzk2MTgtMzY1NS00ZjdiLWE3M2YtMmQ1ZTExYjU0MzA3In0.XSDPi-HJIX7L7Msuse5TxBzVHDMuf8PsrYHjnzT3nDhmoKfOKReIrDYpECaD08s0DX1y9XgtSvSpYipDgGWNwSjhC5gwlK59KOsW2-ArPOYeIjyLUKLHskc_22Dv4h0xNexbGqhvaOP3bCORv2oUQ6D5DKN76AimEbacH8LDpfEo8SGzjWawYSO8LpvqYjk1pnniKVqxJfwPmdh89qRb93vxuW0-gKXTv4i3DtscIwGIDuFEslI0thhn8K88feBGeFz_u9Jf7Mwr7KzPif-HOYdZEidoBv2miFl2h2_L7kmmRxGSaW6jsbX6HVJWM-ghizO72VWQBEw6F1YsVXRk5w","host":"localhost:8080","request-start-time":"1756784314392","content-type":"application/json","connection":"keep-alive","x-supplier-document":"45181802000183","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
-2025-09-02 00:38:41.199 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,,,] 26036 --- [alhost:4317/...] i.o.e.i.h.HttpExporter                   : Failed to export spans. The request could not be executed. Full error message: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4317
+import org.springframework.format.annotation.DateTimeFormat;
+import br.com.experian.swagger.anticipation.model.ErrorModelTO;
+import java.time.LocalDate;
+import br.com.experian.swagger.anticipation.model.ReceivableResponseTO;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.multipart.MultipartFile;
 
-java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4317
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:4317
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:297) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:207) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ExchangeFinder.find(ExchangeFinder.kt:74) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:95) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:83) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:76) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:109) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:201) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:517) ~[okhttp-4.12.0.jar:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
-		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
-		at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-	Caused by: java.net.ConnectException: Connection refused: getsockopt
-		at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-		at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-		at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-		... 18 more
-Caused by: java.net.ConnectException: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[?:?]
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592) ~[?:?]
-	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
-	at java.base/java.net.Socket.connect(Socket.java:757) ~[?:?]
-	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:128) ~[okhttp-4.12.0.jar:?]
-	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.kt:295) ~[okhttp-4.12.0.jar:?]
-	... 18 more
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import jakarta.annotation.Generated;
+
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-02T01:09:20.596991400-03:00[America/Sao_Paulo]", comments = "Generator version: 7.11.0")
+@Validated
+@Tag(name = "Receivables", description = "the Receivables API")
+public interface ReceivablesApi {
+
+    /**
+     * GET /receivables : Retrieve available receivables
+     * Retrieve available receivables
+     *
+     * @param date Payment date to filter receivables (format YYYY-MM-DD). Defaults to today&#39;s date if not provided. (optional)
+     * @param limit Maximum number of receivables to return (optional, default to 10)
+     * @param offset Number of receivables to skip for pagination (optional, default to 0)
+     * @return The request was successful (status code 200)
+     *         or Bad Request (status code 400)
+     *         or Unauthorized (status code 401)
+     *         or Failed Dependency (status code 424)
+     *         or Internal Server Error (status code 500)
+     *         or Unexpected Error (status code 200)
+     */
+    @Operation(
+        operationId = "findAvailables",
+        summary = "Retrieve available receivables",
+        description = "Retrieve available receivables",
+        tags = { "Receivables" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "The request was successful", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ReceivableResponseTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModelTO.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModelTO.class))
+            }),
+            @ApiResponse(responseCode = "424", description = "Failed Dependency", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModelTO.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModelTO.class))
+            }),
+            @ApiResponse(responseCode = "default", description = "Unexpected Error")
+        },
+        security = {
+            @SecurityRequirement(name = "OauthSecurityUser", scopes={ "read" })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/receivables",
+        produces = { "application/json" }
+    )
+    
+    ResponseEntity<ReceivableResponseTO> findAvailables(
+        @Parameter(name = "date", description = "Payment date to filter receivables (format YYYY-MM-DD). Defaults to today's date if not provided.", in = ParameterIn.QUERY) @Valid @RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+        @Min(1) @Max(100) @Parameter(name = "limit", description = "Maximum number of receivables to return", in = ParameterIn.QUERY) @Valid @RequestParam(value = "limit", required = false, defaultValue = "10") Integer limit,
+        @Min(0) @Parameter(name = "offset", description = "Number of receivables to skip for pagination", in = ParameterIn.QUERY) @Valid @RequestParam(value = "offset", required = false, defaultValue = "0") Integer offset
+    );
+
+}
 
 
-{
-  "content": [
-    {
-      "id": "b01c1866-4d3a-4330-abca-5c000c52fed5",
-      "paymentDate": "2024-11-25",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 45098
-      },
-      "amountToReceive": 45098
-    },
-    {
-      "id": "44cf5b43-663e-46e0-a4d5-a64b90284715",
-      "paymentDate": "2024-11-26",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 70000
-      },
-      "amountToReceive": 70000
-    },
-    {
-      "id": "bf10a576-a854-488c-b772-0333e106badb",
-      "paymentDate": "2024-11-27",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 70954
-      },
-      "amountToReceive": 70954
-    },
-    {
-      "id": "58b81e69-deb0-467e-9d63-fb76ec0685a5",
-      "paymentDate": "2024-11-28",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 84306
-      },
-      "amountToReceive": 84306
-    },
-    {
-      "id": "f31efe91-1b2e-4b55-aedb-485d2bd43f51",
-      "paymentDate": "2024-11-29",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 100000
-      },
-      "amountToReceive": 100000
-    },
-    {
-      "id": "ddcd7f10-2fe8-41fc-a77d-a3457372d61f",
-      "paymentDate": "2024-12-23",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 43292
-      },
-      "amountToReceive": 43292
-    },
-    {
-      "id": "94096c00-ed78-4cce-bf39-79bc9a0ade0a",
-      "paymentDate": "2024-12-23",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 43292
-      },
-      "amountToReceive": 43292
-    },
-    {
-      "id": "c4c75623-249d-4857-a1fe-511a59f54c25",
-      "paymentDate": "2024-12-23",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 43292
-      },
-      "amountToReceive": 43292
-    },
-    {
-      "id": "ff8c1460-5be1-4889-894c-46d12c77ad66",
-      "paymentDate": "2024-12-23",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 43292
-      },
-      "amountToReceive": 43292
-    },
-    {
-      "id": "b14feb27-f150-4a3d-a245-146b229941e0",
-      "paymentDate": "2024-12-23",
-      "nationalRegistrationId": "45181802000183",
-      "accreditingInstitutionName": "CONSORCIO MIRAI",
-      "installment": {
-        "count": 1,
-        "number": 1,
-        "amount": 43292
-      },
-      "amountToReceive": 43292
+package br.com.experian.anticipation.application.rest;
+
+import br.com.experian.anticipation.application.adapter.ReceivablesMapper;
+import br.com.experian.anticipation.domain.dto.response.ReceivablesGroupedResponseDto;
+import br.com.experian.anticipation.domain.dto.response.ReceivablesResponseDto;
+import br.com.experian.anticipation.domain.model.ReceivablesModel;
+import br.com.experian.anticipation.domain.service.ReceivablesService;
+import br.com.experian.observability.annotation.LogMethod;
+import br.com.experian.swagger.anticipation.api.ReceivablesApi;
+import br.com.experian.swagger.anticipation.model.ReceivableResponseTO;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Optional;
+
+
+@RestController
+public class ReceivablesController extends  BaseController implements ReceivablesApi {
+
+    private final ReceivablesService receivablesService;
+    private final HttpServletRequest request;
+
+    public ReceivablesController(ReceivablesService receivablesService, HttpServletRequest request) {
+        this.receivablesService = receivablesService;
+        this.request = request;
     }
-  ],
-  "page": {
-    "size": 10,
-    "totalElements": 10,
-    "totalPages": 1,
-    "number": 1
-  }
+
+    @Override
+    @PreAuthorize(HAS_RULES)
+    @LogMethod(LogMethod.LogType.FULL)
+    public ResponseEntity<ReceivablesGroupedResponseDto> findAvailables(LocalDate date, Integer limit, Integer offset) {
+        final String supplierDocument = extractSupplierDocument();
+
+        final int pageLimit = limit != null ? limit : 10;
+        final int pageOffset = offset != null ? offset : 0;
+
+        Optional<ReceivablesResponseDto> receivablesOptional = receivablesService.getReceivables(supplierDocument, pageLimit, pageOffset);
+                if(receivablesOptional.isEmpty()) {
+                    return ResponseEntity.ok(createEmptyGroupedResponse());
+                }
+                ReceivablesModel receivablesModel = receivablesOptional.get().getReceivables();
+
+                ReceivablesGroupedResponseDto response = ReceivablesMapper.toGroupedResponse(receivablesModel);
+                return ResponseEntity.ok(response);
+        }
+
+
+    private String extractSupplierDocument() {
+        String header = request.getHeader("X-Supplier-Document");
+        if (header != null && !header.isBlank()) {
+            return header.trim();
+        }
+        throw new IllegalArgumentException("Supplier document is required (header X-Supplier-Document)");
+    }
+
+    private ReceivablesGroupedResponseDto createEmptyGroupedResponse() {
+     ReceivablesGroupedResponseDto.PaginationDto page = ReceivablesGroupedResponseDto.PaginationDto.builder()
+             .size(10)
+             .totalElements(0)
+             .totalPages(0)
+             .number(1)
+             .build();
+
+        return ReceivablesGroupedResponseDto.builder()
+                .groups(Collections.emptyList())
+                .page(page)
+                .build();
+    }
 }
 
