@@ -1,138 +1,208 @@
-package br.com.experian.swagger.anticipation.model;
-
-import java.net.URI;
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import java.math.BigDecimal;
-import org.springframework.lang.Nullable;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.io.Serializable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
-import jakarta.annotation.Generated;
-
-/**
- * InstallmentDataTO
- */
-
-@JsonTypeName("InstallmentData")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-02T09:44:33.136793100-03:00[America/Sao_Paulo]", comments = "Generator version: 7.11.0")
-public class InstallmentDataTO implements Serializable {
-
-  private static final long serialVersionUID = 1L;
-
-  private @Nullable Integer count;
-
-  private @Nullable Integer number;
-
-  private @Nullable BigDecimal amount;
-
-  public InstallmentDataTO count(Integer count) {
-    this.count = count;
-    return this;
-  }
-
-  /**
-   * Get count
-   * @return count
-   */
-  
-  @Schema(name = "count", example = "3", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("count")
-  public Integer getCount() {
-    return count;
-  }
-
-  public void setCount(Integer count) {
-    this.count = count;
-  }
-
-  public InstallmentDataTO number(Integer number) {
-    this.number = number;
-    return this;
-  }
-
-  /**
-   * Get number
-   * @return number
-   */
-  
-  @Schema(name = "number", example = "1", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("number")
-  public Integer getNumber() {
-    return number;
-  }
-
-  public void setNumber(Integer number) {
-    this.number = number;
-  }
-
-  public InstallmentDataTO amount(BigDecimal amount) {
-    this.amount = amount;
-    return this;
-  }
-
-  /**
-   * Get amount
-   * @return amount
-   */
-  @Valid 
-  @Schema(name = "amount", example = "1534.45", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("amount")
-  public BigDecimal getAmount() {
-    return amount;
-  }
-
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+{
+  "content": [
+    {
+      "paymentDate": "2024-11-25",
+      "count": 1,
+      "totalAmountToReceive": 45098,
+      "items": [
+        {
+          "id": "b01c1866-4d3a-4330-abca-5c000c52fed5",
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 45098
+          },
+          "discount": 0,
+          "amountToReceive": 45098
+        }
+      ]
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    InstallmentDataTO installmentData = (InstallmentDataTO) o;
-    return Objects.equals(this.count, installmentData.count) &&
-        Objects.equals(this.number, installmentData.number) &&
-        Objects.equals(this.amount, installmentData.amount);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(count, number, amount);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class InstallmentDataTO {\n");
-    sb.append("    count: ").append(toIndentedString(count)).append("\n");
-    sb.append("    number: ").append(toIndentedString(number)).append("\n");
-    sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+  ]
+  "page": {
+    "size": 10,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 1
   }
 }
 
+
+
+
+
+
+{
+  "groups": [
+    {
+      "paymentDate": "2024-11-25",
+      "count": 1,
+      "totalAmountToReceive": 45098,
+      "items": [
+        {
+          "id": "b01c1866-4d3a-4330-abca-5c000c52fed5",
+          "paymentDate": "2024-11-25",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 45098
+          },
+          "discount": 45098
+        }
+      ]
+    },
+    {
+      "paymentDate": "2024-11-26",
+      "count": 1,
+      "totalAmountToReceive": 70000,
+      "items": [
+        {
+          "id": "44cf5b43-663e-46e0-a4d5-a64b90284715",
+          "paymentDate": "2024-11-26",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 70000
+          },
+          "discount": 70000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2024-11-27",
+      "count": 1,
+      "totalAmountToReceive": 70954,
+      "items": [
+        {
+          "id": "bf10a576-a854-488c-b772-0333e106badb",
+          "paymentDate": "2024-11-27",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 70954
+          },
+          "discount": 70954
+        }
+      ]
+    },
+    {
+      "paymentDate": "2024-11-28",
+      "count": 1,
+      "totalAmountToReceive": 84306,
+      "items": [
+        {
+          "id": "58b81e69-deb0-467e-9d63-fb76ec0685a5",
+          "paymentDate": "2024-11-28",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 84306
+          },
+          "discount": 84306
+        }
+      ]
+    },
+    {
+      "paymentDate": "2024-11-29",
+      "count": 1,
+      "totalAmountToReceive": 100000,
+      "items": [
+        {
+          "id": "f31efe91-1b2e-4b55-aedb-485d2bd43f51",
+          "paymentDate": "2024-11-29",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 100000
+          },
+          "discount": 100000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2024-12-23",
+      "count": 5,
+      "totalAmountToReceive": 216460,
+      "items": [
+        {
+          "id": "ddcd7f10-2fe8-41fc-a77d-a3457372d61f",
+          "paymentDate": "2024-12-23",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 43292
+          },
+          "discount": 43292
+        },
+        {
+          "id": "94096c00-ed78-4cce-bf39-79bc9a0ade0a",
+          "paymentDate": "2024-12-23",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 43292
+          },
+          "discount": 43292
+        },
+        {
+          "id": "c4c75623-249d-4857-a1fe-511a59f54c25",
+          "paymentDate": "2024-12-23",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 43292
+          },
+          "discount": 43292
+        },
+        {
+          "id": "ff8c1460-5be1-4889-894c-46d12c77ad66",
+          "paymentDate": "2024-12-23",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 43292
+          },
+          "discount": 43292
+        },
+        {
+          "id": "b14feb27-f150-4a3d-a245-146b229941e0",
+          "paymentDate": "2024-12-23",
+          "nationalRegistrationId": "CONSORCIO MIRAI",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 43292
+          },
+          "discount": 43292
+        }
+      ]
+    }
+  ],
+  "page": {
+    "size": 10,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 1
+  }
+}
