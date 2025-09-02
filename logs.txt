@@ -1,3 +1,52 @@
-'findAvailables(LocalDate, Integer, Integer)' in 'br.com.experian.anticipation.application.rest.ReceivablesController' clashes with 'findAvailables(LocalDate, Integer, Integer)' in 'br.com.experian.swagger.anticipation.api.ReceivablesApi'; incompatible return type
+package br.com.experian.anticipation.application.rest;
+
+import br.com.experian.anticipation.application.adapter.ReceivablesMapper;
+import br.com.experian.anticipation.domain.service.ReceivablesService;
+import br.com.experian.observability.annotation.LogMethod;
+import br.com.experian.swagger.anticipation.api.ReceivablesApi;
+import br.com.experian.swagger.anticipation.model.ReceivableResponseTO;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
+
+
+@RestController
+public class ReceivablesController extends  BaseController implements ReceivablesApi {
+
+    private final ReceivablesService receivablesService;
+    private final HttpServletRequest request;
+
+    public ReceivablesController(ReceivablesService receivablesService, HttpServletRequest request) {
+        this.receivablesService = receivablesService;
+        this.request = request;
+    }
+
+    @Override
+    @PreAuthorize(HAS_RULES)
+    @LogMethod(LogMethod.LogType.FULL)
+    public ResponseEntity<ReceivableResponseTO> findAvailables(LocalDate date, Integer limit, Integer offset) {
+        final String supplierDocument = extractSupplierDocument();
+
+        final int pageLimit = limit != null ? limit : 10;
+        final int pageOffset = offset != null ? offset : 0;
+
+        return receivablesService.getReceivables(supplierDocument, pageLimit, pageOffset)
+                .map(ReceivablesMapper::toGroupedResponse)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.noContent().build());
+        }
+
+
+    private String extractSupplierDocument() {
+        String header = request.getHeader("X-Supplier-Document");
+        if (header != null && !header.isBlank()) {
+            return header.trim();
+        }
+        throw new IllegalArgumentException("Supplier document is required (header X-Supplier-Document)");
+    }
+}
 
 'map(java.util.function.Function<? super br.com.experian.anticipation.domain.dto.response.@org.jetbrains.annotations.NotNull ReceivablesResponseDto,? extends U>)' in 'java.util.Optional' cannot be applied to '(<method reference>)'
