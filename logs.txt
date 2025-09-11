@@ -1,35 +1,234 @@
-Rodrigues, Danilo commented on a fileYesterday
-src/main/java/br/com/experian/anticipation/application/rest/ReceivablesController.java
-        Optional<ReceivableResponseDto> receivablesOptional = receivablesService.getReceivables(supplierDocument, pageLimit, pageOffset);
-        if (receivablesOptional.isEmpty()) {
-            return ResponseEntity.ok(createEmptyGroupedResponseTO());
+{
+    "items": [
+        {
+            "id": "815f98c0-af11-4b8f-b33a-75c42eef0b36",
+            "accreditingInstitution": {
+                "id": "c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae",
+                "name": "COMPRADOR NAO ENCONTRADO",
+                "document": "46572145000168",
+                "formattedDocument": "46.572.145/0001-68"
+            },
+            "capitalSource": {
+                "id": "3acee12c-fb7a-4759-9ea1-f72c80ff4073",
+                "name": "FIDC RED ASSET",
+                "document": "17250006000110",
+                "formattedDocument": "17.250.006/0001-10"
+            },
+            "supplier": {
+                "id": "1d81e289-84d8-4665-9933-8df55dfc6590",
+                "name": "MARIA DAS GRACAS JESUS DOS SANTOS 08826808708",
+                "document": "45181802000183",
+                "formattedDocument": "45.181.802/0001-83"
+            },
+            "number": "1245",
+            "statusId": 6,
+            "status": "AnticipationFailed",
+            "anticipatedOn": null,
+            "formattedAnticipatedOn": null,
+            "paymentDate": "2025-09-01T00:00:00+00:00",
+            "formattedPaymentDate": "01/09/2025 00:00:00",
+            "createdAt": "2025-09-01T13:32:14.84+00:00",
+            "formattedCreatedAt": "01/09/2025 13:32:14",
+            "effectiveRate": 0.05,
+            "formattedEffectiveRate": "5,00%",
+            "selectedAmount": 12747.58,
+            "formattedSelectedAmount": "¤12,747.58",
+            "receivedAmount": 0,
+            "formattedReceivedAmount": "¤0.00",
+            "anticipatedDiscount": 0,
+            "formattedAnticipatedDiscount": "¤0.00"
+        },
+        {
+            "id": "0e489c9a-4ca1-4e9a-9f29-c628b34aaf85",
+            "accreditingInstitution": {
+                "id": "c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae",
+                "name": "COMPRADOR NAO ENCONTRADO",
+                "document": "46572145000168",
+                "formattedDocument": "46.572.145/0001-68"
+            },
+            "capitalSource": {
+                "id": "3acee12c-fb7a-4759-9ea1-f72c80ff4073",
+                "name": "FIDC RED ASSET",
+                "document": "17250006000110",
+                "formattedDocument": "17.250.006/0001-10"
+            },
+            "supplier": {
+                "id": "1d81e289-84d8-4665-9933-8df55dfc6590",
+                "name": "MARIA DAS GRACAS JESUS DOS SANTOS 08826808708",
+                "document": "45181802000183",
+                "formattedDocument": "45.181.802/0001-83"
+            },
+            "number": "1242",
+            "statusId": 4,
+            "status": "Anticipated",
+            "anticipatedOn": "2025-08-29T09:49:41.237+00:00",
+            "formattedAnticipatedOn": "29/08/2025 09:49:41",
+            "paymentDate": "2025-08-29T00:00:00+00:00",
+            "formattedPaymentDate": "29/08/2025 00:00:00",
+            "createdAt": "2025-08-29T12:47:20.83+00:00",
+            "formattedCreatedAt": "29/08/2025 12:47:20",
+            "effectiveRate": 0.05,
+            "formattedEffectiveRate": "5,00%",
+            "selectedAmount": 11586.54,
+            "formattedSelectedAmount": "¤11,586.54",
+            "receivedAmount": 11063.273666666666,
+            "formattedReceivedAmount": "¤11,063.27",
+            "anticipatedDiscount": 523.2663333333334,
+            "formattedAnticipatedDiscount": "¤523.27"
+        },
+        {
+            "id": "c90c1ccd-8342-43ea-a4e9-f3604299b06b",
+            "accreditingInstitution": {
+                "id": "9a0ff233-6e3e-4587-8e91-3ae6c3ad11a1",
+                "name": "COMPRADOR NAO ENCONTRADO",
+                "document": "61229650000106",
+                "formattedDocument": "61.229.650/0001-06"
+            },
+            "capitalSource": {
+                "id": "0b401772-4b9c-4cff-9a6f-090626461c3c",
+                "name": "BANCO RENDIMENTO SA",
+                "document": "68900810000138",
+                "formattedDocument": "68.900.810/0001-38"
+            },
+            "supplier": {
+                "id": "1d81e289-84d8-4665-9933-8df55dfc6590",
+                "name": "MARIA DAS GRACAS JESUS DOS SANTOS 08826808708",
+                "document": "45181802000183",
+                "formattedDocument": "45.181.802/0001-83"
+            },
+            "number": "1240",
+            "statusId": 6,
+            "status": "AnticipationFailed",
+            "anticipatedOn": null,
+            "formattedAnticipatedOn": null,
+            "paymentDate": "2025-08-28T00:00:00+00:00",
+            "formattedPaymentDate": "28/08/2025 00:00:00",
+            "createdAt": "2025-08-28T19:30:07.476+00:00",
+            "formattedCreatedAt": "28/08/2025 19:30:07",
+            "effectiveRate": 0.02,
+            "formattedEffectiveRate": "2,00%",
+            "selectedAmount": 5222,
+            "formattedSelectedAmount": "¤5,222.00",
+            "receivedAmount": 0,
+            "formattedReceivedAmount": "¤0.00",
+            "anticipatedDiscount": 0,
+            "formattedAnticipatedDiscount": "¤0.00"
+        },
+        {
+            "id": "e68c6d32-3c10-4cd1-b03b-150f4000911c",
+            "accreditingInstitution": {
+                "id": "9a0ff233-6e3e-4587-8e91-3ae6c3ad11a1",
+                "name": "COMPRADOR NAO ENCONTRADO",
+                "document": "61229650000106",
+                "formattedDocument": "61.229.650/0001-06"
+            },
+            "capitalSource": {
+                "id": "0b401772-4b9c-4cff-9a6f-090626461c3c",
+                "name": "BANCO RENDIMENTO SA",
+                "document": "68900810000138",
+                "formattedDocument": "68.900.810/0001-38"
+            },
+            "supplier": {
+                "id": "1d81e289-84d8-4665-9933-8df55dfc6590",
+                "name": "MARIA DAS GRACAS JESUS DOS SANTOS 08826808708",
+                "document": "45181802000183",
+                "formattedDocument": "45.181.802/0001-83"
+            },
+            "number": "1238",
+            "statusId": 4,
+            "status": "Anticipated",
+            "anticipatedOn": "2025-08-28T15:24:55.186+00:00",
+            "formattedAnticipatedOn": "28/08/2025 15:24:55",
+            "paymentDate": "2025-08-28T00:00:00+00:00",
+            "formattedPaymentDate": "28/08/2025 00:00:00",
+            "createdAt": "2025-08-28T18:13:16.012+00:00",
+            "formattedCreatedAt": "28/08/2025 18:13:16",
+            "effectiveRate": 0.0139,
+            "formattedEffectiveRate": "1,39%",
+            "selectedAmount": 10350.93,
+            "formattedSelectedAmount": "¤10,350.93",
+            "receivedAmount": 10213.747082133334,
+            "formattedReceivedAmount": "¤10,213.75",
+            "anticipatedDiscount": 137.18291786666666,
+            "formattedAnticipatedDiscount": "¤137.18"
+        },
+        {
+            "id": "07629699-25b5-47b4-ab57-45b8f48f756b",
+            "accreditingInstitution": {
+                "id": "c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae",
+                "name": "COMPRADOR NAO ENCONTRADO",
+                "document": null,
+                "formattedDocument": null
+            },
+            "capitalSource": {
+                "id": "3acee12c-fb7a-4759-9ea1-f72c80ff4073",
+                "name": "FIDC RED ASSET",
+                "document": "17250006000110",
+                "formattedDocument": "17.250.006/0001-10"
+            },
+            "supplier": {
+                "id": "1d81e289-84d8-4665-9933-8df55dfc6590",
+                "name": "MARIA DAS GRACAS JESUS DOS SANTOS 08826808708",
+                "document": "45181802000183",
+                "formattedDocument": "45.181.802/0001-83"
+            },
+            "number": "1219",
+            "statusId": 4,
+            "status": "Anticipated",
+            "anticipatedOn": "2025-08-19T09:57:03.224+00:00",
+            "formattedAnticipatedOn": "19/08/2025 09:57:03",
+            "paymentDate": "2025-08-19T00:00:00+00:00",
+            "formattedPaymentDate": "19/08/2025 00:00:00",
+            "createdAt": "2025-08-19T12:52:14.88+00:00",
+            "formattedCreatedAt": "19/08/2025 12:52:14",
+            "effectiveRate": 0.05,
+            "formattedEffectiveRate": "5,00%",
+            "selectedAmount": 7106.32,
+            "formattedSelectedAmount": "¤7,106.32",
+            "receivedAmount": 5694.99925,
+            "formattedReceivedAmount": "¤5,695.00",
+            "anticipatedDiscount": 1411.32075,
+            "formattedAnticipatedDiscount": "¤1,411.32"
+        },
+        {
+            "id": "8f1c8bae-9554-45e2-a16d-0affff73eebb",
+            "accreditingInstitution": {
+                "id": "c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae",
+                "name": "COMPRADOR NAO ENCONTRADO",
+                "document": null,
+                "formattedDocument": null
+            },
+            "capitalSource": {
+                "id": "3acee12c-fb7a-4759-9ea1-f72c80ff4073",
+                "name": "FIDC RED ASSET",
+                "document": "17250006000110",
+                "formattedDocument": "17.250.006/0001-10"
+            },
+            "supplier": {
+                "id": "1d81e289-84d8-4665-9933-8df55dfc6590",
+                "name": "MARIA DAS GRACAS JESUS DOS SANTOS 08826808708",
+                "document": "45181802000183",
+                "formattedDocument": "45.181.802/0001-83"
+            },
+            "number": "1218",
+            "statusId": 6,
+            "status": "AnticipationFailed",
+            "anticipatedOn": null,
+            "formattedAnticipatedOn": null,
+            "paymentDate": "2025-08-19T00:00:00+00:00",
+            "formattedPaymentDate": "19/08/2025 00:00:00",
+            "createdAt": "2025-08-19T12:38:06.003+00:00",
+            "formattedCreatedAt": "19/08/2025 12:38:06",
+            "effectiveRate": 0.05,
+            "formattedEffectiveRate": "5,00%",
+            "selectedAmount": 7106.32,
+            "formattedSelectedAmount": "¤7,106.32",
+            "receivedAmount": 0,
+            "formattedReceivedAmount": "¤0.00",
+            "anticipatedDiscount": 0,
+            "formattedAnticipatedDiscount": "¤0.00"
         }
-        ReceivablesPageDto receivablesPageDto = receivablesOptional.get().getReceivables();
-​
-        ReceivableGroupedResponseTO response = ReceivablesAdapter.toGroupedResponseTO(receivablesPageDto);
-        return ResponseEntity.ok(response);
-    }
-​
-    private String extractSupplierDocumentFromToken() {
-        try {
-            UserAccount userAccount = ((ReceivablesServiceImpl) receivablesService)
-                    .getUserAccountWithBusinessInfo();
-            if (userAccount != null && userAccount.getDocument() != null && userAccount.getDocument().isBlank()) {
-                return userAccount.getDocument().trim();
-            }
-            throw new IllegalArgumentException("User document not found in token");
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Failed do extract supplier document from user token: " + e.getMessage());
-        }
-
-Rodrigues, Danilo
-Yesterday
-
-New
-Remover esse método e todas as dependências dele. Utilize o método 'getStatus' da classe 'OnboardingServiceImpl' como uma referência de como implementar e pegar o CNPJ do um usuário logado.
-
-Reply
-
-Resolve
-
-
+    ],
+    "pageNextId": null,
+    "pageSize": 10
+}
