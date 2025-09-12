@@ -1,32 +1,28 @@
-GET /history
+Cannot resolve method 'size' in 'AnticipationHistoryItemTO'
+history.getItems().size(), supplierDocument);
 
-{
-  "items": [
- {
-  "id": "83c1c2a1-92b9-47f1-8a56-4b1234567890",
-  "requestDate": "2025-05-29",
-  "receivablesCount": 4,
-  "status": "PAID_PARTIALLY",
-  "requestedValue": 1235.00
- },
- {
-  "id": "73ac123d-482b-4311-b123-abcdef987654",
-  "requestDate": "2025-05-29",
-  "receivablesCount": 2,
-  "status": "NOT_APPROVED",
-  "requestedValue": 1000.00
+Expected no arguments but found 1
+return Optional.empty(history);
 
-  }
+Cannot resolve method 'stream' in 'JsonNullable'
+List<HistoryItem> historyItems = externalHistory.getItems().stream()
 
- ],
- "nextPage": null,
- "pageSize": 10
-}
+'HistoryResponse(java.util.List<br.com.experian.anticipation.domain.model.HistoryItem>, java.lang.String, java.lang.Integer)' in 'br.com.experian.anticipation.domain.model.HistoryResponse' cannot be applied to '(java.util.List<br.com.experian.anticipation.domain.model.HistoryItem>, org.openapitools.jackson.nullable.JsonNullable<java.lang.String>, int)'
 
-#Enum
-CONCLUED -> Pago
-PENDING -> Pendente
-PARTIALLY_APPROVED -> Pago Parcialmente
-ERROR -> Erro de antecipação
-REJECTED -> Não aprovado
-ANTICIPABLE -> (Provavelmente não será usado no histórico, mas será listado)
+externalHistory.getPageNextId(),
+
+    private AnticipationHistoryResponseTO convertToHistoryResponse (AntecipaAnticipationCardReceivableListDtoPagedCollectionItems externalHistory) {
+        AnticipationHistoryResponseTO response = new AnticipationHistoryResponseTO();
+
+        return response;
+    }
+
+
+
+    private AnticipationDetailResponseTO convertToDetailResponse(AntecipaAnticipationCardReceivableDto
+                                                                         externalDetail) {
+        AnticipationDetailResponseTO response = new AnticipationDetailResponseTO();
+        //TODO Implementar conversão dos dados da Antecipa para o modelo do projeto
+        //Por enquanto, retornando objeto vazio para compilar
+        return response;
+    }
