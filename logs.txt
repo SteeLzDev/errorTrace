@@ -1,28 +1,219 @@
-Cannot resolve method 'size' in 'AnticipationHistoryItemTO'
-history.getItems().size(), supplierDocument);
-
-Expected no arguments but found 1
-return Optional.empty(history);
-
+Class 'HistoryServiceImpl' must either be declared abstract or implement abstract method 'findHistoryDetailById(String, String, Integer)' in 'HistoryService'
 Cannot resolve method 'stream' in 'JsonNullable'
-List<HistoryItem> historyItems = externalHistory.getItems().stream()
+'setItems(br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO)' in 'br.com.experian.swagger.anticipation.model.AnticipationHistoryResponseTO' cannot be applied to '(java.util.List<br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO>)'
+Cannot resolve method 'inValue' in 'JsonNullable'
+Cannot resolve symbol 'getReceivables'
+Cannot resolve method 'inValue' in 'JsonNullable'
+Cannot resolve method 'getReceivables' in 'AntecipaAnticipationCardReceivableDto'
 
-'HistoryResponse(java.util.List<br.com.experian.anticipation.domain.model.HistoryItem>, java.lang.String, java.lang.Integer)' in 'br.com.experian.anticipation.domain.model.HistoryResponse' cannot be applied to '(java.util.List<br.com.experian.anticipation.domain.model.HistoryItem>, org.openapitools.jackson.nullable.JsonNullable<java.lang.String>, int)'
+Cannot resolve method 'getReceivables' in 'AntecipaAnticipationCardReceivableDto'
+Cannot resolve symbol 'getReceivavables'
+'convertToAnticipatedItem(java.lang.Object)' in 'br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl' cannot be applied to '(<lambda parameter>)'
 
-externalHistory.getPageNextId(),
+package br.com.experian.anticipation.domain.service.impl;
 
-    private AnticipationHistoryResponseTO convertToHistoryResponse (AntecipaAnticipationCardReceivableListDtoPagedCollectionItems externalHistory) {
-        AnticipationHistoryResponseTO response = new AnticipationHistoryResponseTO();
+import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
+import br.com.experian.anticipation.domain.exception.ConflictException;
+import br.com.experian.anticipation.domain.model.Agreement;
+import br.com.experian.anticipation.domain.model.HistoryItem;
+import br.com.experian.anticipation.domain.model.HistoryResponse;
+import br.com.experian.anticipation.domain.repository.AgreementRepository;
+import br.com.experian.anticipation.domain.service.HistoryService;
+import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
+import br.com.experian.observability.annotation.LogMethod;
+import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto;
+import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto;
+import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDtoPagedCollectionItems;
+import br.com.experian.swagger.anticipation.model.*;
+import lombok.extern.log4j.Log4j2;
 
-        return response;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Log4j2
+public class HistoryServiceImpl implements HistoryService {
+
+
+    private final AntecipaClient antecipaClient;
+    private final AgreementRepository agreementRepository;
+    private final String authToken;
+
+    public HistoryServiceImpl(AntecipaClient antecipaClient,
+                              AgreementRepository agreementRepository,
+                              String authToken) {
+        this.antecipaClient = antecipaClient;
+        this.agreementRepository = agreementRepository;
+        this.authToken = authToken;
     }
 
 
+    @Override
+    @LogMethod
+    public Optional<AnticipationHistoryResponseTO> findHistoryPaginated(String capitalSourceDocument,
+                                                String startAnticipationDate,
+                                                String endAnticipationDate,
+                                                String statusId,
+                                                String pageId,
+                                                Integer pageSize) {
+        Agreement agreement = this.getUserAgreement();
+        String supplierDocument = agreement.getNationalRegistrationId();
 
-    private AnticipationDetailResponseTO convertToDetailResponse(AntecipaAnticipationCardReceivableDto
-                                                                         externalDetail) {
+        log.info("Fetching paginated anticipation history for supplier: {}", supplierDocument);
+
+        try {
+            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems externalHistory =
+                    this.antecipaClient.getAnticipations("Bearer " + authToken,
+                            supplierDocument,
+                            capitalSourceDocument,
+                            startAnticipationDate,
+                            endAnticipationDate,
+                            statusId,
+                            pageId,
+                            pageSize);
+            if (externalHistory == null || externalHistory.getItems() == null || externalHistory.getItems().get().isEmpty()) {
+                log.info("No anticipation history found for supplier: {}", supplierDocument);
+                return Optional.empty();
+            }
+
+            List<AnticipationHistoryItemTO> historyItems = externalHistory.getItems().stream()
+                    .map(this::convertToAnticipationHistoryItem)
+                    .collect(Collectors.toList());
+
+            AnticipationHistoryResponseTO response = new AnticipationHistoryResponseTO();
+            response.setItems(historyItems);
+            response.setPageNexId(String.valueOf(externalHistory.getPageNextId()));
+            response.setPageSize(pageSize != null ? pageSize : 10);
+
+            log.info("Successfully retieved {} anticipation records for supplier: {}",
+                    historyItems.size(), supplierDocument);
+            return Optional.of(response);
+
+        } catch (Exception e) {
+            log.error("Error retrieving paginated anticipation history for supplier: {}", supplierDocument, e);
+            throw e;
+        }
+    }
+
+
+    private AnticipationHistoryItemTO convertToAnticipationHistoryItem(AntecipaAnticipationCardReceivableListDto externalItem) {
+        AnticipationHistoryItemTO item = new AnticipationHistoryItemTO();
+
+        item.setId(String.valueOf(externalItem.getId()));
+        item.setNumber(externalItem.getId() != null ? externalItem.getId().inValue() : null);
+
+        if (externalItem.getCreatedAt() != null) {
+            item.setCreatedAt(String.valueOf(externalItem.getCreatedAt()));
+        }
+
+        if (externalItem.getStatusId() != null) {
+            String mappedStatus = String.valueOf(HistoryStatusMapping.mapFromExternalStatusId(externalItem.getStatusId()));
+            item.setStatus(AnticipationHistoryItemTO.StatusEnum.fromValue(mappedStatus));
+            item.setStatusId(getStatusIdFromMappedStatus(mappedStatus));
+        }
+        if (externalItem.getReceivedAmount() != null) {
+            item.setAmount(BigDecimal.valueOf(externalItem.getReceivedAmount()));
+        }
+        if (externalItem.getReceivedAmount() != null) {
+            item.setReceivablesCount(externalItem.getReceivables.size());
+        } else {
+            item.setReceivablesCount(0);
+        }
+
+        item.setAccreditingInstitution(createAccreditingInstitution());
+        item.setCapitalSource(createCapitalSource());
+        item.setSupplier(createSupplier());
+
+        return item;
+    }
+
+    private AnticipationDetailResponseTO convertToAnticipationDetailResponse (AntecipaAnticipationCardReceivableDto externalDetail) {
         AnticipationDetailResponseTO response = new AnticipationDetailResponseTO();
-        //TODO Implementar conversão dos dados da Antecipa para o modelo do projeto
-        //Por enquanto, retornando objeto vazio para compilar
+
+        response.setId(String.valueOf(externalDetail.getId()));
+        response.setNumber(externalDetail.getId() != null ? externalDetail.getId().inValue() : null);
+
+        if (externalDetail.getReceivables() != null) {
+            response.setReceivablesCount(externalDetail.getReceivables().size());
+
+            List<AnticipatedItemTO> anticipatedItems = new ArrayList<>();
+            List<AnticipatedItemTO> noAnticipatedItems = new ArrayList<>();
+
+            externalDetail.getReceivavables.forEach(receivable -> {
+                AnticipatedItemTO item = convertToAnticipatedItem(receivable);
+                anticipatedItems.add(item);
+            });
+
+            response.setAnticipatedItems(anticipatedItems);
+            response.setNoAnticipatedItems(noAnticipatedItems);
+        }
+
+        response.setAccreditingInstitution(createAccreditingInstitution());
+        response.setCapitalSource(createCapitalSource());
+        response.setSupplier(createSupplier());
+        response.setBankAccount(createBankAccount());
+
         return response;
     }
+
+
+    private AnticipatedItemTO convertToAnticipatedItem(Object receivable) {
+        AnticipatedItemTO item = new AnticipatedItemTO();
+
+        return item;
+    }
+
+    private AccreditingInstitutionTO createAccreditingInstitution() {
+        AccreditingInstitutionTO institution = new AccreditingInstitutionTO();
+        institution.setDocument("12345678901234");
+        institution.setName("Cielo S.A");
+        return institution;
+    }
+
+    private CapitalSourceTO createCapitalSource() {
+        CapitalSourceTO capitalSource = new CapitalSourceTO();
+        capitalSource.setDocument("987654321000199");
+        capitalSource.setDocument("Factoring company Ltda");
+        return capitalSource;
+    }
+
+    private SupplierTO createSupplier(){
+        SupplierTO supplier = new SupplierTO();
+        supplier.setDocument("98765431000110");
+        supplier.setName("Supplier company Ltda");
+        return supplier;
+    }
+
+    private BankAccountTO createBankAccount() {
+        BankAccountTO bankAccount = new BankAccountTO();
+        bankAccount.setBank("001");
+        bankAccount.setAgency("1234");
+        bankAccount.setAccount("567890");
+        bankAccount.setAccountType("CHECKING");
+        return bankAccount;
+    }
+
+    private Integer getStatusIdFromMappedStatus(String status){
+        switch (status){
+            case "PENDING":
+                return 1;
+            case "CONCLUDED":
+                return 2;
+            case "PARTIALLY_APPROVED":
+                return 3;
+            case "ERROR":
+                return 4;
+            default:
+                return 1;
+        }
+    }
+
+
+    private Agreement getUserAgreement() {
+        return this.agreementRepository.getUserAgreement()
+                .orElseThrow(() -> new ConflictException("3"));
+    }
+
+}
