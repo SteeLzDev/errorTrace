@@ -1,232 +1,27 @@
-package br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa;
-
-
-import br.com.experian.anticipation.domain.constant.PaymentType;
-import br.com.experian.anticipation.domain.dto.*;
-import br.com.experian.anticipation.domain.exception.FailedDependecyException;
-import br.com.experian.anticipation.domain.model.ReceivablesPage;
-import br.com.experian.anticipation.domain.port.AuthenticationPort;
-import br.com.experian.anticipation.domain.port.ReceivablesPort;
-import br.com.experian.anticipation.infrastructure.integration.feign.constant.Resilience4jConstant;
-import br.com.experian.swagger.antecipa.model.AntecipaCardReceivableListDto;
-import br.com.experian.swagger.antecipa.model.AntecipaCardReceivableListDtoPagedCollectionItems;
-import br.com.experian.swagger.anticipation.model.PaymentTypeTO;
-import feign.FeignException;
-import io.github.resilience4j.retry.annotation.Retry;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-@Log4j2
-@Component
-public class AntecipaReceivablesAdapter implements ReceivablesPort  {
-
-    private static final String FAILED_DEPENDENCY_MESSAGE = "Failure in communication with the receivables service.";
-
-    private final AntecipaClient antecipaClient;
-    private final AuthenticationPort authenticationPort;
-
-    public AntecipaReceivablesAdapter(AntecipaClient antecipaClient, AuthenticationPort authenticationPort) {
-        this.antecipaClient = antecipaClient;
-        this.authenticationPort = authenticationPort;
-    }
-
-    @Override
-    @Retry(name = Resilience4jConstant.ANTECIPA_CERC)
-    public Optional<ReceivablesPageDto> getReceivables(String supplierDocument, Integer limit, Integer offset) {
-        try {
-            log.info("Consulting receivables in the API for document: {} with limit: {} and offset: {}", supplierDocument, limit, offset);
-
-            String bearerToken = "Bearer " + authenticationPort.getValidToken();
-
-            String pageId = calculatePageId(offset, limit);
-
-            AntecipaCardReceivableListDtoPagedCollectionItems response = antecipaClient.getCardReceivables(
-                    bearerToken,
-                    supplierDocument,
-                    "1",
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    pageId,
-                    limit
-            );
-            if (response == null || response.getItems() == null || response.getItems().isEmpty()) {
-                log.info("API returned no receivables for document: {}", supplierDocument);
-                return Optional.empty();
-            }
-
-            ReceivablesPageDto receivablesPageDto = mapToReceivablesModel(response, limit, offset);
-
-            log.info("Successfully retrieved {} receivables for document: {}", receivablesPageDto.getGroups().stream()
-                    .mapToInt(ReceivablesGroupDto::getCount).sum(), supplierDocument);
-
-            return Optional.of(receivablesPageDto);
-        } catch (FeignException e) {
-            log.error("Error querying receivables from API. Status {}: Body: {}", e.status(), e.contentUTF8());
-
-            if (e.status() == 401) {
-                log.info("Invalid token, trying to renew...");
-                authenticationPort.refreshToken();
-                throw new FailedDependecyException("Invalid authentication token", e);
-            }
-            if (e.status() == 404 || e.status() == 204) {
-                log.info("No receivables found in the api for document: {}", supplierDocument);
-                return Optional.empty();
-            }
-            throw new FailedDependecyException(FAILED_DEPENDENCY_MESSAGE, e);
-        }
-    }
-
-    private String calculatePageId(Integer offset, Integer limit) {
-        if (offset == null || limit == null || offset == 0) {
-            return null;
-        }
-        return String.valueOf((offset / limit) + 1);
-    }
-
-    private ReceivablesPageDto mapToReceivablesModel(AntecipaCardReceivableListDtoPagedCollectionItems response, Integer limit, Integer offset) {
-
-       Map<LocalDate, List<ReceivablesPage>> receivablesByDate = response.getItems().stream()
-               .map(this::mapToReceivableModel)
-               .filter(receivable -> receivable.getPaymentDate() != null)
-               .collect(Collectors.groupingBy(ReceivablesPage::getPaymentDate));
-       log.info("Grouped receivables into {} different payment dates", receivablesByDate.size());
-
-       List<ReceivablesGroupDto> groups = receivablesByDate.entrySet().stream()
-               .sorted(Map.Entry.comparingByKey())
-               .map(entry -> {
-                   LocalDate date = entry.getKey();
-                   List<ReceivablesPage> receivablesForDate = entry.getValue();
-                   log.debug("Date: {} has {} receivables", date, receivablesForDate.size());
-                   Double totalAmountToReceive = receivablesForDate.stream()
-                           .mapToDouble(r -> r.getAmountToReceive() != null ? r.getAmountToReceive().doubleValue() : 0.0).sum();
-
-                   return ReceivablesGroupDto.builder()
-                           .date(date)
-                           .receivables(receivablesForDate)
-                           .count(receivablesForDate.size())
-                           .totalAmountToReceive(totalAmountToReceive)
-                           .build();
-               })
-               .collect(Collectors.toList());
-
-
-        int currentPage = offset != null && limit != null ? (offset / limit) + 1 : 1;
-        long totalElements = groups.stream().mapToInt(ReceivablesGroupDto::getCount).sum();
-        int totalPages = limit != null ? (int) Math.ceil((double) totalElements / limit) : 1;
-
-        PageDto pagination = PageDto.builder()
-                .size(limit != null ? limit : (int) totalElements)
-                .totalElements(totalElements)
-                .totalPages(totalPages)
-                .number(currentPage)
-                .build();
-        return ReceivablesPageDto.builder()
-                .groups(groups)
-                .page(pagination)
-                .build();
-    }
-
-    private ReceivablesPage mapToReceivableModel(AntecipaCardReceivableListDto item) {
-        PaymentTypeTO paymentTypeTO = mapPaymentType(item);
-        return ReceivablesPage.builder()
-                .id(item.getId())
-                .paymentDate(convertDueDateToLocalDate(item.getDueDate()))
-                .nationalRegistrationId(extractNationalRegistrationId(item))
-                .accreditingInstitutionName(extractAccreditingInstitutionName(item))
-                .paymentTypeTO(paymentTypeTO)
-                .paymentType(mapToPaymentTypeEnum(paymentTypeTO))
-                .installment(mapInstallment(item))
-                .discount(calculateDiscount(item))
-                .amountToReceive(calculateAmountToReceive(item))
-                .build();
-    }
-
-    private LocalDate convertDueDateToLocalDate(LocalDateTime dueDate) {
-        if (dueDate == null) {
-            return null;
-        }
-        try {
-            LocalDate converted = dueDate.toLocalDate();
-            return converted;
-
-        } catch (Exception e) {
-            log.warn("Error parsing payment date: {}", dueDate, e);
-            return null;
-        }
-    }
-
-    private String extractNationalRegistrationId(AntecipaCardReceivableListDto item) {
-        if (item.getSupplier() != null) {
-            return item.getSupplier().getDocument();
-        }
-        return null;
-    }
-
-    private String extractAccreditingInstitutionName(AntecipaCardReceivableListDto item) {
-
-        if (item.getAccreditingInstitution() != null) {
-            return item.getAccreditingInstitution().getName();
-        }
-        return null;
-
-    }
-
-    private PaymentTypeTO mapPaymentType(AntecipaCardReceivableListDto item) {
-        return PaymentTypeTO.CREDIT_SINGLE;
-    }
-
-    private InstallmentDto mapInstallment (AntecipaCardReceivableListDto item) {
-        return InstallmentDto.builder()
-                .count(1)
-                .number(1)
-                .amount(item.getValue() != null ? BigDecimal.valueOf(item.getValue()) : BigDecimal.ZERO)
-                .build();
-    }
-
-    private BigDecimal calculateDiscount(AntecipaCardReceivableListDto item) {
-        if (item.getAnticipationSimulation() != null && item.getAnticipationSimulation().getDiscount() != null) {
-            return BigDecimal.valueOf(item.getAnticipationSimulation().getDiscount());
-        }
-        return BigDecimal.ZERO;
-    }
-
-    private BigDecimal calculateAmountToReceive(AntecipaCardReceivableListDto item) {
-        BigDecimal originalValue = item.getValue() != null ? BigDecimal.valueOf(item.getValue()) : BigDecimal.ZERO;
-        BigDecimal discount = calculateDiscount(item);
-        return originalValue.subtract(discount);
-    }
-
-    private PaymentType mapToPaymentTypeEnum(PaymentTypeTO paymentTypeTO) {
-        if (paymentTypeTO == null){
-            return null;
-        }
-        switch (paymentTypeTO) {
-            case CREDIT_SINGLE:
-                return PaymentType.CREDIT_SINGLE;
-            case CREDIT_INSTALLMENT:
-                return PaymentType.CREDIT_INSTALLMENT;
-            default:
-                return null;
-        }
-    }
-
+show, tu tem docker
+ 
+cria um schema: receivables
+ 
+e uma collection Agreement
+ 
+ 
+{
+  _id: ObjectId('68654b1828a7e04c2467521d'),
+  userId: '644817dcb5430d6708103a20',
+  businessId: '644817dcb5430d6708103a1f',
+  nationalRegistrationId: '00060784000143',
+  status: 'ACCEPTED',
+  platform: 'ECOMMERCE',
+  version: 2,
+  url: 'https://bfm-pme-uat.serasaexperian.com.br/assets/pdf/Termo_de_Consentimento_e_Autorizacao.pdf',
+  acceptedAt: 2025-07-02T15:07:04.633Z,
+  _class: 'br.com.experian.receivables.infrastructure.repository.document.AgreementDocument'
 }
-
-
-Cannot resolve method 'isEmpty' in 'JsonNullable' : 63
-Cannot resolve method 'stream' in 'JsonNullable' : 99
-Cannot resolve method 'getPaymentDate()' : 101
-'id(java.lang.String)' in 'br.com.experian.anticipation.domain.model.ReceivablesPage.ReceivablesPageBuilder' cannot be applied to '(org.openapitools.jackson.nullable.@jakarta.validation.constraints.NotNull JsonNullable<java.lang.String>)' : 143
-Incompatible types. Found: 'org.openapitools.jackson.nullable.@jakarta.validation.constraints.NotNull JsonNullable<java.lang.String>', required: 'java.lang.String': 171
-Incompatible types. Found: 'org.openapitools.jackson.nullable.@jakarta.validation.constraints.NotNull JsonNullable<java.lang.String>', required: 'java.lang.String' : 36
+ 
+ 
+cria um registro lá com essas informações
+ 
+e usa esse usuário aqui pra gerar o token
+username: raimon5923@uorak.com
+password: Serasa@1
+ 
