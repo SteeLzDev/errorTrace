@@ -1,7 +1,5 @@
-# Monte o Basic base64(clientId:clientSecret):
-# Ex.: echo -n '6870e592e38798676a80a699:SEU_CLIENT_SECRET' | base64
-# Resultado: Njg3MGU... (use o seu)
 
 curl -i -X POST "https://SEU-IAM/client-identities/login" \
   -H "Content-Type: application/json; charset=utf-8" \
   -H "Authorization: Basic Njg3MGU...<base64 de clientId:clientSecret>..."
+
