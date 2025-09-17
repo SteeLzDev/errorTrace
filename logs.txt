@@ -1,47 +1,25 @@
-private AnticipationHistoryItemTO convertToAnticipationHistoryItem(AntecipaAnticipationCardReceivableListDto externalItem) {
-        AnticipationHistoryItemTO item = new AnticipationHistoryItemTO();
-
-        if (externalItem.getId() != null && externalItem.getId().isPresent()) {
-            item.setId(String.valueOf(externalItem.getId().get()));
-        }
-        if (externalItem.getStatusId() != null) {
-            HistoryStatus mappedStatus = HistoryStatusMapping.mapFromExternalStatusId(externalItem.getStatusId());
-            item.setStatus(mappedStatus.name());
-        }
-
-        if (externalItem.getCreatedAt() != null) {
-            item.setCreatedAt(externalItem.getCreatedAt().toString());
-        }
-        if (externalItem.getStatusId() != null) {
-            String mappedStatus = String.valueOf(HistoryStatusMapping.mapFromExternalStatusId(externalItem.getStatusId()));
-            item.setStatus(mappedStatus);
-            item.setStatusId(getStatusIdFromMappedStatus(mappedStatus));
-        }
-        if (externalItem.getSelectedAmount() != null) {
-            item.selectedAmount(BigDecimal.valueOf(externalItem.getSelectedAmount()));
-        }
-        if (externalItem.getReceivedAmount() != null) {
-            item.setReceivedAmount(BigDecimal.valueOf(externalItem.getReceivedAmount()));
-        }
-        if (externalItem.getAnticipatedOn() != null && externalItem.getAnticipatedOn().isPresent()) {
-            LocalDateTime ldt = parseToLocalDate(externalItem.getAnticipatedOn().get());
-            if (ldt != null) item.setAnticipatedOn(ldt);
-        }
-        if (externalItem.getPaymentDate() != null && externalItem.getPaymentDate().isPresent()) {
-            LocalDateTime ldt = parseToLocalDate(externalItem.getPaymentDate().get());
-            if (ldt != null) item.setPaymentDate(ldt);
-        }
-        if (externalItem.getEffectiveRate() != null) {
-            item.setEffectiveRate(BigDecimal.valueOf(externalItem.getEffectiveRate()));
-        }
-
-        if (externalItem.getAnticipatedDiscount() != null) {
-            item.setAnticipatedDiscount(BigDecimal.valueOf(externalItem.getAnticipatedDiscount()));
-        }
-
-        item.setAccreditingInstitution(createAccreditingInstitution());
-        item.setCapitalSource(createCapitalSource());
-        item.setSupplier(createSupplier());
-
-        return item;
+{
+  "items": [
+    {
+      "accreditingInstitution": {
+        "id": "1",
+        "name": "Cielo S.A",
+        "document": "12345678901234",
+        "formattedDocument": "12.345.678/0001-90"
+      },
+      "capitalSource": {
+        "id": "2",
+        "name": "Factoring company Ltda",
+        "document": "987654321000199",
+        "formattedDocument": "98.765.432/0001-10"
+      },
+      "supplier": {
+        "id": "3",
+        "name": "Supplier company Ltda",
+        "document": "98765431000110",
+        "formattedDocument": "11.222.333/0001-81"
+      }
     }
+  ],
+  "pageSize": 10
+}
