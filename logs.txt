@@ -1,1 +1,3 @@
+'map(java.util.function.Function<? super br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto,? extends R>)' in 'java.util.stream.Stream' cannot be applied to '(<method reference>)'
+
 'setItems(br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO)' in 'br.com.experian.swagger.anticipation.model.AnticipationHistoryResponseTO' cannot be applied to '(java.util.List<br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO>)'
