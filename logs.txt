@@ -1,12 +1,25 @@
-  AnticipationHistoryResponse:
-    type: object
-    properties:
-      items:
-        type: array
-        items:
-        $ref: '#/definitions/AnticipationHistoryItem'
-      pageNexId:
-        type: string
-        nullable: true
-      pageSize:
-        type: integer
+{
+  "items": [
+    {
+      "accreditingInstitution": {
+        "id": "1",
+        "name": "Cielo S.A",
+        "document": "12345678901234",
+        "formattedDocument": "12.345.678/0001-90"
+      },
+      "capitalSource": {
+        "id": "2",
+        "name": "Factoring company Ltda",
+        "document": "987654321000199",
+        "formattedDocument": "98.765.432/0001-10"
+      },
+      "supplier": {
+        "id": "3",
+        "name": "Supplier company Ltda",
+        "document": "98765431000110",
+        "formattedDocument": "11.222.333/0001-81"
+      }
+    }
+  ],
+  "pageSize": 10
+}
