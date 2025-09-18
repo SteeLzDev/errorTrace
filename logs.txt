@@ -1,614 +1,297 @@
-swagger: '2.0'
-info:
-  version: 1.0.0
-  title: PME-Receivables-Anticipation-BR
-  description: >-
-    This API persist and returns the receivables information.
-  contact:
-    name: Squad Gestão Financeira
-    email: squadgestaofinanceira@br.experian.com
-host: sandbox-api.serasaexperian.com.br
-basePath: /serasaempreendedor/receivables-anticipation/v1
-schemes:
-  - https
-consumes:
-  - application/json
-produces:
-  - application/json
-securityDefinitions:
-  OauthSecurityUser:
-    type: oauth2
-    flow: password
-    tokenUrl: https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login
-    scopes:
-      read: User read scope
+package br.com.experian.anticipation.domain.service.impl;
 
-paths:
-  /onboarding:
-    get:
-      tags:
-        - Onboarding
-      description: Retrive onboarding status
-      summary: Retrive onboarding status
-      security:
-        - OauthSecurityUser:
-            - read
-      operationId: retrieveStatus
-      responses:
-        200:
-          description: The request was successful
-          schema:
-            $ref: "#/definitions/OnboardingResponse"
-        204:
-          description: Not started
-        401:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        424:
-          description: Failed Dependency
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        default:
-          description: Unexpected Error
-    post:
-      tags:
-        - Onboarding
-      description: Start onboarding process
-      summary: Start onboarding process
-      security:
-        - OauthSecurityUser:
-            - read
-      operationId: accept
-      responses:
-        204:
-          description: The request was successful
-          headers:
-            location:
-              type: string
-              description: 'Redirect URL: https://cadastro.pagbank.com.br/serasa-empreendedor'
-        401:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        424:
-          description: Failed Dependency
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        default:
-          description: Unexpected Error
-  /history:
-    get:
-      tags:
-        - History
-      description: Retrieve anticipation history with paginated response and receivables count
-      summary: Retrieve anticipation history
-      operationId: findHistory
-      parameters:
-        - name: capitalSourceDocument
-          in: query
-          description: Capital source document to filter anticipation
-          required: false
-          type: string
-        - name: anticipationDate
-          in: query
-          description: Anticipation date to filter (format YYYY-MM-DD)
-          required: false
-          type: string
-          format: date
-        - name: statusId
-          in: query
-          description: Status ID to filter anticipations
-          required: false
-          type: string
-        - name: pageId
-          in: query
-          description: Page ID for pagination
-          required: false
-          type: string
-        - name: pageSize
-          in: query
-          description: Number of items per page
-          required: false
-          type: integer
-          minimum: 1
-          maximum: 100
-          default: 10
-      responses:
-        200:
-          description: The Request was successful
-          schema:
-            $ref: "#/definitions/HistoryListResponse"
-        204:
-          description: No Content
-        401:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        424:
-          description: Failed Dependency
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        default:
-          description: Unexpected Error
-  /history/{id}:
-    get:
-      tags:
-        - History
-      description: Retrieve specific anticipation details with receivables breakdown
-      summary: Retrieve anticipation details by ID
-      operationId: findHistoryById
-      parameters:
-        - name: id
-          in: path
-          description: Anticipation ID
-          required: true
-          type: string
-        - name: pageSize
-          in: query
-          description: Number of items per page
-          required: false
-          type: integer
-          default: 10
-      responses:
-        200:
-          description: The Request was successful
-          schema:
-            $ref: "#/definitions/HistoryDetailResponse"
-        404:
-          description: Not found
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        401:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        424:
-          description: Failed Dependency
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        default:
-          description: Unexpected Error
-  /receivables:
-    get:
-      tags:
-        - Receivables
-      description: Retrieve available receivables grouped by payment date
-      summary: Retrieve available receivables
-      security:
-        - OauthSecurityUser:
-            - read
-      operationId: findAvailables
-      parameters:
-        - name: date
-          in: query
-          description: Payment date to filter receivables (format YYYY-MM-DD). Defaults to today's date if not provided.
-          required: false
-          type: string
-          format: date
-        - name: limit
-          in: query
-          description: Maximum number of receivables to return
-          required: false
-          type: integer
-          minimum: 1
-          maximum: 100
-          default: 10
-        - name: offset
-          in: query
-          description: Number of receivables to skip for pagination
-          required: false
-          type: integer
-          minimum: 0
-          default: 0
-      responses:
-        200:
-          description: The request was successful
-          schema:
-            $ref: "#/definitions/ReceivableGroupedResponse"
-        400:
-          description: Bad Request
-          schema:
-            $ref: "#/definitions/ErrorModel"
-        401:
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        424:
-          description: Failed Dependency
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        500:
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        default:
-          description: Unexpected Error
+import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
+import br.com.experian.anticipation.domain.exception.ConflictException;
+import br.com.experian.anticipation.domain.model.Agreement;
+import br.com.experian.anticipation.domain.port.AuthenticationPort;
+import br.com.experian.anticipation.domain.repository.AgreementRepository;
+import br.com.experian.anticipation.domain.service.HistoryService;
+import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
+import br.com.experian.observability.annotation.LogMethod;
+import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto;
+import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto;
+import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDtoPagedCollectionItems;
+import br.com.experian.swagger.anticipation.model.*;
+import lombok.extern.log4j.Log4j2;
+import org.openapitools.jackson.nullable.JsonNullable;
 
-definitions:
-  OnboardingResponse:
-    type: object
-    properties:
-      status:
-        $ref: '#/definitions/OnboardingStatus'
-  OnboardingStatus:
-    type: string
-    enum:
-      - STARTED
-      - REVIEW
-      - PENDING
-      - APPROVED
-      - REJECTED
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-  HistoryListResponse:
-    type: object
-    properties:
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/HistoryListItem'
-      nextPage:
-        type: string
-        x-nullable: true
-      pageSize:
-        type: integer
-    required: [items, pageSize]
+@Log4j2
+public class HistoryServiceImpl implements HistoryService {
 
-  HistoryListItem:
-    type: object
-    properties:
-      id:
-        type: string
-      requestDate:
-        type: string
-        format: date
-      receivablesCount:
-        type: integer
-        description: Total count of receivables for this anticipation
-      status:
-        type: string
-        enum: [PENDING, CONCLUDED, ERROR, PARTIALLY_APPROVED, REJECTED]
-      requestedAmount:
-        type: number
-        format: double
-    required: [id, requestDate, receivablesCount, status, requestedAmount]
 
-  HistoryDetailResponse:
-    type: object
-    properties:
-      id:
-        type: string
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/HistoryDetailItem'
-      nextPage:
-        type: string
-        x-nullable: true
-      pageSize:
-        type: integer
-    required: [id, items, pageSize]
+    private final AntecipaClient antecipaClient;
+    private final AgreementRepository agreementRepository;
+    private final AuthenticationPort authenticationPort;
 
-  HistoryDetailItem:
-    type: object
-    properties:
-      receiveDate:
-        type: string
-        format: date
-      cnpj:
-        type: string
-        example: '66637023158333'
-      acquirer:
-        type: string
-        example: 'Mock Accrediting Institution'
-      installmentNumber:
-        type: integer
-      originalValue:
-        type: number
-        format: double
-      anticipationRate:
-        type: number
-        format: double
-        x-nullable: true
-      discountAmount:
-        type: number
-        format: double
-        x-nullable: true
-      netValue:
-        type: number
-        format: double
-        x-nullable: true
-    required: [receiveDate, cnpj, acquirer, installmentNumber, originalValue]
+    public HistoryServiceImpl(AntecipaClient antecipaClient,
+                              AgreementRepository agreementRepository, AuthenticationPort authenticationPort) {
+        this.antecipaClient = antecipaClient;
+        this.agreementRepository = agreementRepository;
+        this.authenticationPort = authenticationPort;
+    }
 
-  AnticipationHistoryResponse:
-    type: object
-    properties:
-      items:
-        type: array
-        items:
-         $ref: '#/definitions/AnticipationHistoryItem'
-      nextPage:
-        type: string
-        x-nullable: true
-      pageSize:
-        type: integer
-    required: [items, pageSize]
 
-  AnticipationHistoryItem:
-    type: object
-    properties:
-      id:
-        type: string
-      requestDate:
-        type: string
-        format: date
-      receivablesCount:
-        type: integer
-        x-nullable: true
-      status:
-        type: string
-        enum: [PENDING, CONCLUDED, ERROR, PARTIALLY_APPROVED, PAID]
-      requestedAmount:
-        type: string
-        format: decimal
-    required: [id, requestDate, status, requestedAmount]
+    @Override
+    @LogMethod
+    public Optional<AnticipationHistoryResponseTO> findHistoryPaginated(String capitalSourceDocument,
+                                                                        String startAnticipationDate,
+                                                                        String endAnticipationDate,
+                                                                        String statusId,
+                                                                        String pageId,
+                                                                        Integer pageSize) {
+        //Agreement agreement = this.getUserAgreement();
+        //String supplierDocument = agreement.getNationalRegistrationId();
+        //TODO Temporário - Usar documento fixo para testes, depois voltar com o getUserAgreement
+        String supplierDocument = "45181802000183";
 
-  AnticipationDetailResponse:
-    type: object
-    properties:
-      id:
-        type: string
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/AnticipationDetailItem'
-      nextPage:
-        type: string
-        x-nullable: true
-      pageSize:
-        type: integer
-    required: [id, items, pageSize]
+        log.info("Fetching paginated anticipation history for supplier: {}", supplierDocument);
 
-  AnticipationDetailItem:
-    type: object
-    properties:
-      receiveDate:
-        type: string
-        format: date
-      cnpj:
-        type: string
-        example: '18772021000190'
-      acquirer:
-        type: string
-        example: 'Accrediting Institution Name'
-      installmentNumber:
-        type: integer
-      originalValue:
-        type: string
-        format: decimal
-      anticipationRate:
-        type: string
-        format: decimal
-      discountAmount:
-        type: string
-        format: decimal
-      netValue:
-        type: string
-        format: decimal
-    required: [receiveDate, cnpj, acquirer, installmentNumber, originalValue, anticipationRate, discountAmount, netValue]
+        try {
+            String token = "Bearer " + authenticationPort.getValidToken();
 
-  Institution:
-    type: object
-    properties:
-      id:
-        type: string
-      name:
-        type: string
-      document:
-        type: string
-        x-nullable: true
-      formattedDocument:
-        type: string
-        x-nullable: true
+            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems page =
+                    antecipaClient.getAnticipations(token,
+                            supplierDocument,
+                            capitalSourceDocument,
+                            startAnticipationDate,
+                            endAnticipationDate,
+                            statusId,
+                            pageId,
+                            pageSize);
 
-  CapitalSource:
-    type: object
-    properties:
-      document:
-        type: string
-        example: '98765432000110'
-      name:
-        type: string
-        example: 'Antecipa Pagamentos'
+            List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(page);
+            if (externalItems == null || externalItems.isEmpty()) {
+                log.info("No anticipation history found for supplier: {}", supplierDocument);
+                return Optional.empty();
+            }
 
-  Supplier:
-    type: object
-    properties:
-      document:
-        type: string
-        example: '11222333000144'
-      name:
-        type: string
-        example: 'Supplier Company Ltda'
+            List<AnticipationHistoryItemTO> historyItems = new ArrayList<>();
 
-  BankAccount:
-    type: object
-    properties:
-      id:
-        type: string
-      externalId:
-        type: string
-      bankCode:
-        type: string
-      bankName:
-        type: string
-      branchNumber:
-        type: string
-      branchDigit:
-        type: string
-      accountNumber:
-        type: string
-      accountDigit:
-        type: string
+            for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
+                AnticipationHistoryItemTO item = new AnticipationHistoryItemTO();
 
-  AnticipatedItem:
-    type: object
-    properties:
-      id:
-        type: string
-      externalId:
-        type: string
-      status:
-        type: string
-      dueDate:
-        type: string
-        format: date-time
-      daysToDue:
-        type: integer
-      paymentDate:
-        type: string
-        format: date-time
-      selectedAmount:
-        type: string
-        format: decimal
-      formattedSelectedAmount:
-        type: string
-      discount:
-        type: string
-        format: decimal
-      formattedDiscount:
-        type: string
-      netValue:
-        type: string
-        format: decimal
-      formattedNetValue:
-        type: string
-      requestedRate:
-        type: string
-        format: decimal
-      formattedRequestedRate:
-        type: string
-      effectiveRate:
-        type: string
-        format: decimal
-      formattedEffectiveRate:
-        type: string
-      anticipationResponseMessage:
-        type: string
+                //id
+                String id = ext.getId() != null ? String.valueOf(ext.getId()) : null;
+                item.setId(id);
 
-  ReceivableGroupedResponse:
-    type: object
-    properties:
-      content:
-        type: array
-        items:
-          $ref: '#/definitions/ReceivableGroup'
-      page:
-        $ref: '#/definitions/Pagination'
 
-  ReceivableGroup:
-    type: object
-    properties:
-      paymentDate:
-        type: string
-        example: '2025-07-22'
-      count:
-        type: integer
-        example: 5
-      totalAmountToReceive:
-        type: number
-        example: '7422.25'
-      items:
-        type: array
-        items:
-          $ref: '#/definitions/ReceivableData'
-  ReceivableData:
-    type: object
-    properties:
-      id:
-        type: string
-        example: 'f63985b1-619d-4514-ab19-bd1ec6f69ab0'
-      paymentDate:
-        type: string
-        example: '2025-07-22'
-      nationalRegistrationId:
-        type: string
-        example: '18772021000190'
-      accreditingInstitutionName:
-        type: string
-        example: 'Cielo'
-      paymentType:
-        $ref: '#/definitions/PaymentType'
-      installment:
-        $ref: '#/definitions/InstallmentData'
-      discount:
-        type: number
-        example: '50.00'
-      amountToReceive:
-        type: number
-        example: '1484.45'
-  PaymentType:
-    type: string
-    enum:
-      - CREDIT_SINGLE
-      - CREDIT_INSTALLMENT
-    example: 'CREDIT_INSTALLMENT'
-  InstallmentData:
-    type: object
-    properties:
-      count:
-        type: integer
-        example: '3'
-      number:
-        type: integer
-        example: '1'
-      amount:
-        type: number
-        example: '1534.45'
-      paymentType:
-        $ref: '#/definitions/PaymentType'
-      discount:
-        type: number
-        example: '50.00'
-  Pagination:
-    type: object
-    properties:
-      size:
-        type: integer
-        example: 10
-      totalElements:
-        type: integer
-        example: 50
-      totalPages:
-        type: integer
-        example: 5
-      number:
-        type: integer
-        example: 1
+                //requestDate (YYY-MM-DD) a partir de createdAt
+                if (ext.getCreatedAt() != null) {
+                    LocalDateTime ldt = parseToLocalDate(ext.getCreatedAt().toString());
+                    if (ldt != null) {
+                        item.setRequestDate(ldt.toLocalDate());
+                    }
 
-  ErrorModel:
-    type: object
-    required:
-      - code
-      - message
-    properties:
-      code:
-        type: string
-      message:
-        type: string
+                }
+                //Status mapping usando mapeamento
+                if (ext.getStatusId() != null) {
+                    String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
+                    item.setStatus(AnticipationHistoryItemTO.StatusEnum.valueOf(mappedStatus));
+                }
+
+                    //RequestedAmount = selectedAmount do parceiro
+                    if (ext.getSelectedAmount() != null) {
+                        item.setRequestedAmount(BigDecimal.valueOf(ext.getSelectedAmount()));
+                    }
+
+                    //ReceivablesCount -> somatório (anticipated + noAnticipated) do detalhe
+                    if (id != null) {
+                        try {
+                            AntecipaAnticipationCardReceivableDto detail =
+                                    antecipaClient.getAnticipationById(token, supplierDocument, id);
+                            int count = countReceivables(detail);
+                            item.setReceivablesCount(count);
+                        } catch (Exception e) {
+                            log.warn("Failed to fetch receivables count for ID: {}", id, e);
+                            item.setReceivablesCount(0);
+                        }
+                    } else {
+                        item.setReceivablesCount(0);
+                    }
+                    historyItems.add(item);
+                }
+                AnticipationHistoryResponseTO response = new AnticipationHistoryResponseTO();
+                response.setItems(historyItems);
+                response.setNextPage(extractNexpageId(page));
+                response.setPageSize(pageSize != null ? pageSize : 10);
+                log.info("Successfully retrieved {} anticipation records for supplier: {}", historyItems.size(), supplierDocument);
+                return Optional.of(response);
+
+            } catch (Exception e) {
+                log.error("Error fetching anticipation history for supplier: {}", supplierDocument, e);
+                return Optional.empty();
+            }
+        }
+
+
+    @Override
+    @LogMethod
+    public Optional<AnticipationDetailResponseTO> findHistoryDetailById(String supplierDocument, String id, Integer pageSize) {
+
+        try {
+            String token = "Bearer " + authenticationPort.getValidToken();
+
+            AntecipaAnticipationCardReceivableDto externalDetail =
+                    antecipaClient.getAnticipationById(token, supplierDocument, id);
+
+            if (externalDetail == null) {
+                log.info("No anticipation details found for ID: {}", id);
+                return Optional.empty();
+            }
+
+
+            AnticipationDetailResponseTO detailResponse = new AnticipationDetailResponseTO();
+            detailResponse.setId(externalDetail.getId() != null && externalDetail.getId().isPresent() ? String.valueOf(externalDetail.getId().get()) : id);
+            detailResponse.setItems(toDetailItems(externalDetail));
+            detailResponse.setNextPage(null);
+            detailResponse.setPageSize(pageSize != null ? pageSize : 10);
+
+            return Optional.of(detailResponse);
+
+        } catch (Exception e) {
+            log.error("Error fetching anticipation details for supplier: {} and ID: {}", supplierDocument, id, e);
+            return Optional.empty();
+        }
+    }
+
+    private List<AnticipationDetailItemTO> toDetailItems(AntecipaAnticipationCardReceivableDto externalDetail) {
+        List<AnticipationDetailItemTO> items = new ArrayList<>();
+        //processar itens antecipados
+        if (externalDetail.getAnticipatedItems() != null && externalDetail.getAnticipatedItems().isPresent()) {
+            List<AntecipaAnticipationCardReceivableDto> anticipatedItems = externalDetail.getAnticipatedItems().get();
+            for (AntecipaAnticipationCardReceivableDto anticipatedItem : anticipatedItems) {
+                AnticipationDetailItemTO item = convertToDetailItem(anticipatedItem, externalDetail);
+                if (item != null) {
+                    items.add(item);
+                }
+            }
+        }
+        //processar itens não antecipados
+        if (externalDetail.getNotAnticipatedItems() != null && externalDetail.getNotAnticipatedItems().isPresent()) {
+            List<AntecipaAnticipationCardReceivableDto> noAnticipatedItems = externalDetail.getNotAnticipatedItems().get();
+            for (AntecipaAnticipationCardReceivableDto noAnticipatedItem : noAnticipatedItems) {
+                AnticipationDetailItemTO item = convertToDetailItem(noAnticipatedItem, externalDetail);
+                if (item != null) {
+                    items.add(item);
+                }
+            }
+        }
+        return items;
+    }
+
+    private AnticipationDetailItemTO convertToDetailItem(AntecipaAnticipationCardReceivableListDto sourceItem, AntecipaAnticipationCardReceivableDto parentDetail) {
+        if (sourceItem == null) return null;
+        AnticipationDetailItemTO item = new AnticipationDetailItemTO();
+
+        //Receive Date
+        if (sourceItem.getPaymentDate() != null) {
+            LocalDateTime ldt = parseToLocalDate(sourceItem.getPaymentDate().toString());
+            if (ldt != null) {
+                item.setReceiveDate(ldt.toLocalDate());
+            }
+        }
+        //CNPJ - pegar do supplier do detalhe pai
+        if (parentDetail.getSupplier() != null && parentDetail.getSupplier().getDocument() != null) {
+            item.setCnpj(String.valueOf(parentDetail.getSupplier().getDocument()));
+        }
+
+        //Acquirer - pegar do accreditingInstitution
+        if (parentDetail.getAccreditingInstitution() != null && parentDetail.getAccreditingInstitution().getName() != null) {
+            item.setAcquirer(String.valueOf(parentDetail.getAccreditingInstitution().getName()));
+        }
+
+        //Installment number = assumindo 1 se não especificado
+        item.setInstallmentNumber(1);
+
+        //original value
+        if (sourceItem.getSelectedAmount() != null) {
+            item.setOriginalValue(BigDecimal.valueOf(sourceItem.getSelectedAmount()));
+        }
+
+        //Anticipation Rate
+        if (sourceItem.getEffectiveRate() != null) {
+            item.setAnticipationRate(BigDecimal.valueOf(sourceItem.getEffectiveRate()));
+
+        }
+
+        //Discount amount
+        if (sourceItem.getAnticipatedDiscount() != null) {
+            item.setDiscountAmount(BigDecimal.valueOf(sourceItem.getAnticipatedDiscount()));
+        }
+
+        //NetValue = receivedAmount do parceiro
+        if (sourceItem.getReceivedAmount() != null) {
+            item.setNetValue(BigDecimal.valueOf(sourceItem.getReceivedAmount()));
+        }
+        return item;
+    }
+
+    private static int countReceivables(AntecipaAnticipationCardReceivableDto detail) {
+        if (detail == null) return 0;
+        int anticipated = sizeOf(detail.getAnticipatedItems());
+        int noAnticipated = sizeOf(detail.getNotAnticipatedItems());
+        return anticipated + noAnticipated;
+    }
+
+    private static int sizeOf(JsonNullable<? extends  List<?>> maybeList) {
+        return (maybeList != null && maybeList.isPresent() && maybeList.get() != null) ? maybeList.get().size() : 0;
+    }
+
+    private static LocalDateTime parseToLocalDate(String s) {
+        if (s == null || s.isBlank()) return null;
+        try {
+            return OffsetDateTime.parse(s).toLocalDateTime();
+        } catch (DateTimeParseException ignore) {
+        }
+        try {
+            return LocalDateTime.parse(s);
+        } catch (DateTimeParseException ignore) {
+        }
+        try {
+            return LocalDate.parse(s).atStartOfDay();
+        } catch (DateTimeParseException ignore) {
+        }
+
+        return null;
+    }
+
+    private List<AntecipaAnticipationCardReceivableListDto> extractItems(
+            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems page) {
+        if (page == null) return List.of();
+        try {
+            JsonNullable<List<AntecipaAnticipationCardReceivableListDto>> maybe = page.getItems();
+            if (maybe != null && maybe.isPresent() && maybe.get() != null) {
+                return maybe.get();
+        }
+    } catch (Throwable ignore){}
+
+        return List.of();
+    }
+
+    private JsonNullable<String> extractNexpageId(AntecipaAnticipationCardReceivableListDtoPagedCollectionItems page) {
+        return null; //por enquanto sem paginação
+    }
+
+
+    private Agreement getUserAgreement() {
+        return this.agreementRepository.getUserAgreement()
+                .orElseThrow(() -> new ConflictException("3"));
+    }
+
+}
+
+
+'setReceivablesCount(org.openapitools.jackson.nullable.JsonNullable<java.lang.Integer>)' in 'br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO' cannot be applied to '(int)'
+'setReceivablesCount(org.openapitools.jackson.nullable.JsonNullable<java.lang.Integer>)' in 'br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO' cannot be applied to '(int)'
+'setReceivablesCount(org.openapitools.jackson.nullable.JsonNullable<java.lang.Integer>)' in 'br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO' cannot be applied to '(int)'
+Incompatible types. Found: 'java.util.List<br.com.experian.swagger.antecipa.model.@jakarta.validation.Valid AntecipaAnticipationCardReceivabletDto>', required: 'java.util.List<br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto>'
+'convertToDetailItem(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto, br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto)' in 'br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl' cannot be applied to '(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto, br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto)''convertToDetailItem(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto, br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto)' in 'br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl' cannot be applied to '(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto, br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto)'
