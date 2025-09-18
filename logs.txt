@@ -1,4 +1,295 @@
-HistoryDetailResponse:
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: PME-Receivables-Anticipation-BR
+  description: >-
+    This API persist and returns the receivables information.
+  contact:
+    name: Squad Gestão Financeira
+    email: squadgestaofinanceira@br.experian.com
+host: sandbox-api.serasaexperian.com.br
+basePath: /serasaempreendedor/receivables-anticipation/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  OauthSecurityUser:
+    type: oauth2
+    flow: password
+    tokenUrl: https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login
+    scopes:
+      read: User read scope
+
+paths:
+  /onboarding:
+    get:
+      tags:
+        - Onboarding
+      description: Retrive onboarding status
+      summary: Retrive onboarding status
+      security:
+        - OauthSecurityUser:
+            - read
+      operationId: retrieveStatus
+      responses:
+        200:
+          description: The request was successful
+          schema:
+            $ref: "#/definitions/OnboardingResponse"
+        204:
+          description: Not started
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+    post:
+      tags:
+        - Onboarding
+      description: Start onboarding process
+      summary: Start onboarding process
+      security:
+        - OauthSecurityUser:
+            - read
+      operationId: accept
+      responses:
+        204:
+          description: The request was successful
+          headers:
+            location:
+              type: string
+              description: 'Redirect URL: https://cadastro.pagbank.com.br/serasa-empreendedor'
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+  /history:
+    get:
+      tags:
+        - History
+      description: Retrieve anticipation history with paginated response and receivables count
+      summary: Retrieve anticipation history
+      operationId: findHistory
+      parameters:
+        - name: capitalSourceDocument
+          in: query
+          description: Capital source document to filter anticipation
+          required: false
+          type: string
+        - name: anticipationDate
+          in: query
+          description: Anticipation date to filter (format YYYY-MM-DD)
+          required: false
+          type: string
+          format: date
+        - name: statusId
+          in: query
+          description: Status ID to filter anticipations
+          required: false
+          type: string
+        - name: pageId
+          in: query
+          description: Page ID for pagination
+          required: false
+          type: string
+        - name: pageSize
+          in: query
+          description: Number of items per page
+          required: false
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+      responses:
+        200:
+          description: The Request was successful
+          schema:
+            $ref: "#/definitions/HistoryListResponse"
+        204:
+          description: No Content
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+  /history/{id}:
+    get:
+      tags:
+        - History
+      description: Retrieve specific anticipation details with receivables breakdown
+      summary: Retrieve anticipation details by ID
+      operationId: findHistoryById
+      parameters:
+        - name: id
+          in: path
+          description: Anticipation ID
+          required: true
+          type: string
+        - name: pageSize
+          in: query
+          description: Number of items per page
+          required: false
+          type: integer
+          default: 10
+      responses:
+        200:
+          description: The Request was successful
+          schema:
+            $ref: "#/definitions/HistoryDetailResponse"
+        404:
+          description: Not found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+  /receivables:
+    get:
+      tags:
+        - Receivables
+      description: Retrieve available receivables grouped by payment date
+      summary: Retrieve available receivables
+      security:
+        - OauthSecurityUser:
+            - read
+      operationId: findAvailables
+      parameters:
+        - name: date
+          in: query
+          description: Payment date to filter receivables (format YYYY-MM-DD). Defaults to today's date if not provided.
+          required: false
+          type: string
+          format: date
+        - name: limit
+          in: query
+          description: Maximum number of receivables to return
+          required: false
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+        - name: offset
+          in: query
+          description: Number of receivables to skip for pagination
+          required: false
+          type: integer
+          minimum: 0
+          default: 0
+      responses:
+        200:
+          description: The request was successful
+          schema:
+            $ref: "#/definitions/ReceivableGroupedResponse"
+        400:
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+
+definitions:
+  OnboardingResponse:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/OnboardingStatus'
+  OnboardingStatus:
+    type: string
+    enum:
+      - STARTED
+      - REVIEW
+      - PENDING
+      - APPROVED
+      - REJECTED
+
+  HistoryListResponse:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/HistoryListItem'
+      nextPage:
+        type: string
+        x-nullable: true
+      pageSize:
+        type: integer
+    required: [items, pageSize]
+
+  HistoryListItem:
+    type: object
+    properties:
+      id:
+        type: string
+      requestDate:
+        type: string
+        format: date
+      receivablesCount:
+        type: integer
+        description: Total count of receivables for this anticipation
+      status:
+        type: string
+        enum: [PENDING, CONCLUDED, ERROR, PARTIALLY_APPROVED, REJECTED]
+      requestedAmount:
+        type: number
+        format: double
+    required: [id, requestDate, receivablesCount, status, requestedAmount]
+
+  HistoryDetailResponse:
     type: object
     properties:
       id:
@@ -12,6 +303,7 @@ HistoryDetailResponse:
         x-nullable: true
       pageSize:
         type: integer
+    required: [id, items, pageSize]
 
   HistoryDetailItem:
     type: object
@@ -21,8 +313,10 @@ HistoryDetailResponse:
         format: date
       cnpj:
         type: string
+        example: '66637023158333'
       acquirer:
         type: string
+        example: 'Mock Accrediting Institution'
       installmentNumber:
         type: integer
       originalValue:
@@ -40,3 +334,281 @@ HistoryDetailResponse:
         type: number
         format: double
         x-nullable: true
+    required: [receiveDate, cnpj, acquirer, installmentNumber, originalValue]
+
+  AnticipationHistoryResponse:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+         $ref: '#/definitions/AnticipationHistoryItem'
+      nextPage:
+        type: string
+        x-nullable: true
+      pageSize:
+        type: integer
+    required: [items, pageSize]
+
+  AnticipationHistoryItem:
+    type: object
+    properties:
+      id:
+        type: string
+      requestDate:
+        type: string
+        format: date
+      receivablesCount:
+        type: integer
+        x-nullable: true
+      status:
+        type: string
+        enum: [PENDING, CONCLUDED, ERROR, PARTIALLY_APPROVED, PAID]
+      requestedAmount:
+        type: string
+        format: decimal
+    required: [id, requestDate, status, requestedAmount]
+
+  AnticipationDetailResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/AnticipationDetailItem'
+      nextPage:
+        type: string
+        x-nullable: true
+      pageSize:
+        type: integer
+    required: [id, items, pageSize]
+
+  AnticipationDetailItem:
+    type: object
+    properties:
+      receiveDate:
+        type: string
+        format: date
+      cnpj:
+        type: string
+        example: '18772021000190'
+      acquirer:
+        type: string
+        example: 'Accrediting Institution Name'
+      installmentNumber:
+        type: integer
+      originalValue:
+        type: string
+        format: decimal
+      anticipationRate:
+        type: string
+        format: decimal
+      discountAmount:
+        type: string
+        format: decimal
+      netValue:
+        type: string
+        format: decimal
+    required: [receiveDate, cnpj, acquirer, installmentNumber, originalValue, anticipationRate, discountAmount, netValue]
+
+  Institution:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      document:
+        type: string
+        x-nullable: true
+      formattedDocument:
+        type: string
+        x-nullable: true
+
+  CapitalSource:
+    type: object
+    properties:
+      document:
+        type: string
+        example: '98765432000110'
+      name:
+        type: string
+        example: 'Antecipa Pagamentos'
+
+  Supplier:
+    type: object
+    properties:
+      document:
+        type: string
+        example: '11222333000144'
+      name:
+        type: string
+        example: 'Supplier Company Ltda'
+
+  BankAccount:
+    type: object
+    properties:
+      id:
+        type: string
+      externalId:
+        type: string
+      bankCode:
+        type: string
+      bankName:
+        type: string
+      branchNumber:
+        type: string
+      branchDigit:
+        type: string
+      accountNumber:
+        type: string
+      accountDigit:
+        type: string
+
+  AnticipatedItem:
+    type: object
+    properties:
+      id:
+        type: string
+      externalId:
+        type: string
+      status:
+        type: string
+      dueDate:
+        type: string
+        format: date-time
+      daysToDue:
+        type: integer
+      paymentDate:
+        type: string
+        format: date-time
+      selectedAmount:
+        type: string
+        format: decimal
+      formattedSelectedAmount:
+        type: string
+      discount:
+        type: string
+        format: decimal
+      formattedDiscount:
+        type: string
+      netValue:
+        type: string
+        format: decimal
+      formattedNetValue:
+        type: string
+      requestedRate:
+        type: string
+        format: decimal
+      formattedRequestedRate:
+        type: string
+      effectiveRate:
+        type: string
+        format: decimal
+      formattedEffectiveRate:
+        type: string
+      anticipationResponseMessage:
+        type: string
+
+  ReceivableGroupedResponse:
+    type: object
+    properties:
+      content:
+        type: array
+        items:
+          $ref: '#/definitions/ReceivableGroup'
+      page:
+        $ref: '#/definitions/Pagination'
+
+  ReceivableGroup:
+    type: object
+    properties:
+      paymentDate:
+        type: string
+        example: '2025-07-22'
+      count:
+        type: integer
+        example: 5
+      totalAmountToReceive:
+        type: number
+        example: '7422.25'
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ReceivableData'
+  ReceivableData:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 'f63985b1-619d-4514-ab19-bd1ec6f69ab0'
+      paymentDate:
+        type: string
+        example: '2025-07-22'
+      nationalRegistrationId:
+        type: string
+        example: '18772021000190'
+      accreditingInstitutionName:
+        type: string
+        example: 'Cielo'
+      paymentType:
+        $ref: '#/definitions/PaymentType'
+      installment:
+        $ref: '#/definitions/InstallmentData'
+      discount:
+        type: number
+        example: '50.00'
+      amountToReceive:
+        type: number
+        example: '1484.45'
+  PaymentType:
+    type: string
+    enum:
+      - CREDIT_SINGLE
+      - CREDIT_INSTALLMENT
+    example: 'CREDIT_INSTALLMENT'
+  InstallmentData:
+    type: object
+    properties:
+      count:
+        type: integer
+        example: '3'
+      number:
+        type: integer
+        example: '1'
+      amount:
+        type: number
+        example: '1534.45'
+      paymentType:
+        $ref: '#/definitions/PaymentType'
+      discount:
+        type: number
+        example: '50.00'
+  Pagination:
+    type: object
+    properties:
+      size:
+        type: integer
+        example: 10
+      totalElements:
+        type: integer
+        example: 50
+      totalPages:
+        type: integer
+        example: 5
+      number:
+        type: integer
+        example: 1
+
+  ErrorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
