@@ -1,297 +1,55 @@
-package br.com.experian.anticipation.domain.service.impl;
-
-import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
-import br.com.experian.anticipation.domain.exception.ConflictException;
-import br.com.experian.anticipation.domain.model.Agreement;
-import br.com.experian.anticipation.domain.port.AuthenticationPort;
-import br.com.experian.anticipation.domain.repository.AgreementRepository;
-import br.com.experian.anticipation.domain.service.HistoryService;
-import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
-import br.com.experian.observability.annotation.LogMethod;
-import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto;
-import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto;
-import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDtoPagedCollectionItems;
-import br.com.experian.swagger.anticipation.model.*;
-import lombok.extern.log4j.Log4j2;
-import org.openapitools.jackson.nullable.JsonNullable;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-@Log4j2
-public class HistoryServiceImpl implements HistoryService {
-
-
-    private final AntecipaClient antecipaClient;
-    private final AgreementRepository agreementRepository;
-    private final AuthenticationPort authenticationPort;
-
-    public HistoryServiceImpl(AntecipaClient antecipaClient,
-                              AgreementRepository agreementRepository, AuthenticationPort authenticationPort) {
-        this.antecipaClient = antecipaClient;
-        this.agreementRepository = agreementRepository;
-        this.authenticationPort = authenticationPort;
-    }
-
-
-    @Override
-    @LogMethod
-    public Optional<AnticipationHistoryResponseTO> findHistoryPaginated(String capitalSourceDocument,
-                                                                        String startAnticipationDate,
-                                                                        String endAnticipationDate,
-                                                                        String statusId,
-                                                                        String pageId,
-                                                                        Integer pageSize) {
-        //Agreement agreement = this.getUserAgreement();
-        //String supplierDocument = agreement.getNationalRegistrationId();
-        //TODO Temporário - Usar documento fixo para testes, depois voltar com o getUserAgreement
-        String supplierDocument = "45181802000183";
-
-        log.info("Fetching paginated anticipation history for supplier: {}", supplierDocument);
-
-        try {
-            String token = "Bearer " + authenticationPort.getValidToken();
-
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems page =
-                    antecipaClient.getAnticipations(token,
-                            supplierDocument,
-                            capitalSourceDocument,
-                            startAnticipationDate,
-                            endAnticipationDate,
-                            statusId,
-                            pageId,
-                            pageSize);
-
-            List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(page);
-            if (externalItems == null || externalItems.isEmpty()) {
-                log.info("No anticipation history found for supplier: {}", supplierDocument);
-                return Optional.empty();
-            }
-
-            List<AnticipationHistoryItemTO> historyItems = new ArrayList<>();
-
-            for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
-                AnticipationHistoryItemTO item = new AnticipationHistoryItemTO();
-
-                //id
-                String id = ext.getId() != null ? String.valueOf(ext.getId()) : null;
-                item.setId(id);
-
-
-                //requestDate (YYY-MM-DD) a partir de createdAt
-                if (ext.getCreatedAt() != null) {
-                    LocalDateTime ldt = parseToLocalDate(ext.getCreatedAt().toString());
-                    if (ldt != null) {
-                        item.setRequestDate(ldt.toLocalDate());
-                    }
-
-                }
-                //Status mapping usando mapeamento
-                if (ext.getStatusId() != null) {
-                    String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
-                    item.setStatus(AnticipationHistoryItemTO.StatusEnum.valueOf(mappedStatus));
-                }
-
-                    //RequestedAmount = selectedAmount do parceiro
-                    if (ext.getSelectedAmount() != null) {
-                        item.setRequestedAmount(BigDecimal.valueOf(ext.getSelectedAmount()));
-                    }
-
-                    //ReceivablesCount -> somatório (anticipated + noAnticipated) do detalhe
-                    if (id != null) {
-                        try {
-                            AntecipaAnticipationCardReceivableDto detail =
-                                    antecipaClient.getAnticipationById(token, supplierDocument, id);
-                            int count = countReceivables(detail);
-                            item.setReceivablesCount(count);
-                        } catch (Exception e) {
-                            log.warn("Failed to fetch receivables count for ID: {}", id, e);
-                            item.setReceivablesCount(0);
-                        }
-                    } else {
-                        item.setReceivablesCount(0);
-                    }
-                    historyItems.add(item);
-                }
-                AnticipationHistoryResponseTO response = new AnticipationHistoryResponseTO();
-                response.setItems(historyItems);
-                response.setNextPage(extractNexpageId(page));
-                response.setPageSize(pageSize != null ? pageSize : 10);
-                log.info("Successfully retrieved {} anticipation records for supplier: {}", historyItems.size(), supplierDocument);
-                return Optional.of(response);
-
-            } catch (Exception e) {
-                log.error("Error fetching anticipation history for supplier: {}", supplierDocument, e);
-                return Optional.empty();
-            }
-        }
-
-
-    @Override
-    @LogMethod
-    public Optional<AnticipationDetailResponseTO> findHistoryDetailById(String supplierDocument, String id, Integer pageSize) {
-
-        try {
-            String token = "Bearer " + authenticationPort.getValidToken();
-
-            AntecipaAnticipationCardReceivableDto externalDetail =
-                    antecipaClient.getAnticipationById(token, supplierDocument, id);
-
-            if (externalDetail == null) {
-                log.info("No anticipation details found for ID: {}", id);
-                return Optional.empty();
-            }
-
-
-            AnticipationDetailResponseTO detailResponse = new AnticipationDetailResponseTO();
-            detailResponse.setId(externalDetail.getId() != null && externalDetail.getId().isPresent() ? String.valueOf(externalDetail.getId().get()) : id);
-            detailResponse.setItems(toDetailItems(externalDetail));
-            detailResponse.setNextPage(null);
-            detailResponse.setPageSize(pageSize != null ? pageSize : 10);
-
-            return Optional.of(detailResponse);
-
-        } catch (Exception e) {
-            log.error("Error fetching anticipation details for supplier: {} and ID: {}", supplierDocument, id, e);
-            return Optional.empty();
-        }
-    }
-
-    private List<AnticipationDetailItemTO> toDetailItems(AntecipaAnticipationCardReceivableDto externalDetail) {
-        List<AnticipationDetailItemTO> items = new ArrayList<>();
-        //processar itens antecipados
-        if (externalDetail.getAnticipatedItems() != null && externalDetail.getAnticipatedItems().isPresent()) {
-            List<AntecipaAnticipationCardReceivableDto> anticipatedItems = externalDetail.getAnticipatedItems().get();
-            for (AntecipaAnticipationCardReceivableDto anticipatedItem : anticipatedItems) {
-                AnticipationDetailItemTO item = convertToDetailItem(anticipatedItem, externalDetail);
-                if (item != null) {
-                    items.add(item);
-                }
-            }
-        }
-        //processar itens não antecipados
-        if (externalDetail.getNotAnticipatedItems() != null && externalDetail.getNotAnticipatedItems().isPresent()) {
-            List<AntecipaAnticipationCardReceivableDto> noAnticipatedItems = externalDetail.getNotAnticipatedItems().get();
-            for (AntecipaAnticipationCardReceivableDto noAnticipatedItem : noAnticipatedItems) {
-                AnticipationDetailItemTO item = convertToDetailItem(noAnticipatedItem, externalDetail);
-                if (item != null) {
-                    items.add(item);
-                }
-            }
-        }
-        return items;
-    }
-
-    private AnticipationDetailItemTO convertToDetailItem(AntecipaAnticipationCardReceivableListDto sourceItem, AntecipaAnticipationCardReceivableDto parentDetail) {
-        if (sourceItem == null) return null;
-        AnticipationDetailItemTO item = new AnticipationDetailItemTO();
-
-        //Receive Date
-        if (sourceItem.getPaymentDate() != null) {
-            LocalDateTime ldt = parseToLocalDate(sourceItem.getPaymentDate().toString());
-            if (ldt != null) {
-                item.setReceiveDate(ldt.toLocalDate());
-            }
-        }
-        //CNPJ - pegar do supplier do detalhe pai
-        if (parentDetail.getSupplier() != null && parentDetail.getSupplier().getDocument() != null) {
-            item.setCnpj(String.valueOf(parentDetail.getSupplier().getDocument()));
-        }
-
-        //Acquirer - pegar do accreditingInstitution
-        if (parentDetail.getAccreditingInstitution() != null && parentDetail.getAccreditingInstitution().getName() != null) {
-            item.setAcquirer(String.valueOf(parentDetail.getAccreditingInstitution().getName()));
-        }
-
-        //Installment number = assumindo 1 se não especificado
-        item.setInstallmentNumber(1);
-
-        //original value
-        if (sourceItem.getSelectedAmount() != null) {
-            item.setOriginalValue(BigDecimal.valueOf(sourceItem.getSelectedAmount()));
-        }
-
-        //Anticipation Rate
-        if (sourceItem.getEffectiveRate() != null) {
-            item.setAnticipationRate(BigDecimal.valueOf(sourceItem.getEffectiveRate()));
-
-        }
-
-        //Discount amount
-        if (sourceItem.getAnticipatedDiscount() != null) {
-            item.setDiscountAmount(BigDecimal.valueOf(sourceItem.getAnticipatedDiscount()));
-        }
-
-        //NetValue = receivedAmount do parceiro
-        if (sourceItem.getReceivedAmount() != null) {
-            item.setNetValue(BigDecimal.valueOf(sourceItem.getReceivedAmount()));
-        }
-        return item;
-    }
-
-    private static int countReceivables(AntecipaAnticipationCardReceivableDto detail) {
-        if (detail == null) return 0;
-        int anticipated = sizeOf(detail.getAnticipatedItems());
-        int noAnticipated = sizeOf(detail.getNotAnticipatedItems());
-        return anticipated + noAnticipated;
-    }
-
-    private static int sizeOf(JsonNullable<? extends  List<?>> maybeList) {
-        return (maybeList != null && maybeList.isPresent() && maybeList.get() != null) ? maybeList.get().size() : 0;
-    }
-
-    private static LocalDateTime parseToLocalDate(String s) {
-        if (s == null || s.isBlank()) return null;
-        try {
-            return OffsetDateTime.parse(s).toLocalDateTime();
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDateTime.parse(s);
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDate.parse(s).atStartOfDay();
-        } catch (DateTimeParseException ignore) {
-        }
-
-        return null;
-    }
-
-    private List<AntecipaAnticipationCardReceivableListDto> extractItems(
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems page) {
-        if (page == null) return List.of();
-        try {
-            JsonNullable<List<AntecipaAnticipationCardReceivableListDto>> maybe = page.getItems();
-            if (maybe != null && maybe.isPresent() && maybe.get() != null) {
-                return maybe.get();
-        }
-    } catch (Throwable ignore){}
-
-        return List.of();
-    }
-
-    private JsonNullable<String> extractNexpageId(AntecipaAnticipationCardReceivableListDtoPagedCollectionItems page) {
-        return null; //por enquanto sem paginação
-    }
-
-
-    private Agreement getUserAgreement() {
-        return this.agreementRepository.getUserAgreement()
-                .orElseThrow(() -> new ConflictException("3"));
-    }
-
+GET /history/{id}
+[
+ {
+  "id": "83c1c2a1-92b9-47f1-8a56-4b1234567890",
+  "requestDate": "2025-05-29",
+  "receivables" [
+ {
+  "cnpj": "12.345.678/0001-00",
+  "accreditingInstitution": "Stone",
+  "installments": 3,
+  "installmentValue": 500.00,
+  "feePercentage": 1.99,
+  "discountValue": 15.00,
+  "netValue:": 485.00
+ },
+ {
+  "cnpj": "98.765.432/0001-99",
+  "accreditingInstitution": "Cielo",
+  "installments": 10,
+  "installmentValue": 250.00,
+  "feePercentage": 1.99,
+  "discountValue": 50.00,
+  "netValue:": 200.00
+  }
+],
+"totalNetValue": 1000.00
 }
+ 
+#Enum
+CONCLUED -> Pago
+PENDING -> Pendente
+PARTIALLY_APPROVED -> Pago Parcialmente
+ERROR -> Erro de antecipação
+REJECTED -> Não aprovado
+ANTICIPABLE -> (Provavelmente não será usado no histórico, mas será listado)
 
-
-'setReceivablesCount(org.openapitools.jackson.nullable.JsonNullable<java.lang.Integer>)' in 'br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO' cannot be applied to '(int)'
-'setReceivablesCount(org.openapitools.jackson.nullable.JsonNullable<java.lang.Integer>)' in 'br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO' cannot be applied to '(int)'
-'setReceivablesCount(org.openapitools.jackson.nullable.JsonNullable<java.lang.Integer>)' in 'br.com.experian.swagger.anticipation.model.AnticipationHistoryItemTO' cannot be applied to '(int)'
-Incompatible types. Found: 'java.util.List<br.com.experian.swagger.antecipa.model.@jakarta.validation.Valid AntecipaAnticipationCardReceivabletDto>', required: 'java.util.List<br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto>'
-'convertToDetailItem(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto, br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto)' in 'br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl' cannot be applied to '(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto, br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto)''convertToDetailItem(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto, br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto)' in 'br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl' cannot be applied to '(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto, br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto)'
+GET /history
+ 
+ 
+[
+ {
+  "id": "83c1c2a1-92b9-47f1-8a56-4b1234567890",
+  "requestDate": "2025-05-29",
+  "receivablesCount": 4,
+  "status": "PAID_PARTIALLY",
+  "requestedValue": 1235.00
+ },
+ {
+  "id": "73ac123d-482b-4311-b123-abcdef987654",
+  "requestDate": "2025-05-29",
+  "receivablesCount": 2,
+  "status": "NOT_APPROVED",
+  "requestedValue": 1000.00
+  }
+]
