@@ -1,93 +1,18 @@
-package br.com.experian.anticipation.infrastructure.config;
-
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import org.openapitools.jackson.nullable.JsonNullable;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-@Configuration
+// JacksonConfig.java
+@Configuration(proxyBeanMethods = false)
 public class JacksonConfig {
 
-    @Bean
-    @Primary
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(LocalDateTime.class, new CustomLocalDateTimeDeserializer());
-        module.addDeserializer(JsonNullable.class, new JsonNullableListDeserializer());
-        mapper.registerModule(module);
-        
-        return mapper;
-    }
-    
-    private static class CustomLocalDateTimeDeserializer extends LocalDateTimeDeserializer {
-        
-        public CustomLocalDateTimeDeserializer() {
-            super(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        }
-        
-        @Override
-        protected LocalDateTime _fromString(JsonParser p, 
-                                          DeserializationContext ctxt, 
-                                          String string) throws IOException {
-            if (string == null || string.trim().isEmpty()) {
-                return null;
-            }
-            
-            try {
-                return OffsetDateTime.parse(string).toLocalDateTime();
-            } catch (Exception e1) {
-                try {
-                    return LocalDateTime.parse(string);
-                } catch (Exception e2) {
-                    try {
-                        return LocalDateTime.parse(string, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
-                    } catch (Exception e3) {
-                        // Fallback to default deserializer
-                        return super._fromString(p, ctxt, string);
-                    }
-                }
-            }
-        }
-    }
-    
-    private static class JsonNullableListDeserializer extends JsonDeserializer<JsonNullable<?>> {
-        
-        @Override
-        public JsonNullable<?> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-            if (p.getCurrentToken() == JsonToken.VALUE_NULL) {
-                return JsonNullable.undefined();
-            }
-            
-            if (p.getCurrentToken() == JsonToken.START_ARRAY) {
-                ObjectMapper mapper = (ObjectMapper) p.getCodec();
-                List<AntecipaAnticipationCardReceivableListDto> list = 
-                    mapper.readValue(p, ctxt.getTypeFactory().constructCollectionType(List.class, AntecipaAnticipationCardReceivableListDto.class));
-                return JsonNullable.of(list);
-            }
-            
-            ObjectMapper mapper = (ObjectMapper) p.getCodec();
-            Object value = mapper.readValue(p, Object.class);
-            return JsonNullable.of(value);
-        }
-    }
+  @Bean
+  public Module jsonNullableModule() {
+    return new org.openapitools.jackson.nullable.JsonNullableModule();
+  }
+
+  @Bean
+  public Jackson2ObjectMapperBuilderCustomizer jacksonCustomizer() {
+    return builder -> {
+      builder.modulesToInstall(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+      builder.featuresToDisable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+      // Se precisar, registre aqui seu deserializer de LocalDateTime custom.
+    };
+  }
 }
