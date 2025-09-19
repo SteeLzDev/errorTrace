@@ -1,295 +1,573 @@
-org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'historyController' defined in file [C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes\br\com\experian\anticipation\application\rest\HistoryController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'historyService' defined in class path resource [br/com/experian/anticipation/infrastructure/config/BeanConfiguration.class]: Unsatisfied dependency expressed through method 'historyService' parameter 0: Error creating bean with name 'br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1375) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1212) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.3.13.jar:3.3.13]
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.3.13.jar:3.3.13]
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.3.13.jar:3.3.13]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:335) ~[spring-boot-3.3.13.jar:3.3.13]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363) ~[spring-boot-3.3.13.jar:3.3.13]
-	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352) ~[spring-boot-3.3.13.jar:3.3.13]
-	at br.com.experian.anticipation.ExperianReceivablesAnticipationApplication.main(ExperianReceivablesAnticipationApplication.java:14) ~[classes/:?]
-Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'historyService' defined in class path resource [br/com/experian/anticipation/infrastructure/config/BeanConfiguration.class]: Unsatisfied dependency expressed through method 'historyService' parameter 0: Error creating bean with name 'br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	... 19 more
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient': FactoryBean threw exception on object creation
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.doGetObjectFromFactoryBean(FactoryBeanRegistrySupport.java:188) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:124) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance(AbstractBeanFactory.java:1867) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getObjectForBeanInstance(AbstractAutowireCapableBeanFactory.java:1296) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:347) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	... 19 more
-Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'feignDecoder' defined in br.com.experian.anticipation.infrastructure.config.FeignConfig: Failed to instantiate [feign.codec.Decoder]: Factory method 'feignDecoder' threw exception with message: com/fasterxml/jackson/dataformat/cbor/CBORFactory
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:648) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:636) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.cloud.context.named.NamedContextFactory.createContext(NamedContextFactory.java:139) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.context.named.NamedContextFactory.getContext(NamedContextFactory.java:123) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.context.named.NamedContextFactory.getInstance(NamedContextFactory.java:200) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.get(FeignClientFactoryBean.java:398) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.feign(FeignClientFactoryBean.java:136) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getTarget(FeignClientFactoryBean.java:468) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getObject(FeignClientFactoryBean.java:456) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.doGetObjectFromFactoryBean(FactoryBeanRegistrySupport.java:182) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:124) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance(AbstractBeanFactory.java:1867) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getObjectForBeanInstance(AbstractAutowireCapableBeanFactory.java:1296) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:347) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	... 19 more
-Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [feign.codec.Decoder]: Factory method 'feignDecoder' threw exception with message: com/fasterxml/jackson/dataformat/cbor/CBORFactory
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:178) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:636) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.cloud.context.named.NamedContextFactory.createContext(NamedContextFactory.java:139) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.context.named.NamedContextFactory.getContext(NamedContextFactory.java:123) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.context.named.NamedContextFactory.getInstance(NamedContextFactory.java:200) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.get(FeignClientFactoryBean.java:398) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.feign(FeignClientFactoryBean.java:136) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getTarget(FeignClientFactoryBean.java:468) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getObject(FeignClientFactoryBean.java:456) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.doGetObjectFromFactoryBean(FactoryBeanRegistrySupport.java:182) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:124) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance(AbstractBeanFactory.java:1867) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getObjectForBeanInstance(AbstractAutowireCapableBeanFactory.java:1296) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:347) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	... 19 more
-Caused by: java.lang.NoClassDefFoundError: com/fasterxml/jackson/dataformat/cbor/CBORFactory
-	at org.springframework.http.converter.json.Jackson2ObjectMapperBuilder.cbor(Jackson2ObjectMapperBuilder.java:932) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.http.converter.cbor.MappingJackson2CborHttpMessageConverter.<init>(MappingJackson2CborHttpMessageConverter.java:50) ~[spring-web-6.1.21.jar:6.1.21]
-	at br.com.experian.anticipation.infrastructure.config.FeignConfig.feignDecoder(FeignConfig.java:23) ~[classes/:?]
-	at br.com.experian.anticipation.infrastructure.config.FeignConfig$$SpringCGLIB$$0.CGLIB$feignDecoder$0(<generated>) ~[classes/:?]
-	at br.com.experian.anticipation.infrastructure.config.FeignConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes/:?]
-	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-6.1.21.jar:6.1.21]
-	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:400) ~[spring-context-6.1.21.jar:6.1.21]
-	at br.com.experian.anticipation.infrastructure.config.FeignConfig$$SpringCGLIB$$0.feignDecoder(<generated>) ~[classes/:?]
+"C:\Program Files\Zulu\zulu-21\bin\java.exe" -Dmaven.multiModuleProjectDirectory=C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services -Djansi.passthrough=true "-Dmaven.home=C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2025.1.3/plugins/maven/lib/maven3" "-Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\bin\m2.conf" "-Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven-event-listener.jar" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=54856" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds-2.8.0.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds.license" org.codehaus.classworlds.Launcher -Didea.version=2025.1.5.1 -DskipTests=true spring-boot:run
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< br.com.experian.bfm:experian-pme-bfm-receivables-anticipation-services >--
+[INFO] Building experian-pme-bfm-receivables-anticipation-domain-services 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.13:run (default-cli) > test-compile @ experian-pme-bfm-receivables-anticipation-services >>>
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (anticipation) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from api package name: br.com.experian.swagger.anticipation
+[INFO] Processing operation retrieveStatus
+[INFO] Processing operation accept
+[INFO] Processing operation findHistory
+[INFO] Processing operation findAvailables
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\HistoryItemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\HistoryResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\InstallmentDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingStatusTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\PaginationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\PaymentTypeTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableGroupTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableGroupedResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableItemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\HistoryApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\OnboardingApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\ReceivablesApi.java
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (antecipa-cerc) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.antecipa
+[WARNING] Empty operationId found for path: GET /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGET
+[WARNING] Empty operationId found for path: POST /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentIdGET
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Anticipations/Simulate/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSimulateSupplierDocumentPOST
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Anticipations/Execute/{SupplierDocument}/{CapitalSourceDocument}/{OfferId}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsExecuteSupplierDocumentCapitalSourceDocumentOfferIdPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Anticipations/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Anticipations/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesAnticipationsSupplierDocumentIdGET
+[WARNING] Empty operationId found for path: POST /Webhook. Renamed to auto-generated operationId: webhookPOST
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAccreditingInstitutionAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAccreditingInstitutionCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAddCapitalSourceSupplierRegistrationCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAntecipaUserIdentity.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivabletDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaBankAccountDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaBasicResultDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCapitalSourceAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCapitalSourceCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableAnticipationSimulationDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaOfferAnnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulateAnticipationCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivablesViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAddressViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierBankAccountDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierPartnerDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierPartnerViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierRegistrationDto.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (digital-account) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.digital.account
+[WARNING] Failed to get the schema name: null
+[INFO] Inline schema created as UserAccountAdmin_allOf_mainContactAdminUpdate. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings UserAccountAdmin_allOf_mainContactAdminUpdate=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings UserAccountAdmin_allOf_mainContactAdminUpdate=NewModel,ModelA=NewModelA in CLI).
+[INFO] Inline schema created as ErrorModel_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ErrorModel_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ErrorModel_inner=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation authFindUserById
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalAuthenticationFactorSettingsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalChannelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalErrorModelInnerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalFederatedAccountTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalHerculesTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalMainframeDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalManagerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalNewUserPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountAdminAllOfMainContactAdminUpdateTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountAdminTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountHistoricTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserCreatedByTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserDocumentTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserEcsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserJobTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserMainEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserMainPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserPhoneTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (business-registration) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.etis.registration
+[INFO] Inline schema created as ExperianErrorModel_allOf_errorList. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation getBusinessRegistrationDataFull
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataAddressTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataCnaeTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataCorporateReorganizationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelAllOfErrorListTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISProblemTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (partners-and-admins) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.etis.registration
+[INFO] Inline schema created as ExperianErrorModel_allOf_errorList. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation getBusinessPartners
+[INFO] Processing operation getBusinessDirectors
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAbstractEntityTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorParticipationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISDocumentStatusTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISDocumentTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelAllOfErrorListTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISGenericEntityCompositionTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISNaturalPersonDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginatedResponseCompositionTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginationLinksTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerAndManagerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerParticipationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnersAndManagersTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnersTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISProblemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISRevenueServiceStatusTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Copying 11 resources from src\main\resources to target\classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.12.0:compile (default-compile) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 157 source files with javac [debug target 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.12.0:testCompile (default-testCompile) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] <<< spring-boot:3.3.13:run (default-cli) < test-compile @ experian-pme-bfm-receivables-anticipation-services <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.13:run (default-cli) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.3.13)
+
+2025-09-19 15:06:38.891  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 5760 --- [           main] perianReceivablesAnticipationApplication : Starting ExperianReceivablesAnticipationApplication using Java 21.0.7 with PID 5760 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
+2025-09-19 15:06:38.924  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 5760 --- [           main] perianReceivablesAnticipationApplication : No active profile set, falling back to 1 default profile: "default"
+2025-09-19 15:06:54.286  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 5760 --- [           main] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.spring.security.config.service.impl.IamServiceImpl","method_name":"findTokenKey(java.lang.String clientId)"},"entry_parameters":{"clientId":"6870e592e38798676a80a699"},"return_object":{"optional":true,"return_value":"{\"alg\":\"RS512\",\"kty\":\"RSA\",\"use\":\"sig\",\"value\":\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsl3eMU9CZ4m4ezpHS3EHVdU4TawAxO0o8rCeE3YZoF9qsXJQuzdZvlxXOv225/YdGVgmu4OjjjgIaXpPn/nEB5OLtsGWylLvNbeWewjIcGbnCQzOK9OiSQ3ugx3Y9dCNjeDhmPlzQ8TXprBkWLcSa/tP2sbgMyvn1bZH8XBqWleTJhugQEOF1Ei+e+Nu20VPKKLDvq0/bfCP1ZblIdoZH3hwhqGE6ASl35bdxL3A5Z8+P5Tdrxe6rWxZgFNLwtYBW1HW7FHrPMKSFNvYDv0snCWzLtC8VlgZYMeCMEarwfz7+biOFJp5Pi4aAoQwWme8srFNVIBKYqmEW2fmbVrvrQIDAQAB\"}"},"truncated":false}
+2025-09-19 15:06:54.317  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 5760 --- [           main] b.c.e.s.s.u.JwtUtil                      : message="Token key loaded from IAM service successfully."
+2025-09-19 15:07:03.861  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 5760 --- [           main] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  :  Initializing with  Basic Auth header
+SSL Desativado para desenvolvimento
+2025-09-19 15:07:16.759  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 5760 --- [           main] perianReceivablesAnticipationApplication : Started ExperianReceivablesAnticipationApplication in 41.092 seconds (process running for 44.335)
+2025-09-19 15:08:05.521  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.args="{anticipationDate=null, statusId=null, capitalSourceDocument=null, pageSize=10, pageId=null}" custom.experian.java.method.args_count="5" log.origin.function="findHistory" message="Init method"
+2025-09-19 15:08:05.595  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : log.origin.function="findHistoryWithReceivables" message="Init method"
+2025-09-19 15:08:05.601  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : Fetching anticipation history with receivables for supplier: 45181802000183
+2025-09-19 15:08:05.601  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  : Invalid or expired token, renewing...
+2025-09-19 15:08:05.601  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  : Renewing authentication token...
+2025-09-19 15:08:10.189  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.auth.sand.antecipa.com/v1/authentication/signin","http_method":"POST","http_status_response":200,"request_headers":{"Authorization":["Basic MjM2Y2VhOGEtNzBlMS03MGMzLWM1OGQtODRiMTFmNTI3NmNhOjI5NGZmMzAwLTIyMTAtNDU3YS1iODIyLWJkNGM1ZDIwY2ZmZA=="]},"execution_time":4504,"response":"{\"accessToken\":\"eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJiZmUyM2ViMS1kYTJlLTRiZDAtODFlZi1lOGQwODE4NzlkZmIiLCJldmVudF9pZCI6IjQ5MzU1ZjNjLWQxMjktNGY5NC05ZWYyLTEzZGVmNDdjYmUwYyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzMDUyOTAsImV4cCI6MTc1ODMxMjQ5MCwiaWF0IjoxNzU4MzA1MjkwLCJqdGkiOiJiNTFhOWRmNS04NDhiLTQyZmQtODhmNS1hNTM1YWJhMDRjOGEiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.e-mUHE0jn0zBS6Pj8EEioCmy_jMczqoKpz83rQDirNYMxrVmSimq-cHPzwExPVzr9mujdJGldPGaIYLEV6vPaQVH2pNwagrCOockVZIXnCoxYzVklGgH1kFvX3QzUpKAYJPQ-E4yZ9ySNiQdqBb-Z6hahWbiD_gi2HeK6QdManb9EPDFHGZJthWQmg8wac20hRoYL0xQYlks8yuCY6XeW7WvBZ5XZmtNwBdUPsaNoNEuCTFpf5ebT573xskhY32JBwTiusWfv-_jzu89wsTxUDQ_8hYF40jwc9nEboweV9xSdzx85KsjXc28qJESYKMcaBjnzE3PR03TP_kxx6GuFA\",\"tokenType\":\"Bearer\",\"expiresIn\":7200}","application_structure":{"class_name":"AntecipaAuthClient","method_name":"signin(String)"},"authorization":{"authentication_type":"BASIC"},"truncated":false}
+2025-09-19 15:08:10.213  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  : Renewed token, expires in 7200 seconds
+2025-09-19 15:08:21.564  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Anticipations/45181802000183?PageSize=10","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJiZmUyM2ViMS1kYTJlLTRiZDAtODFlZi1lOGQwODE4NzlkZmIiLCJldmVudF9pZCI6IjQ5MzU1ZjNjLWQxMjktNGY5NC05ZWYyLTEzZGVmNDdjYmUwYyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzMDUyOTAsImV4cCI6MTc1ODMxMjQ5MCwiaWF0IjoxNzU4MzA1MjkwLCJqdGkiOiJiNTFhOWRmNS04NDhiLTQyZmQtODhmNS1hNTM1YWJhMDRjOGEiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.e-mUHE0jn0zBS6Pj8EEioCmy_jMczqoKpz83rQDirNYMxrVmSimq-cHPzwExPVzr9mujdJGldPGaIYLEV6vPaQVH2pNwagrCOockVZIXnCoxYzVklGgH1kFvX3QzUpKAYJPQ-E4yZ9ySNiQdqBb-Z6hahWbiD_gi2HeK6QdManb9EPDFHGZJthWQmg8wac20hRoYL0xQYlks8yuCY6XeW7WvBZ5XZmtNwBdUPsaNoNEuCTFpf5ebT573xskhY32JBwTiusWfv-_jzu89wsTxUDQ_8hYF40jwc9nEboweV9xSdzx85KsjXc28qJESYKMcaBjnzE3PR03TP_kxx6GuFA"]},"execution_time":1049,"response":"{\"items\":[{\"id\":\"815f98c0-af11-4b8f-b33a-75c42eef0b36\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"************************\",\"document\":\"46572145000168\",\"formattedDocument\":\"46.572.145/0001-68\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\",\"formattedDocument\":\"17.250.006/0001-10\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"number\":\"1245\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"formattedAnticipatedOn\":null,\"paymentDate\":\"2025-09-01T00:00:00+00:00\",\"formattedPaymentDate\":\"01/09/2025 00:00:00\",\"createdAt\":\"2025-09-01T13:32:14.84+00:00\",\"formattedCreatedAt\":\"01/09/2025 13:32:14\",\"effectiveRate\":0.05,\"formattedEffectiveRate\":\"5,00%\",\"selectedAmount\":12747.58,\"formattedSelectedAmount\":\"¤12,747.58\",\"receivedAmount\":0,\"formattedReceivedAmount\":\"¤0.00\",\"anticipatedDiscount\":0,\"formattedAnticipatedDiscount\":\"¤0.00\"},{\"id\":\"0e489c9a-4ca1-4e9a-9f29-c628b34aaf85\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"************************\",\"document\":\"46572145000168\",\"formattedDocument\":\"46.572.145/0001-68\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\",\"formattedDocument\":\"17.250.006/0001-10\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"number\":\"1242\",\"statusId\":4,\"status\":\"Anticipated\",\"anticipatedOn\":\"2025-08-29T09:49:41.237+00:00\",\"formattedAnticipatedOn\":\"29/08/2025 09:49:41\",\"paymentDate\":\"2025-08-29T00:00:00+00:00\",\"formattedPaymentDate\":\"29/08/2025 00:00:00\",\"createdAt\":\"2025-08-29T12:47:20.83+00:00\",\"formattedCreatedAt\":\"29/08/2025 12:47:20\",\"effectiveRate\":0.05,\"formattedEffectiveRate\":\"5,00%\",\"selectedAmount\":11586.54,\"formattedSelectedAmount\":\"¤11,586.54\",\"receivedAmount\":11063.273666666666,\"formattedReceivedAmount\":\"¤11,063.27\",\"anticipatedDiscount\":523.2663333333334,\"formattedAnticipatedDiscount\":\"¤523.27\"},{\"id\":\"c90c1ccd-8342-43ea-a4e9-f3604299b06b\",\"accreditingInstitution\":{\"id\":\"9a0ff233-6e3e-4587-8e91-3ae6c3ad11a1\",\"name\":\"************************\",\"document\":\"61229650000106\",\"formattedDocument\":\"61.229.650/0001-06\"},\"capitalSource\":{\"id\":\"0b401772-4b9c-4cff-9a6f-090626461c3c\",\"name\":\"*******************\",\"document\":\"68900810000138\",\"formattedDocument\":\"68.900.810/0001-38\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"number\":\"1240\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"formattedAnticipatedOn\":null,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"formattedPaymentDate\":\"28/08/2025 00:00:00\",\"createdAt\":\"2025-08-28T19:30:07.476+00:00\",\"formattedCreatedAt\":\"28/08/2025 19:30:07\",\"effectiveRate\":0.02,\"formattedEffectiveRate\":\"2,00%\",\"selectedAmount\":5222,\"formattedSelectedAmount\":\"¤5,222.00\",\"receivedAmount\":0,\"formattedReceivedAmount\":\"¤0.00\",\"anticipatedDiscount\":0,\"formattedAnticipatedDiscount\":\"¤0.00\"},{\"id\":\"e68c6d32-3c10-4cd1-b03b-150f4000911c\",\"accreditingInstitution\":{\"id\":\"9a0ff233-6e3e-4587-8e91-3ae6c3ad11a1\",\"name\":\"************************\",\"document\":\"61229650000106\",\"formattedDocument\":\"61.229.650/0001-06\"},\"capitalSource\":{\"id\":\"0b401772-4b9c-4cff-9a6f-090626461c3c\",\"name\":\"*******************\",\"document\":\"68900810000138\",\"formattedDocument\":\"68.900.810/0001-38\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"number\":\"1238\",\"statusId\":4,\"status\":\"Anticipated\",\"anticipatedOn\":\"2025-08-28T15:24:55.186+00:00\",\"formattedAnticipatedOn\":\"28/08/2025 15:24:55\",\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"formattedPaymentDate\":\"28/08/2025 00:00:00\",\"createdAt\":\"2025-08-28T18:13:16.012+00:00\",\"formattedCreatedAt\":\"28/08/2025 18:13:16\",\"effectiveRate\":0.0139,\"formattedEffectiveRate\":\"1,39%\",\"selectedAmount\":10350.93,\"formattedSelectedAmount\":\"¤10,350.93\",\"receivedAmount\":10213.747082133334,\"formattedReceivedAmount\":\"¤10,213.75\",\"anticipatedDiscount\":137.18291786666666,\"formattedAnticipatedDiscount\":\"¤137.18\"},{\"id\":\"07629699-25b5-47b4-ab57-45b8f48f756b\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"************************\",\"document\":null,\"formattedDocument\":null},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\",\"formattedDocument\":\"17.250.006/0001-10\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\",\"formattedDocument\":\"45.181.802/0001-83\"},\"nu","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipations(String,String,String,String,String,String,String,Integer)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-19T17:08:10","iat":"2025-09-19T15:08:10"}},"truncated":true}
+2025-09-19 15:08:21.593 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : Error fetching anticipation history with receivables for supplier: 45181802000183
+
+feign.codec.DecodeException: Error while extracting response for type [class br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDtoPagedCollectionItems] and content type [application/json;charset=utf-8]
+	at feign.InvocationContext.decode(InvocationContext.java:118) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.proceed(InvocationContext.java:88) ~[feign-core-13.4.jar:?]
+	at feign.ResponseHandler.handleResponse(ResponseHandler.java:63) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:98) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:48) ~[feign-core-13.4.jar:?]
+	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:99) ~[feign-core-13.4.jar:?]
+	at org.springframework.cloud.openfeign.FeignCachingInvocationHandlerFactory$1.proceed(FeignCachingInvocationHandlerFactory.java:66) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at org.springframework.cache.interceptor.CacheInterceptor.lambda$invoke$0(CacheInterceptor.java:55) ~[spring-context-6.1.21.jar:6.1.21]
+	at org.springframework.cache.interceptor.CacheAspectSupport.invokeOperation(CacheAspectSupport.java:416) ~[spring-context-6.1.21.jar:6.1.21]
+	at org.springframework.cache.interceptor.CacheAspectSupport.execute(CacheAspectSupport.java:401) ~[spring-context-6.1.21.jar:6.1.21]
+	at org.springframework.cache.interceptor.CacheInterceptor.invoke(CacheInterceptor.java:65) ~[spring-context-6.1.21.jar:6.1.21]
+	at org.springframework.cloud.openfeign.FeignCachingInvocationHandlerFactory.lambda$create$1(FeignCachingInvocationHandlerFactory.java:53) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at jdk.proxy2/jdk.proxy2.$Proxy157.getAnticipations(Unknown Source) ~[?:?]
+	at br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl.findHistoryWithReceivables(HistoryServiceImpl.java:145) ~[classes/:?]
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:636) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.cloud.context.named.NamedContextFactory.createContext(NamedContextFactory.java:139) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.context.named.NamedContextFactory.getContext(NamedContextFactory.java:123) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.context.named.NamedContextFactory.getInstance(NamedContextFactory.java:200) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.get(FeignClientFactoryBean.java:398) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.feign(FeignClientFactoryBean.java:136) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getTarget(FeignClientFactoryBean.java:468) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getObject(FeignClientFactoryBean.java:456) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.doGetObjectFromFactoryBean(FactoryBeanRegistrySupport.java:182) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:124) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance(AbstractBeanFactory.java:1867) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getObjectForBeanInstance(AbstractAutowireCapableBeanFactory.java:1296) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:347) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	... 19 more
-Caused by: java.lang.ClassNotFoundException: com.fasterxml.jackson.dataformat.cbor.CBORFactory
-	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641) ~[?:?]
-	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188) ~[?:?]
-	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[?:?]
-	at org.springframework.http.converter.json.Jackson2ObjectMapperBuilder.cbor(Jackson2ObjectMapperBuilder.java:932) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.http.converter.cbor.MappingJackson2CborHttpMessageConverter.<init>(MappingJackson2CborHttpMessageConverter.java:50) ~[spring-web-6.1.21.jar:6.1.21]
-	at br.com.experian.anticipation.infrastructure.config.FeignConfig.feignDecoder(FeignConfig.java:23) ~[classes/:?]
-	at br.com.experian.anticipation.infrastructure.config.FeignConfig$$SpringCGLIB$$0.CGLIB$feignDecoder$0(<generated>) ~[classes/:?]
-	at br.com.experian.anticipation.infrastructure.config.FeignConfig$$SpringCGLIB$$FastClass$$1.invoke(<generated>) ~[classes/:?]
-	at org.springframework.cglib.proxy.MethodProxy.invokeSuper(MethodProxy.java:258) ~[spring-core-6.1.21.jar:6.1.21]
-	at org.springframework.context.annotation.ConfigurationClassEnhancer$BeanMethodInterceptor.intercept(ConfigurationClassEnhancer.java:400) ~[spring-context-6.1.21.jar:6.1.21]
-	at br.com.experian.anticipation.infrastructure.config.FeignConfig$$SpringCGLIB$$0.feignDecoder(<generated>) ~[classes/:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.observability.aspect.LoggerAspect.log(LoggerAspect.java:67) ~[experian-observability-3.0.0.jar:3.0.0]
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:146) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:644) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:636) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:971) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:625) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.cloud.context.named.NamedContextFactory.createContext(NamedContextFactory.java:139) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.context.named.NamedContextFactory.getContext(NamedContextFactory.java:123) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.context.named.NamedContextFactory.getInstance(NamedContextFactory.java:200) ~[spring-cloud-context-4.1.5.jar:4.1.5]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.get(FeignClientFactoryBean.java:398) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.feign(FeignClientFactoryBean.java:136) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getTarget(FeignClientFactoryBean.java:468) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.cloud.openfeign.FeignClientFactoryBean.getObject(FeignClientFactoryBean.java:456) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.doGetObjectFromFactoryBean(FactoryBeanRegistrySupport.java:182) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.FactoryBeanRegistrySupport.getObjectFromFactoryBean(FactoryBeanRegistrySupport.java:124) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getObjectForBeanInstance(AbstractBeanFactory.java:1867) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.getObjectForBeanInstance(AbstractAutowireCapableBeanFactory.java:1296) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:347) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:542) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1185) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:337) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:335) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1448) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1358) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.21.jar:6.1.21]
-	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.21.jar:6.1.21]
-	... 19 more
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.pme.logging.interceptor.LogMethodInterceptor.handleMethodInterceptor(LogMethodInterceptor.java:78) ~[experian-pme-starter-logging-1.5.1.jar:?]
+	at br.com.experian.pme.logging.interceptor.LogMethodInterceptor.handleServiceInterceptor(LogMethodInterceptor.java:39) ~[experian-pme-starter-logging-1.5.1.jar:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl$$SpringCGLIB$$0.findHistoryWithReceivables(<generated>) ~[classes/:?]
+	at br.com.experian.anticipation.application.rest.HistoryController.findHistory(HistoryController.java:36) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174) ~[spring-context-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.observability.aspect.LoggerAspect.log(LoggerAspect.java:67) ~[experian-observability-3.0.0.jar:3.0.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.proceed(AuthorizationManagerBeforeMethodInterceptor.java:269) ~[spring-security-core-6.3.10.jar:6.3.10]
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.attemptAuthorization(AuthorizationManagerBeforeMethodInterceptor.java:264) ~[spring-security-core-6.3.10.jar:6.3.10]
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.invoke(AuthorizationManagerBeforeMethodInterceptor.java:197) ~[spring-security-core-6.3.10.jar:6.3.10]
+	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44) ~[spring-security-config-6.3.10.jar:6.3.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.anticipation.application.rest.HistoryController$$SpringCGLIB$$0.findHistory(<generated>) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.ShallowEtagHeaderFilter.doFilterInternal(ShallowEtagHeaderFilter.java:107) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at br.com.experian.observability.filter.MdcFilter.doFilter(MdcFilter.java:23) ~[experian-observability-3.0.0.jar:3.0.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at br.com.experian.spring.security.config.filter.BearerAuthenticationFilter.doFilterInternal(BearerAuthenticationFilter.java:54) ~[experian-spring-security-configuration-2.2.0.jar:2.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at br.com.experian.spring.security.config.filter.ExceptionHandlerFilter.doFilter(ExceptionHandlerFilter.java:24) ~[experian-spring-security-configuration-2.2.0.jar:2.2.0]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:117) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230) ~[spring-security-config-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at io.opentelemetry.instrumentation.spring.webmvc.v6_0.WebMvcTelemetryProducingFilter.doFilterInternal(WebMvcTelemetryProducingFilter.java:67) ~[opentelemetry-spring-webmvc-6.0-2.6.0-alpha.jar:2.6.0-alpha]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
+Caused by: org.springframework.web.client.RestClientException: Error while extracting response for type [class br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDtoPagedCollectionItems] and content type [application/json;charset=utf-8]
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:119) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.cloud.openfeign.support.SpringDecoder.decode(SpringDecoder.java:71) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at org.springframework.cloud.openfeign.support.ResponseEntityDecoder.decode(ResponseEntityDecoder.java:62) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at feign.InvocationContext.decode(InvocationContext.java:114) ~[feign-core-13.4.jar:?]
+	... 224 more
+Caused by: org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `org.openapitools.jackson.nullable.JsonNullable<java.util.List<br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto>>` from Array value (token `JsonToken.START_ARRAY`)
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:406) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:354) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:104) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.cloud.openfeign.support.SpringDecoder.decode(SpringDecoder.java:71) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at org.springframework.cloud.openfeign.support.ResponseEntityDecoder.decode(ResponseEntityDecoder.java:62) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at feign.InvocationContext.decode(InvocationContext.java:114) ~[feign-core-13.4.jar:?]
+	... 224 more
+Caused by: com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize value of type `org.openapitools.jackson.nullable.JsonNullable<java.util.List<br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto>>` from Array value (token `JsonToken.START_ARRAY`)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 10] (through reference chain: br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDtoPagedCollectionItems["items"])
+	at com.fasterxml.jackson.databind.exc.MismatchedInputException.from(MismatchedInputException.java:59) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.DeserializationContext.reportInputMismatch(DeserializationContext.java:1794) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.DeserializationContext.handleUnexpectedToken(DeserializationContext.java:1568) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.DeserializationContext.handleUnexpectedToken(DeserializationContext.java:1515) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeFromArray(BeanDeserializer.java:671) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeOther(BeanDeserializer.java:203) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:179) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.deser.impl.MethodProperty.deserializeAndSet(MethodProperty.java:129) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserializeFromObject(BeanDeserializer.java:392) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:177) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:342) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.ObjectReader._bindAndClose(ObjectReader.java:2130) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at com.fasterxml.jackson.databind.ObjectReader.readValue(ObjectReader.java:1500) ~[jackson-databind-2.19.1.jar:2.19.1]
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.readJavaType(AbstractJackson2HttpMessageConverter.java:395) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter.read(AbstractJackson2HttpMessageConverter.java:354) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.client.HttpMessageConverterExtractor.extractData(HttpMessageConverterExtractor.java:104) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.cloud.openfeign.support.SpringDecoder.decode(SpringDecoder.java:71) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at org.springframework.cloud.openfeign.support.ResponseEntityDecoder.decode(ResponseEntityDecoder.java:62) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
+	at feign.InvocationContext.decode(InvocationContext.java:114) ~[feign-core-13.4.jar:?]
+	... 224 more
 
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  01:18 min
-[INFO] Finished at: 2025-09-19T14:54:40-03:00
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.3.13:run (default-cli) on project experian-pme-bfm-receivables-anticipation-services: Process terminated with exit code: 1 -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
-
-Process finished with exit code 1
+2025-09-19 15:08:21.634  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : custom.experian.java.method.duration="16039" log.origin.function="findHistoryWithReceivables" message="Finish method"
+2025-09-19 15:08:21.643  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl","method_name":"findHistoryWithReceivables(java.lang.String supplierDocument, java.lang.String capitalSourceDocument, java.lang.String startAnticipationDate, java.lang.String endAnticipationDate, java.lang.String statusId, java.lang.String pageId, java.lang.Integer pageSize)"},"entry_parameters":{"supplierDocument":"45181802000183","pageSize":10},"return_object":{"optional":true},"truncated":false}
+2025-09-19 15:08:21.643  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : No anticipation history found for the given filters
+2025-09-19 15:08:21.669  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.duration="16155" custom.experian.java.method.result="{\"headers\":{},\"body\":null,\"statusCode\":\"NO_CONTENT\",\"statusCodeValue\":204}" log.origin.function="findHistory" message="Finish method"
+2025-09-19 15:08:21.714  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/history" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_BUSINESS, ROLE_CLI-AUTH-IDENTIFIED, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68b89e5e72111743ae657472" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="69798" custom.experian.http.request.token.exp="1758308655" custom.experian.http.request.token.iat="1758305055" custom.experian.http.request.token.iss="http://experian-dp-iam-authorization-server-service.digital-identity-services-uat.svc" custom.experian.http.request.token.jti="7f340fa1-96e9-4c75-bb9e-b2edf72eada1" custom.experian.http.request.token.nbf="1758305055" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="353c3036-e7f9-40ba-adee-397d6397bbae" custom.experian.http.request.token.sub="68b89e5e72111743ae657473" custom.experian.http.request.token.tenant_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.user_id="68b89e5e72111743ae657473" destination.address="0:0:0:0:0:0:0:1" destination.port="55326" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/history" http.response.status_code="204" server.address="*********"
+2025-09-19 15:08:21.741  INFO [experian-pme-bfm-receivables-anticipation-domain-services,821a03131e75563332b087c03e535957,416b8dfa6d27f07b,] 5760 --- [nio-8080-exec-1] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68b89e5e72111743ae657472","user_id":"68b89e5e72111743ae657473","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"69798","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/history","http_method":"GET","http_status_response":204,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.HistoryController","method_name":"findHistory(java.lang.String capitalSourceDocument, java.time.LocalDate anticipationDate, java.lang.String statusId, java.lang.String pageId, java.lang.Integer pageSize)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-09-19T16:04:15","iat":"2025-09-19T15:04:15","authorities":["ROLE_BUSINESSADMIN","ROLE_BUSINESS","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2OGI4OWU1ZTcyMTExNzQzYWU2NTc0NzMiLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwic2Vzc2lvbl9pZCI6IjM1M2MzMDM2LWU3ZjktNDBiYS1hZGVlLTM5N2Q2Mzk3YmJhZSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQlVTSU5FU1NBRE1JTiIsIlJPTEVfQlVTSU5FU1MiLCJST0xFX0NMSS1BVVRILUlERU5USUZJRUQiLCJST0xFX0NMSS0xU1RQQVJUWSIsIlJPTEVfVVNFUiIsIlJPTEVfQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLTNSRFBBUlRZIiwiUk9MRV9QRVJTT04iLCJST0xFX0JVU0lORVNTVVNFUiIsIlJPTEVfQVVUSC1JREVOVElGSUVEIl0sImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwibmJmIjoxNzU4MzA1MDU1LCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3IiwidXNlcl9pZCI6IjY4Yjg5ZTVlNzIxMTE3NDNhZTY1NzQ3MyIsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwic2VydmljZV9pZCI6IjYwMDVlYWM2OWZmN2MwM2I1NjNkYjVlYiIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImV4cCI6MTc1ODMwODY1NSwiY3VzdG9tZXJfaWQiOjY5Nzk4LCJpYXQiOjE3NTgzMDUwNTUsImJ1c2luZXNzX2lkIjoiNjhiODllNWU3MjExMTc0M2FlNjU3NDcyIiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwianRpIjoiN2YzNDBmYTEtOTZlOS00Yzc1LWJiOWUtYjJlZGY3MmVhZGExIn0.dXJCQmrwUg88aYqnXwb-trCSyJkcmNj9x9Haf2kxT8GysQVSrg5n82BX7kYU2Z3ovihFA2GCLOLvokTlUmArcPhen3BvL_RvSWPeTO_Yui0FA5MlBZd5YKh-kYafYM3xlQ1EY5D9MJMQnc6coeW4y-KK8rzBxuxX-vuKsk0283fJVIwfGwY0ayIPeOuAB5-ed4C05Jbn48MN1fdrBkLXTbDV3MM7MBkV48DgeiIVkLWXD8lK56hhx-S2kicC9H5gqv2HhPghlQ-sdaXaxwqv7i-iqRiDZNqNYMdim4mK5QaaWdXhRBG9m7wIBOZTCPk5zjQGWGVXX0cX0MrMTQxJRg","host":"localhost:8080","request-start-time":"1758305284252","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
