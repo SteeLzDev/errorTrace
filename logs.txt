@@ -1,55 +1,5 @@
-GET /history/{id}
-[
- {
-  "id": "83c1c2a1-92b9-47f1-8a56-4b1234567890",
-  "requestDate": "2025-05-29",
-  "receivables" [
- {
-  "cnpj": "12.345.678/0001-00",
-  "accreditingInstitution": "Stone",
-  "installments": 3,
-  "installmentValue": 500.00,
-  "feePercentage": 1.99,
-  "discountValue": 15.00,
-  "netValue:": 485.00
- },
- {
-  "cnpj": "98.765.432/0001-99",
-  "accreditingInstitution": "Cielo",
-  "installments": 10,
-  "installmentValue": 250.00,
-  "feePercentage": 1.99,
-  "discountValue": 50.00,
-  "netValue:": 200.00
-  }
-],
-"totalNetValue": 1000.00
-}
- 
-#Enum
-CONCLUED -> Pago
-PENDING -> Pendente
-PARTIALLY_APPROVED -> Pago Parcialmente
-ERROR -> Erro de antecipação
-REJECTED -> Não aprovado
-ANTICIPABLE -> (Provavelmente não será usado no histórico, mas será listado)
+Incompatible types. Found: 'java.util.List<br.com.experian.swagger.antecipa.model.@jakarta.validation.Valid AntecipaAnticipationCardReceivabletDto>', required: 'java.util.List<br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto>'
 
-GET /history
- 
- 
-[
- {
-  "id": "83c1c2a1-92b9-47f1-8a56-4b1234567890",
-  "requestDate": "2025-05-29",
-  "receivablesCount": 4,
-  "status": "PAID_PARTIALLY",
-  "requestedValue": 1235.00
- },
- {
-  "id": "73ac123d-482b-4311-b123-abcdef987654",
-  "requestDate": "2025-05-29",
-  "receivablesCount": 2,
-  "status": "NOT_APPROVED",
-  "requestedValue": 1000.00
-  }
-]
+Cannot resolve method 'getAnticipatedDiscount' in 'AntecipaAnticipationCardReceivableDto'
+
+Cannot resolve method 'getAnticipatedDiscount' in 'AntecipaAnticipationCardReceivableDto'
