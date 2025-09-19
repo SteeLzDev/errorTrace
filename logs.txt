@@ -79,12 +79,14 @@ public class JacksonConfig {
             }
             
             if (p.getCurrentToken() == JsonToken.START_ARRAY) {
+                ObjectMapper mapper = (ObjectMapper) p.getCodec();
                 List<AntecipaAnticipationCardReceivableListDto> list = 
-                    p.readValueAs(ctxt.getTypeFactory().constructCollectionType(List.class, AntecipaAnticipationCardReceivableListDto.class));
+                    mapper.readValue(p, ctxt.getTypeFactory().constructCollectionType(List.class, AntecipaAnticipationCardReceivableListDto.class));
                 return JsonNullable.of(list);
             }
             
-            Object value = p.readValueAs(Object.class);
+            ObjectMapper mapper = (ObjectMapper) p.getCodec();
+            Object value = mapper.readValue(p, Object.class);
             return JsonNullable.of(value);
         }
     }
