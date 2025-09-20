@@ -1,1 +1,48 @@
-Incompatible types. Found: 'org.openapitools.jackson.nullable.@jakarta.validation.Valid JsonNullable<java.util.List<br.com.experian.swagger.antecipa.model.@jakarta.validation.Valid AntecipaAnticipationCardReceivableListDto>>', required: 'org.openapitools.jackson.nullable.JsonNullable<java.util.List<java.lang.Object>>'
+// no topo da classe (se ainda não tiver)
+private static final ObjectMapper MAPPER = new ObjectMapper();
+
+private List<AntecipaAnticipationCardReceivableListDto> extractItems(
+        AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
+
+    if (pagedResponse == null) return List.of();
+
+    // ⚠️ ajuste de tipo: use o tipo real que o getter retorna
+    JsonNullable<List<AntecipaAnticipationCardReceivableListDto>> itemsNullable = pagedResponse.getItems();
+    if (itemsNullable == null || !itemsNullable.isPresent() || itemsNullable.get() == null) {
+        log.info("No items present in JsonNullable response");
+        return List.of();
+    }
+
+    // Iteramos como wildcard para permitir LinkedHashMap nos elementos
+    List<?> rawItems = itemsNullable.get();
+    List<AntecipaAnticipationCardReceivableListDto> convertedItems = new ArrayList<>();
+
+    for (Object item : rawItems) {
+        try {
+            Object v = item;
+
+            // Alguns geradores/serializações aninham JsonNullable por elemento
+            if (v instanceof JsonNullable<?>) {
+                JsonNullable<?> jn = (JsonNullable<?>) v;
+                if (!jn.isPresent() || jn.get() == null) continue;
+                v = jn.get();
+            }
+
+            if (v instanceof AntecipaAnticipationCardReceivableListDto dto) {
+                convertedItems.add(dto);
+
+            } else if (v instanceof LinkedHashMap<?, ?> || v instanceof java.util.Map<?, ?>) {
+                // Quando o Feign/Jackson devolve Map ao invés do DTO
+                convertedItems.add(MAPPER.convertValue(v, AntecipaAnticipationCardReceivableListDto.class));
+
+            } else {
+                log.warn("Unexpected item type in response: {}", v.getClass().getName());
+            }
+        } catch (Exception e) {
+            log.error("Error converting item to DTO", e);
+        }
+    }
+
+    log.info("Successfully converted {} items from external API response", convertedItems.size());
+    return convertedItems;
+}
