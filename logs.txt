@@ -1,47 +1,52 @@
-private List<AntecipaAnticipationCardReceivableListDto> extractItems(
-        AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
-
-    if (pagedResponse == null) return List.of();
-
-    // Pode ser JsonNullable<List<...>> OU List<...>
-    Object itemsField = pagedResponse.getItems();
-    List<?> rawList;
-
-    if (itemsField == null) return List.of();
-
-    if (itemsField instanceof JsonNullable<?>) {
-        JsonNullable<?> jn = (JsonNullable<?>) itemsField;
-        if (!jn.isPresent() || jn.get() == null) return List.of();
-        if (!(jn.get() instanceof List<?> list)) {
-            log.warn("items presente mas não é List: {}", jn.get().getClass().getName());
-            return List.of();
+   private List<AntecipaAnticipationCardReceivableListDto> extractItems(
+            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
+        if (pagedResponse == null || pagedResponse.getItems() == null) {
+            return new ArrayList<>();
         }
-        rawList = list;
-    } else if (itemsField instanceof List<?>) {
-        rawList = (List<?>) itemsField;
-    } else {
-        log.warn("Tipo inesperado em items: {}", itemsField.getClass().getName());
-        return List.of();
+        
+        JsonNullable<List<Object>> itemsNullable = pagedResponse.getItems();
+        if (!itemsNullable.isPresent() || itemsNullable.get() == null) {
+            log.info("No items present in JsonNullable response");
+            return new ArrayList<>();
+        }
+        
+        List<Object> rawItems = itemsNullable.get();
+        List<AntecipaAnticipationCardReceivableListDto> convertedItems = new ArrayList<>();
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        
+        for (Object item : rawItems) {
+            try {
+                if (item instanceof LinkedHashMap) {
+                    // Converter LinkedHashMap para DTO usando ObjectMapper
+                    AntecipaAnticipationCardReceivableListDto dto = objectMapper.convertValue(
+                        item, AntecipaAnticipationCardReceivableListDto.class);
+                    convertedItems.add(dto);
+                } else if (item instanceof AntecipaAnticipationCardReceivableListDto) {
+                    // Se já é o tipo correto, adicionar diretamente
+                    convertedItems.add((AntecipaAnticipationCardReceivableListDto) item);
+                } else if (item instanceof JsonNullable) {
+                    JsonNullable<?> nullableItem = (JsonNullable<?>) item;
+                    if (nullableItem.isPresent() && nullableItem.get() != null) {
+                        Object actualItem = nullableItem.get();
+                        if (actualItem instanceof LinkedHashMap) {
+                            AntecipaAnticipationCardReceivableListDto dto = objectMapper.convertValue(
+                                actualItem, AntecipaAnticipationCardReceivableListDto.class);
+                            convertedItems.add(dto);
+                        } else if (actualItem instanceof AntecipaAnticipationCardReceivableListDto) {
+                            convertedItems.add((AntecipaAnticipationCardReceivableListDto) actualItem);
+                        } else {
+                            log.warn("Unexpected item type inside JsonNullable: {}", actualItem.getClass().getName());
+                        }
+                    }
+                } else {
+                    log.warn("Unexpected item type in response: {}", item.getClass().getName());
+                }
+            } catch (Exception e) {
+                log.error("Error converting item to DTO: {}", e.getMessage(), e);
+            }
+        }
+        
+        log.info("Successfully converted {} items from external API response", convertedItems.size());
+        return convertedItems;
     }
-
-    List<AntecipaAnticipationCardReceivableListDto> out = new ArrayList<>();
-    for (Object o : rawList) {
-        Object v = o;
-
-        // Alguns geradores colocam cada elemento como JsonNullable<T>
-        if (v instanceof JsonNullable<?>) {
-            JsonNullable<?> jnElem = (JsonNullable<?>) v;
-            if (!jnElem.isPresent() || jnElem.get() == null) continue;
-            v = jnElem.get();
-        }
-
-        if (v instanceof AntecipaAnticipationCardReceivableListDto dto) {
-            out.add(dto);
-        } else if (v instanceof LinkedHashMap<?, ?> || v instanceof java.util.Map<?, ?>) {
-            out.add(MAPPER.convertValue(v, AntecipaAnticipationCardReceivableListDto.class));
-        } else {
-            log.warn("Elemento inesperado em items: {}", v.getClass().getName());
-        }
-    }
-    return out;
-}
