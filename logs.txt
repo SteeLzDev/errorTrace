@@ -1,68 +1,260 @@
-    private List<ReceivableItemTO> processReceivables(AntecipaAnticipationCardReceivableDto detail,
-                                                    AntecipaAnticipationCardReceivableListDto listItem) {
-        List<ReceivableItemTO> receivables = new ArrayList<>();
+2025-09-20 11:13:42.066  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Anticipations/45181802000183?PageSize=10","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJlNTI1MzA2Ni0yNTk3LTQ0MTAtOTQ0YS01NTY3OThmNjJkNTUiLCJldmVudF9pZCI6IjdjYjUxMzM5LWE0ZWUtNDQwYy05NjE0LThhMGY3OWY3NGQ1MyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzNzc1NjUsImV4cCI6MTc1ODM4NDc2NSwiaWF0IjoxNzU4Mzc3NTY1LCJqdGkiOiJiMmM4MzM5NC04ZmQ2LTQzYjItYWM0Zi1mNjNmNTBjNGRjZWIiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.U7HRKBdG8P7xUrTY7mGRKqsEfDbs1I-0ABmFq3aOHarpzAJmGAma1kAaPM6sv9AzPcHYgmbZg01wDgOzFO6r9vY3Ve7x5oiOwZhSNNqL5IeeCL6FA_mr7A0MjzSqU92a-l1NMv3djBuXQGLRtrcV8M1cyD-iN8Bm-Oy4ZxaEP0M3AMGHlaW_A7aDUwOfdroJDQ2nFqNmSyEeT8xY6UXNXfg8MQoOwh-ciEBd6Wz6E7x5G0O2Tl9SrpyGaT3L5tbYN4iFW2OBdQd6Xeca3NtjuhhKzgzvBEus-N5KXnynbQnM2wc6UL_Zmyl_o2zmmctiq_7KY52HXJetQfuA2sRCAw"]},"execution_time":7804,"response":"{\"items\":[{\"id\":\"815f98c0-af11-4b8f-b33a-75c42eef0b36\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"************************\",\"document\":\"46572145000168\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":\"1245\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"paymentDate\":\"2025-09-01T00:00:00+00:00\",\"createdAt\":\"2025-09-01T13:32:14.84+00:00\",\"effectiveRate\":0.05,\"selectedAmount\":12747.58,\"receivedAmount\":0,\"anticipatedDiscount\":0},{\"id\":\"0e489c9a-4ca1-4e9a-9f29-c628b34aaf85\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"************************\",\"document\":\"46572145000168\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":\"1242\",\"statusId\":4,\"status\":\"Anticipated\",\"anticipatedOn\":\"2025-08-29T09:49:41.237+00:00\",\"paymentDate\":\"2025-08-29T00:00:00+00:00\",\"createdAt\":\"2025-08-29T12:47:20.83+00:00\",\"effectiveRate\":0.05,\"selectedAmount\":11586.54,\"receivedAmount\":11063.273666666666,\"anticipatedDiscount\":523.2663333333334},{\"id\":\"c90c1ccd-8342-43ea-a4e9-f3604299b06b\",\"accreditingInstitution\":{\"id\":\"9a0ff233-6e3e-4587-8e91-3ae6c3ad11a1\",\"name\":\"************************\",\"document\":\"61229650000106\"},\"capitalSource\":{\"id\":\"0b401772-4b9c-4cff-9a6f-090626461c3c\",\"name\":\"*******************\",\"document\":\"68900810000138\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":\"1240\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"createdAt\":\"2025-08-28T19:30:07.476+00:00\",\"effectiveRate\":0.02,\"selectedAmount\":5222,\"receivedAmount\":0,\"anticipatedDiscount\":0},{\"id\":\"e68c6d32-3c10-4cd1-b03b-150f4000911c\",\"accreditingInstitution\":{\"id\":\"9a0ff233-6e3e-4587-8e91-3ae6c3ad11a1\",\"name\":\"************************\",\"document\":\"61229650000106\"},\"capitalSource\":{\"id\":\"0b401772-4b9c-4cff-9a6f-090626461c3c\",\"name\":\"*******************\",\"document\":\"68900810000138\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":\"1238\",\"statusId\":4,\"status\":\"Anticipated\",\"anticipatedOn\":\"2025-08-28T15:24:55.186+00:00\",\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"createdAt\":\"2025-08-28T18:13:16.012+00:00\",\"effectiveRate\":0.0139,\"selectedAmount\":10350.93,\"receivedAmount\":10213.747082133334,\"anticipatedDiscount\":137.18291786666666},{\"id\":\"07629699-25b5-47b4-ab57-45b8f48f756b\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"************************\",\"document\":null},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":\"1219\",\"statusId\":4,\"status\":\"Anticipated\",\"anticipatedOn\":\"2025-08-19T09:57:03.224+00:00\",\"paymentDate\":\"2025-08-19T00:00:00+00:00\",\"createdAt\":\"2025-08-19T12:52:14.88+00:00\",\"effectiveRate\":0.05,\"selectedAmount\":7106.32,\"receivedAmount\":5694.99925,\"anticipatedDiscount\":1411.32075},{\"id\":\"8f1c8bae-9554-45e2-a16d-0affff73eebb\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"************************\",\"document\":null},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":\"1218\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"paymentDate\":\"2025-08-19T00:00:00+00:00\",\"createdAt\":\"2025-08-19T12:38:06.003+00:00\",\"effectiveRate\":0.05,\"selectedAmount\":7106.32,\"receivedAmount\":0,\"anticipatedDiscount\":0}],\"pageNextId\":null,\"pageSize\":10}","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipations(String,String,String,String,String,String,String,Integer)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-20T13:12:45","iat":"2025-09-20T11:12:45"}},"truncated":true}
+2025-09-20 11:13:42.752  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Anticipations/45181802000183/815f98c0-af11-4b8f-b33a-75c42eef0b36","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJlNTI1MzA2Ni0yNTk3LTQ0MTAtOTQ0YS01NTY3OThmNjJkNTUiLCJldmVudF9pZCI6IjdjYjUxMzM5LWE0ZWUtNDQwYy05NjE0LThhMGY3OWY3NGQ1MyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzNzc1NjUsImV4cCI6MTc1ODM4NDc2NSwiaWF0IjoxNzU4Mzc3NTY1LCJqdGkiOiJiMmM4MzM5NC04ZmQ2LTQzYjItYWM0Zi1mNjNmNTBjNGRjZWIiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.U7HRKBdG8P7xUrTY7mGRKqsEfDbs1I-0ABmFq3aOHarpzAJmGAma1kAaPM6sv9AzPcHYgmbZg01wDgOzFO6r9vY3Ve7x5oiOwZhSNNqL5IeeCL6FA_mr7A0MjzSqU92a-l1NMv3djBuXQGLRtrcV8M1cyD-iN8Bm-Oy4ZxaEP0M3AMGHlaW_A7aDUwOfdroJDQ2nFqNmSyEeT8xY6UXNXfg8MQoOwh-ciEBd6Wz6E7x5G0O2Tl9SrpyGaT3L5tbYN4iFW2OBdQd6Xeca3NtjuhhKzgzvBEus-N5KXnynbQnM2wc6UL_Zmyl_o2zmmctiq_7KY52HXJetQfuA2sRCAw"]},"execution_time":677,"response":"{\"id\":\"815f98c0-af11-4b8f-b33a-75c42eef0b36\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"*****************************\",\"document\":\"46572145000168\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":1245,\"requestedBy\":\"fornecedor@antecipa.com\",\"statusId\":6,\"status\":\"Error\",\"mediumTerm\":28,\"paymentDate\":\"2025-09-01T00:00:00+00:00\",\"createdAt\":\"2025-09-01T13:32:14.84+00:00\",\"amount\":12148.3039,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"selectedAmount\":12747.58,\"receivedAmount\":0,\"bankAccount\":{\"id\":\"c6cd4a4f-2111-4c35-aa17-7ee46b91f01d\",\"externalId\":\"9040088\",\"bankCode\":\"033\",\"bankName\":\"****************(Brasil) S. A.\",\"branchNumber\":\"0005\",\"branchDigit\":\"0\",\"accountNumber\":\"793127\",\"accountDigit\":\"4\"},\"anticipatedItems\":[],\"notAnticipatedItems\":[{\"id\":\"e38b8905-91d5-40a3-b7f8-7ee24a72cda4\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-09-30\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-30T00:00:00+00:00\",\"daysToDue\":29,\"paymentDate\":\"2025-09-01T00:00:00+00:00\",\"selectedAmount\":1632.16,\"discount\":78.887733333333333333333334911,\"netValue\":1553.2722666666666666666666651,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":null},{\"id\":\"def582a9-65cb-4baa-b557-d0503ff1cd48\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-09-28\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-29T00:00:00+00:00\",\"daysToDue\":28,\"paymentDate\":\"2025-09-01T00:00:00+00:00\",\"selectedAmount\":2018.75,\"discount\":94.20833333333333333333333522,\"netValue\":1924.5416666666666666666666648,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":null},{\"id\":\"a9e4c5cf-218d-4dec-8985-9fe1e00a803f\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-09-27\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-29T00:00:00+00:00\",\"daysToDue\":28,\"paymentDate\":\"2025-09-01T00:00:00+00:00\",\"selectedAmount\":2494.36,\"discount\":116.40346666666666666666666899,\"netValue\":2377.9565333333333333333333310,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":null},{\"id\":\"8abaab6d-5794-4e41-bd67-f12d10fc2173\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-09-29\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-29T00:00:00+00:00\",\"daysToDue\":28,\"paymentDate\":\"2025-09-01T00:00:00+00:00\",\"selectedAmount\":6101.68,\"discount\":284.74506666666666666666667236,\"netValue\":5816.9349333333333333333333276,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":null},{\"id\":\"32af4832-9d6a-4440-adb6-6a818ed2e7e8\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-10-01\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-10-01T00:00:00+00:00\",\"daysToDue\":30,\"paymentDate\":\"2025-09-01T00:00:00+00:00\",\"selectedAmount\":500.63,\"discount\":25.031500000000000000000000501,\"netValue\":475.59849999999999999999999950,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":null}]}","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipationById(String,String,String)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-20T13:12:45","iat":"2025-09-20T11:12:45"}},"truncated":true}
+2025-09-20 11:13:43.264  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Anticipations/45181802000183/0e489c9a-4ca1-4e9a-9f29-c628b34aaf85","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJlNTI1MzA2Ni0yNTk3LTQ0MTAtOTQ0YS01NTY3OThmNjJkNTUiLCJldmVudF9pZCI6IjdjYjUxMzM5LWE0ZWUtNDQwYy05NjE0LThhMGY3OWY3NGQ1MyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzNzc1NjUsImV4cCI6MTc1ODM4NDc2NSwiaWF0IjoxNzU4Mzc3NTY1LCJqdGkiOiJiMmM4MzM5NC04ZmQ2LTQzYjItYWM0Zi1mNjNmNTBjNGRjZWIiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.U7HRKBdG8P7xUrTY7mGRKqsEfDbs1I-0ABmFq3aOHarpzAJmGAma1kAaPM6sv9AzPcHYgmbZg01wDgOzFO6r9vY3Ve7x5oiOwZhSNNqL5IeeCL6FA_mr7A0MjzSqU92a-l1NMv3djBuXQGLRtrcV8M1cyD-iN8Bm-Oy4ZxaEP0M3AMGHlaW_A7aDUwOfdroJDQ2nFqNmSyEeT8xY6UXNXfg8MQoOwh-ciEBd6Wz6E7x5G0O2Tl9SrpyGaT3L5tbYN4iFW2OBdQd6Xeca3NtjuhhKzgzvBEus-N5KXnynbQnM2wc6UL_Zmyl_o2zmmctiq_7KY52HXJetQfuA2sRCAw"]},"execution_time":503,"response":"{\"id\":\"0e489c9a-4ca1-4e9a-9f29-c628b34aaf85\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"*****************************\",\"document\":\"46572145000168\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":1242,\"requestedBy\":\"fornecedor@antecipa.com\",\"statusId\":4,\"status\":\"Anticipated\",\"mediumTerm\":27,\"paymentDate\":\"2025-08-29T00:00:00+00:00\",\"createdAt\":\"2025-08-29T12:47:20.83+00:00\",\"amount\":11063.273666666666,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"selectedAmount\":11586.54,\"receivedAmount\":11063.273666666666,\"bankAccount\":{\"id\":\"c6cd4a4f-2111-4c35-aa17-7ee46b91f01d\",\"externalId\":\"9040088\",\"bankCode\":\"033\",\"bankName\":\"****************(Brasil) S. A.\",\"branchNumber\":\"0005\",\"branchDigit\":\"0\",\"accountNumber\":\"793127\",\"accountDigit\":\"4\"},\"anticipatedItems\":[{\"id\":\"dba7ab7e-63b5-45e4-b139-518a005569ad\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-09-25\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-25T00:00:00+00:00\",\"daysToDue\":27,\"paymentDate\":\"2025-08-29T00:00:00+00:00\",\"selectedAmount\":2093.25,\"discount\":94.19625000000000000000000188,\"netValue\":1999.0537499999999999999999981,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"},{\"id\":\"78f451a3-3a89-403a-a0b6-79cad933ee89\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-09-26\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-26T00:00:00+00:00\",\"daysToDue\":28,\"paymentDate\":\"2025-08-29T00:00:00+00:00\",\"selectedAmount\":6132.17,\"discount\":286.16793333333333333333333906,\"netValue\":5846.0020666666666666666666609,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"},{\"id\":\"5ea69d3a-e6de-4a9d-95e9-33f65b28abdc\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-09-24\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-24T00:00:00+00:00\",\"daysToDue\":26,\"paymentDate\":\"2025-08-29T00:00:00+00:00\",\"selectedAmount\":1713.29,\"discount\":74.242566666666666666666668152,\"netValue\":1639.0474333333333333333333318,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"},{\"id\":\"48f59534-0fd8-482c-b96c-e2ce150c4d58\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-09-23\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-23T00:00:00+00:00\",\"daysToDue\":25,\"paymentDate\":\"2025-08-29T00:00:00+00:00\",\"selectedAmount\":1647.83,\"discount\":68.659583333333333333333334707,\"netValue\":1579.1704166666666666666666653,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"}],\"notAnticipatedItems\":[]}","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipationById(String,String,String)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-20T13:12:45","iat":"2025-09-20T11:12:45"}},"truncated":false}
+2025-09-20 11:13:43.694  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Anticipations/45181802000183/c90c1ccd-8342-43ea-a4e9-f3604299b06b","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJlNTI1MzA2Ni0yNTk3LTQ0MTAtOTQ0YS01NTY3OThmNjJkNTUiLCJldmVudF9pZCI6IjdjYjUxMzM5LWE0ZWUtNDQwYy05NjE0LThhMGY3OWY3NGQ1MyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzNzc1NjUsImV4cCI6MTc1ODM4NDc2NSwiaWF0IjoxNzU4Mzc3NTY1LCJqdGkiOiJiMmM4MzM5NC04ZmQ2LTQzYjItYWM0Zi1mNjNmNTBjNGRjZWIiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.U7HRKBdG8P7xUrTY7mGRKqsEfDbs1I-0ABmFq3aOHarpzAJmGAma1kAaPM6sv9AzPcHYgmbZg01wDgOzFO6r9vY3Ve7x5oiOwZhSNNqL5IeeCL6FA_mr7A0MjzSqU92a-l1NMv3djBuXQGLRtrcV8M1cyD-iN8Bm-Oy4ZxaEP0M3AMGHlaW_A7aDUwOfdroJDQ2nFqNmSyEeT8xY6UXNXfg8MQoOwh-ciEBd6Wz6E7x5G0O2Tl9SrpyGaT3L5tbYN4iFW2OBdQd6Xeca3NtjuhhKzgzvBEus-N5KXnynbQnM2wc6UL_Zmyl_o2zmmctiq_7KY52HXJetQfuA2sRCAw"]},"execution_time":420,"response":"{\"id\":\"c90c1ccd-8342-43ea-a4e9-f3604299b06b\",\"accreditingInstitution\":{\"id\":\"9a0ff233-6e3e-4587-8e91-3ae6c3ad11a1\",\"name\":\"*****************************\",\"document\":\"61229650000106\"},\"capitalSource\":{\"id\":\"0b401772-4b9c-4cff-9a6f-090626461c3c\",\"name\":\"*******************\",\"document\":\"68900810000138\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":1240,\"requestedBy\":\"diego@antecipa.com\",\"statusId\":6,\"status\":\"Error\",\"mediumTerm\":90,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"createdAt\":\"2025-08-28T19:30:07.476+00:00\",\"amount\":4908.68,\"requestedRate\":0,\"effectiveRate\":0.02,\"selectedAmount\":5222,\"receivedAmount\":0,\"bankAccount\":{\"id\":\"c6cd4a4f-2111-4c35-aa17-7ee46b91f01d\",\"externalId\":\"9040088\",\"bankCode\":\"033\",\"bankName\":\"****************(Brasil) S. A.\",\"branchNumber\":\"0005\",\"branchDigit\":\"0\",\"accountNumber\":\"793127\",\"accountDigit\":\"4\"},\"anticipatedItems\":[],\"notAnticipatedItems\":[{\"id\":\"2ef292f9-6472-4a58-809d-e77e64e69c3a\",\"externalId\":\"45181802000183|61229650000106|VCC|2025-11-26\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-11-26T00:00:00+00:00\",\"daysToDue\":90,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"selectedAmount\":5222,\"discount\":313.32000000000000000000001567,\"netValue\":4908.6799999999999999999999843,\"requestedRate\":0,\"effectiveRate\":0.02,\"anticipationResponseMessage\":null}]}","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipationById(String,String,String)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-20T13:12:45","iat":"2025-09-20T11:12:45"}},"truncated":false}
+2025-09-20 11:13:44.215  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Anticipations/45181802000183/e68c6d32-3c10-4cd1-b03b-150f4000911c","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJlNTI1MzA2Ni0yNTk3LTQ0MTAtOTQ0YS01NTY3OThmNjJkNTUiLCJldmVudF9pZCI6IjdjYjUxMzM5LWE0ZWUtNDQwYy05NjE0LThhMGY3OWY3NGQ1MyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzNzc1NjUsImV4cCI6MTc1ODM4NDc2NSwiaWF0IjoxNzU4Mzc3NTY1LCJqdGkiOiJiMmM4MzM5NC04ZmQ2LTQzYjItYWM0Zi1mNjNmNTBjNGRjZWIiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.U7HRKBdG8P7xUrTY7mGRKqsEfDbs1I-0ABmFq3aOHarpzAJmGAma1kAaPM6sv9AzPcHYgmbZg01wDgOzFO6r9vY3Ve7x5oiOwZhSNNqL5IeeCL6FA_mr7A0MjzSqU92a-l1NMv3djBuXQGLRtrcV8M1cyD-iN8Bm-Oy4ZxaEP0M3AMGHlaW_A7aDUwOfdroJDQ2nFqNmSyEeT8xY6UXNXfg8MQoOwh-ciEBd6Wz6E7x5G0O2Tl9SrpyGaT3L5tbYN4iFW2OBdQd6Xeca3NtjuhhKzgzvBEus-N5KXnynbQnM2wc6UL_Zmyl_o2zmmctiq_7KY52HXJetQfuA2sRCAw"]},"execution_time":510,"response":"{\"id\":\"e68c6d32-3c10-4cd1-b03b-150f4000911c\",\"accreditingInstitution\":{\"id\":\"9a0ff233-6e3e-4587-8e91-3ae6c3ad11a1\",\"name\":\"*****************************\",\"document\":\"61229650000106\"},\"capitalSource\":{\"id\":\"0b401772-4b9c-4cff-9a6f-090626461c3c\",\"name\":\"*******************\",\"document\":\"68900810000138\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":1238,\"requestedBy\":\"fornecedor@antecipa.com\",\"statusId\":4,\"status\":\"Anticipated\",\"mediumTerm\":29,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"createdAt\":\"2025-08-28T18:13:16.012+00:00\",\"amount\":10213.747082133334,\"requestedRate\":0,\"effectiveRate\":0.0139,\"selectedAmount\":10350.93,\"receivedAmount\":10213.747082133334,\"bankAccount\":{\"id\":\"c6cd4a4f-2111-4c35-aa17-7ee46b91f01d\",\"externalId\":\"9040088\",\"bankCode\":\"033\",\"bankName\":\"****************(Brasil) S. A.\",\"branchNumber\":\"0005\",\"branchDigit\":\"0\",\"accountNumber\":\"793127\",\"accountDigit\":\"4\"},\"anticipatedItems\":[{\"id\":\"fcf5b201-35f9-4306-9bf3-dfaafcfd9bae\",\"externalId\":\"45181802000183|61229650000106|VCC|2025-09-25\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-25T00:00:00+00:00\",\"daysToDue\":28,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"selectedAmount\":1890.45,\"discount\":24.525437999999999999999998236,\"netValue\":1865.9245620000000000000000018,\"requestedRate\":0,\"effectiveRate\":0.0139,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"},{\"id\":\"69fd963c-0652-42cf-b8ea-49e7a463f2c3\",\"externalId\":\"45181802000183|61229650000106|VCC|2025-09-24\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-24T00:00:00+00:00\",\"daysToDue\":27,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"selectedAmount\":960.56,\"discount\":12.016605599999999999999999135,\"netValue\":948.5433944000000000000000009,\"requestedRate\":0,\"effectiveRate\":0.0139,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"},{\"id\":\"617d9d2e-a9ac-4829-b64b-45717dcccf63\",\"externalId\":\"45181802000183|61229650000106|VCC|2025-09-26\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-26T00:00:00+00:00\",\"daysToDue\":29,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"selectedAmount\":7404.2,\"discount\":99.48776733333333333333332618,\"netValue\":7304.7122326666666666666666738,\"requestedRate\":0,\"effectiveRate\":0.0139,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"},{\"id\":\"1da87bf6-70c8-4e58-b90a-d88cc750c5ec\",\"externalId\":\"45181802000183|61229650000106|VCC|2025-09-23\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-09-23T00:00:00+00:00\",\"daysToDue\":26,\"paymentDate\":\"2025-08-28T00:00:00+00:00\",\"selectedAmount\":95.72,\"discount\":1.1531069333333333333333332504,\"netValue\":94.56689306666666666666666675,\"requestedRate\":0,\"effectiveRate\":0.0139,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"}],\"notAnticipatedItems\":[]}","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipationById(String,String,String)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-20T13:12:45","iat":"2025-09-20T11:12:45"}},"truncated":false}
+2025-09-20 11:13:44.663  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Anticipations/45181802000183/07629699-25b5-47b4-ab57-45b8f48f756b","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJlNTI1MzA2Ni0yNTk3LTQ0MTAtOTQ0YS01NTY3OThmNjJkNTUiLCJldmVudF9pZCI6IjdjYjUxMzM5LWE0ZWUtNDQwYy05NjE0LThhMGY3OWY3NGQ1MyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzNzc1NjUsImV4cCI6MTc1ODM4NDc2NSwiaWF0IjoxNzU4Mzc3NTY1LCJqdGkiOiJiMmM4MzM5NC04ZmQ2LTQzYjItYWM0Zi1mNjNmNTBjNGRjZWIiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.U7HRKBdG8P7xUrTY7mGRKqsEfDbs1I-0ABmFq3aOHarpzAJmGAma1kAaPM6sv9AzPcHYgmbZg01wDgOzFO6r9vY3Ve7x5oiOwZhSNNqL5IeeCL6FA_mr7A0MjzSqU92a-l1NMv3djBuXQGLRtrcV8M1cyD-iN8Bm-Oy4ZxaEP0M3AMGHlaW_A7aDUwOfdroJDQ2nFqNmSyEeT8xY6UXNXfg8MQoOwh-ciEBd6Wz6E7x5G0O2Tl9SrpyGaT3L5tbYN4iFW2OBdQd6Xeca3NtjuhhKzgzvBEus-N5KXnynbQnM2wc6UL_Zmyl_o2zmmctiq_7KY52HXJetQfuA2sRCAw"]},"execution_time":437,"response":"{\"id\":\"07629699-25b5-47b4-ab57-45b8f48f756b\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"*****************************\",\"document\":\"46572145000168\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":1219,\"requestedBy\":\"diego@antecipa.com\",\"statusId\":4,\"status\":\"Anticipated\",\"mediumTerm\":119,\"paymentDate\":\"2025-08-19T00:00:00+00:00\",\"createdAt\":\"2025-08-19T12:52:14.88+00:00\",\"amount\":5694.99925,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"selectedAmount\":7106.32,\"receivedAmount\":5694.99925,\"bankAccount\":{\"id\":\"c6cd4a4f-2111-4c35-aa17-7ee46b91f01d\",\"externalId\":\"9040088\",\"bankCode\":\"033\",\"bankName\":\"****************(Brasil) S. A.\",\"branchNumber\":\"0005\",\"branchDigit\":\"0\",\"accountNumber\":\"793127\",\"accountDigit\":\"4\"},\"anticipatedItems\":[{\"id\":\"96fcdedf-ae68-44b1-9850-c2e849e5c8fa\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-12-16\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-12-16T00:00:00+00:00\",\"daysToDue\":119,\"paymentDate\":\"2025-08-19T00:00:00+00:00\",\"selectedAmount\":5965.95,\"discount\":1183.2467500000000000000000237,\"netValue\":4782.7032499999999999999999763,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"},{\"id\":\"674a5104-c1d9-43eb-bc7f-097a122c65b8\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-12-17\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-12-17T00:00:00+00:00\",\"daysToDue\":120,\"paymentDate\":\"2025-08-19T00:00:00+00:00\",\"selectedAmount\":1140.37,\"discount\":228.07400000000000000000000456,\"netValue\":912.2959999999999999999999954,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":\"UR antecipada com sucesso.\"}],\"notAnticipatedItems\":[]}","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipationById(String,String,String)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-20T13:12:45","iat":"2025-09-20T11:12:45"}},"truncated":false}
+2025-09-20 11:13:45.168  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Anticipations/45181802000183/8f1c8bae-9554-45e2-a16d-0affff73eebb","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiJlNTI1MzA2Ni0yNTk3LTQ0MTAtOTQ0YS01NTY3OThmNjJkNTUiLCJldmVudF9pZCI6IjdjYjUxMzM5LWE0ZWUtNDQwYy05NjE0LThhMGY3OWY3NGQ1MyIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTgzNzc1NjUsImV4cCI6MTc1ODM4NDc2NSwiaWF0IjoxNzU4Mzc3NTY1LCJqdGkiOiJiMmM4MzM5NC04ZmQ2LTQzYjItYWM0Zi1mNjNmNTBjNGRjZWIiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.U7HRKBdG8P7xUrTY7mGRKqsEfDbs1I-0ABmFq3aOHarpzAJmGAma1kAaPM6sv9AzPcHYgmbZg01wDgOzFO6r9vY3Ve7x5oiOwZhSNNqL5IeeCL6FA_mr7A0MjzSqU92a-l1NMv3djBuXQGLRtrcV8M1cyD-iN8Bm-Oy4ZxaEP0M3AMGHlaW_A7aDUwOfdroJDQ2nFqNmSyEeT8xY6UXNXfg8MQoOwh-ciEBd6Wz6E7x5G0O2Tl9SrpyGaT3L5tbYN4iFW2OBdQd6Xeca3NtjuhhKzgzvBEus-N5KXnynbQnM2wc6UL_Zmyl_o2zmmctiq_7KY52HXJetQfuA2sRCAw"]},"execution_time":496,"response":"{\"id\":\"8f1c8bae-9554-45e2-a16d-0affff73eebb\",\"accreditingInstitution\":{\"id\":\"c20f6f22-c0b5-4a4a-8f47-e9ae2c2e5dae\",\"name\":\"*****************************\",\"document\":\"46572145000168\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"1d81e289-84d8-4665-9933-8df55dfc6590\",\"name\":\"*********************************************\",\"document\":\"45181802000183\"},\"number\":1218,\"requestedBy\":\"diego@antecipa.com\",\"statusId\":6,\"status\":\"Error\",\"mediumTerm\":119,\"paymentDate\":\"2025-08-19T00:00:00+00:00\",\"createdAt\":\"2025-08-19T12:38:06.003+00:00\",\"amount\":5694.99925,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"selectedAmount\":7106.32,\"receivedAmount\":0,\"bankAccount\":{\"id\":\"c6cd4a4f-2111-4c35-aa17-7ee46b91f01d\",\"externalId\":\"9040088\",\"bankCode\":\"033\",\"bankName\":\"****************(Brasil) S. A.\",\"branchNumber\":\"0005\",\"branchDigit\":\"0\",\"accountNumber\":\"793127\",\"accountDigit\":\"4\"},\"anticipatedItems\":[],\"notAnticipatedItems\":[{\"id\":\"96fcdedf-ae68-44b1-9850-c2e849e5c8fa\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-12-16\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-12-16T00:00:00+00:00\",\"daysToDue\":119,\"paymentDate\":\"2025-08-19T00:00:00+00:00\",\"selectedAmount\":5965.95,\"discount\":1183.2467500000000000000000237,\"netValue\":4782.7032499999999999999999763,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":null},{\"id\":\"674a5104-c1d9-43eb-bc7f-097a122c65b8\",\"externalId\":\"45181802000183|46572145000168|MCC|2025-12-17\",\"statusId\":2,\"status\":\"2\",\"dueDate\":\"2025-12-17T00:00:00+00:00\",\"daysToDue\":120,\"paymentDate\":\"2025-08-19T00:00:00+00:00\",\"selectedAmount\":1140.37,\"discount\":228.07400000000000000000000456,\"netValue\":912.2959999999999999999999954,\"requestedRate\":0.05,\"effectiveRate\":0.05,\"anticipationResponseMessage\":null}]}","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipationById(String,String,String)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-09-20T13:12:45","iat":"2025-09-20T11:12:45"}},"truncated":false}
+2025-09-20 11:13:45.173  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.a.d.s.i.HistoryServiceImpl         : Successfully retrieved 6 anticipation records with receivables for supplier: 45181802000183
+2025-09-20 11:13:45.173  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.a.d.s.i.HistoryServiceImpl         : custom.experian.java.method.duration="10919" log.origin.function="findHistoryWithReceivables" message="Finish method"
+2025-09-20 11:13:45.175  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl","method_name":"findHistoryWithReceivables(java.lang.String supplierDocument, java.lang.String capitalSourceDocument, java.lang.String startAnticipationDate, java.lang.String endAnticipationDate, java.lang.String statusId, java.lang.String pageId, java.lang.Integer pageSize)"},"entry_parameters":{"supplierDocument":"45181802000183","pageSize":10},"return_object":{"optional":true,"return_value":"{\"items\":[{\"id\":\"815f98c0-af11-4b8f-b33a-75c42eef0b36\",\"requestDate\":\"2025-09-01\",\"status\":\"ERROR\",\"receivablesCount\":5,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1632.16,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":2018.75,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":2494.36,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":6101.68,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":500.63,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0}],\"totalNetValue\":0.0},{\"id\":\"0e489c9a-4ca1-4e9a-9f29-c628b34aaf85\",\"requestDate\":\"2025-08-29\",\"status\":\"CONCLUDED\",\"receivablesCount\":4,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":2093.25,\"feePercentage\":0.05,\"discountValue\":523.2663333333334,\"netValue\":11063.273666666666},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":6132.17,\"feePercentage\":0.05,\"discountValue\":523.2663333333334,\"netValue\":11063.273666666666},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1713.29,\"feePercentage\":0.05,\"discountValue\":523.2663333333334,\"netValue\":11063.273666666666},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1647.83,\"feePercentage\":0.05,\"discountValue\":523.2663333333334,\"netValue\":11063.273666666666}],\"totalNetValue\":44253.094666666664},{\"id\":\"c90c1ccd-8342-43ea-a4e9-f3604299b06b\",\"requestDate\":\"2025-08-28\",\"status\":\"ERROR\",\"receivablesCount\":1,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":5222.0,\"feePercentage\":0.02,\"discountValue\":0.0,\"netValue\":0.0}],\"totalNetValue\":0.0},{\"id\":\"e68c6d32-3c10-4cd1-b03b-150f4000911c\",\"requestDate\":\"2025-08-28\",\"status\":\"CONCLUDED\",\"receivablesCount\":4,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":1890.45,\"feePercentage\":0.0139,\"discountValue\":137.18291786666666,\"netValue\":10213.747082133334},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":960.56,\"feePercentage\":0.0139,\"discountValue\":137.18291786666666,\"netValue\":10213.747082133334},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":7404.2,\"feePercentage\":0.0139,\"discountValue\":137.18291786666666,\"netValue\":10213.747082133334},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":95.72,\"feePercentage\":0.0139,\"discountValue\":137.18291786666666,\"netValue\":10213.747082133334}],\"totalNetValue\":40854.988328533336},{\"id\":\"07629699-25b5-47b4-ab57-45b8f48f756b\",\"requestDate\":\"2025-08-19\",\"status\":\"CONCLUDED\",\"receivablesCount\":2,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":5965.95,\"feePercentage\":0.05,\"discountValue\":1411.32075,\"netValue\":5694.99925},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1140.37,\"feePercentage\":0.05,\"discountValue\":1411.32075,\"netValue\":5694.99925}],\"totalNetValue\":11389.99850},{\"id\":\"8f1c8bae-9554-45e2-a16d-0affff73eebb\",\"requestDate\":\"2025-08-19\",\"status\":\"ERROR\",\"receivablesCount\":2,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":5965.95,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1140.37,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0}],\"totalNetValue\""},"truncated":true}
+2025-09-20 11:13:45.177  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.duration="10924" custom.experian.java.method.result="{\"headers\":{},\"body\":{\"items\":[{\"id\":\"815f98c0-af11-4b8f-b33a-75c42eef0b36\",\"requestDate\":[2025,9,1],\"status\":\"ERROR\",\"receivablesCount\":5,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1632.16,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":2018.75,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":2494.36,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":6101.68,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":500.63,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0}],\"totalNetValue\":0.0},{\"id\":\"0e489c9a-4ca1-4e9a-9f29-c628b34aaf85\",\"requestDate\":[2025,8,29],\"status\":\"CONCLUDED\",\"receivablesCount\":4,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":2093.25,\"feePercentage\":0.05,\"discountValue\":523.2663333333334,\"netValue\":11063.273666666666},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":6132.17,\"feePercentage\":0.05,\"discountValue\":523.2663333333334,\"netValue\":11063.273666666666},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1713.29,\"feePercentage\":0.05,\"discountValue\":523.2663333333334,\"netValue\":11063.273666666666},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1647.83,\"feePercentage\":0.05,\"discountValue\":523.2663333333334,\"netValue\":11063.273666666666}],\"totalNetValue\":44253.094666666664},{\"id\":\"c90c1ccd-8342-43ea-a4e9-f3604299b06b\",\"requestDate\":[2025,8,28],\"status\":\"ERROR\",\"receivablesCount\":1,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":5222.0,\"feePercentage\":0.02,\"discountValue\":0.0,\"netValue\":0.0}],\"totalNetValue\":0.0},{\"id\":\"e68c6d32-3c10-4cd1-b03b-150f4000911c\",\"requestDate\":[2025,8,28],\"status\":\"CONCLUDED\",\"receivablesCount\":4,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":1890.45,\"feePercentage\":0.0139,\"discountValue\":137.18291786666666,\"netValue\":10213.747082133334},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":960.56,\"feePercentage\":0.0139,\"discountValue\":137.18291786666666,\"netValue\":10213.747082133334},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":7404.2,\"feePercentage\":0.0139,\"discountValue\":137.18291786666666,\"netValue\":10213.747082133334},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 61229650]\",\"installments\":1,\"installmentValue\":95.72,\"feePercentage\":0.0139,\"discountValue\":137.18291786666666,\"netValue\":10213.747082133334}],\"totalNetValue\":40854.988328533336},{\"id\":\"07629699-25b5-47b4-ab57-45b8f48f756b\",\"requestDate\":[2025,8,19],\"status\":\"CONCLUDED\",\"receivablesCount\":2,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":5965.95,\"feePercentage\":0.05,\"discountValue\":1411.32075,\"netValue\":5694.99925},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1140.37,\"feePercentage\":0.05,\"discountValue\":1411.32075,\"netValue\":5694.99925}],\"totalNetValue\":11389.99850},{\"id\":\"8f1c8bae-9554-45e2-a16d-0affff73eebb\",\"requestDate\":[2025,8,19],\"status\":\"ERROR\",\"receivablesCount\":2,\"receivables\":[{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":5965.95,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0},{\"cnpj\":\"JsonNullable[45181802000183]\",\"accreditingInstitution\":\"JsonNullable[COMPRADOR TESTE CERC 46572145]\",\"installments\":1,\"installmentValue\":1140.37,\"feePercentage\":0.05,\"discountValue\":0.0,\"netValue\":0.0}],\"totalNetValue\":0.0}],\"nextPage\":null,\"pageSize\":10},\"statusCode\":\"OK\",\"statusCodeValue\":200}" log.origin.function="findHistory" message="Finish method"
+2025-09-20 11:13:45.180  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/history" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_BUSINESS, ROLE_CLI-AUTH-IDENTIFIED, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68b89e5e72111743ae657472" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="69798" custom.experian.http.request.token.exp="1758381153" custom.experian.http.request.token.iat="1758377553" custom.experian.http.request.token.iss="http://experian-dp-iam-authorization-server-service.digital-identity-services-uat.svc" custom.experian.http.request.token.jti="502e6f5b-f139-49b5-a13f-d6fc045b2271" custom.experian.http.request.token.nbf="1758377553" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="d0144b58-0465-45df-9270-8851d244a309" custom.experian.http.request.token.sub="68b89e5e72111743ae657473" custom.experian.http.request.token.tenant_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.user_id="68b89e5e72111743ae657473" destination.address="0:0:0:0:0:0:0:1" destination.port="51468" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/history" http.response.status_code="200" server.address="*********"
+2025-09-20 11:13:45.182  INFO [experian-pme-bfm-receivables-anticipation-domain-services,82ef2e946ee93842c97c058a13067fe7,28e0f39e4e5da8a1,] 35324 --- [nio-8080-exec-5] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68b89e5e72111743ae657472","user_id":"68b89e5e72111743ae657473","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"69798","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/history","http_method":"GET","http_status_response":200,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.HistoryController","method_name":"findHistory(java.lang.String capitalSourceDocument, java.time.LocalDate anticipationDate, java.lang.String statusId, java.lang.String pageId, java.lang.Integer pageSize)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-09-20T12:12:33","iat":"2025-09-20T11:12:33","authorities":["ROLE_BUSINESSADMIN","ROLE_BUSINESS","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2OGI4OWU1ZTcyMTExNzQzYWU2NTc0NzMiLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwic2Vzc2lvbl9pZCI6ImQwMTQ0YjU4LTA0NjUtNDVkZi05MjcwLTg4NTFkMjQ0YTMwOSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQlVTSU5FU1NBRE1JTiIsIlJPTEVfQlVTSU5FU1MiLCJST0xFX0NMSS1BVVRILUlERU5USUZJRUQiLCJST0xFX0NMSS0xU1RQQVJUWSIsIlJPTEVfVVNFUiIsIlJPTEVfQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLTNSRFBBUlRZIiwiUk9MRV9QRVJTT04iLCJST0xFX0JVU0lORVNTVVNFUiIsIlJPTEVfQVVUSC1JREVOVElGSUVEIl0sImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwibmJmIjoxNzU4Mzc3NTUzLCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3IiwidXNlcl9pZCI6IjY4Yjg5ZTVlNzIxMTE3NDNhZTY1NzQ3MyIsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwic2VydmljZV9pZCI6IjYwMDVlYWM2OWZmN2MwM2I1NjNkYjVlYiIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImV4cCI6MTc1ODM4MTE1MywiY3VzdG9tZXJfaWQiOjY5Nzk4LCJpYXQiOjE3NTgzNzc1NTMsImJ1c2luZXNzX2lkIjoiNjhiODllNWU3MjExMTc0M2FlNjU3NDcyIiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwianRpIjoiNTAyZTZmNWItZjEzOS00OWI1LWExM2YtZDZmYzA0NWIyMjcxIn0.rN5740nijSqn1brM0Ft5JRvTvQRtjhU679ITQX4jiUICz5J8jMx-W_K8xLXPagtgd1QyuQN9sWMS-OgKSYwR9N9pmyM6SWyHVcX4pY3P3qj7g_ox8OTHOO7ROMhNh6EMiMdD79rzpALokadyTL4SPnSQOgB_RcGT_WXQpqBpvFTNfFfgkXqu1n4HM5w-UFYBr0nnu1eljKUqtfVySh2NLG32KqCTBDVINzz2x0_G0RgRGksIwAl_HQ3T_PeWw9j-YrhEe7V2A69DTnuLrwkayf2vHJ7NAcntSr0EPIPI_ba-4Ul8x4NXfLEtoOFUNnOXnA6ViWpQaUH5m0KrqCgF0A","host":"localhost:8080","request-start-time":"1758377614208","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
 
-        if (detail == null) return receivables;
-
-        if (detail.getAnticipatedItems() != null && detail.getAnticipatedItems().isPresent()) {
-            Object anticipatedItemsObj = detail.getAnticipatedItems().get();
-            if (anticipatedItemsObj instanceof List<?>) {
-                List<?> anticipatedItems = (List<?>) anticipatedItemsObj;
-
-                for (Object itemObj : anticipatedItems) {
-                    try {
-                        AntecipaAnticipationCardReceivabletDto sourceItem = null;
-                        
-                        if (itemObj instanceof AntecipaAnticipationCardReceivabletDto) {
-                            sourceItem = (AntecipaAnticipationCardReceivabletDto) itemObj;
-                        } else if (itemObj instanceof LinkedHashMap) {
-                            // Converter LinkedHashMap para DTO usando ObjectMapper
-                            sourceItem = objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivabletDto.class);
-                        } else {
-                            log.warn("Unexpected item type in anticipatedItems: {}", itemObj.getClass().getName());
-                            continue;
-                        }
-                        
-                        ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
-                        if (item != null) {
-                            receivables.add(item);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error converting anticipated item to DTO: {}", e.getMessage(), e);
-                    }
-                }
-            }
+{
+  "items": [
+    {
+      "id": "815f98c0-af11-4b8f-b33a-75c42eef0b36",
+      "requestDate": [
+        2025,
+        9,
+        1
+      ],
+      "status": "ERROR",
+      "receivablesCount": 5,
+      "receivables": [
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 1632.16,
+          "feePercentage": 0.05,
+          "discountValue": 0,
+          "netValue": 0
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 2018.75,
+          "feePercentage": 0.05,
+          "discountValue": 0,
+          "netValue": 0
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 2494.36,
+          "feePercentage": 0.05,
+          "discountValue": 0,
+          "netValue": 0
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 6101.68,
+          "feePercentage": 0.05,
+          "discountValue": 0,
+          "netValue": 0
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 500.63,
+          "feePercentage": 0.05,
+          "discountValue": 0,
+          "netValue": 0
         }
-
-        if (detail.getNotAnticipatedItems() != null && detail.getNotAnticipatedItems().isPresent()) {
-            Object notAnticipatedItemsObj = detail.getNotAnticipatedItems().get();
-            if (notAnticipatedItemsObj instanceof List<?>) {
-                List<?> notAnticipatedItems = (List<?>) notAnticipatedItemsObj;
-
-                for (Object itemObj : notAnticipatedItems) {
-                    try {
-                        AntecipaAnticipationCardReceivabletDto sourceItem = null;
-                        
-                        if (itemObj instanceof AntecipaAnticipationCardReceivabletDto) {
-                            sourceItem = (AntecipaAnticipationCardReceivabletDto) itemObj;
-                        } else if (itemObj instanceof LinkedHashMap) {
-                            // Converter LinkedHashMap para DTO usando ObjectMapper
-                            sourceItem = objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivabletDto.class);
-                        } else {
-                            log.warn("Unexpected item type in notAnticipatedItems: {}", itemObj.getClass().getName());
-                            continue;
-                        }
-                        
-                        ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
-                        if (item != null) {
-                            receivables.add(item);
-                        }
-                    } catch (Exception e) {
-                        log.error("Error converting not anticipated item to DTO: {}", e.getMessage(), e);
-                    }
-                }
-            }
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "0e489c9a-4ca1-4e9a-9f29-c628b34aaf85",
+      "requestDate": [
+        2025,
+        8,
+        29
+      ],
+      "status": "CONCLUDED",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 2093.25,
+          "feePercentage": 0.05,
+          "discountValue": 523.2663333333334,
+          "netValue": 11063.273666666666
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 6132.17,
+          "feePercentage": 0.05,
+          "discountValue": 523.2663333333334,
+          "netValue": 11063.273666666666
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 1713.29,
+          "feePercentage": 0.05,
+          "discountValue": 523.2663333333334,
+          "netValue": 11063.273666666666
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 1647.83,
+          "feePercentage": 0.05,
+          "discountValue": 523.2663333333334,
+          "netValue": 11063.273666666666
         }
-
-        return receivables;
+      ],
+      "totalNetValue": 44253.094666666664
+    },
+    {
+      "id": "c90c1ccd-8342-43ea-a4e9-f3604299b06b",
+      "requestDate": [
+        2025,
+        8,
+        28
+      ],
+      "status": "ERROR",
+      "receivablesCount": 1,
+      "receivables": [
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 61229650]",
+          "installments": 1,
+          "installmentValue": 5222,
+          "feePercentage": 0.02,
+          "discountValue": 0,
+          "netValue": 0
+        }
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "e68c6d32-3c10-4cd1-b03b-150f4000911c",
+      "requestDate": [
+        2025,
+        8,
+        28
+      ],
+      "status": "CONCLUDED",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 61229650]",
+          "installments": 1,
+          "installmentValue": 1890.45,
+          "feePercentage": 0.0139,
+          "discountValue": 137.18291786666666,
+          "netValue": 10213.747082133334
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 61229650]",
+          "installments": 1,
+          "installmentValue": 960.56,
+          "feePercentage": 0.0139,
+          "discountValue": 137.18291786666666,
+          "netValue": 10213.747082133334
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 61229650]",
+          "installments": 1,
+          "installmentValue": 7404.2,
+          "feePercentage": 0.0139,
+          "discountValue": 137.18291786666666,
+          "netValue": 10213.747082133334
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 61229650]",
+          "installments": 1,
+          "installmentValue": 95.72,
+          "feePercentage": 0.0139,
+          "discountValue": 137.18291786666666,
+          "netValue": 10213.747082133334
+        }
+      ],
+      "totalNetValue": 40854.988328533334
+    },
+    {
+      "id": "07629699-25b5-47b4-ab57-45b8f48f756b",
+      "requestDate": [
+        2025,
+        8,
+        19
+      ],
+      "status": "CONCLUDED",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 5965.95,
+          "feePercentage": 0.05,
+          "discountValue": 1411.32075,
+          "netValue": 5694.99925
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 1140.37,
+          "feePercentage": 0.05,
+          "discountValue": 1411.32075,
+          "netValue": 5694.99925
+        }
+      ],
+      "totalNetValue": 11389.9985
+    },
+    {
+      "id": "8f1c8bae-9554-45e2-a16d-0affff73eebb",
+      "requestDate": [
+        2025,
+        8,
+        19
+      ],
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 5965.95,
+          "feePercentage": 0.05,
+          "discountValue": 0,
+          "netValue": 0
+        },
+        {
+          "cnpj": "JsonNullable[45181802000183]",
+          "accreditingInstitution": "JsonNullable[COMPRADOR TESTE CERC 46572145]",
+          "installments": 1,
+          "installmentValue": 1140.37,
+          "feePercentage": 0.05,
+          "discountValue": 0,
+          "netValue": 0
+        }
+      ],
+      "totalNetValue": 0
     }
+  ],
+  "nextPage": null,
+  "pageSize": 10
+}
