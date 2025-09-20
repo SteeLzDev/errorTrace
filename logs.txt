@@ -1,37 +1,101 @@
-  private List<ReceivableItemTO> processReceivables(AntecipaAnticipationCardReceivableDto detail,
-                                                      AntecipaAnticipationCardReceivableListDto listItem) {
-        List<ReceivableItemTO> receivables = new ArrayList<>();
+package br.com.experian.anticipation.infrastructure.config;
 
-        if (detail == null) return receivables;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.openapitools.jackson.nullable.JsonNullable;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
-        //Processar anticipated items
-        if (detail.getAnticipatedItems() != null && detail.getAnticipatedItems().isPresent()) {
-            List<AntecipaAnticipationCardReceivableDto> anticipatedItems =
-                    (List<AntecipaAnticipationCardReceivableDto>) detail.getAnticipatedItems().get();
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
 
-            for (AntecipaAnticipationCardReceivableDto sourceItem : anticipatedItems) {
-                ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
-                if (item != null) {
-                    receivables.add(item);
-                }
+@Configuration
+public class AntecipaApiConfig {
 
-            }
-        }
-
-        //Processar noAnticipated items
-        if (detail.getNotAnticipatedItems() != null && detail.getNotAnticipatedItems().isPresent()) {
-            List<AntecipaAnticipationCardReceivableDto> noAnticipatedItems =
-                    (List<AntecipaAnticipationCardReceivableDto>) detail.getNotAnticipatedItems().get();
-
-            for (AntecipaAnticipationCardReceivableDto sourceItem : noAnticipatedItems) {
-                ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
-                if (item != null) {
-                    receivables.add(item);
-                }
-            }
-        }
-        return receivables;
+    @Bean
+    @Primary
+    public ObjectMapper antecipaObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(LocalDateTime.class, new FlexibleLocalDateTimeDeserializer());
+        module.addDeserializer(JsonNullable.class, new AntecipaJsonNullableDeserializer());
+        
+        mapper.registerModule(module);
+        mapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        
+        return mapper;
     }
 
-Inconvertible types; cannot cast 'java.util.List<br.com.experian.swagger.antecipa.model.@jakarta.validation.Valid AntecipaAnticipationCardReceivabletDto>' to 'java.util.List<br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto>'
-Inconvertible types; cannot cast 'java.util.List<br.com.experian.swagger.antecipa.model.@jakarta.validation.Valid AntecipaAnticipationCardReceivabletDto>' to 'java.util.List<br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto>'
+    public static class FlexibleLocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
+        @Override
+        public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+            String dateString = p.getValueAsString();
+            
+            if (dateString == null || dateString.trim().isEmpty()) {
+                return null;
+            }
+            
+            try {
+                // Tenta primeiro com timezone (formato da API do parceiro)
+                if (dateString.contains("+") || dateString.contains("Z")) {
+                    OffsetDateTime offsetDateTime = OffsetDateTime.parse(dateString);
+                    return offsetDateTime.toLocalDateTime();
+                }
+                
+                // Fallback para formato ISO padrão
+                return LocalDateTime.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            } catch (DateTimeParseException e) {
+                // Último fallback - tenta outros formatos comuns
+                try {
+                    return LocalDateTime.parse(dateString.replace("Z", ""));
+                } catch (DateTimeParseException ex) {
+                    throw new IOException("Cannot parse date: " + dateString, ex);
+                }
+            }
+        }
+    }
+
+    public static class AntecipaJsonNullableDeserializer extends JsonDeserializer<JsonNullable> {
+        @Override
+        public JsonNullable deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+            ObjectMapper mapper = (ObjectMapper) p.getCodec();
+            JsonNode node = mapper.readTree(p);
+            
+            if (node.isNull()) {
+                return JsonNullable.undefined();
+            }
+            
+            if (node.isArray()) {
+                // API do parceiro retorna array direto - converte para List
+                List<?> list = mapper.convertValue(node, List.class);
+                return JsonNullable.of(list);
+            }
+            
+            // Se for objeto, tenta extrair a propriedade 'items'
+            if (node.isObject() && node.has("items")) {
+                JsonNode itemsNode = node.get("items");
+                if (itemsNode.isArray()) {
+                    List<?> list = mapper.convertValue(itemsNode, List.class);
+                    return JsonNullable.of(list);
+                }
+            }
+            
+            // Fallback - retorna o valor como está
+            Object value = mapper.convertValue(node, Object.class);
+            return JsonNullable.of(value);
+        }
+    }
+}
