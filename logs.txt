@@ -33,3 +33,36 @@
                 }
             }
         }
+
+        if (detail.getNotAnticipatedItems() != null && detail.getNotAnticipatedItems().isPresent()) {
+            Object notAnticipatedItemsObj = detail.getNotAnticipatedItems().get();
+            if (notAnticipatedItemsObj instanceof List<?>) {
+                List<?> notAnticipatedItems = (List<?>) notAnticipatedItemsObj;
+
+                for (Object itemObj : notAnticipatedItems) {
+                    try {
+                        AntecipaAnticipationCardReceivabletDto sourceItem = null;
+                        
+                        if (itemObj instanceof AntecipaAnticipationCardReceivabletDto) {
+                            sourceItem = (AntecipaAnticipationCardReceivabletDto) itemObj;
+                        } else if (itemObj instanceof LinkedHashMap) {
+                            // Converter LinkedHashMap para DTO usando ObjectMapper
+                            sourceItem = objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivabletDto.class);
+                        } else {
+                            log.warn("Unexpected item type in notAnticipatedItems: {}", itemObj.getClass().getName());
+                            continue;
+                        }
+                        
+                        ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
+                        if (item != null) {
+                            receivables.add(item);
+                        }
+                    } catch (Exception e) {
+                        log.error("Error converting not anticipated item to DTO: {}", e.getMessage(), e);
+                    }
+                }
+            }
+        }
+
+        return receivables;
+    }
