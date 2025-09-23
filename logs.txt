@@ -1,1 +1,7 @@
-Incompatible types. Found: 'org.openapitools.jackson.nullable.@jakarta.validation.Valid JsonNullable<java.util.List<br.com.experian.swagger.antecipa.model.@jakarta.validation.Valid AntecipaAnticipationCardReceivableListDto>>', required: 'org.openapitools.jackson.nullable.JsonNullable<java.util.List<java.lang.Object>>'
+[WARNING] C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\main\resources\client\Receivables-Anticipation.yaml [0:0]: unexpected error in Open-API generation
+org.openapitools.codegen.SpecValidationException: There were issues with the specification. The option can be disabled via validateSpec (Maven/Gradle) or --skip-validate-spec (CLI).
+ | Error count: 3, Warning count: 0
+Errors: 
+	-attribute components.schemas.AssetStatus.const is unexpected
+	-attribute components.schemas.AssetOrdernation.const is unexpected
+	-attribute components.schemas.AnticipationStatus.const is unexpected
