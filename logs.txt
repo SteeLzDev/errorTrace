@@ -1,1 +1,1 @@
-Incompatible types. Found: 'java.util.List<java.lang.Object>', required: 'java.util.List<br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto>'
+Inconvertible types; cannot cast 'org.openapitools.jackson.nullable.@jakarta.validation.Valid JsonNullable<java.util.List<br.com.experian.swagger.antecipa.model.@jakarta.validation.Valid AntecipaAnticipationCardReceivableListDto>>' to 'org.openapitools.jackson.nullable.JsonNullable<java.util.List<java.lang.Object>>'
