@@ -17,3 +17,231 @@
 2025-09-29 16:19:34.165  INFO [experian-pme-bfm-receivables-anticipation-domain-services,8cb4f41e2cf60aa295ef62f08402e005,4427522da8ae6a12,] 14812 --- [nio-8080-exec-4] b.c.e.a.a.r.ReceivablesController        : custom.experian.java.method.duration="882" custom.experian.java.method.result="{\"headers\":{},\"body\":{\"content\":[{\"paymentDate\":\"2027-02-15\",\"count\":1,\"totalAmountToReceive\":9.9997E+8,\"items\":[{\"id\":\"d344887b-52f4-4b29-8796-405030fed7c1\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":9.9997E+8,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":999970000}]},{\"paymentDate\":\"2027-02-16\",\"count\":2,\"totalAmountToReceive\":1.999989E+9,\"items\":[{\"id\":\"00f3a635-81b4-4dd1-b373-5c6eb9fb9d29\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":9.9999E+8,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":999990000},{\"id\":\"521be465-5743-4fe1-bada-86aeb5ac252e\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":9.99999E+8,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":999999000}]},{\"paymentDate\":\"2027-02-18\",\"count\":1,\"totalAmountToReceive\":0.0,\"items\":[{\"id\":\"cb8ba895-31c5-419c-8b0c-3ba4b3a8ce96\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":0.0,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":0.0}]},{\"paymentDate\":\"2027-02-19\",\"count\":1,\"totalAmountToReceive\":999997432.11,\"items\":[{\"id\":\"a85b8f50-ae2f-4dc9-95f8-4de618a58c1a\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":999997432.11,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":999997432.11}]},{\"paymentDate\":\"2027-05-27\",\"count\":1,\"totalAmountToReceive\":9.999812E+8,\"items\":[{\"id\":\"9e21d9ca-96f1-45b3-8043-06278d34109d\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":9.999812E+8,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":999981200}]},{\"paymentDate\":\"2039-11-22\",\"count\":2,\"totalAmountToReceive\":0.0,\"items\":[{\"id\":\"d19b807d-90e2-4107-b2f2-b207b425bcf7\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":0.0,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":0.0},{\"id\":\"e545fd67-9c02-455a-b3e9-5d8c9abc6ad0\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":0.0,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":0.0}]},{\"paymentDate\":\"2042-11-24\",\"count\":1,\"totalAmountToReceive\":99.86,\"items\":[{\"id\":\"68341f70-7ed0-44ce-9d68-85db9cee6408\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":99.86,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":99.86}]},{\"paymentDate\":\"2050-12-07\",\"count\":1,\"totalAmountToReceive\":600.0,\"items\":[{\"id\":\"9e6b3166-c239-48c1-a29b-7a2c69901b4c\",\"paymentDate\":null,\"nationalRegistrationId\":\"45181802000183\",\"accreditingInstitutionName\":\"*******************************\",\"paymentType\":\"CREDIT_SINGLE\",\"installment\":{\"count\":1,\"number\":1,\"amount\":600.0,\"paymentType\":null,\"discount\":null},\"discount\":0,\"amountToReceive\":600.0}]}],\"page\":{\"size\":10,\"totalElements\":10,\"totalPages\":1,\"number\":1}},\"statusCode\":\"OK\",\"statusCodeValue\":200}" log.origin.function="findAvailables" message="Finish method"
 2025-09-29 16:19:34.168  INFO [experian-pme-bfm-receivables-anticipation-domain-services,8cb4f41e2cf60aa295ef62f08402e005,4427522da8ae6a12,] 14812 --- [nio-8080-exec-4] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/receivables" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_BUSINESS, ROLE_CLI-AUTH-IDENTIFIED, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68b89e5e72111743ae657472" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="69798" custom.experian.http.request.token.exp="1759177133" custom.experian.http.request.token.iat="1759173533" custom.experian.http.request.token.iss="http://experian-dp-iam-authorization-server-service.digital-identity-services-uat.svc" custom.experian.http.request.token.jti="fb81aa2b-ab6d-455c-8e6e-0c1b92aae448" custom.experian.http.request.token.nbf="1759173533" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="38f9682f-74d6-4c76-a661-22a5a5af652a" custom.experian.http.request.token.sub="68b89e5e72111743ae657473" custom.experian.http.request.token.tenant_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.user_id="68b89e5e72111743ae657473" destination.address="0:0:0:0:0:0:0:1" destination.port="64442" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/receivables" http.response.status_code="200" server.address="*********"
 2025-09-29 16:19:34.171  INFO [experian-pme-bfm-receivables-anticipation-domain-services,8cb4f41e2cf60aa295ef62f08402e005,4427522da8ae6a12,] 14812 --- [nio-8080-exec-4] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68b89e5e72111743ae657472","user_id":"68b89e5e72111743ae657473","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"69798","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/receivables","http_method":"GET","http_status_response":200,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.ReceivablesController","method_name":"findAvailables(java.time.LocalDate date, java.lang.Integer limit, java.lang.Integer offset)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-09-29T17:18:53","iat":"2025-09-29T16:18:53","authorities":["ROLE_BUSINESSADMIN","ROLE_BUSINESS","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2OGI4OWU1ZTcyMTExNzQzYWU2NTc0NzMiLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwic2Vzc2lvbl9pZCI6IjM4Zjk2ODJmLTc0ZDYtNGM3Ni1hNjYxLTIyYTVhNWFmNjUyYSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQlVTSU5FU1NBRE1JTiIsIlJPTEVfQlVTSU5FU1MiLCJST0xFX0NMSS1BVVRILUlERU5USUZJRUQiLCJST0xFX0NMSS0xU1RQQVJUWSIsIlJPTEVfVVNFUiIsIlJPTEVfQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLTNSRFBBUlRZIiwiUk9MRV9QRVJTT04iLCJST0xFX0JVU0lORVNTVVNFUiIsIlJPTEVfQVVUSC1JREVOVElGSUVEIl0sImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwibmJmIjoxNzU5MTczNTMzLCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3IiwidXNlcl9pZCI6IjY4Yjg5ZTVlNzIxMTE3NDNhZTY1NzQ3MyIsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwic2VydmljZV9pZCI6IjYwMDVlYWM2OWZmN2MwM2I1NjNkYjVlYiIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImV4cCI6MTc1OTE3NzEzMywiY3VzdG9tZXJfaWQiOjY5Nzk4LCJpYXQiOjE3NTkxNzM1MzMsImJ1c2luZXNzX2lkIjoiNjhiODllNWU3MjExMTc0M2FlNjU3NDcyIiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwianRpIjoiZmI4MWFhMmItYWI2ZC00NTVjLThlNmUtMGMxYjkyYWFlNDQ4In0.r3zMJYngKf2oHQWNCzLr8AYZETsz_PS-xJTjWCdKOu9kx9TXV8XWbUy2fwsuAFrUf-v-oU_RPOaRvgud_gPqIMbjRD0zP_FON3TOinqpaxktHGkJRsG7DPDrUk6ib8rMmntwC7iPJ_8EEenDERnSN_cg0GfPJfeIkVhJ-am4eS6iLSneXde1usC2u2vS9dTwF6L19JQRoF9xatvWKEpyKmp_Y7WwoYXWKq6kemGZAth3VpIEsi3ZnTYyxt4anOqBnyMslA4jIALR9s4HJNVYVUkN5E2hrK-TUQShsdSJx1GTnV6Wjd3iyWV_kaxZEMrVmCEzw_1eBQBKi46IBfwQeQ","host":"localhost:8080","request-start-time":"1759173573249","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
+
+{
+  "content": [
+    {
+      "paymentDate": "2027-02-15",
+      "count": 1,
+      "totalAmountToReceive": 999970000,
+      "items": [
+        {
+          "id": "d344887b-52f4-4b29-8796-405030fed7c1",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999970000,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999970000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2027-02-16",
+      "count": 2,
+      "totalAmountToReceive": 1999989000,
+      "items": [
+        {
+          "id": "00f3a635-81b4-4dd1-b373-5c6eb9fb9d29",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999990000,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999990000
+        },
+        {
+          "id": "521be465-5743-4fe1-bada-86aeb5ac252e",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999999000,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999999000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2027-02-18",
+      "count": 1,
+      "totalAmountToReceive": 0,
+      "items": [
+        {
+          "id": "cb8ba895-31c5-419c-8b0c-3ba4b3a8ce96",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 0,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 0
+        }
+      ]
+    },
+    {
+      "paymentDate": "2027-02-19",
+      "count": 1,
+      "totalAmountToReceive": 999997432.11,
+      "items": [
+        {
+          "id": "a85b8f50-ae2f-4dc9-95f8-4de618a58c1a",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999997432.11,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999997432.11
+        }
+      ]
+    },
+    {
+      "paymentDate": "2027-05-27",
+      "count": 1,
+      "totalAmountToReceive": 999981200,
+      "items": [
+        {
+          "id": "9e21d9ca-96f1-45b3-8043-06278d34109d",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999981200,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999981200
+        }
+      ]
+    },
+    {
+      "paymentDate": "2039-11-22",
+      "count": 2,
+      "totalAmountToReceive": 0,
+      "items": [
+        {
+          "id": "d19b807d-90e2-4107-b2f2-b207b425bcf7",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 0,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 0
+        },
+        {
+          "id": "e545fd67-9c02-455a-b3e9-5d8c9abc6ad0",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 0,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 0
+        }
+      ]
+    },
+    {
+      "paymentDate": "2042-11-24",
+      "count": 1,
+      "totalAmountToReceive": 99.86,
+      "items": [
+        {
+          "id": "68341f70-7ed0-44ce-9d68-85db9cee6408",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 99.86,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 99.86
+        }
+      ]
+    },
+    {
+      "paymentDate": "2050-12-07",
+      "count": 1,
+      "totalAmountToReceive": 600,
+      "items": [
+        {
+          "id": "9e6b3166-c239-48c1-a29b-7a2c69901b4c",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "LUIS DE SOUZA FARIA 45157324120",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 600,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 600
+        }
+      ]
+    }
+  ],
+  "page": {
+    "size": 10,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 1
+  }
+}
+
