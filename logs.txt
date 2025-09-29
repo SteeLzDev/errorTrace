@@ -1,50 +1,265 @@
-{
-  "content": [
-    {
-      "paymentDate": "2024-11-26",
-      "count": 1,
-      "totalAmountToReceive": 70000,
-      "items": [
-        {
-          "id": "44cf5b43-663e-46e0-a4d5-a64b90284715",
-          "nationalRegistrationId": "45181802000183",
-          "accreditingInstitutionName": "CONSORCIO MIRAI",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 70000
-          },
-          "discount": 0,
-          "amountToReceive": 70000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2024-11-29",
-      "count": 1,
-      "totalAmountToReceive": 100000,
-      "items": [
-        {
-          "id": "f31efe91-1b2e-4b55-aedb-485d2bd43f51",
-          "nationalRegistrationId": "45181802000183",
-          "accreditingInstitutionName": "CONSORCIO MIRAI",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 100000
-          },
-          "discount": 0,
-          "amountToReceive": 100000
-        }
-      ]
+package br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa;
+
+import br.com.experian.anticipation.domain.constant.PaymentType;
+import br.com.experian.anticipation.domain.dto.*;
+import br.com.experian.anticipation.domain.exception.FailedDependecyException;
+import br.com.experian.anticipation.domain.model.ReceivablesPage;
+import br.com.experian.anticipation.domain.port.AuthenticationPort;
+import br.com.experian.anticipation.domain.port.ReceivablesPort;
+import br.com.experian.anticipation.infrastructure.integration.feign.constant.Resilience4jConstant;
+import br.com.experian.swagger.antecipa.model.AntecipaCardReceivableListDto;
+import br.com.experian.swagger.antecipa.model.AntecipaCardReceivableListDtoPagedCollectionItems;
+import br.com.experian.swagger.anticipation.model.PaymentTypeTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
+import io.github.resilience4j.retry.annotation.Retry;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Log4j2
+@Component
+public class AntecipaReceivablesAdapter implements ReceivablesPort {
+
+    private static final String FAILED_DEPENDENCY_MESSAGE = "Failure in communication with the receivables service.";
+
+    private final AntecipaClient antecipaClient;
+    private final AuthenticationPort authenticationPort;
+    private final ObjectMapper objectMapper;
+
+    public AntecipaReceivablesAdapter(AntecipaClient antecipaClient,
+                                      AuthenticationPort authenticationPort,
+                                      ObjectMapper objectMapper) {
+        this.antecipaClient = antecipaClient;
+        this.authenticationPort = authenticationPort;
+        this.objectMapper = objectMapper;
     }
-  ],
-  "page": {
-    "size": 10,
-    "totalElements": 2,
-    "totalPages": 1,
-    "number": 1
-  }
+
+    @Override
+    @Retry(name = Resilience4jConstant.ANTECIPA_CERC)
+    public Optional<ReceivablesPageDto> getReceivables(String supplierDocument, Integer limit, Integer offset) {
+        try {
+            log.info("Consulting receivables in the API for document: {} with limit: {} and offset: {}",
+                    supplierDocument, limit, offset);
+
+            final String bearerToken = "Bearer " + authenticationPort.getValidToken();
+            final String pageId = calculatePageId(offset, limit);
+
+            final AntecipaCardReceivableListDtoPagedCollectionItems response = antecipaClient.getCardReceivables(
+                    bearerToken,
+                    supplierDocument,
+                    "1",          // StatusId (mantido como estava)
+                    null, null, null, null, null,
+                    pageId,
+                    limit
+            );
+
+            if (response == null || response.getItems() == null || response.getItems().isEmpty()) {
+                log.info("API returned no receivables for document: {}", supplierDocument);
+                return Optional.empty();
+            }
+
+            final ReceivablesPageDto receivablesPageDto = mapToReceivablesModel(response, limit, offset);
+
+            final int totalItems = receivablesPageDto.getGroups().stream()
+                    .mapToInt(ReceivablesGroupDto::getCount)
+                    .sum();
+
+            log.info("Successfully retrieved {} receivables for document: {}", totalItems, supplierDocument);
+            return Optional.of(receivablesPageDto);
+
+        } catch (FeignException e) {
+            log.error("Error querying receivables from API. Status {}: Body: {}", e.status(), e.contentUTF8());
+
+            if (e.status() == 401) {
+                log.info("Invalid token, trying to renew...");
+                authenticationPort.refreshToken();
+                throw new FailedDependecyException("Invalid authentication token", e);
+            }
+            if (e.status() == 404 || e.status() == 204) {
+                log.info("No receivables found in the api for document: {}", supplierDocument);
+                return Optional.empty();
+            }
+            throw new FailedDependecyException(FAILED_DEPENDENCY_MESSAGE, e);
+        }
+    }
+
+    private String calculatePageId(Integer offset, Integer limit) {
+        if (offset == null || limit == null || offset <= 0) {
+            return null;
+        }
+        return String.valueOf((offset / limit) + 1);
+    }
+
+    private ReceivablesPageDto mapToReceivablesModel(AntecipaCardReceivableListDtoPagedCollectionItems response,
+                                                     Integer limit, Integer offset) {
+
+        // Conversão segura dos itens para o DTO gerado
+        final List<AntecipaCardReceivableListDto> items = response.getItems().stream()
+                .map(this::toDtoSafely)
+                .collect(Collectors.toList());
+
+        final Map<LocalDate, List<ReceivablesPage>> receivablesByDate = items.stream()
+                .map(this::mapToReceivableModel)
+                .filter(r -> r.getPaymentDate() != null)
+                .collect(Collectors.groupingBy(ReceivablesPage::getPaymentDate));
+
+        log.info("Grouped receivables into {} different payment dates", receivablesByDate.size());
+
+        final List<ReceivablesGroupDto> groups = receivablesByDate.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(entry -> {
+                    final LocalDate date = entry.getKey();
+                    final List<ReceivablesPage> receivablesForDate = entry.getValue();
+                    log.debug("Date: {} has {} receivables", date, receivablesForDate.size());
+
+                    // Soma precisa com BigDecimal para evitar smells de precisão
+                    final BigDecimal totalAmount = receivablesForDate.stream()
+                            .map(r -> r.getAmountToReceive() != null ? r.getAmountToReceive() : BigDecimal.ZERO)
+                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                    return ReceivablesGroupDto.builder()
+                            .date(date)
+                            .receivables(receivablesForDate)
+                            .count(receivablesForDate.size())
+                            .totalAmountToReceive(totalAmount.doubleValue()) // mantém contrato atual do DTO
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+        final int currentPage = (offset != null && limit != null) ? (offset / limit) + 1 : 1;
+        final long totalElements = groups.stream().mapToInt(ReceivablesGroupDto::getCount).sum();
+        final int totalPages = (limit != null && limit > 0)
+                ? (int) Math.ceil((double) totalElements / limit)
+                : 1;
+
+        final PageDto pagination = PageDto.builder()
+                .size(limit != null ? limit : (int) totalElements)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .number(currentPage)
+                .build();
+
+        return ReceivablesPageDto.builder()
+                .groups(groups)
+                .page(pagination)
+                .build();
+    }
+
+    // Converte Map/LinkedHashMap -> DTO gerado quando necessário
+    private AntecipaCardReceivableListDto toDtoSafely(Object raw) {
+        if (raw instanceof AntecipaCardReceivableListDto) {
+            return (AntecipaCardReceivableListDto) raw;
+        }
+        // Conversão resiliente para acompanhar mudanças de geração
+        return objectMapper.convertValue(raw, AntecipaCardReceivableListDto.class);
+    }
+
+    private ReceivablesPage mapToReceivableModel(AntecipaCardReceivableListDto item) {
+        final PaymentTypeTO paymentTypeTO = mapPaymentType(item);
+
+        return ReceivablesPage.builder()
+                .id(item.getId() != null && item.getId().isPresent() ? item.getId().get() : null)
+                .paymentDate(convertDueDateToLocalDate(item.getDueDate()))
+                .nationalRegistrationId(extractNationalRegistrationId(item))
+                .accreditingInstitutionName(extractAccreditingInstitutionName(item))
+                .paymentTypeTO(paymentTypeTO)
+                .paymentType(mapToPaymentTypeEnum(paymentTypeTO))
+                .installment(mapInstallment(item))
+                .discount(calculateDiscount(item))
+                .amountToReceive(calculateAmountToReceive(item))
+                .build();
+    }
+
+    private LocalDate convertPaymentDateToLocalDate(AntecipaCardReceivableListDto item) {
+        if (item.getPaymentDate() == null || !item.getPaymentDate().isPresent()) {
+            return null;
+        }
+        try {
+            final String paymentDateStr = String.valueOf(item.getPaymentDate().get());
+            if (paymentDateStr.isEmpty()) {
+                return null;
+            }
+            return LocalDate.parse(paymentDateStr);
+        } catch (Exception e) {
+            log.warn("Erro parsing payment date: {}", item.getPaymentDate().orElse(null), e);
+            return null;
+        }
+    }
+
+    private LocalDate convertDueDateToLocalDate(LocalDateTime dueDate) {
+        if (dueDate == null) {
+            return null;
+        }
+        try {
+            return dueDate.toLocalDate();
+        } catch (Exception e) {
+            log.warn("Error parsing due date: {}", dueDate, e);
+            return null;
+        }
+    }
+
+    private String extractNationalRegistrationId(AntecipaCardReceivableListDto item) {
+        if (item.getSupplier() != null && item.getSupplier().getDocument() != null &&
+                item.getSupplier().getDocument().isPresent()) {
+            return item.getSupplier().getDocument().get();
+        }
+        return null;
+    }
+
+    private String extractAccreditingInstitutionName(AntecipaCardReceivableListDto item) {
+        if (item.getAccreditingInstitution() != null &&
+                item.getAccreditingInstitution().getName() != null &&
+                item.getAccreditingInstitution().getName().isPresent()) {
+            return item.getAccreditingInstitution().getName().get();
+        }
+        return null;
+    }
+
+    private PaymentTypeTO mapPaymentType(AntecipaCardReceivableListDto item) {
+        // Mantido como antes (ajuste futuro se o parceiro passar o tipo real)
+        return PaymentTypeTO.CREDIT_SINGLE;
+    }
+
+    private InstallmentDto mapInstallment(AntecipaCardReceivableListDto item) {
+        return InstallmentDto.builder()
+                .count(1)
+                .number(1)
+                .amount(item.getValue() != null ? BigDecimal.valueOf(item.getValue()) : BigDecimal.ZERO)
+                .build();
+    }
+
+    private BigDecimal calculateDiscount(AntecipaCardReceivableListDto item) {
+        if (item.getAnticipationSimulation() != null && item.getAnticipationSimulation().getDiscount() != null) {
+            return BigDecimal.valueOf(item.getAnticipationSimulation().getDiscount());
+        }
+        return BigDecimal.ZERO;
+    }
+
+    private BigDecimal calculateAmountToReceive(AntecipaCardReceivableListDto item) {
+        final BigDecimal originalValue = item.getValue() != null ? BigDecimal.valueOf(item.getValue()) : BigDecimal.ZERO;
+        final BigDecimal discount = calculateDiscount(item);
+        return originalValue.subtract(discount);
+    }
+
+    private PaymentType mapToPaymentTypeEnum(PaymentTypeTO paymentTypeTO) {
+        if (paymentTypeTO == null) {
+            return null;
+        }
+        switch (paymentTypeTO) {
+            case CREDIT_SINGLE:
+                return PaymentType.CREDIT_SINGLE;
+            case CREDIT_INSTALLMENT:
+                return PaymentType.CREDIT_INSTALLMENT;
+            default:
+                return null;
+        }
+    }
 }
