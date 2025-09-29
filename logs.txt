@@ -2,6 +2,7 @@ package br.com.experian.anticipation.application.handler;
 
 import br.com.experian.anticipation.domain.exception.BadRequestException;
 import br.com.experian.anticipation.domain.exception.ConflictException;
+import br.com.experian.anticipation.domain.exception.ExternalApiException;
 import br.com.experian.anticipation.domain.exception.NotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -19,55 +20,66 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Map<String, Object>> handleBadRequestException(BadRequestException ex) {
         log.error("BadRequestException: {}", ex.getMessage());
-
+        
         Map<String, Object> response = new HashMap<>();
         response.put("code", 400);
         response.put("message", ex.getMessage() != null ? ex.getMessage() : "Bad Request");
-
+        
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFoundException(NotFoundException ex) {
         log.error("NotFoundException: {}", ex.getMessage());
-
+        
         Map<String, Object> response = new HashMap<>();
         response.put("code", 404);
         response.put("message", ex.getMessage() != null ? ex.getMessage() : "Not Found");
-
+        
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(ConflictException.class)
     public ResponseEntity<Map<String, Object>> handleConflictException(ConflictException ex) {
         log.error("ConflictException: {}", ex.getMessage());
-
+        
         Map<String, Object> response = new HashMap<>();
         response.put("code", 409);
         response.put("message", ex.getMessage() != null ? ex.getMessage() : "Conflict");
-
+        
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(ExternalApiException.class)
+    public ResponseEntity<Map<String, Object>> handleExternalApiException(ExternalApiException ex) {
+        log.error("ExternalApiException: {}", ex.getMessage());
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("code", ex.getStatusCode());
+        response.put("message", ex.getMessage());
+        
+        return ResponseEntity.status(ex.getHttpStatus()).body(response);
     }
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, Object>> handleRuntimeException(RuntimeException ex) {
         log.error("RuntimeException: {}", ex.getMessage(), ex);
-
+        
         Map<String, Object> response = new HashMap<>();
         response.put("code", 500);
         response.put("message", "Internal Server Error");
-
+        
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
         log.error("Unexpected exception: {}", ex.getMessage(), ex);
-
+        
         Map<String, Object> response = new HashMap<>();
         response.put("code", 500);
         response.put("message", "Internal Server Error");
-
+        
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
