@@ -1,8 +1,8 @@
 package br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa;
 
+
 import br.com.experian.anticipation.domain.constant.PaymentType;
 import br.com.experian.anticipation.domain.dto.*;
-import br.com.experian.anticipation.domain.exception.FailedDependecyException;
 import br.com.experian.anticipation.domain.model.ReceivablesPage;
 import br.com.experian.anticipation.domain.port.AuthenticationPort;
 import br.com.experian.anticipation.domain.port.ReceivablesPort;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -28,15 +29,12 @@ import java.util.stream.Collectors;
 @Component
 public class AntecipaReceivablesAdapter implements ReceivablesPort {
 
-    private static final String FAILED_DEPENDENCY_MESSAGE = "Failure in communication with the receivables service.";
 
     private final AntecipaClient antecipaClient;
     private final AuthenticationPort authenticationPort;
     private final ObjectMapper objectMapper;
 
-    public AntecipaReceivablesAdapter(AntecipaClient antecipaClient,
-                                      AuthenticationPort authenticationPort,
-                                      ObjectMapper objectMapper) {
+    public AntecipaReceivablesAdapter(AntecipaClient antecipaClient, AuthenticationPort authenticationPort, ObjectMapper objectMapper) {
         this.antecipaClient = antecipaClient;
         this.authenticationPort = authenticationPort;
         this.objectMapper = objectMapper;
@@ -46,125 +44,109 @@ public class AntecipaReceivablesAdapter implements ReceivablesPort {
     @Retry(name = Resilience4jConstant.ANTECIPA_CERC)
     public Optional<ReceivablesPageDto> getReceivables(String supplierDocument, Integer limit, Integer offset) {
         try {
-            log.info("Consulting receivables in the API for document: {} with limit: {} and offset: {}",
-                    supplierDocument, limit, offset);
+            log.info("Consulting receivables in the API for document: {} with limit: {} and offset: {}", supplierDocument, limit, offset);
 
-            final String bearerToken = "Bearer " + authenticationPort.getValidToken();
-            final String pageId = calculatePageId(offset, limit);
+            String bearerToken = "Bearer " + authenticationPort.getValidToken();
 
-            final AntecipaCardReceivableListDtoPagedCollectionItems response = antecipaClient.getCardReceivables(
+            String pageId = calculatePageId(offset, limit);
+
+            AntecipaCardReceivableListDtoPagedCollectionItems response = antecipaClient.getCardReceivables(
                     bearerToken,
                     supplierDocument,
-                    "1",          // StatusId (mantido como estava)
-                    null, null, null, null, null,
+                    "1",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
                     pageId,
                     limit
             );
-
-            if (response == null || response.getItems() == null || response.getItems().isEmpty()) {
+            if (response == null || response.getItems() == null || response.getItems().get().isEmpty()) {
                 log.info("API returned no receivables for document: {}", supplierDocument);
                 return Optional.empty();
             }
 
-            final ReceivablesPageDto receivablesPageDto = mapToReceivablesModel(response, limit, offset);
+            ReceivablesPageDto receivablesPageDto = mapToReceivablesModel(response, limit, offset);
 
-            final int totalItems = receivablesPageDto.getGroups().stream()
-                    .mapToInt(ReceivablesGroupDto::getCount)
-                    .sum();
+            log.info("Successfully retrieved {} receivables for document: {}", receivablesPageDto.getGroups().stream()
+                    .mapToInt(ReceivablesGroupDto::getCount).sum(), supplierDocument);
 
-            log.info("Successfully retrieved {} receivables for document: {}", totalItems, supplierDocument);
             return Optional.of(receivablesPageDto);
-
         } catch (FeignException e) {
-            log.error("Error querying receivables from API. Status {}: Body: {}", e.status(), e.contentUTF8());
-
-            if (e.status() == 401) {
-                log.info("Invalid token, trying to renew...");
-                authenticationPort.refreshToken();
-                throw new FailedDependecyException("Invalid authentication token", e);
-            }
-            if (e.status() == 404 || e.status() == 204) {
-                log.info("No receivables found in the api for document: {}", supplierDocument);
-                return Optional.empty();
-            }
-            throw new FailedDependecyException(FAILED_DEPENDENCY_MESSAGE, e);
+            log.error("Error querying receivables for document: {} - Status: {}, Message: {}", supplierDocument, e.status(), e.getMessage(), e);
+            return Optional.empty();
         }
     }
 
     private String calculatePageId(Integer offset, Integer limit) {
-        if (offset == null || limit == null || offset <= 0) {
+        if (offset == null || limit == null || offset == 0) {
             return null;
         }
         return String.valueOf((offset / limit) + 1);
     }
 
-    private ReceivablesPageDto mapToReceivablesModel(AntecipaCardReceivableListDtoPagedCollectionItems response,
-                                                     Integer limit, Integer offset) {
+    private ReceivablesPageDto mapToReceivablesModel(AntecipaCardReceivableListDtoPagedCollectionItems response, Integer limit, Integer offset) {
 
-        // Conversão segura dos itens para o DTO gerado
-        final List<AntecipaCardReceivableListDto> items = response.getItems().stream()
-                .map(this::toDtoSafely)
-                .collect(Collectors.toList());
+        List<AntecipaCardReceivableListDto> items = new ArrayList<>();
 
-        final Map<LocalDate, List<ReceivablesPage>> receivablesByDate = items.stream()
+        if (response.getItems().isPresent()) {
+            List<?> rawItems = response.getItems().get();
+            log.debug("Processing {} raw items from response", rawItems.size());
+            for (Object rawItem : rawItems) {
+                try {
+                    AntecipaCardReceivableListDto dto = objectMapper.convertValue(rawItem, AntecipaCardReceivableListDto.class);
+                    items.add(dto);
+                    log.debug("Successfully converted item to AntecipaCardReceivableListDto: {}", dto);
+                } catch (IllegalArgumentException e) {
+                    log.warn("Failed to convert item to AntecipaCardReceivableListDto: {}", e.getMessage());
+                }
+            }
+            log.info("Successfully converted {} / {} items from API response", items.size(), rawItems.size());
+        }
+        Map<LocalDate, List<ReceivablesPage>> receivablesByDate = items.stream()
                 .map(this::mapToReceivableModel)
-                .filter(r -> r.getPaymentDate() != null)
+                .filter(receivable -> receivable.getPaymentDate() != null)
                 .collect(Collectors.groupingBy(ReceivablesPage::getPaymentDate));
-
         log.info("Grouped receivables into {} different payment dates", receivablesByDate.size());
 
-        final List<ReceivablesGroupDto> groups = receivablesByDate.entrySet().stream()
+        List<ReceivablesGroupDto> groups = receivablesByDate.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .map(entry -> {
-                    final LocalDate date = entry.getKey();
-                    final List<ReceivablesPage> receivablesForDate = entry.getValue();
+                    LocalDate date = entry.getKey();
+                    List<ReceivablesPage> receivablesForDate = entry.getValue();
                     log.debug("Date: {} has {} receivables", date, receivablesForDate.size());
-
-                    // Soma precisa com BigDecimal para evitar smells de precisão
-                    final BigDecimal totalAmount = receivablesForDate.stream()
-                            .map(r -> r.getAmountToReceive() != null ? r.getAmountToReceive() : BigDecimal.ZERO)
-                            .reduce(BigDecimal.ZERO, BigDecimal::add);
+                    Double totalAmountToReceive = receivablesForDate.stream()
+                            .mapToDouble(r -> r.getAmountToReceive() != null ? r.getAmountToReceive().doubleValue() : 0.0).sum();
 
                     return ReceivablesGroupDto.builder()
                             .date(date)
                             .receivables(receivablesForDate)
                             .count(receivablesForDate.size())
-                            .totalAmountToReceive(totalAmount.doubleValue()) // mantém contrato atual do DTO
+                            .totalAmountToReceive(totalAmountToReceive)
                             .build();
                 })
                 .collect(Collectors.toList());
 
-        final int currentPage = (offset != null && limit != null) ? (offset / limit) + 1 : 1;
-        final long totalElements = groups.stream().mapToInt(ReceivablesGroupDto::getCount).sum();
-        final int totalPages = (limit != null && limit > 0)
-                ? (int) Math.ceil((double) totalElements / limit)
-                : 1;
 
-        final PageDto pagination = PageDto.builder()
+        int currentPage = offset != null && limit != null ? (offset / limit) + 1 : 1;
+        long totalElements = groups.stream().mapToInt(ReceivablesGroupDto::getCount).sum();
+        int totalPages = limit != null ? (int) Math.ceil((double) totalElements / limit) : 1;
+
+        PageDto pagination = PageDto.builder()
                 .size(limit != null ? limit : (int) totalElements)
                 .totalElements(totalElements)
                 .totalPages(totalPages)
                 .number(currentPage)
                 .build();
-
         return ReceivablesPageDto.builder()
                 .groups(groups)
                 .page(pagination)
                 .build();
     }
 
-    // Converte Map/LinkedHashMap -> DTO gerado quando necessário
-    private AntecipaCardReceivableListDto toDtoSafely(Object raw) {
-        if (raw instanceof AntecipaCardReceivableListDto) {
-            return (AntecipaCardReceivableListDto) raw;
-        }
-        // Conversão resiliente para acompanhar mudanças de geração
-        return objectMapper.convertValue(raw, AntecipaCardReceivableListDto.class);
-    }
-
     private ReceivablesPage mapToReceivableModel(AntecipaCardReceivableListDto item) {
-        final PaymentTypeTO paymentTypeTO = mapPaymentType(item);
-
+        PaymentTypeTO paymentTypeTO = mapPaymentType(item);
         return ReceivablesPage.builder()
                 .id(item.getId() != null && item.getId().isPresent() ? item.getId().get() : null)
                 .paymentDate(convertDueDateToLocalDate(item.getDueDate()))
@@ -183,8 +165,8 @@ public class AntecipaReceivablesAdapter implements ReceivablesPort {
             return null;
         }
         try {
-            final String paymentDateStr = String.valueOf(item.getPaymentDate().get());
-            if (paymentDateStr.isEmpty()) {
+            String paymentDateStr = String.valueOf(item.getPaymentDate().get());
+            if (paymentDateStr == null || paymentDateStr.isEmpty()) {
                 return null;
             }
             return LocalDate.parse(paymentDateStr);
@@ -199,9 +181,11 @@ public class AntecipaReceivablesAdapter implements ReceivablesPort {
             return null;
         }
         try {
-            return dueDate.toLocalDate();
+            LocalDate converted = dueDate.toLocalDate();
+            return converted;
+
         } catch (Exception e) {
-            log.warn("Error parsing due date: {}", dueDate, e);
+            log.warn("Error parsing payment date: {}", dueDate, e);
             return null;
         }
     }
@@ -215,16 +199,17 @@ public class AntecipaReceivablesAdapter implements ReceivablesPort {
     }
 
     private String extractAccreditingInstitutionName(AntecipaCardReceivableListDto item) {
+
         if (item.getAccreditingInstitution() != null &&
                 item.getAccreditingInstitution().getName() != null &&
                 item.getAccreditingInstitution().getName().isPresent()) {
             return item.getAccreditingInstitution().getName().get();
         }
         return null;
+
     }
 
     private PaymentTypeTO mapPaymentType(AntecipaCardReceivableListDto item) {
-        // Mantido como antes (ajuste futuro se o parceiro passar o tipo real)
         return PaymentTypeTO.CREDIT_SINGLE;
     }
 
@@ -244,8 +229,8 @@ public class AntecipaReceivablesAdapter implements ReceivablesPort {
     }
 
     private BigDecimal calculateAmountToReceive(AntecipaCardReceivableListDto item) {
-        final BigDecimal originalValue = item.getValue() != null ? BigDecimal.valueOf(item.getValue()) : BigDecimal.ZERO;
-        final BigDecimal discount = calculateDiscount(item);
+        BigDecimal originalValue = item.getValue() != null ? BigDecimal.valueOf(item.getValue()) : BigDecimal.ZERO;
+        BigDecimal discount = calculateDiscount(item);
         return originalValue.subtract(discount);
     }
 
@@ -262,4 +247,232 @@ public class AntecipaReceivablesAdapter implements ReceivablesPort {
                 return null;
         }
     }
+
+}
+
+{
+  "content": [
+    {
+      "paymentDate": "2027-02-15",
+      "count": 1,
+      "totalAmountToReceive": 999970000,
+      "items": [
+        {
+          "id": "d344887b-52f4-4b29-8796-405030fed7c1",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999970000,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999970000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2027-02-16",
+      "count": 2,
+      "totalAmountToReceive": 1999989000,
+      "items": [
+        {
+          "id": "00f3a635-81b4-4dd1-b373-5c6eb9fb9d29",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999990000,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999990000
+        },
+        {
+          "id": "521be465-5743-4fe1-bada-86aeb5ac252e",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999999000,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999999000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2027-02-18",
+      "count": 1,
+      "totalAmountToReceive": 0,
+      "items": [
+        {
+          "id": "cb8ba895-31c5-419c-8b0c-3ba4b3a8ce96",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 0,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 0
+        }
+      ]
+    },
+    {
+      "paymentDate": "2027-02-19",
+      "count": 1,
+      "totalAmountToReceive": 999997432.11,
+      "items": [
+        {
+          "id": "a85b8f50-ae2f-4dc9-95f8-4de618a58c1a",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999997432.11,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999997432.11
+        }
+      ]
+    },
+    {
+      "paymentDate": "2027-05-27",
+      "count": 1,
+      "totalAmountToReceive": 999981200,
+      "items": [
+        {
+          "id": "9e21d9ca-96f1-45b3-8043-06278d34109d",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 999981200,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 999981200
+        }
+      ]
+    },
+    {
+      "paymentDate": "2039-11-22",
+      "count": 2,
+      "totalAmountToReceive": 0,
+      "items": [
+        {
+          "id": "d19b807d-90e2-4107-b2f2-b207b425bcf7",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 0,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 0
+        },
+        {
+          "id": "e545fd67-9c02-455a-b3e9-5d8c9abc6ad0",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 0,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 0
+        }
+      ]
+    },
+    {
+      "paymentDate": "2042-11-24",
+      "count": 1,
+      "totalAmountToReceive": 99.86,
+      "items": [
+        {
+          "id": "68341f70-7ed0-44ce-9d68-85db9cee6408",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "COMPRADOR NAO ENCONTRADO",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 99.86,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 99.86
+        }
+      ]
+    },
+    {
+      "paymentDate": "2050-12-07",
+      "count": 1,
+      "totalAmountToReceive": 600,
+      "items": [
+        {
+          "id": "9e6b3166-c239-48c1-a29b-7a2c69901b4c",
+          "paymentDate": null,
+          "nationalRegistrationId": "45181802000183",
+          "accreditingInstitutionName": "LUIS DE SOUZA FARIA 45157324120",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 600,
+            "paymentType": null,
+            "discount": null
+          },
+          "discount": 0,
+          "amountToReceive": 600
+        }
+      ]
+    }
+  ],
+  "page": {
+    "size": 10,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 1
+  }
 }
