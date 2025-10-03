@@ -1,8 +1,323 @@
-2025-10-03 15:28:13.515 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,1699d5b28869d6e0f2bbe6033fa71ab2,6d0e653c655e0ec7,] 15940 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : Error fetching anticipation history for supplier: 45181802000183: Read timed out executing GET https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Suppliers/45181802000183/Anticipations?PageId=0&PageSize=10
-
-feign.RetryableException: Read timed out executing GET https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Suppliers/45181802000183/Anticipations?PageId=0&PageSize=10
-	at feign.FeignException.errorExecuting(FeignException.java:278) ~[feign-core-13.4.jar:?]
-	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:94) ~[feign-core-13.4.jar:?]
+[INFO] 
+[INFO] --< br.com.experian.bfm:experian-pme-bfm-receivables-anticipation-services >--
+[INFO] Building experian-pme-bfm-receivables-anticipation-domain-services 1.0.1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.13:run (default-cli) > test-compile @ experian-pme-bfm-receivables-anticipation-services >>>
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (anticipation) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from api package name: br.com.experian.swagger.anticipation
+[INFO] Processing operation retrieveStatus
+[INFO] Processing operation accept
+[INFO] Processing operation findHistory
+[INFO] Processing operation findAvailables
+[INFO] Processing operation checkMarketAvailability
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\HistoryItemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\HistoryResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\InstallmentDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingStatusTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\PaginationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\PaymentTypeTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableGroupTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableGroupedResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableItemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\HistoryApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\MarketApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\OnboardingApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\ReceivablesApi.java
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (antecipa-cerc) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.antecipa
+[WARNING] Empty operationId found for path: GET /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGET
+[WARNING] Empty operationId found for path: POST /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentIdGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Suppliers/{SupplierDocument}/Assets/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAssetsIdGET
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/Simulate. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAnticipationsSimulatePOST
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/Execute/{OfferId}. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAnticipationsExecuteOfferIdPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAnticipationsGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAnticipationsIdGET
+[WARNING] Empty operationId found for path: POST /Webhook. Renamed to auto-generated operationId: webhookPOST
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAccreditingInstitutionAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAccreditingInstitutionCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAddCapitalSourceSupplierRegistrationCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableItemDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationStatus.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAssetOrdernation.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAssetStatus.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaBankAccountDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaBasicResultDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCapitalSourceAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCapitalSourceCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableAnticipationSimulationDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableSimulationAnticipationViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaOfferAnnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulateAnticipationCardReceivableCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAddressViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierBankAccountDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierPartnerDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierPartnerViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierRegistrationDto.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (digital-account) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.digital.account
+[WARNING] Failed to get the schema name: null
+[INFO] Inline schema created as UserAccountAdmin_allOf_mainContactAdminUpdate. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings UserAccountAdmin_allOf_mainContactAdminUpdate=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings UserAccountAdmin_allOf_mainContactAdminUpdate=NewModel,ModelA=NewModelA in CLI).
+[INFO] Inline schema created as ErrorModel_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ErrorModel_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ErrorModel_inner=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation authFindUserById
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalAuthenticationFactorSettingsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalChannelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalErrorModelInnerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalFederatedAccountTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalHerculesTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalMainframeDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalManagerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalNewUserPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountAdminAllOfMainContactAdminUpdateTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountAdminTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountHistoricTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserCreatedByTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserDocumentTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserEcsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserJobTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserMainEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserMainPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserPhoneTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (business-registration) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.etis.registration
+[INFO] Inline schema created as ExperianErrorModel_allOf_errorList. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation getBusinessRegistrationDataFull
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataAddressTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataCnaeTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataCorporateReorganizationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelAllOfErrorListTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISProblemTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (partners-and-admins) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.etis.registration
+[INFO] Inline schema created as ExperianErrorModel_allOf_errorList. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation getBusinessPartners
+[INFO] Processing operation getBusinessDirectors
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAbstractEntityTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorParticipationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISDocumentStatusTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISDocumentTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelAllOfErrorListTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISGenericEntityCompositionTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISNaturalPersonDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginatedResponseCompositionTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginationLinksTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerAndManagerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerParticipationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnersAndManagersTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnersTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISProblemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISRevenueServiceStatusTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.12.0:compile (default-compile) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 162 source files with javac [debug target 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.12.0:testCompile (default-testCompile) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] <<< spring-boot:3.3.13:run (default-cli) < test-compile @ experian-pme-bfm-receivables-anticipation-services <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.13:run (default-cli) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Attaching agents: []
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::               (v3.3.13)
+2025-10-03 15:42:47.643  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 20112 --- [           main] perianReceivablesAnticipationApplication : Starting ExperianReceivablesAnticipationApplication using Java 21.0.7 with PID 20112 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
+2025-10-03 15:42:47.675  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 20112 --- [           main] perianReceivablesAnticipationApplication : No active profile set, falling back to 1 default profile: "default"
+2025-10-03 15:43:00.170  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 20112 --- [           main] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.spring.security.config.service.impl.IamServiceImpl","method_name":"findTokenKey(java.lang.String clientId)"},"entry_parameters":{"clientId":"6870e592e38798676a80a699"},"return_object":{"optional":true,"return_value":"{\"alg\":\"RS512\",\"kty\":\"RSA\",\"use\":\"sig\",\"value\":\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsl3eMU9CZ4m4ezpHS3EHVdU4TawAxO0o8rCeE3YZoF9qsXJQuzdZvlxXOv225/YdGVgmu4OjjjgIaXpPn/nEB5OLtsGWylLvNbeWewjIcGbnCQzOK9OiSQ3ugx3Y9dCNjeDhmPlzQ8TXprBkWLcSa/tP2sbgMyvn1bZH8XBqWleTJhugQEOF1Ei+e+Nu20VPKKLDvq0/bfCP1ZblIdoZH3hwhqGE6ASl35bdxL3A5Z8+P5Tdrxe6rWxZgFNLwtYBW1HW7FHrPMKSFNvYDv0snCWzLtC8VlgZYMeCMEarwfz7+biOFJp5Pi4aAoQwWme8srFNVIBKYqmEW2fmbVrvrQIDAQAB\"}"},"truncated":false}
+2025-10-03 15:43:00.184  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 20112 --- [           main] b.c.e.s.s.u.JwtUtil                      : message="Token key loaded from IAM service successfully."
+2025-10-03 15:43:06.084  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 20112 --- [           main] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  :  Initializing with  Basic Auth header
+SSL Desativado para desenvolvimento
+2025-10-03 15:43:19.867  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 20112 --- [           main] perianReceivablesAnticipationApplication : Started ExperianReceivablesAnticipationApplication in 34.357 seconds (process running for 38.281)
+2025-10-03 15:43:22.857  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.args="{anticipationDate=null, statusId=null, offset=0, limit=10}" custom.experian.java.method.args_count="4" log.origin.function="findHistory" message="Init method"
+2025-10-03 15:43:22.934  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : log.origin.function="findHistoryWithReceivables" message="Init method"
+2025-10-03 15:43:22.938  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getUserId" message="Init method"
+2025-10-03 15:43:22.938  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="1" log.origin.function="getUserId" message="Finish method"
+2025-10-03 15:43:22.938  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getBusinessId" message="Init method"
+2025-10-03 15:43:22.938  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="0" log.origin.function="getBusinessId" message="Finish method"
+2025-10-03 15:43:23.381  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.l.i.LogMongoInterceptor          : {"type":"DATABASE","database_operation":"AFTER_LOAD","collection":"Agreement","document":"{\"_id\": {\"$oid\": \"68654b1828a7e04c2467521d\"}, \"userId\": \"68b89e5e72111743ae657473\", \"businessId\": \"68b89e5e72111743ae657472\", \"nationalRegistrationId\": \"45181802000183\", \"status\": \"ACCEPTED\", \"platform\": \"ECOMMERCE\", \"version\": 2, \"url\": \"https://bfm-pme-uat.serasaexperian.com.br/assets/pdf/Termo_de_Consentimento_e_Autorizacao.pdf\", \"acceptedAt\": {\"$date\": \"2025-07-02T15:07:04.633Z\"}, \"_class\": \"br.com.experian.receivables.infrastructure.repository.document.AgreementDocument\"}","operation_status":{"status":"SUCCESS"},"truncated":false}
+2025-10-03 15:43:23.449  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : Fetching anticipation history with receivables for supplier: 45181802000183
+2025-10-03 15:43:23.449  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  : Invalid or expired token, renewing...
+2025-10-03 15:43:23.449  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  : Renewing authentication token...
+2025-10-03 15:43:27.496  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.auth.sand.antecipa.com/v1/authentication/signin","http_method":"POST","http_status_response":200,"request_headers":{"Authorization":["Basic MjM2Y2VhOGEtNzBlMS03MGMzLWM1OGQtODRiMTFmNTI3NmNhOjI5NGZmMzAwLTIyMTAtNDU3YS1iODIyLWJkNGM1ZDIwY2ZmZA=="]},"execution_time":3967,"response":"{\"accessToken\":\"eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiI2M2Q5YmY2YS1kNDYwLTQzYzktOTU3Ni0yNjhkMDVjZTEyMjIiLCJldmVudF9pZCI6IjhkOWRjMmFlLTViODItNGI1MC05ZWMyLTAwZjQ1MmMxMjhkZSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTk1MTcwMTEsImV4cCI6MTc1OTUyNDIxMSwiaWF0IjoxNzU5NTE3MDExLCJqdGkiOiIyMWE5N2RhYy0yODAxLTQzM2MtYTdjNC1mOTEzMmZmNmIzOTYiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.Qooi_iyW9FEip2KHcTQtoMJTu3aSY86IJrvrucydhxRK-CcxfO45UzFuF8zmfdC6mp5p0UnP9B-5rb_oPjNyfj0Fzsj4pK6eHN5AB05Kj10MSymtHDzSJncrRB__0ZPBW2rKZlRtFM7DDqfkif89xyDVtl3eCX8fQdGVQ1p6LHYBbnLtZbRyp-Yj4mZXWsq-gjQ5KX9sqbXY2jZJo0LMJribM6XeDKscD90GTvHHDGh8lX0lC28LXe9HaCaFK1ODsjKUmKqj_oTKjVAnR06RyLJ0YychkeMoIKhX2Azt9hKS_0rUGvBznz0YortYMz2iVFecwf2T3TAjH9mx8IeHLA\",\"tokenType\":\"Bearer\",\"expiresIn\":7200}","application_structure":{"class_name":"AntecipaAuthClient","method_name":"signin(String)"},"authorization":{"authentication_type":"BASIC"},"truncated":false}
+2025-10-03 15:43:27.519  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  : Renewed token, expires in 7200 seconds
+2025-10-03 15:43:42.286 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"FAIL_500"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Suppliers/45181802000183/Anticipations?PageId=0&PageSize=10","http_method":"GET","http_status_response":500,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiI2M2Q5YmY2YS1kNDYwLTQzYzktOTU3Ni0yNjhkMDVjZTEyMjIiLCJldmVudF9pZCI6IjhkOWRjMmFlLTViODItNGI1MC05ZWMyLTAwZjQ1MmMxMjhkZSIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NTk1MTcwMTEsImV4cCI6MTc1OTUyNDIxMSwiaWF0IjoxNzU5NTE3MDExLCJqdGkiOiIyMWE5N2RhYy0yODAxLTQzM2MtYTdjNC1mOTEzMmZmNmIzOTYiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.Qooi_iyW9FEip2KHcTQtoMJTu3aSY86IJrvrucydhxRK-CcxfO45UzFuF8zmfdC6mp5p0UnP9B-5rb_oPjNyfj0Fzsj4pK6eHN5AB05Kj10MSymtHDzSJncrRB__0ZPBW2rKZlRtFM7DDqfkif89xyDVtl3eCX8fQdGVQ1p6LHYBbnLtZbRyp-Yj4mZXWsq-gjQ5KX9sqbXY2jZJo0LMJribM6XeDKscD90GTvHHDGh8lX0lC28LXe9HaCaFK1ODsjKUmKqj_oTKjVAnR06RyLJ0YychkeMoIKhX2Azt9hKS_0rUGvBznz0YortYMz2iVFecwf2T3TAjH9mx8IeHLA"]},"execution_time":14752,"response":"{\"traceId\":\"00-5fdad376d00a07f9cd1b2a5bdbe389e6-d692624959e016f8-00\",\"message\":\"Internal server error.Please try again or contact your system administrator.\",\"code\":\"500\",\"detail\":null}","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipations(String,String,String,String,String,String,String,Integer)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-10-03T17:43:31","iat":"2025-10-03T15:43:31"}},"truncated":false}
+2025-10-03 15:43:42.309 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : Error fetching anticipation history for supplier: 45181802000183: [500 Internal Server Error] during [GET] to [https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Suppliers/45181802000183/Anticipations?PageId=0&PageSize=10] [AntecipaClient#getAnticipations(String,String,String,String,String,String,String,Integer)]: [{"traceId":"00-5fdad376d00a07f9cd1b2a5bdbe389e6-d692624959e016f8-00","message":"Internal server error.Please try again or contact your system administrator.","code":"500","detail":null}]
+feign.FeignException$InternalServerError: [500 Internal Server Error] during [GET] to [https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Suppliers/45181802000183/Anticipations?PageId=0&PageSize=10] [AntecipaClient#getAnticipations(String,String,String,String,String,String,String,Integer)]: [{"traceId":"00-5fdad376d00a07f9cd1b2a5bdbe389e6-d692624959e016f8-00","message":"Internal server error.Please try again or contact your system administrator.","code":"500","detail":null}]
+	at feign.FeignException.serverErrorStatus(FeignException.java:259) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:206) ~[feign-core-13.4.jar:?]
+	at feign.FeignException.errorStatus(FeignException.java:194) ~[feign-core-13.4.jar:?]
+	at feign.codec.ErrorDecoder$Default.decode(ErrorDecoder.java:103) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.decodeError(InvocationContext.java:126) ~[feign-core-13.4.jar:?]
+	at feign.InvocationContext.proceed(InvocationContext.java:72) ~[feign-core-13.4.jar:?]
+	at feign.ResponseHandler.handleResponse(ResponseHandler.java:63) ~[feign-core-13.4.jar:?]
+	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:98) ~[feign-core-13.4.jar:?]
 	at feign.SynchronousMethodHandler.invoke(SynchronousMethodHandler.java:48) ~[feign-core-13.4.jar:?]
 	at feign.ReflectiveFeign$FeignInvocationHandler.invoke(ReflectiveFeign.java:99) ~[feign-core-13.4.jar:?]
 	at org.springframework.cloud.openfeign.FeignCachingInvocationHandlerFactory$1.proceed(FeignCachingInvocationHandlerFactory.java:66) ~[spring-cloud-openfeign-core-4.1.4.jar:4.1.4]
@@ -225,505 +540,9 @@ feign.RetryableException: Read timed out executing GET https://api.anticipation.
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
-Caused by: java.net.SocketTimeoutException: Read timed out
-	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[?:?]
-	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[?:?]
-	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1109) ~[?:?]
-	at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:489) ~[?:?]
-	at java.base/sun.security.ssl.SSLSocketInputRecord.readHeader(SSLSocketInputRecord.java:483) ~[?:?]
-	at java.base/sun.security.ssl.SSLSocketInputRecord.bytesInCompletePacket(SSLSocketInputRecord.java:70) ~[?:?]
-	at java.base/sun.security.ssl.SSLSocketImpl.readApplicationRecord(SSLSocketImpl.java:1461) ~[?:?]
-	at java.base/sun.security.ssl.SSLSocketImpl$AppInputStream.read(SSLSocketImpl.java:1066) ~[?:?]
-	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291) ~[?:?]
-	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347) ~[?:?]
-	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420) ~[?:?]
-	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399) ~[?:?]
-	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827) ~[?:?]
-	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759) ~[?:?]
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1708) ~[?:?]
-	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1617) ~[?:?]
-	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531) ~[?:?]
-	at java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:307) ~[?:?]
-	at feign.Client$Default.convertResponse(Client.java:111) ~[feign-core-13.4.jar:?]
-	at feign.Client$Default.execute(Client.java:107) ~[feign-core-13.4.jar:?]
-	at feign.SynchronousMethodHandler.executeAndDecode(SynchronousMethodHandler.java:82) ~[feign-core-13.4.jar:?]
-	... 222 more
-
-2025-10-03 15:28:13.538  INFO [experian-pme-bfm-receivables-anticipation-domain-services,1699d5b28869d6e0f2bbe6033fa71ab2,6d0e653c655e0ec7,] 15940 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : custom.experian.java.method.duration="22570" log.origin.function="findHistoryWithReceivables" message="Finish method"
-2025-10-03 15:28:13.548  INFO [experian-pme-bfm-receivables-anticipation-domain-services,1699d5b28869d6e0f2bbe6033fa71ab2,6d0e653c655e0ec7,] 15940 --- [nio-8080-exec-1] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl","method_name":"findHistoryWithReceivables(java.lang.String capitalSourceDocument, java.lang.String startAnticipationDate, java.lang.String endAnticipationDate, java.lang.String statusId, java.lang.Integer offset, java.lang.Integer limit)"},"entry_parameters":{"offset":0,"limit":10},"return_object":{"optional":true},"truncated":false}
-2025-10-03 15:28:13.548  INFO [experian-pme-bfm-receivables-anticipation-domain-services,1699d5b28869d6e0f2bbe6033fa71ab2,6d0e653c655e0ec7,] 15940 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : No anticipation history found for the given filters
-2025-10-03 15:28:13.559  INFO [experian-pme-bfm-receivables-anticipation-domain-services,1699d5b28869d6e0f2bbe6033fa71ab2,6d0e653c655e0ec7,] 15940 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.duration="22700" custom.experian.java.method.result="{\"headers\":{},\"body\":null,\"statusCode\":\"NO_CONTENT\",\"statusCodeValue\":204}" log.origin.function="findHistory" message="Finish method"
-2025-10-03 15:28:13.576  INFO [experian-pme-bfm-receivables-anticipation-domain-services,1699d5b28869d6e0f2bbe6033fa71ab2,6d0e653c655e0ec7,] 15940 --- [nio-8080-exec-1] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/history" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_CLI-AUTH-IDENTIFIED, ROLE_BUSINESS, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68b89e5e72111743ae657472" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="69798" custom.experian.http.request.token.exp="1759516441" custom.experian.http.request.token.iat="1759512841" custom.experian.http.request.token.jti="34fce222-a53c-42ce-9f65-fbfe7d6c9e06" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="1b597b5c-3456-47d9-9511-ceced60c6972" custom.experian.http.request.token.sub="6005eac6d7b8585522baafa9" custom.experian.http.request.token.user_id="68b89e5e72111743ae657473" destination.address="0:0:0:0:0:0:0:1" destination.port="50585" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/history" http.response.status_code="204" server.address="*********"
-2025-10-03 15:28:13.582  INFO [experian-pme-bfm-receivables-anticipation-domain-services,1699d5b28869d6e0f2bbe6033fa71ab2,6d0e653c655e0ec7,] 15940 --- [nio-8080-exec-1] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68b89e5e72111743ae657472","user_id":"68b89e5e72111743ae657473","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"69798","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/history","http_method":"GET","http_status_response":204,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.HistoryController","method_name":"findHistory(java.time.LocalDate anticipationDate, java.lang.String statusId, java.lang.Integer limit, java.lang.Integer offset)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-10-03T15:34:01","iat":"2025-10-03T14:34:01","authorities":["ROLE_BUSINESSADMIN","ROLE_CLI-AUTH-IDENTIFIED","ROLE_BUSINESS","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJhbGciOiJSUzUxMiJ9.eyJqdGkiOiIzNGZjZTIyMi1hNTNjLTQyY2UtOWY2NS1mYmZlN2Q2YzllMDYiLCJpYXQiOjE3NTk1MTI4NDEsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwidXNlcl9pZCI6IjY4Yjg5ZTVlNzIxMTE3NDNhZTY1NzQ3MyIsImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwiYnVzaW5lc3NfaWQiOiI2OGI4OWU1ZTcyMTExNzQzYWU2NTc0NzIiLCJzZXJ2aWNlX2lkIjoiNjAwNWVhYzY5ZmY3YzAzYjU2M2RiNWViIiwiYnVzaW5lc3NfdW5pdF9pZCI6IjYzODEyMTM3MTBkNGZiNzA3MzczZjUzNyIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImN1c3RvbWVyX2lkIjo2OTc5OCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9CVVNJTkVTU0FETUlOIiwiUk9MRV9DTEktQVVUSC1JREVOVElGSUVEIiwiUk9MRV9CVVNJTkVTUyIsIlJPTEVfQ0xJLTFTVFBBUlRZIiwiUk9MRV9VU0VSIiwiUk9MRV9BVVRILUJBU0lDIiwiUk9MRV9DTEktM1JEUEFSVFkiLCJST0xFX1BFUlNPTiIsIlJPTEVfQlVTSU5FU1NVU0VSIiwiUk9MRV9BVVRILUlERU5USUZJRUQiXSwiZXhwIjoxNzU5NTE2NDQxLCJzdWIiOiI2MDA1ZWFjNmQ3Yjg1ODU1MjJiYWFmYTkiLCJzZXNzaW9uX2lkIjoiMWI1OTdiNWMtMzQ1Ni00N2Q5LTk1MTEtY2VjZWQ2MGM2OTcyIn0.VFRANHTrhYdB2B3fwP6EPrbKWUV9e_VDpu2HCxyiU6KQD4C1QEZVCq2mW4u_XtdovJ7hmCf5MS688cmaDXgbXrudEbRqYTRd7V0GEKnul6LJV7PHBwkDRvsS1LWA8nI4ZwgTxAuivlVa9tk6qfmqRTv2JTJWsupp2CJPEBp24tvp85IJNATa9f996kW83Dzx74kkVW98e6DdD0s2yv5efgmbdIi3_mdd0LD2WswD-up7ShREpvDBnNaeS7vuHDM0cpuEhXAwqpFCGkl9rRwG4aUiG0_Xk1lqIhshAW_aZ5FuQnE-heZnu39DinxOiUqC2srzWagCKOw5Eiw3b7DvsA","host":"localhost:8080","request-start-time":"1759516068541","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
-
-
-
-http://localhost:8080/serasaempreendedor/receivables-anticipation/v1/history?limit=10&offset=0
-
-
-package br.com.experian.anticipation.application.rest;
-
-import br.com.experian.anticipation.domain.dto.response.UserAccount;
-import br.com.experian.anticipation.domain.service.HistoryService;
-import br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl;
-import br.com.experian.anticipation.domain.service.impl.ReceivablesServiceImpl;
-import br.com.experian.observability.annotation.LogMethod;
-import br.com.experian.swagger.anticipation.api.HistoryApi;
-import br.com.experian.swagger.anticipation.model.HistoryResponseTO;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
-import java.util.Optional;
-
-@Log4j2
-@RestController
-public class HistoryController extends BaseController implements HistoryApi {
-
-    private final HistoryService historyService;
-
-    public HistoryController(HistoryService historyService) {
-        this.historyService = historyService;
-    }
-
-    @Override
-    @PreAuthorize(HAS_RULES)
-    @LogMethod(LogMethod.LogType.FULL)
-    public ResponseEntity<HistoryResponseTO> findHistory(LocalDate anticipationDate,
-                                                         String statusId,
-                                                         Integer limit,
-                                                         Integer offset) {
-        final int pageLimit = limit != null ? limit : 10;
-        final int pageOffset = offset != null ? offset : 0;
-
-        String anticipationDateStr = anticipationDate != null ? anticipationDate.toString() : null;
-
-        Optional<HistoryResponseTO> historyOpt = this.historyService.findHistoryWithReceivables(null,
-                anticipationDateStr, null, statusId, pageOffset, pageLimit);
-
-        if (historyOpt.isEmpty()) {
-            log.info("No anticipation history found for the given filters");
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(historyOpt.get());
-
-    }
-}
-
-
-package br.com.experian.anticipation.domain.service.impl;
-
-import br.com.experian.anticipation.domain.client.AccountClient;
-import br.com.experian.anticipation.domain.client.RegistrationClient;
-import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
-import br.com.experian.anticipation.domain.exception.ConflictException;
-import br.com.experian.anticipation.domain.model.Agreement;
-import br.com.experian.anticipation.domain.port.AuthenticationPort;
-import br.com.experian.anticipation.domain.repository.AgreementRepository;
-import br.com.experian.anticipation.domain.service.HistoryService;
-import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
-import br.com.experian.observability.annotation.LogMethod;
-import br.com.experian.swagger.antecipa.model.*;
-import br.com.experian.swagger.anticipation.model.*;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import feign.FeignException;
-import lombok.extern.log4j.Log4j2;
-import org.openapitools.jackson.nullable.JsonNullable;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
-
-
-@Log4j2
-public class HistoryServiceImpl implements HistoryService {
-
-
-    private final AntecipaClient antecipaClient;
-    private final AgreementRepository agreementRepository;
-    private final AuthenticationPort authenticationPort;
-    private final ObjectMapper objectMapper;
-    private final AccountClient accountClient;
-    private final RegistrationClient registrationClient;
-
-    public HistoryServiceImpl(AntecipaClient antecipaClient,
-                              AgreementRepository agreementRepository, AuthenticationPort authenticationPort, ObjectMapper objectMapper, AccountClient accountClient,
-                              RegistrationClient registrationClient) {
-        this.antecipaClient = antecipaClient;
-        this.agreementRepository = agreementRepository;
-        this.authenticationPort = authenticationPort;
-        this.objectMapper = objectMapper;
-        this.accountClient = accountClient;
-        this.registrationClient = registrationClient;
-
-    }
-
-
-    @Override
-    @LogMethod
-    public Optional<HistoryResponseTO> findHistoryWithReceivables(String capitalSourceDocument,
-                                                                  String startAnticipationDate,
-                                                                  String endAnticipationDate,
-                                                                  String statusId,
-                                                                  String pageId,
-                                                                  Integer pageSize) {
-        Agreement agreement = this.getUserAgreement();
-        log.info("Fetching anticipation history with receivables for supplier: {}", agreement.getNationalRegistrationId());
-
-
-        try {
-            String token = "Bearer " + authenticationPort.getValidToken();
-
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse =
-                    antecipaClient.getAnticipations(token, agreement.getNationalRegistrationId(),
-                            capitalSourceDocument,
-                            startAnticipationDate,
-                            endAnticipationDate,
-                            statusId,
-                            pageId,
-                            pageSize);
-            List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(pagedResponse);
-
-            if (externalItems.isEmpty()) {
-                log.info("No anticipation history for supplier: {}", agreement);
-                return Optional.empty();
-            }
-
-            List<HistoryItemTO> historyItems = buildHistoryItems(externalItems, agreement.getNationalRegistrationId(), token);
-
-            HistoryResponseTO response = new HistoryResponseTO();
-            response.setItems(historyItems);
-            response.setNextPage(null);
-            response.setPageSize(pageSize != null ? pageSize : 10);
-            log.info("Successfully retrieved {} anticipation records with receivables for supplier: {}", historyItems.size(), agreement.getNationalRegistrationId());
-            return Optional.of(response);
-        } catch (Exception e) {
-            log.error("Error fetching anticipation history for supplier: {}: {}", agreement.getNationalRegistrationId(), e.getMessage(), e);
-            return Optional.empty();
-        }
-    }
-
-    @Override
-    @LogMethod
-    public Optional<HistoryResponseTO> findHistoryWithReceivables(String capitalSourceDocument,
-                                                                 String startAnticipationDate,
-                                                                 String endAnticipationDate,
-                                                                 String statusId,
-                                                                 Integer offset,
-                                                                 Integer limit) {
-        String pageIdStr = offset != null ? String.valueOf(offset) : "0";
-        Integer pageSizeInt = limit != null ? limit : 10;
-        return findHistoryWithReceivables(capitalSourceDocument, startAnticipationDate, endAnticipationDate, statusId, pageIdStr, pageSizeInt);
-    }
-
-    private List<HistoryItemTO> buildHistoryItems(List<AntecipaAnticipationCardReceivableListDto> externalItems,
-                                                  String supplierDocument,
-                                                  String token) {
-        List<HistoryItemTO> historyItems = new ArrayList<>();
-
-        for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
-            HistoryItemTO item = createHistoryItem(ext, supplierDocument, token);
-            historyItems.add(item);
-        }
-        return historyItems;
-    }
-
-    private HistoryItemTO createHistoryItem(AntecipaAnticipationCardReceivableListDto ext, String supplierDocument, String token) {
-
-        HistoryItemTO item = new HistoryItemTO();
-
-
-        String id = extractId(ext);
-        item.setId(id);
-
-
-        setRequestDate(item, ext);
-
-
-        setStatus(item, ext);
-
-
-        setReceivablesData(item, id, supplierDocument, token, ext);
-
-        return item;
-    }
-
-
-    private String extractId(AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getId() != null && ext.getId().isPresent()) {
-            return String.valueOf(ext.getId().get());
-        }
-        return null;
-    }
-
-
-    private void setRequestDate(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getCreatedAt() != null) {
-            LocalDateTime ldt = parseToLocalDate(ext.getCreatedAt().toString());
-            if (ldt != null) {
-                String formattedDate = ldt.toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-                item.setRequestDate(LocalDate.parse(formattedDate));
-            }
-        }
-    }
-
-    private void setStatus(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getStatusId() != null) {
-            String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
-            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
-            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
-        }
-    }
-
-    private void setReceivablesData(HistoryItemTO item, String id, String supplierDocument,
-                                    String token, AntecipaAnticipationCardReceivableListDto ext) {
-        if (id != null) {
-
-            try {
-                AntecipaAnticipationCardReceivableDto detail =
-                        antecipaClient.getAnticipationById(token, supplierDocument, id);
-
-
-                List<ReceivableItemTO> receivables = processReceivables(detail, ext);
-                item.setReceivables(receivables);
-
-
-                BigDecimal totalNetValue = calculateTotalNetValue(receivables);
-                item.setTotalNetValue(totalNetValue);
-                item.setReceivablesCount(receivables.size());
-
-            } catch (Exception e) {
-                log.warn("Failed to fetch receivables details for ID: {}", id, e);
-                setEmptyReceivablesData(item);
-            }
-        } else {
-            setEmptyReceivablesData(item);
-        }
-    }
-
-    private BigDecimal calculateTotalNetValue(List<ReceivableItemTO> receivables) {
-        return receivables.stream()
-                .map(ReceivableItemTO::getNetValue)
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private void setEmptyReceivablesData(HistoryItemTO item) {
-        item.setReceivables(new ArrayList<>());
-        item.setTotalNetValue(BigDecimal.ZERO);
-        item.setReceivablesCount(0);
-    }
-
-    private List<AntecipaAnticipationCardReceivableListDto> extractItems(
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
-
-        if (pagedResponse == null) return Collections.emptyList();
-
-        var itemsNullable = pagedResponse.getItems();
-
-        Object raw = itemsNullable.get();
-        if (!(raw instanceof List<?> rawList) || rawList.isEmpty()) return Collections.emptyList();
-
-        try {
-            byte[] bytes = objectMapper.writeValueAsBytes(rawList);
-            return objectMapper.readValue(bytes, new TypeReference<>() {
-            });
-
-        } catch (Exception e) {
-            log.error("Error deserializing items list", e);
-            return Collections.emptyList();
-        }
-    }
-
-
-    private List<ReceivableItemTO> processReceivables(AntecipaAnticipationCardReceivableDto detail,
-                                                      AntecipaAnticipationCardReceivableListDto listItem) {
-        List<ReceivableItemTO> receivables = new ArrayList<>();
-
-        if (detail == null) return receivables;
-
-        processAnticipatedItems(detail, listItem, receivables);
-        processNoAnticipatedItems(detail, listItem, receivables);
-
-        return receivables;
-    }
-
-    private void processAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
-                                         AntecipaAnticipationCardReceivableListDto listItem,
-                                         List<ReceivableItemTO> receivables) {
-
-        if (detail.getAnticipatedItems() != null && detail.getAnticipatedItems().isPresent()) {
-            List<?> anticipatedItemsObj = detail.getAnticipatedItems().get();
-            if (anticipatedItemsObj != null) {
-
-                processReceivablesList(anticipatedItemsObj, detail, listItem, receivables);
-            }
-        }
-    }
-
-    private void processNoAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
-                                           AntecipaAnticipationCardReceivableListDto listItem,
-                                           List<ReceivableItemTO> receivables) {
-        if (detail.getNotAnticipatedItems() != null && detail.getNotAnticipatedItems().isPresent()) {
-            List<?> notAnticipatedItemsObj = detail.getNotAnticipatedItems().get();
-            if (notAnticipatedItemsObj != null) {
-                processReceivablesList(notAnticipatedItemsObj, detail, listItem, receivables);
-            }
-        }
-    }
-
-    private void processReceivablesList(List<?> itemsList,
-                                        AntecipaAnticipationCardReceivableDto detail,
-                                        AntecipaAnticipationCardReceivableListDto listItem,
-                                        List<ReceivableItemTO> receivables) {
-        for (Object itemObj : itemsList) {
-
-            try {
-                AntecipaAnticipationCardReceivableItemDto sourceItem = convertToSourceItem(itemObj);
-                if (sourceItem != null) {
-                    ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
-                    if (item != null) {
-                        receivables.add(item);
-                    }
-                }
-            } catch (Exception e) {
-                log.error("Error converting anticipated item to DTO: {}", e.getMessage(), e);
-            }
-        }
-    }
-
-    private AntecipaAnticipationCardReceivableItemDto convertToSourceItem(Object itemObj) {
-        if (itemObj instanceof AntecipaAnticipationCardReceivableItemDto) {
-            return (AntecipaAnticipationCardReceivableItemDto) itemObj;
-        } else if (itemObj instanceof LinkedHashMap) {
-            return objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivableItemDto.class);
-        } else {
-            log.warn("Unexpected item type in anticipatedItems: {}", itemObj.getClass().getName());
-            return null;
-        }
-    }
-
-    private ReceivableItemTO convertToReceivableItem(AntecipaAnticipationCardReceivableItemDto sourceItem,
-                                                     AntecipaAnticipationCardReceivableDto parentDetail,
-                                                     AntecipaAnticipationCardReceivableListDto parentListItem) {
-        if (sourceItem == null) return null;
-
-        ReceivableItemTO item = new ReceivableItemTO();
-
-        setCnpj(item, parentDetail);
-        setAccreditingInstitution(item, parentDetail);
-        setBasicReceivableData(item, sourceItem);
-        return item;
-
-    }
-
-    private void setCnpj(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
-        if (parentDetail.getSupplier() != null && parentDetail.getSupplier().getDocument() != null) {
-            JsonNullable<String> documentNullable = parentDetail.getSupplier().getDocument();
-            if (documentNullable.isPresent()) {
-                item.setCnpj(documentNullable.get());
-            }
-        }
-    }
-
-    private void setAccreditingInstitution(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
-
-        if (parentDetail.getAccreditingInstitution() != null && parentDetail.getAccreditingInstitution().getName() != null) {
-            JsonNullable<String> nameNullable = parentDetail.getAccreditingInstitution().getName();
-            if (nameNullable.isPresent()) {
-                item.setAccreditingInstitution(nameNullable.get());
-            }
-        }
-    }
-
-    private void setBasicReceivableData(ReceivableItemTO item, AntecipaAnticipationCardReceivableItemDto sourceItem) {
-
-
-        item.setInstallments(1);
-
-
-        if (sourceItem.getSelectedAmount() != null) {
-            item.setInstallmentValue(BigDecimal.valueOf(sourceItem.getSelectedAmount()));
-        }
-
-
-        if (sourceItem.getEffectiveRate() != null) {
-            item.setFeePercentage(BigDecimal.valueOf(sourceItem.getEffectiveRate()));
-        }
-
-
-        if (sourceItem.getDiscount() != null) {
-            item.setDiscountValue(BigDecimal.valueOf(sourceItem.getDiscount()));
-        } else {
-            item.setDiscountValue(BigDecimal.ZERO);
-        }
-
-        if (sourceItem.getNetValue() != null) {
-            item.setNetValue(BigDecimal.valueOf(sourceItem.getNetValue()));
-        } else {
-            item.setNetValue(BigDecimal.ZERO);
-        }
-    }
-
-    private static LocalDateTime parseToLocalDate(String s) {
-        if (s == null || s.isBlank()) return null;
-        try {
-            return OffsetDateTime.parse(s).toLocalDateTime();
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDateTime.parse(s);
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDate.parse(s).atStartOfDay();
-        } catch (DateTimeParseException ignore) {
-
-        }
-
-        return null;
-    }
-
-    private Agreement getUserAgreement() {
-        return this.agreementRepository.getUserAgreement()
-                .orElseThrow(() -> new ConflictException("3"));
-    }
-
-}
-
-
-package br.com.experian.anticipation.domain.service;
-
-import br.com.experian.swagger.anticipation.model.HistoryResponseTO;
-
-import java.util.Optional;
-
-public interface HistoryService {
-
-    Optional<HistoryResponseTO> findHistoryWithReceivables(String capitalSourceDocument,
-                                                           String startAnticipationDate,
-                                                           String endAnticipationDate,
-                                                           String statusId,
-                                                           String pageId,
-                                                           Integer pageSize);
-
-    Optional<HistoryResponseTO> findHistoryWithReceivables(String capitalSourceDocument,
-                                                           String startAnticipationDate,
-                                                           String endAnticipationDate,
-                                                           String statusId,
-                                                           Integer offset,
-                                                           Integer limit);
-}
-
-
-
+2025-10-03 15:43:42.328  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.d.s.i.HistoryServiceImpl         : custom.experian.java.method.duration="19394" log.origin.function="findHistoryWithReceivables" message="Finish method"
+2025-10-03 15:43:42.339  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl","method_name":"findHistoryWithReceivables(java.lang.String capitalSourceDocument, java.lang.String startAnticipationDate, java.lang.String endAnticipationDate, java.lang.String statusId, java.lang.Integer offset, java.lang.Integer limit)"},"entry_parameters":{"offset":0,"limit":10},"return_object":{"optional":true},"truncated":false}
+2025-10-03 15:43:42.339  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : No anticipation history found for the given filters
+2025-10-03 15:43:42.373  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.duration="19525" custom.experian.java.method.result="{\"headers\":{},\"body\":null,\"statusCodeValue\":204,\"statusCode\":\"NO_CONTENT\"}" log.origin.function="findHistory" message="Finish method"
+2025-10-03 15:43:42.394  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/history" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_CLI-AUTH-IDENTIFIED, ROLE_BUSINESS, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68b89e5e72111743ae657472" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="69798" custom.experian.http.request.token.exp="1759520448" custom.experian.http.request.token.iat="1759516848" custom.experian.http.request.token.jti="a92e3a0e-32ae-4b83-bc7f-b69224c27126" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="8d8fb50e-8758-482c-88c9-049ba6187bd5" custom.experian.http.request.token.sub="6005eac6d7b8585522baafa9" custom.experian.http.request.token.user_id="68b89e5e72111743ae657473" destination.address="0:0:0:0:0:0:0:1" destination.port="63901" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/history" http.response.status_code="204" server.address="*********"
+2025-10-03 15:43:42.416  INFO [experian-pme-bfm-receivables-anticipation-domain-services,a1f98b63c54838879807f19e8d07e668,69f3c21442e7e683,] 20112 --- [nio-8080-exec-1] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68b89e5e72111743ae657472","user_id":"68b89e5e72111743ae657473","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"69798","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/history","http_method":"GET","http_status_response":204,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.HistoryController","method_name":"findHistory(java.time.LocalDate anticipationDate, java.lang.String statusId, java.lang.Integer limit, java.lang.Integer offset)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-10-03T16:40:48","iat":"2025-10-03T15:40:48","authorities":["ROLE_BUSINESSADMIN","ROLE_CLI-AUTH-IDENTIFIED","ROLE_BUSINESS","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJhbGciOiJSUzUxMiJ9.eyJqdGkiOiJhOTJlM2EwZS0zMmFlLTRiODMtYmM3Zi1iNjkyMjRjMjcxMjYiLCJpYXQiOjE3NTk1MTY4NDgsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwidXNlcl9pZCI6IjY4Yjg5ZTVlNzIxMTE3NDNhZTY1NzQ3MyIsImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwiYnVzaW5lc3NfaWQiOiI2OGI4OWU1ZTcyMTExNzQzYWU2NTc0NzIiLCJzZXJ2aWNlX2lkIjoiNjAwNWVhYzY5ZmY3YzAzYjU2M2RiNWViIiwiYnVzaW5lc3NfdW5pdF9pZCI6IjYzODEyMTM3MTBkNGZiNzA3MzczZjUzNyIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImN1c3RvbWVyX2lkIjo2OTc5OCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9CVVNJTkVTU0FETUlOIiwiUk9MRV9DTEktQVVUSC1JREVOVElGSUVEIiwiUk9MRV9CVVNJTkVTUyIsIlJPTEVfQ0xJLTFTVFBBUlRZIiwiUk9MRV9VU0VSIiwiUk9MRV9BVVRILUJBU0lDIiwiUk9MRV9DTEktM1JEUEFSVFkiLCJST0xFX1BFUlNPTiIsIlJPTEVfQlVTSU5FU1NVU0VSIiwiUk9MRV9BVVRILUlERU5USUZJRUQiXSwiZXhwIjoxNzU5NTIwNDQ4LCJzdWIiOiI2MDA1ZWFjNmQ3Yjg1ODU1MjJiYWFmYTkiLCJzZXNzaW9uX2lkIjoiOGQ4ZmI1MGUtODc1OC00ODJjLTg4YzktMDQ5YmE2MTg3YmQ1In0.mjJk-Tsbu44XoE-RsGP_r_fhLzb0_ePsX1wRrJJjx-vuUyBzcq2PRpGAnTIt4Asl0QpHngRT-iSkVxP2pWidI5TsW24nF6AeJx_Eia0DVlB33gaHYUQvdodaFYSghh0EQqFkjJ9DtmR7TpYo0QSubHxYHn3MNvPw-XEVtodaxCPFjWqGg0eEFgUtvxWAoY1IstdeKlJlHLrphOR7MTF_0EVYvbNdmvhGySuR77mpyX5lBhOTEFOP_sm4vbvkNSjhFinnF-tvYICMJWFHc2IGmyb8pgeahMHCWvP1akpk9UlIRtWpIXhsohKl-N8I7HcENxrRLt-9k1efey_4JyECYA","host":"localhost:8080","request-start-time":"1759517001259","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
