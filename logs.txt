@@ -239,3 +239,1822 @@ feign.FeignException$InternalServerError: [500 Internal Server Error] during [GE
 2025-10-03 17:19:11.711  INFO [experian-pme-bfm-receivables-anticipation-domain-services,427d0800bfbf5b0fc080c551e02ede08,594a9c85e4d71595,] 31152 --- [nio-8080-exec-1] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.duration="17480" custom.experian.java.method.result="{\"headers\":{},\"body\":null,\"statusCode\":\"NO_CONTENT\",\"statusCodeValue\":204}" log.origin.function="findHistory" message="Finish method"
 2025-10-03 17:19:11.721  INFO [experian-pme-bfm-receivables-anticipation-domain-services,427d0800bfbf5b0fc080c551e02ede08,594a9c85e4d71595,] 31152 --- [nio-8080-exec-1] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/history" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_CLI-AUTH-IDENTIFIED, ROLE_BUSINESS, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68b89e5e72111743ae657472" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="69798" custom.experian.http.request.token.exp="1759524219" custom.experian.http.request.token.iat="1759520619" custom.experian.http.request.token.jti="0fb013c3-5e13-4ecc-ab34-66991fc074c4" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="a837cb7e-e8bb-4b09-b078-bef5df75713d" custom.experian.http.request.token.sub="6005eac6d7b8585522baafa9" custom.experian.http.request.token.user_id="68b89e5e72111743ae657473" destination.address="0:0:0:0:0:0:0:1" destination.port="53345" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/history" http.response.status_code="204" server.address="*********"
 2025-10-03 17:19:11.733  INFO [experian-pme-bfm-receivables-anticipation-domain-services,427d0800bfbf5b0fc080c551e02ede08,594a9c85e4d71595,] 31152 --- [nio-8080-exec-1] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68b89e5e72111743ae657472","user_id":"68b89e5e72111743ae657473","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"69798","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/history","http_method":"GET","http_status_response":204,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.HistoryController","method_name":"findHistory(java.time.LocalDate anticipationDate, java.lang.String statusId, java.lang.Integer limit, java.lang.Integer offset)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-10-03T17:43:39","iat":"2025-10-03T16:43:39","authorities":["ROLE_BUSINESSADMIN","ROLE_CLI-AUTH-IDENTIFIED","ROLE_BUSINESS","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJhbGciOiJSUzUxMiJ9.eyJqdGkiOiIwZmIwMTNjMy01ZTEzLTRlY2MtYWIzNC02Njk5MWZjMDc0YzQiLCJpYXQiOjE3NTk1MjA2MTksInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwidXNlcl9pZCI6IjY4Yjg5ZTVlNzIxMTE3NDNhZTY1NzQ3MyIsImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwiYnVzaW5lc3NfaWQiOiI2OGI4OWU1ZTcyMTExNzQzYWU2NTc0NzIiLCJzZXJ2aWNlX2lkIjoiNjAwNWVhYzY5ZmY3YzAzYjU2M2RiNWViIiwiYnVzaW5lc3NfdW5pdF9pZCI6IjYzODEyMTM3MTBkNGZiNzA3MzczZjUzNyIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImN1c3RvbWVyX2lkIjo2OTc5OCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9CVVNJTkVTU0FETUlOIiwiUk9MRV9DTEktQVVUSC1JREVOVElGSUVEIiwiUk9MRV9CVVNJTkVTUyIsIlJPTEVfQ0xJLTFTVFBBUlRZIiwiUk9MRV9VU0VSIiwiUk9MRV9BVVRILUJBU0lDIiwiUk9MRV9DTEktM1JEUEFSVFkiLCJST0xFX1BFUlNPTiIsIlJPTEVfQlVTSU5FU1NVU0VSIiwiUk9MRV9BVVRILUlERU5USUZJRUQiXSwiZXhwIjoxNzU5NTI0MjE5LCJzdWIiOiI2MDA1ZWFjNmQ3Yjg1ODU1MjJiYWFmYTkiLCJzZXNzaW9uX2lkIjoiYTgzN2NiN2UtZThiYi00YjA5LWIwNzgtYmVmNWRmNzU3MTNkIn0.Ro0vC3SXgxam5-0EKz8Jysf4tAooMCeVBGiRWh1UoxmOk49ySl2vliJSGDwKTyxPNTjMvEVd_U9qzRCTtp6qVv9NP4JiZ5pe7fps_GInzIZ93NEXiTCZXAL3b2Gvf9vkknHHm5xd5-hiCqYFxoiE4A_xUTvCQmh-i0BbaX82nBnkZBcEHvbleDuetV2JSpzIpv-NBDypW4e1r5FPIE3BBMQBaEl2Q9SArnbpELX8ZoVRqfcvQDVmxLKlHlMBFnAx7DVfvQdM8NzzHKOKMWAVm5xNqbK8EoeqEFX5LK68Y1Lhnvy_Ki-T8WP6RqXs_-TbCz7F0YeR7TTbC8R6zglrfw","host":"localhost:8080","request-start-time":"1759522732564","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
+
+
+
+package br.com.experian.anticipation.domain.service;
+
+import br.com.experian.swagger.anticipation.model.HistoryResponseTO;
+
+import java.util.Optional;
+
+public interface HistoryService {
+
+    Optional<HistoryResponseTO> findHistoryWithReceivables(String capitalSourceDocument,
+                                                           String startAnticipationDate,
+                                                           String endAnticipationDate,
+                                                           String statusId,
+                                                           String pageId,
+                                                           Integer pageSize);
+
+    Optional<HistoryResponseTO> findHistoryWithReceivables(String capitalSourceDocument,
+                                                           String startAnticipationDate,
+                                                           String endAnticipationDate,
+                                                           String statusId,
+                                                           Integer offset,
+                                                           Integer limit);
+}
+
+
+package br.com.experian.anticipation.application.rest;
+
+import br.com.experian.anticipation.domain.dto.response.UserAccount;
+import br.com.experian.anticipation.domain.service.HistoryService;
+import br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl;
+import br.com.experian.anticipation.domain.service.impl.ReceivablesServiceImpl;
+import br.com.experian.observability.annotation.LogMethod;
+import br.com.experian.swagger.anticipation.api.HistoryApi;
+import br.com.experian.swagger.anticipation.model.HistoryResponseTO;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+@Log4j2
+@RestController
+public class HistoryController extends BaseController implements HistoryApi {
+
+    private final HistoryService historyService;
+
+    public HistoryController(HistoryService historyService) {
+        this.historyService = historyService;
+    }
+
+    @Override
+    @PreAuthorize(HAS_RULES)
+    @LogMethod(LogMethod.LogType.FULL)
+    public ResponseEntity<HistoryResponseTO> findHistory(LocalDate anticipationDate,
+                                                         String statusId,
+                                                         Integer limit,
+                                                         Integer offset) {
+        final int pageLimit = limit != null ? limit : 10;
+        final int pageOffset = offset != null ? offset : 0;
+
+        String anticipationDateStr = anticipationDate != null ? anticipationDate.toString() : null;
+
+        Optional<HistoryResponseTO> historyOpt = this.historyService.findHistoryWithReceivables(null,
+                anticipationDateStr, null, statusId, pageOffset, pageLimit);
+
+        if (historyOpt.isEmpty()) {
+            log.info("No anticipation history found for the given filters");
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(historyOpt.get());
+
+    }
+}
+
+
+package br.com.experian.anticipation.domain.service.impl;
+
+import br.com.experian.anticipation.domain.client.AccountClient;
+import br.com.experian.anticipation.domain.client.RegistrationClient;
+import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
+import br.com.experian.anticipation.domain.exception.ConflictException;
+import br.com.experian.anticipation.domain.model.Agreement;
+import br.com.experian.anticipation.domain.port.AuthenticationPort;
+import br.com.experian.anticipation.domain.repository.AgreementRepository;
+import br.com.experian.anticipation.domain.service.HistoryService;
+import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
+import br.com.experian.observability.annotation.LogMethod;
+import br.com.experian.swagger.antecipa.model.*;
+import br.com.experian.swagger.anticipation.model.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j2;
+import org.openapitools.jackson.nullable.JsonNullable;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
+
+
+@Log4j2
+public class HistoryServiceImpl implements HistoryService {
+
+
+    private final AntecipaClient antecipaClient;
+    private final AgreementRepository agreementRepository;
+    private final AuthenticationPort authenticationPort;
+    private final ObjectMapper objectMapper;
+    private final AccountClient accountClient;
+    private final RegistrationClient registrationClient;
+
+    public HistoryServiceImpl(AntecipaClient antecipaClient,
+                              AgreementRepository agreementRepository, AuthenticationPort authenticationPort, ObjectMapper objectMapper, AccountClient accountClient,
+                              RegistrationClient registrationClient) {
+        this.antecipaClient = antecipaClient;
+        this.agreementRepository = agreementRepository;
+        this.authenticationPort = authenticationPort;
+        this.objectMapper = objectMapper;
+        this.accountClient = accountClient;
+        this.registrationClient = registrationClient;
+
+    }
+
+
+    @Override
+    @LogMethod
+    public Optional<HistoryResponseTO> findHistoryWithReceivables(String capitalSourceDocument,
+                                                                  String startAnticipationDate,
+                                                                  String endAnticipationDate,
+                                                                  String statusId,
+                                                                  String pageId,
+                                                                  Integer pageSize) {
+        Agreement agreement = this.getUserAgreement();
+        log.info("Fetching anticipation history with receivables for supplier: {}", agreement.getNationalRegistrationId());
+
+
+        try {
+            String token = "Bearer " + authenticationPort.getValidToken();
+
+            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse =
+                    antecipaClient.getAnticipations(token, agreement.getNationalRegistrationId(),
+                            capitalSourceDocument,
+                            startAnticipationDate,
+                            endAnticipationDate,
+                            statusId,
+                            pageId,
+                            pageSize);
+            List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(pagedResponse);
+
+            if (externalItems.isEmpty()) {
+                log.info("No anticipation history for supplier: {}", agreement);
+                return Optional.empty();
+            }
+
+            List<HistoryItemTO> historyItems = buildHistoryItems(externalItems, agreement.getNationalRegistrationId(), token);
+
+            HistoryResponseTO response = new HistoryResponseTO();
+            response.setItems(historyItems);
+            response.setNextPage(null);
+            response.setPageSize(pageSize != null ? pageSize : 10);
+            log.info("Successfully retrieved {} anticipation records with receivables for supplier: {}", historyItems.size(), agreement.getNationalRegistrationId());
+            return Optional.of(response);
+        } catch (Exception e) {
+            log.error("Error fetching anticipation history for supplier: {}: {}", agreement.getNationalRegistrationId(), e.getMessage(), e);
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    @LogMethod
+    public Optional<HistoryResponseTO> findHistoryWithReceivables(String capitalSourceDocument,
+                                                                  String startAnticipationDate,
+                                                                  String endAnticipationDate,
+                                                                  String statusId,
+                                                                  Integer offset,
+                                                                  Integer limit) {
+        Integer pageSizeInt = limit != null && limit > 0 ? limit : 10;
+        Integer pageIdInt = offset != null ? offset / pageSizeInt : 0;
+        String pageIdStr = String.valueOf(pageIdInt);
+        return findHistoryWithReceivables(capitalSourceDocument, startAnticipationDate, endAnticipationDate, statusId, pageIdStr, pageSizeInt);
+    }
+
+    private List<HistoryItemTO> buildHistoryItems(List<AntecipaAnticipationCardReceivableListDto> externalItems,
+                                                  String supplierDocument,
+                                                  String token) {
+        List<HistoryItemTO> historyItems = new ArrayList<>();
+
+        for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
+            HistoryItemTO item = createHistoryItem(ext, supplierDocument, token);
+            historyItems.add(item);
+        }
+        return historyItems;
+    }
+
+    private HistoryItemTO createHistoryItem(AntecipaAnticipationCardReceivableListDto ext, String supplierDocument, String token) {
+
+        HistoryItemTO item = new HistoryItemTO();
+
+
+        String id = extractId(ext);
+        item.setId(id);
+
+
+        setRequestDate(item, ext);
+
+
+        setStatus(item, ext);
+
+
+        setReceivablesData(item, id, supplierDocument, token, ext);
+
+        return item;
+    }
+
+
+    private String extractId(AntecipaAnticipationCardReceivableListDto ext) {
+        if (ext.getId() != null && ext.getId().isPresent()) {
+            return String.valueOf(ext.getId().get());
+        }
+        return null;
+    }
+
+
+    private void setRequestDate(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
+        if (ext.getCreatedAt() != null) {
+            LocalDateTime ldt = parseToLocalDate(ext.getCreatedAt().toString());
+            if (ldt != null) {
+                String formattedDate = ldt.toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
+                item.setRequestDate(LocalDate.parse(formattedDate));
+            }
+        }
+    }
+
+    private void setStatus(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
+        if (ext.getStatusId() != null) {
+            String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
+            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
+            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
+        }
+    }
+
+    private void setReceivablesData(HistoryItemTO item, String id, String supplierDocument,
+                                    String token, AntecipaAnticipationCardReceivableListDto ext) {
+        if (id != null) {
+
+            try {
+                AntecipaAnticipationCardReceivableDto detail =
+                        antecipaClient.getAnticipationById(token, supplierDocument, id);
+
+
+                List<ReceivableItemTO> receivables = processReceivables(detail, ext);
+                item.setReceivables(receivables);
+
+
+                BigDecimal totalNetValue = calculateTotalNetValue(receivables);
+                item.setTotalNetValue(totalNetValue);
+                item.setReceivablesCount(receivables.size());
+
+            } catch (Exception e) {
+                log.warn("Failed to fetch receivables details for ID: {}", id, e);
+                setEmptyReceivablesData(item);
+            }
+        } else {
+            setEmptyReceivablesData(item);
+        }
+    }
+
+    private BigDecimal calculateTotalNetValue(List<ReceivableItemTO> receivables) {
+        return receivables.stream()
+                .map(ReceivableItemTO::getNetValue)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private void setEmptyReceivablesData(HistoryItemTO item) {
+        item.setReceivables(new ArrayList<>());
+        item.setTotalNetValue(BigDecimal.ZERO);
+        item.setReceivablesCount(0);
+    }
+
+    private List<AntecipaAnticipationCardReceivableListDto> extractItems(
+            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
+
+        if (pagedResponse == null) return Collections.emptyList();
+
+        var itemsNullable = pagedResponse.getItems();
+
+        Object raw = itemsNullable.get();
+        if (!(raw instanceof List<?> rawList) || rawList.isEmpty()) return Collections.emptyList();
+
+        try {
+            byte[] bytes = objectMapper.writeValueAsBytes(rawList);
+            return objectMapper.readValue(bytes, new TypeReference<>() {
+            });
+
+        } catch (Exception e) {
+            log.error("Error deserializing items list", e);
+            return Collections.emptyList();
+        }
+    }
+
+
+    private List<ReceivableItemTO> processReceivables(AntecipaAnticipationCardReceivableDto detail,
+                                                      AntecipaAnticipationCardReceivableListDto listItem) {
+        List<ReceivableItemTO> receivables = new ArrayList<>();
+
+        if (detail == null) return receivables;
+
+        processAnticipatedItems(detail, listItem, receivables);
+        processNoAnticipatedItems(detail, listItem, receivables);
+
+        return receivables;
+    }
+
+    private void processAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
+                                         AntecipaAnticipationCardReceivableListDto listItem,
+                                         List<ReceivableItemTO> receivables) {
+
+        if (detail.getAnticipatedItems() != null && detail.getAnticipatedItems().isPresent()) {
+            List<?> anticipatedItemsObj = detail.getAnticipatedItems().get();
+            if (anticipatedItemsObj != null) {
+
+                processReceivablesList(anticipatedItemsObj, detail, listItem, receivables);
+            }
+        }
+    }
+
+    private void processNoAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
+                                           AntecipaAnticipationCardReceivableListDto listItem,
+                                           List<ReceivableItemTO> receivables) {
+        if (detail.getNotAnticipatedItems() != null && detail.getNotAnticipatedItems().isPresent()) {
+            List<?> notAnticipatedItemsObj = detail.getNotAnticipatedItems().get();
+            if (notAnticipatedItemsObj != null) {
+                processReceivablesList(notAnticipatedItemsObj, detail, listItem, receivables);
+            }
+        }
+    }
+
+    private void processReceivablesList(List<?> itemsList,
+                                        AntecipaAnticipationCardReceivableDto detail,
+                                        AntecipaAnticipationCardReceivableListDto listItem,
+                                        List<ReceivableItemTO> receivables) {
+        for (Object itemObj : itemsList) {
+
+            try {
+                AntecipaAnticipationCardReceivableItemDto sourceItem = convertToSourceItem(itemObj);
+                if (sourceItem != null) {
+                    ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
+                    if (item != null) {
+                        receivables.add(item);
+                    }
+                }
+            } catch (Exception e) {
+                log.error("Error converting anticipated item to DTO: {}", e.getMessage(), e);
+            }
+        }
+    }
+
+    private AntecipaAnticipationCardReceivableItemDto convertToSourceItem(Object itemObj) {
+        if (itemObj instanceof AntecipaAnticipationCardReceivableItemDto) {
+            return (AntecipaAnticipationCardReceivableItemDto) itemObj;
+        } else if (itemObj instanceof LinkedHashMap) {
+            return objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivableItemDto.class);
+        } else {
+            log.warn("Unexpected item type in anticipatedItems: {}", itemObj.getClass().getName());
+            return null;
+        }
+    }
+
+    private ReceivableItemTO convertToReceivableItem(AntecipaAnticipationCardReceivableItemDto sourceItem,
+                                                     AntecipaAnticipationCardReceivableDto parentDetail,
+                                                     AntecipaAnticipationCardReceivableListDto parentListItem) {
+        if (sourceItem == null) return null;
+
+        ReceivableItemTO item = new ReceivableItemTO();
+
+        setCnpj(item, parentDetail);
+        setAccreditingInstitution(item, parentDetail);
+        setBasicReceivableData(item, sourceItem);
+        return item;
+
+    }
+
+    private void setCnpj(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
+        if (parentDetail.getSupplier() != null && parentDetail.getSupplier().getDocument() != null) {
+            JsonNullable<String> documentNullable = parentDetail.getSupplier().getDocument();
+            if (documentNullable.isPresent()) {
+                item.setCnpj(documentNullable.get());
+            }
+        }
+    }
+
+    private void setAccreditingInstitution(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
+
+        if (parentDetail.getAccreditingInstitution() != null && parentDetail.getAccreditingInstitution().getName() != null) {
+            JsonNullable<String> nameNullable = parentDetail.getAccreditingInstitution().getName();
+            if (nameNullable.isPresent()) {
+                item.setAccreditingInstitution(nameNullable.get());
+            }
+        }
+    }
+
+    private void setBasicReceivableData(ReceivableItemTO item, AntecipaAnticipationCardReceivableItemDto sourceItem) {
+
+
+        item.setInstallments(1);
+
+
+        if (sourceItem.getSelectedAmount() != null) {
+            item.setInstallmentValue(BigDecimal.valueOf(sourceItem.getSelectedAmount()));
+        }
+
+
+        if (sourceItem.getEffectiveRate() != null) {
+            item.setFeePercentage(BigDecimal.valueOf(sourceItem.getEffectiveRate()));
+        }
+
+
+        if (sourceItem.getDiscount() != null) {
+            item.setDiscountValue(BigDecimal.valueOf(sourceItem.getDiscount()));
+        } else {
+            item.setDiscountValue(BigDecimal.ZERO);
+        }
+
+        if (sourceItem.getNetValue() != null) {
+            item.setNetValue(BigDecimal.valueOf(sourceItem.getNetValue()));
+        } else {
+            item.setNetValue(BigDecimal.ZERO);
+        }
+    }
+
+    private static LocalDateTime parseToLocalDate(String s) {
+        if (s == null || s.isBlank()) return null;
+        try {
+            return OffsetDateTime.parse(s).toLocalDateTime();
+        } catch (DateTimeParseException ignore) {
+        }
+        try {
+            return LocalDateTime.parse(s);
+        } catch (DateTimeParseException ignore) {
+        }
+        try {
+            return LocalDate.parse(s).atStartOfDay();
+        } catch (DateTimeParseException ignore) {
+
+        }
+
+        return null;
+    }
+
+    private Agreement getUserAgreement() {
+        return this.agreementRepository.getUserAgreement()
+                .orElseThrow(() -> new ConflictException("3"));
+    }
+
+}
+
+
+package br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa;
+
+import br.com.experian.swagger.antecipa.model.*;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+
+@FeignClient(name = "AntecipaClient", url ="${api.antecipa.base.uri}")
+public interface AntecipaClient {
+
+    @GetMapping("/Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}")
+    AntecipaSupplierRegistrationDto getSupplierRegistration(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("CapitalSourceDocument") String capitalSourceDocument,
+            @PathVariable("SupplierDocument") String supplierDocument);
+
+    @PostMapping("/Originators/CapitalSources/{CapitalSourceDocument}/Suppliers")
+    AntecipaBasicResultDto addSupplier(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("CapitalSourceDocument") String capitalSourceDocument,
+            @RequestBody AntecipaAddCapitalSourceSupplierRegistrationCommandViewModel supplierAddCommand);
+
+    @GetMapping("/Originators/CardReceivables/suppliers/{SupplierDocument}")
+    AntecipaCardReceivableListDtoPagedCollectionItems getCardReceivables(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @RequestParam(value = "StatusId", required = false) String statusId,
+            @RequestParam(value = "AccreditingInstitutionDocument", required = false) String accreditingInstitutionDocument,
+            @RequestParam(value = "CapitalSourceDocument", required = false) String capitalSourceDocument,
+            @RequestParam(value = "StartDueDate", required = false) String startDueDate,
+            @RequestParam(value = "EndDueDate", required = false) String endDueDate,
+            @RequestParam(value = "OrderedBy", required = false) String orderedBy,
+            @RequestParam(value = "PageId", required = false) String pageId,
+            @RequestParam(value = "PageSize", required = false) Integer pageSize);
+
+    @GetMapping("/Originators/CardReceivables/{SupplierDocument}/{Id}")
+    AntecipaCardReceivableDto getCardReceivableById(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @PathVariable("Id") String id);
+
+
+    @GetMapping("/Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations")
+    AntecipaAnticipationCardReceivableListDtoPagedCollectionItems getAnticipations(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @RequestParam(value = "CapitalSourceDocument", required = false) String capitalSourceDocument,
+            @RequestParam(value = "StartAnticipationDate", required = false) String startAnticipationDate,
+            @RequestParam(value = "EndAnticipationDate", required = false) String endAnticipationDate,
+            @RequestParam(value = "StatusId", required = false) String statusId,
+            @RequestParam(value = "PageId", required = false) String pageId,
+            @RequestParam(value = "PageSize", required = false)Integer pageSize);
+
+    @GetMapping("/Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/{Id}")
+    AntecipaAnticipationCardReceivableDto getAnticipationById(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @PathVariable("Id") String id);
+
+    @PostMapping("/Originators/CardReceivables/Anticipations/Simulate/{SupplierDocument}")
+    AntecipaSimulationAnticipationCardReceivableDto simulate(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @RequestBody AntecipaSimulateAnticipationCardReceivableCommandViewModel simulateAnticipationCommand);
+
+
+    @PostMapping("/Originators/CardReceivables/Anticipations/Execute/{SupplierDocument}/{CapitalSourceDocument}/{OfferId}")
+    void execute(
+            @RequestHeader("Authorization") String bearerToken,
+            @PathVariable("SupplierDocument") String supplierDocument,
+            @PathVariable("CapitalSourceDocument") String capitalSourceDocument,
+            @PathVariable("OfferId") String offerId);
+}
+
+
+openapi: 3.0.4
+info:
+  title: Public Anticipation Api
+  description: ''
+  version: v1
+servers:
+- url: /v1
+paths:
+  /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}:
+    get:
+      tags:
+      - CapitalSources
+      parameters:
+      - name: CapitalSourceDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplierRegistrationDto'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers:
+    post:
+      tags:
+      - CapitalSources
+      parameters:
+      - name: CapitalSourceDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddCapitalSourceSupplierRegistrationCommandViewModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AddCapitalSourceSupplierRegistrationCommandViewModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AddCapitalSourceSupplierRegistrationCommandViewModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicResultDto'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /Originators/CardReceivables/{SupplierDocument}:
+    get:
+      tags:
+      - CardReceivables
+      description: '**DEPRECATED**: Please use "/Originators/CardReceivables/Suppliers/{SupplierDocument}"
+        instead'
+      parameters:
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: StatusId
+        in: query
+        description: 1 = Não Antecipável, 2 = Antecipável, 3 = Antecipado, 4 = Pago,
+          5 = Cancelado
+        schema:
+          $ref: '#/components/schemas/AssetStatus'
+      - name: AccreditingInstitutionDocument
+        in: query
+        schema:
+          type: string
+      - name: CapitalSourceDocument
+        in: query
+        schema:
+          type: string
+      - name: StartDueDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: EndDueDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: OrderedBy
+        in: query
+        description: 1 = Data de Vencimento Decrescente, 2 = Data de Vencimento Crescente
+        schema:
+          $ref: '#/components/schemas/AssetOrdernation'
+      - name: PageId
+        in: query
+        schema:
+          type: string
+          default: null
+      - name: PageSize
+        in: query
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardReceivableListDtoPagedCollectionItems'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      deprecated: true
+  /Originators/CardReceivables/Suppliers/{SupplierDocument}:
+    get:
+      tags:
+      - CardReceivables
+      parameters:
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: StatusId
+        in: query
+        description: 1 = Não Antecipável, 2 = Antecipável, 3 = Antecipado, 4 = Pago,
+          5 = Cancelado
+        schema:
+          $ref: '#/components/schemas/AssetStatus'
+      - name: AccreditingInstitutionDocument
+        in: query
+        schema:
+          type: string
+      - name: CapitalSourceDocument
+        in: query
+        schema:
+          type: string
+      - name: StartDueDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: EndDueDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: OrderedBy
+        in: query
+        description: 1 = Data de Vencimento Decrescente, 2 = Data de Vencimento Crescente
+        schema:
+          $ref: '#/components/schemas/AssetOrdernation'
+      - name: PageId
+        in: query
+        schema:
+          type: string
+          default: null
+      - name: PageSize
+        in: query
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardReceivableListDtoPagedCollectionItems'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /Originators/CardReceivables/{SupplierDocument}/{Id}:
+    get:
+      tags:
+      - CardReceivables
+      description: '**DEPRECATED**: Please use "/Originators/CardReceivables/Suppliers/{SupplierDocument}/Assets/{Id}"
+        instead'
+      parameters:
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardReceivableDto'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      deprecated: true
+  /Originators/CardReceivables/Suppliers/{SupplierDocument}/Assets/{Id}:
+    get:
+      tags:
+      - CardReceivables
+      parameters:
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardReceivableDto'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/Simulate:
+    post:
+      tags:
+      - CardReceivables
+      parameters:
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateAnticipationCardReceivableCommandViewModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SimulateAnticipationCardReceivableCommandViewModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SimulateAnticipationCardReceivableCommandViewModel'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulationAnticipationCardReceivableDto'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/Execute/{OfferId}:
+    post:
+      tags:
+      - CardReceivables
+      parameters:
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: OfferId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations:
+    get:
+      tags:
+      - CardReceivables
+      parameters:
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: CapitalSourceDocument
+        in: query
+        schema:
+          type: string
+      - name: StartAnticipationDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: EndAnticipationDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+      - name: StatusId
+        in: query
+        description: 1 = Nova, 2 = Agendada, 3 = Processando, 4 = Antecipada, 5 =
+          Antecipada Parcialmente, 6 = Erro na Antecipação, 7 = Documentação Pendente
+        schema:
+          $ref: '#/components/schemas/AnticipationStatus'
+      - name: PageId
+        in: query
+        schema:
+          type: string
+          default: null
+      - name: PageSize
+        in: query
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnticipationCardReceivableListDtoPagedCollectionItems'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/{Id}:
+    get:
+      tags:
+      - CardReceivables
+      parameters:
+      - name: SupplierDocument
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnticipationCardReceivableDto'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /Webhook:
+    post:
+      tags:
+      - Webhook
+      summary: Example Webhook
+      description: 'This is just an example of a webhook. The URL does not need to
+        be the same as in this swagger,
+
+        but the body must follow the structure presented.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: {}
+              examples:
+                Anticipation finished for card receivables:
+                  value: '{"Event":"AnticipationFinishedCardReceivables","OccurredAt":"2025-09-23T13:58:47.1533792Z","Data":{"AnticipationId":"75c5b2ce-5bd5-4641-9554-1e6ec6382339","SupplierId":"7766e12a-d2d4-4c24-9879-e8287a828810","SupplierDocument":"28111692000164","SupplierName":"Supplier
+                    Example","CapitalSourceId":"a528670f-5f91-4644-bc3b-1f06994ee86b","CapitalSourceDocument":"58408679000132","CapitalSourceName":"Capital
+                    Source Example","AccreditingInstitutionId":"a488bc1e-282b-42a4-a585-19c8a087e6de","AccreditingInstitutionName":"Accrediting
+                    Institution Example","AccreditingInstitutionDocument":"12345678000199","StatusId":1,"Reason":"Anticipation
+                    completed successfully","Status":"Active"}}'
+                Supplier status change by capital source:
+                  value: '{"Event":"CapitalSourceSupplierStatusChange","OccurredAt":"2025-09-23T13:58:47.1537845Z","Data":{"SupplierId":"fc7225d7-a6ad-4663-84c4-53605455c520","SupplierDocument":"28111692000164","SupplierName":"Supplier
+                    Example","CapitalSourceId":"4d7fd685-31b5-4eba-bdd3-95ae1c6fe094","CapitalSourceDocument":"58408679000132","CapitalSourceName":"Capital
+                    Source Example","Status":"Active","StatusId":1,"Reason":"Supplier
+                    status changed successfully"}}'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    AccreditingInstitutionAnticipationCardReceivableDto:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        document:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AccreditingInstitutionCardReceivableDto:
+      required:
+      - document
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        document:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AddCapitalSourceSupplierRegistrationCommandViewModel:
+      required:
+      - address
+      - corporateName
+      - document
+      - email
+      - name
+      - partners
+      - phoneNumber
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+        corporateName:
+          minLength: 1
+          type: string
+        document:
+          minLength: 1
+          type: string
+        email:
+          minLength: 1
+          type: string
+        phoneNumber:
+          minLength: 1
+          type: string
+        address:
+          $ref: '#/components/schemas/SupplierAddressViewModel'
+        partners:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupplierPartnerViewModel'
+      additionalProperties: false
+    AnticipationCardReceivableDto:
+      required:
+      - accreditingInstitution
+      - anticipatedItems
+      - capitalSource
+      - id
+      - notAnticipatedItems
+      - requestedBy
+      - status
+      - supplier
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        accreditingInstitution:
+          $ref: '#/components/schemas/AccreditingInstitutionAnticipationCardReceivableDto'
+        capitalSource:
+          $ref: '#/components/schemas/CapitalSourceAnticipationCardReceivableDto'
+        supplier:
+          $ref: '#/components/schemas/SupplierAnticipationCardReceivableDto'
+        number:
+          type: integer
+          format: int32
+        requestedBy:
+          type: string
+          nullable: true
+        statusId:
+          type: integer
+          format: int32
+        status:
+          type: string
+          nullable: true
+        mediumTerm:
+          type: number
+          format: double
+        paymentDate:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        amount:
+          type: number
+          format: double
+        requestedRate:
+          type: number
+          format: double
+        effectiveRate:
+          type: number
+          format: double
+        selectedAmount:
+          type: number
+          format: double
+        receivedAmount:
+          type: number
+          format: double
+        bankAccount:
+          $ref: '#/components/schemas/BankAccountDto'
+        anticipatedItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnticipationCardReceivableItemDto'
+          nullable: true
+        notAnticipatedItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnticipationCardReceivableItemDto'
+          nullable: true
+      additionalProperties: false
+    AnticipationCardReceivableItemDto:
+      required:
+      - anticipationResponseMessage
+      - externalId
+      - id
+      - status
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        externalId:
+          type: string
+          nullable: true
+        statusId:
+          type: integer
+          format: int32
+        status:
+          type: string
+          nullable: true
+        dueDate:
+          type: string
+          format: date-time
+        daysToDue:
+          type: integer
+          format: int32
+        paymentDate:
+          type: string
+          format: date-time
+        selectedAmount:
+          type: number
+          format: double
+        discount:
+          type: number
+          format: double
+        netValue:
+          type: number
+          format: double
+        requestedRate:
+          type: number
+          format: double
+        effectiveRate:
+          type: number
+          format: double
+        anticipationResponseMessage:
+          type: string
+          nullable: true
+      additionalProperties: false
+    AnticipationCardReceivableListDto:
+      required:
+      - accreditingInstitution
+      - capitalSource
+      - id
+      - number
+      - status
+      - supplier
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        accreditingInstitution:
+          $ref: '#/components/schemas/AccreditingInstitutionAnticipationCardReceivableDto'
+        capitalSource:
+          $ref: '#/components/schemas/CapitalSourceAnticipationCardReceivableDto'
+        supplier:
+          $ref: '#/components/schemas/SupplierAnticipationCardReceivableDto'
+        number:
+          type: string
+          nullable: true
+        statusId:
+          type: integer
+          format: int32
+        status:
+          type: string
+          nullable: true
+        anticipatedOn:
+          type: string
+          format: date-time
+          nullable: true
+        paymentDate:
+          type: string
+          format: date-time
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        effectiveRate:
+          type: number
+          format: double
+        selectedAmount:
+          type: number
+          format: double
+        receivedAmount:
+          type: number
+          format: double
+        anticipatedDiscount:
+          type: number
+          format: double
+      additionalProperties: false
+    AnticipationCardReceivableListDtoPagedCollectionItems:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnticipationCardReceivableListDto'
+          nullable: true
+        pageNextId:
+          type: string
+          nullable: true
+        pageSize:
+          type: integer
+          format: int32
+      additionalProperties: false
+    AnticipationStatus:
+      title: Nova | Agendada | Processando | Antecipada | Antecipada Parcialmente
+        | Erro na Antecipação | Documentação Pendente
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      type: integer
+      description: 1 = Nova, 2 = Agendada, 3 = Processando, 4 = Antecipada, 5 = Antecipada
+        Parcialmente, 6 = Erro na Antecipação, 7 = Documentação Pendente
+      format: int32
+      x-enum-varnames:
+      - New
+      - Scheduled
+      - Processing
+      - Anticipated
+      - PartiallyAnticipated
+      - Error
+      - InAnalysis
+      x-enumDescriptions:
+      - Nova
+      - Agendada
+      - Processando
+      - Antecipada
+      - Antecipada Parcialmente
+      - Erro na Antecipação
+      - Documentação Pendente
+      x-enumNames:
+      - Nova
+      - Agendada
+      - Processando
+      - Antecipada
+      - Antecipada Parcialmente
+      - Erro na Antecipação
+      - Documentação Pendente
+    AssetOrdernation:
+      title: Data de Vencimento Decrescente | Data de Vencimento Crescente
+      enum:
+      - 1
+      - 2
+      type: integer
+      description: 1 = Data de Vencimento Decrescente, 2 = Data de Vencimento Crescente
+      format: int32
+      x-enum-varnames:
+      - DueDateDesc
+      - DueDateAsc
+      x-enumDescriptions:
+      - Data de Vencimento Decrescente
+      - Data de Vencimento Crescente
+      x-enumNames:
+      - Data de Vencimento Decrescente
+      - Data de Vencimento Crescente
+    AssetStatus:
+      title: Não Antecipável | Antecipável | Antecipado | Pago | Cancelado
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      type: integer
+      description: 1 = Não Antecipável, 2 = Antecipável, 3 = Antecipado, 4 = Pago,
+        5 = Cancelado
+      format: int32
+      x-enum-varnames:
+      - NotAnticipable
+      - Anticipable
+      - Anticipated
+      - Paid
+      - Cancelled
+      x-enumDescriptions:
+      - Não Antecipável
+      - Antecipável
+      - Antecipado
+      - Pago
+      - Cancelado
+      x-enumNames:
+      - Não Antecipável
+      - Antecipável
+      - Antecipado
+      - Pago
+      - Cancelado
+    BankAccountDto:
+      required:
+      - accountDigit
+      - accountNumber
+      - bankCode
+      - branchDigit
+      - branchNumber
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        externalId:
+          type: string
+          nullable: true
+        bankCode:
+          type: string
+          nullable: true
+        bankName:
+          type: string
+          nullable: true
+        branchNumber:
+          type: string
+          nullable: true
+        branchDigit:
+          type: string
+          nullable: true
+        accountNumber:
+          type: string
+          nullable: true
+        accountDigit:
+          type: string
+          nullable: true
+      additionalProperties: false
+    BasicResultDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CapitalSourceAnticipationCardReceivableDto:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        document:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CapitalSourceCardReceivableDto:
+      required:
+      - document
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        document:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CardReceivableAnticipationSimulationDto:
+      required:
+      - capitalSource
+      type: object
+      properties:
+        capitalSource:
+          $ref: '#/components/schemas/CapitalSourceCardReceivableDto'
+        rate:
+          type: number
+          format: double
+        discount:
+          type: number
+          format: double
+      additionalProperties: false
+    CardReceivableDto:
+      required:
+      - accreditingInstitution
+      - canceledReason
+      - externalId
+      - id
+      - notAnticipableReason
+      - status
+      - supplier
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        accreditingInstitution:
+          $ref: '#/components/schemas/AccreditingInstitutionCardReceivableDto'
+        supplier:
+          $ref: '#/components/schemas/SupplierCardReceivableDto'
+        value:
+          type: number
+          format: double
+        statusId:
+          type: integer
+          format: int32
+        status:
+          type: string
+          nullable: true
+        dueDate:
+          type: string
+          format: date-time
+        daysToDue:
+          type: integer
+          format: int32
+        paymentDate:
+          type: string
+          format: date-time
+          nullable: true
+        notAnticipableReason:
+          type: string
+          nullable: true
+        canceledReason:
+          type: string
+          nullable: true
+        externalId:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CardReceivableListDto:
+      required:
+      - accreditingInstitution
+      - id
+      - status
+      - supplier
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        accreditingInstitution:
+          $ref: '#/components/schemas/AccreditingInstitutionCardReceivableDto'
+        supplier:
+          $ref: '#/components/schemas/SupplierCardReceivableDto'
+        value:
+          type: number
+          format: double
+        statusId:
+          type: integer
+          format: int32
+        status:
+          type: string
+          nullable: true
+        dueDate:
+          type: string
+          format: date-time
+        daysToDue:
+          type: integer
+          format: int32
+        paymentDate:
+          type: string
+          format: date-time
+          nullable: true
+        anticipationSimulation:
+          $ref: '#/components/schemas/CardReceivableAnticipationSimulationDto'
+      additionalProperties: false
+    CardReceivableListDtoPagedCollectionItems:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardReceivableListDto'
+          nullable: true
+        pageNextId:
+          type: string
+          nullable: true
+        pageSize:
+          type: integer
+          format: int32
+      additionalProperties: false
+    CardReceivableSimulationAnticipationViewModel:
+      required:
+      - accreditingInstitutionDocument
+      - ids
+      type: object
+      properties:
+        accreditingInstitutionDocument:
+          type: string
+          nullable: true
+        ids:
+          type: array
+          items:
+            type: string
+          nullable: true
+      additionalProperties: false
+    OfferAnnticipationCardReceivableDto:
+      required:
+      - cardReceivables
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        capitalSource:
+          $ref: '#/components/schemas/CapitalSourceAnticipationCardReceivableDto'
+        bankAccount:
+          $ref: '#/components/schemas/BankAccountDto'
+        rate:
+          type: number
+          format: double
+        mediumTerm:
+          type: number
+          format: double
+        selectedAmount:
+          type: number
+          format: double
+        discount:
+          type: number
+          format: double
+        finalAmount:
+          type: number
+          format: double
+        paymentDate:
+          type: string
+          format: date-time
+          nullable: true
+        cardReceivables:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimulationAnticipationCardReceivableListDto'
+          nullable: true
+      additionalProperties: false
+    SimulateAnticipationCardReceivableCommandViewModel:
+      required:
+      - cardReceivables
+      - finalUserName
+      type: object
+      properties:
+        capitalSourceDocument:
+          type: string
+          nullable: true
+        finalUserName:
+          type: string
+          nullable: true
+        cardReceivables:
+          type: array
+          items:
+            $ref: '#/components/schemas/CardReceivableSimulationAnticipationViewModel'
+          nullable: true
+      additionalProperties: false
+    SimulationAnticipationCardReceivableDto:
+      required:
+      - id
+      - noOfferReason
+      - offers
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        accreditingInstitution:
+          $ref: '#/components/schemas/AccreditingInstitutionAnticipationCardReceivableDto'
+        requestedAmount:
+          type: number
+          format: double
+        noOfferReason:
+          type: string
+          nullable: true
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OfferAnnticipationCardReceivableDto'
+          nullable: true
+      additionalProperties: false
+    SimulationAnticipationCardReceivableListDto:
+      required:
+      - id
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        totalAmount:
+          type: number
+          format: double
+        discount:
+          type: number
+          format: double
+        netValue:
+          type: number
+          format: double
+        dueDate:
+          type: string
+          format: date-time
+        daysToDue:
+          type: integer
+          format: int32
+        paymentDate:
+          type: string
+          format: date-time
+          nullable: true
+      additionalProperties: false
+    SupplierAddressViewModel:
+      required:
+      - city
+      - country
+      - neighborhood
+      - number
+      - state
+      - street
+      - zipCode
+      type: object
+      properties:
+        street:
+          minLength: 1
+          type: string
+        number:
+          minLength: 1
+          type: string
+        complement:
+          type: string
+          nullable: true
+        neighborhood:
+          minLength: 1
+          type: string
+        city:
+          minLength: 1
+          type: string
+        state:
+          minLength: 1
+          type: string
+        zipCode:
+          minLength: 1
+          type: string
+        country:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    SupplierAnticipationCardReceivableDto:
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        document:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SupplierBankAccountDto:
+      required:
+      - accountDigit
+      - accountNumber
+      - bankCode
+      - bankName
+      - branchDigit
+      - branchNumber
+      type: object
+      properties:
+        bankCode:
+          type: string
+          nullable: true
+        bankName:
+          type: string
+          nullable: true
+        branchNumber:
+          type: string
+          nullable: true
+        branchDigit:
+          type: string
+          nullable: true
+        accountNumber:
+          type: string
+          nullable: true
+        accountDigit:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SupplierCardReceivableDto:
+      required:
+      - document
+      - id
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        document:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SupplierPartnerDto:
+      required:
+      - document
+      - email
+      - name
+      - phoneNumber
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        document:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SupplierPartnerViewModel:
+      required:
+      - document
+      - email
+      - name
+      - phoneNumber
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+        document:
+          minLength: 1
+          type: string
+        email:
+          minLength: 1
+          type: string
+        phoneNumber:
+          minLength: 1
+          type: string
+      additionalProperties: false
+    SupplierRegistrationDto:
+      required:
+      - bankAccounts
+      - corporateName
+      - document
+      - id
+      - name
+      - partners
+      - status
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        document:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        corporateName:
+          type: string
+          nullable: true
+        partners:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupplierPartnerDto'
+          nullable: true
+        bankAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupplierBankAccountDto'
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        statusId:
+          type: integer
+          format: int32
+      additionalProperties: false
+  securitySchemes:
+    bearer:
+      type: http
+      description: Bearer Authorization header using the Bearer scheme.
+      scheme: bearer
+      bearerFormat: JWT
+security:
+- bearer: []
+
+
+
+
+
