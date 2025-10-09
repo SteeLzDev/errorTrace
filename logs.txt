@@ -1,166 +1,578 @@
-add fix pagination /receivables endpoint and DE/PARA onboarding endpoint
+"C:\Program Files\Zulu\zulu-21\bin\java.exe" -Dmaven.multiModuleProjectDirectory=C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services -Djansi.passthrough=true "-Dmaven.home=C:/Program Files/JetBrains/IntelliJ IDEA Community Edition 2025.1.3/plugins/maven/lib/maven3" "-Dclassworlds.conf=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\bin\m2.conf" "-Dmaven.ext.class.path=C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven-event-listener.jar" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\lib\idea_rt.jar=63857" -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath "C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds-2.8.0.jar;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2025.1.3\plugins\maven\lib\maven3\boot\plexus-classworlds.license" org.codehaus.classworlds.Launcher -Didea.version=2025.1.5.1 -DskipTests=true spring-boot:run
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --< br.com.experian.bfm:experian-pme-bfm-receivables-anticipation-services >--
+[INFO] Building experian-pme-bfm-receivables-anticipation-domain-services 1.0.1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.13:run (default-cli) > test-compile @ experian-pme-bfm-receivables-anticipation-services >>>
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (anticipation) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from api package name: br.com.experian.swagger.anticipation
+[INFO] Processing operation retrieveStatus
+[INFO] Processing operation accept
+[INFO] Processing operation findHistory
+[INFO] Processing operation findAvailables
+[INFO] Processing operation checkMarketAvailability
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\HistoryItemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\HistoryResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\InstallmentDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingExecutionResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\OnboardingStatusTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\PaginationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\PaymentTypeTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableGroupTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableGroupedResponseTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\model\ReceivableItemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\HistoryApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\MarketApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\OnboardingApi.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\anticipation\api\ReceivablesApi.java
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (antecipa-cerc) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.antecipa
+[WARNING] Empty operationId found for path: GET /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersSupplierDocumentGET
+[WARNING] Empty operationId found for path: POST /Originators/CapitalSources/{CapitalSourceDocument}/Suppliers. Renamed to auto-generated operationId: originatorsCapitalSourcesCapitalSourceDocumentSuppliersPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Suppliers/{SupplierDocument}. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/{SupplierDocument}/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSupplierDocumentIdGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Suppliers/{SupplierDocument}/Assets/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAssetsIdGET
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/Simulate. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAnticipationsSimulatePOST
+[WARNING] Empty operationId found for path: POST /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/Execute/{OfferId}. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAnticipationsExecuteOfferIdPOST
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAnticipationsGET
+[WARNING] Empty operationId found for path: GET /Originators/CardReceivables/Suppliers/{SupplierDocument}/Anticipations/{Id}. Renamed to auto-generated operationId: originatorsCardReceivablesSuppliersSupplierDocumentAnticipationsIdGET
+[WARNING] Empty operationId found for path: POST /Webhook. Renamed to auto-generated operationId: webhookPOST
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] Processing operation null
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAccreditingInstitutionAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAccreditingInstitutionCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAddCapitalSourceSupplierRegistrationCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableItemDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAnticipationStatus.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAssetOrdernation.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaAssetStatus.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaBankAccountDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaBasicResultDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCapitalSourceAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCapitalSourceCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableAnticipationSimulationDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableListDtoPagedCollectionItems.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaCardReceivableSimulationAnticipationViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaOfferAnnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulateAnticipationCardReceivableCommandViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSimulationAnticipationCardReceivableListDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAddressViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierAnticipationCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierBankAccountDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierCardReceivableDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierPartnerDto.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierPartnerViewModel.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\antecipa\model\AntecipaSupplierRegistrationDto.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] 'host' (OAS 2.0) or 'servers' (OAS 3.0) not defined in the spec. Default to [http://localhost] for server URL [http://localhost/v1]
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (digital-account) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.digital.account
+[WARNING] Failed to get the schema name: null
+[INFO] Inline schema created as UserAccountAdmin_allOf_mainContactAdminUpdate. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings UserAccountAdmin_allOf_mainContactAdminUpdate=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings UserAccountAdmin_allOf_mainContactAdminUpdate=NewModel,ModelA=NewModelA in CLI).
+[INFO] Inline schema created as ErrorModel_inner. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ErrorModel_inner=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ErrorModel_inner=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation authFindUserById
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalAuthenticationFactorSettingsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalChannelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalErrorModelInnerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalFederatedAccountTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalHerculesTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalMainframeDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalManagerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalNewUserPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountAdminAllOfMainContactAdminUpdateTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountAdminTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountHistoricTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserAccountTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserCreatedByTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserDocumentTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserEcsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserJobTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserMainEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserMainPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\digital\account\model\DigitalUserPhoneTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (business-registration) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.etis.registration
+[INFO] Inline schema created as ExperianErrorModel_allOf_errorList. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation getBusinessRegistrationDataFull
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` bigdecimal detected for type `number`. Defaulting to `number`
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataAddressTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataCnaeTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataCorporateReorganizationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataEmailTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataPhoneTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISBusinessRegistrationDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelAllOfErrorListTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISProblemTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[WARNING] 'scheme' not defined in the spec (2.0). Default to [http] for server URL [http://sandbox-api.serasaexperian.com.br/stg-br-api.experian.com/cs/nikereports/v2]
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- openapi-generator:7.11.0:generate (partners-and-admins) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Generating with dryRun=false
+[INFO] No .openapi-generator-ignore file found.
+[INFO] OpenAPI Generator: spring (server)
+[INFO] Generator 'spring' is considered stable.
+[INFO] ----------------------------------
+[INFO] Environment variable JAVA_POST_PROCESS_FILE not defined so the Java code may not be properly formatted. To define it, try 'export JAVA_POST_PROCESS_FILE="/usr/local/bin/clang-format -i"' (Linux/Mac)
+[INFO] NOTE: To enable file post-processing, 'enablePostProcessFile' must be set to `true` (--enable-post-process-file for CLI).
+[INFO] Invoker Package Name, originally not set, is now derived from model package name: br.com.experian.swagger.etis.registration
+[INFO] Inline schema created as ExperianErrorModel_allOf_errorList. To have complete control of the model name, set the `title` field or use the modelNameMapping option (e.g. --model-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI) or inlineSchemaNameMapping option (--inline-schema-name-mappings ExperianErrorModel_allOf_errorList=NewModel,ModelA=NewModelA in CLI).
+[INFO] Processing operation getBusinessPartners
+[INFO] Processing operation getBusinessDirectors
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[WARNING] Unknown `format` int32 detected for type `number`. Defaulting to `number`
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAbstractEntityTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorParticipationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISAdministratorsTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISDocumentStatusTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISDocumentTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelAllOfErrorListTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISExperianErrorModelTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISGenericEntityCompositionTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISNaturalPersonDataTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginatedResponseCompositionTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginationLinksTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPaginationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerAndManagerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerParticipationTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnerTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnersAndManagersTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISPartnersTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISProblemTO.java
+[INFO] writing file C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\generated-sources\openapi\gen\br\com\experian\swagger\etis\registration\model\ETISRevenueServiceStatusTO.java
+[INFO] Skipping generation of APIs.
+[INFO] Skipping generation of Webhooks.
+[INFO] Skipping generation of supporting files.
+################################################################################
+# Thanks for using OpenAPI Generator.                                          #
+# Please consider donation to help us maintain this project 🙏                 #
+# https://opencollective.com/openapi_generator/donate                          #
+################################################################################
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO] The encoding used to copy filtered properties files have not been set. This means that the same encoding will be used to copy filtered properties files as when copying other filtered resources. This might not be what you want! Run your build with --debug to see which files might be affected. Read more at https://maven.apache.org/plugins/maven-resources-plugin/examples/filtering-properties-files.html
+[INFO] 
+[INFO] --- compiler:3.12.0:compile (default-compile) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 164 source files with javac [debug target 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] skip non existing resourceDirectory C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.12.0:testCompile (default-testCompile) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] <<< spring-boot:3.3.13:run (default-cli) < test-compile @ experian-pme-bfm-receivables-anticipation-services <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.13:run (default-cli) @ experian-pme-bfm-receivables-anticipation-services ---
+[INFO] Attaching agents: []
 
-Start review
-Overview
-Diff
-Commits
-Builds
-Oliveira, Davi
-Oliveira, Davi created a pull request22 mins ago
-No description for this pull request.
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
 
+ :: Spring Boot ::               (v3.3.13)
 
-Add one
-GEFI-4713
-Activity
-Oliveira, Davi
-What do you want to say?
-artemis
-artemis commented on a file21 mins ago
-src/main/java/br/com/experian/anticipation/infrastructure/integration/feign/client/antecipa/AntecipaServiceImpl.java
-artemis
-artemis
-21 mins ago
+2025-10-09 14:19:47.461  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 27756 --- [           main] perianReceivablesAnticipationApplication : Starting ExperianReceivablesAnticipationApplication using Java 21.0.7 with PID 27756 (C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services\target\classes started by C18132Q in C:\Users\C18132Q\Documents\Workspace-experian\experian-pme-bfm-receivables-anticipation-domain-services)
+2025-10-09 14:19:47.519  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 27756 --- [           main] perianReceivablesAnticipationApplication : No active profile set, falling back to 1 default profile: "default"
+2025-10-09 14:20:16.586  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 27756 --- [           main] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.spring.security.config.service.impl.IamServiceImpl","method_name":"findTokenKey(java.lang.String clientId)"},"entry_parameters":{"clientId":"6870e592e38798676a80a699"},"return_object":{"optional":true,"return_value":"{\"alg\":\"RS512\",\"kty\":\"RSA\",\"use\":\"sig\",\"value\":\"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsl3eMU9CZ4m4ezpHS3EHVdU4TawAxO0o8rCeE3YZoF9qsXJQuzdZvlxXOv225/YdGVgmu4OjjjgIaXpPn/nEB5OLtsGWylLvNbeWewjIcGbnCQzOK9OiSQ3ugx3Y9dCNjeDhmPlzQ8TXprBkWLcSa/tP2sbgMyvn1bZH8XBqWleTJhugQEOF1Ei+e+Nu20VPKKLDvq0/bfCP1ZblIdoZH3hwhqGE6ASl35bdxL3A5Z8+P5Tdrxe6rWxZgFNLwtYBW1HW7FHrPMKSFNvYDv0snCWzLtC8VlgZYMeCMEarwfz7+biOFJp5Pi4aAoQwWme8srFNVIBKYqmEW2fmbVrvrQIDAQAB\"}"},"truncated":false}
+2025-10-09 14:20:16.623  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 27756 --- [           main] b.c.e.s.s.u.JwtUtil                      : message="Token key loaded from IAM service successfully."
+2025-10-09 14:20:30.806  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 27756 --- [           main] b.c.e.a.i.i.f.c.a.a.AntecipaAuthService  :  Initializing with  Basic Auth header
+SSL Desativado para desenvolvimento
+2025-10-09 14:20:54.791  INFO [experian-pme-bfm-receivables-anticipation-domain-services,,,] 27756 --- [           main] perianReceivablesAnticipationApplication : Started ExperianReceivablesAnticipationApplication in 72.838 seconds (process running for 82.521)
+2025-10-09 14:21:05.793  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.a.a.r.OnboardingController         : log.origin.function="accept" message="Init method"
+2025-10-09 14:21:05.848  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.a.d.s.i.OnboardingServiceImpl      : log.origin.function="execute" message="Init method"
+2025-10-09 14:21:05.851  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getUserId" message="Init method"
+2025-10-09 14:21:05.852  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="2" log.origin.function="getUserId" message="Finish method"
+2025-10-09 14:21:05.852  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getBusinessId" message="Init method"
+2025-10-09 14:21:05.852  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="0" log.origin.function="getBusinessId" message="Finish method"
+2025-10-09 14:21:06.739  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.l.i.LogMongoInterceptor          : {"type":"DATABASE","database_operation":"AFTER_LOAD","collection":"Agreement","document":"{\"_id\": {\"$oid\": \"68654b1828a7e04c2467521d\"}, \"userId\": \"68b89e5e72111743ae657473\", \"businessId\": \"68b89e5e72111743ae657472\", \"nationalRegistrationId\": \"45181802000183\", \"status\": \"ACCEPTED\", \"platform\": \"ECOMMERCE\", \"version\": 2, \"url\": \"https://bfm-pme-uat.serasaexperian.com.br/assets/pdf/Termo_de_Consentimento_e_Autorizacao.pdf\", \"acceptedAt\": {\"$date\": \"2025-07-02T15:07:04.633Z\"}, \"_class\": \"br.com.experian.receivables.infrastructure.repository.document.AgreementDocument\"}","operation_status":{"status":"SUCCESS"},"truncated":false}
+2025-10-09 14:21:06.870  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] .i.f.c.a.DigitalAccountClientServiceImpl : log.origin.function="getMyUserAccount" message="Init method"
+2025-10-09 14:21:06.877  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getToken" message="Init method"
+2025-10-09 14:21:06.878  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="1" log.origin.function="getToken" message="Finish method"
+2025-10-09 14:21:07.582  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"business_id":"68b89e5e72111743ae657472","user_id":"68b89e5e72111743ae657473","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"69798","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://uat-api.serasaexperian.com.br/cross-domain/account/v1/user-accounts/me","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJhbGciOiJSUzUxMiJ9.eyJqdGkiOiI1NDlmNDYyMC0xYzBkLTRhYmUtODY5ZS01OTRiODczMWE3NDkiLCJpYXQiOjE3NjAwMjk4MzcsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwidXNlcl9pZCI6IjY4Yjg5ZTVlNzIxMTE3NDNhZTY1NzQ3MyIsImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwiYnVzaW5lc3NfaWQiOiI2OGI4OWU1ZTcyMTExNzQzYWU2NTc0NzIiLCJzZXJ2aWNlX2lkIjoiNjAwNWVhYzY5ZmY3YzAzYjU2M2RiNWViIiwiYnVzaW5lc3NfdW5pdF9pZCI6IjYzODEyMTM3MTBkNGZiNzA3MzczZjUzNyIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImN1c3RvbWVyX2lkIjo2OTc5OCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9CVVNJTkVTU0FETUlOIiwiUk9MRV9DTEktQVVUSC1JREVOVElGSUVEIiwiUk9MRV9CVVNJTkVTUyIsIlJPTEVfQ0xJLTFTVFBBUlRZIiwiUk9MRV9VU0VSIiwiUk9MRV9BVVRILUJBU0lDIiwiUk9MRV9DTEktM1JEUEFSVFkiLCJST0xFX1BFUlNPTiIsIlJPTEVfQlVTSU5FU1NVU0VSIiwiUk9MRV9BVVRILUlERU5USUZJRUQiXSwiZXhwIjoxNzYwMDMzNDM3LCJzdWIiOiI2MDA1ZWFjNmQ3Yjg1ODU1MjJiYWFmYTkiLCJzZXNzaW9uX2lkIjoiYjYxMTJmNzktMmNhMC00MDVkLWEzNzktNmQxZDMzM2Q3MmRiIn0.d9r3reDta7-7c6oG2741-ueFNFdo13ctigW8lRsEI0A-bVIZhFLKI-4j0VPItN1NqoEc7Fu-0kzgSSDLu7BGZxHQvcPNO2wu5hrkNWSeS_0s3Q2BPJ6NWr8rlVR1B_-VPRfHGjh2I5tdSw5gXNri9K6eVZrYTOJzExfLWXKHTIhOFd33ntJxvlKXh2YOcIpPDWnYiErxXU7N_s3TeMjZABFdf1HhZcpVQCjKwWjFPOKUxpOA7djj936v9I-Yb-w45ZRaAb8BmcG_r2dJiboOG_HnoWeNXBWoxwV4plY7W2zvNjq1NtTZggqaOTbfFb0NEdqXyhd2RPR2zr8X6A9RGw"],"Content-Type":["application/json"]},"execution_time":560,"response":"{\"id\":\"68b89e5e72111743ae657473\",\"fullName\":\"****************\",\"document\":{\"documentId\":\"014******12\",\"documentCountry\":\"***\"},\"birthDate\":\"****-**-**\",\"email\":{\"email\":\"*******************\",\"validatedStatus\":\"NOT_VALIDATED\"},\"mobile\":{\"regionCode\":**,\"areaCode\":**,\"phoneNumber\":*********}}","application_structure":{"class_name":"DigitalAccountClient","method_name":"findMyUserAccount()"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-10-09T15:10:37","iat":"2025-10-09T14:10:37","authorities":["ROLE_BUSINESSADMIN","ROLE_CLI-AUTH-IDENTIFIED","ROLE_BUSINESS","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"truncated":false}
+2025-10-09 14:21:07.943  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] .i.f.c.a.DigitalAccountClientServiceImpl : custom.experian.java.method.duration="1073" custom.experian.java.method.result="{\"fullName\":\"****************\",\"document\":\"014******12\",\"email\":\"*******************\",\"phoneNumber\":\"***********\"}" log.origin.function="getMyUserAccount" message="Finish method"
+2025-10-09 14:21:07.943  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] .f.c.r.EITSRegistrationClientServiceImpl : custom.experian.java.method.args="{nationalRegistrationId="45181802000183"}" custom.experian.java.method.args_count="1" log.origin.function="findBusinessInfo" message="Init method"
+2025-10-09 14:21:07.952  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.c.ClientSecurityServiceImpl    : log.origin.function="getToken" message="Init method"
+2025-10-09 14:21:08.165  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.c.ClientIdentitiesService      : log.origin.function="getIamResponse" message="Init method"
+2025-10-09 14:21:08.399  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://uat-api.serasaexperian.com.br/security/iam/v1/client-identities/login","http_method":"POST","http_status_response":201,"request_headers":{"Authorization":["Basic Njg3MGU1OTJlMzg3OTg2NzZhODBhNjk5OjZlZTE0OTMxQ21XclR5LWNiN2UtNGQ2NC04MzNhLWEyNTk2MGMwYzA3ZQ=="],"Content-Type":["application/json"]},"execution_time":220,"response":"{\"accessToken\":\"eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2ODcwZTU5MmUzODc5ODY3NmE4MGE2OTkiLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9DTEktQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLUFVVEgtSURFTlRJRklFRCIsIlJPTEVfQ0xJLTFTVFBBUlRZIiwiUk9MRV9DTEktM1JEUEFSVFkiXSwiY2xpZW50X2lkIjoiNjg3MGU1OTJlMzg3OTg2NzZhODBhNjk5IiwibmJmIjoxNzYwMDMwNDcyLCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3Iiwic2VydmljZV9pZCI6IjY4NzBlNTkyMjY3MjZjN2NlZDJkM2VkOSIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsInNjb3BlIjpbIlJFQUQiLCJXUklURSJdLCJleHAiOjE3NjAwMzQwNzIsImlhdCI6MTc2MDAzMDQ3MiwiYXBwX2lkIjoiNjg3MGU1OTIyYTE2MmUwZjVjNGRjMzMxIiwianRpIjoiMDUxY2FmZmItNGU3NC00MDAzLTg3NWEtNzIwMWUwZjU0MDk1In0.UD18YRSkAL5vBK2IFXumW7TaIx5g4C_pAO7Pbl3WoHyXfC6r-CT1adJuQALrdNOjz3nWfu2OaTdbfIT9wELQkk37pmVc-VdvvWdJqONhW_qzHcl2q62j2N_-iAADYads2C0p9H19QHzkkKbCr7q8CRn6fnUqHv2UyWtManhHZVySpLhpr1DxtMcEzJgv1_4grvMXH4rU2QCfAwuS2IJS4IXtA2C4hHmlGwIn1Hd6Om3mn6lnOlrdR0culNhCb8W93amxxFZB2MPnWICA5_ImukYjLJrbzil_4xtP3FUHN_sYcelVChkKfFdu-L_RzpVq_4jbSD-PoT1v5nm_KSQYbg\",\"tokenType\":\"Bearer\",\"expiresIn\":\"1760034072\",\"scope\":[\"READ\",\"WRITE\"]}","application_structure":{"class_name":"ClientIdentitiesRepository","method_name":"login(String)"},"authorization":{"authentication_type":"BASIC"},"truncated":false}
+2025-10-09 14:21:08.411  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.c.ClientIdentitiesService      : custom.experian.java.method.duration="246" log.origin.function="getIamResponse" message="Finish method"
+2025-10-09 14:21:08.434  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.s.c.ClientSecurityServiceImpl    : custom.experian.java.method.duration="482" custom.experian.java.method.result="\"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2ODcwZTU5MmUzODc5ODY3NmE4MGE2OTkiLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9DTEktQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLUFVVEgtSURFTlRJRklFRCIsIlJPTEVfQ0xJLTFTVFBBUlRZIiwiUk9MRV9DTEktM1JEUEFSVFkiXSwiY2xpZW50X2lkIjoiNjg3MGU1OTJlMzg3OTg2NzZhODBhNjk5IiwibmJmIjoxNzYwMDMwNDcyLCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3Iiwic2VydmljZV9pZCI6IjY4NzBlNTkyMjY3MjZjN2NlZDJkM2VkOSIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsInNjb3BlIjpbIlJFQUQiLCJXUklURSJdLCJleHAiOjE3NjAwMzQwNzIsImlhdCI6MTc2MDAzMDQ3MiwiYXBwX2lkIjoiNjg3MGU1OTIyYTE2MmUwZjVjNGRjMzMxIiwianRpIjoiMDUxY2FmZmItNGU3NC00MDAzLTg3NWEtNzIwMWUwZjU0MDk1In0.UD18YRSkAL5vBK2IFXumW7TaIx5g4C_pAO7Pbl3WoHyXfC6r-CT1adJuQALrdNOjz3nWfu2OaTdbfIT9wELQkk37pmVc-VdvvWdJqONhW_qzHcl2q62j2N_-iAADYads2C0p9H19QHzkkKbCr7q8CRn6fnUqHv2UyWtManhHZVySpLhpr1DxtMcEzJgv1_4grvMXH4rU2QCfAwuS2IJS4IXtA2C4hHmlGwIn1Hd6Om3mn6lnOlrdR0culNhCb8W93amxxFZB2MPnWICA5_ImukYjLJrbzil_4xtP3FUHN_sYcelVChkKfFdu-L_RzpVq_4jbSD-PoT1v5nm_KSQYbg\"" log.origin.function="getToken" message="Finish method"
+2025-10-09 14:21:09.278  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"6870e592e38798676a80a699","app_id":"6870e5922a162e0f5c4dc331","service_id":"6870e59226726c7ced2d3ed9","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.uat-ds.br.experian.eeca/internal/credit-report/business-registration/v2/registration-data/documents-pj","http_method":"GET","http_status_response":204,"request_headers":{"Authorization":["Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2ODcwZTU5MmUzODc5ODY3NmE4MGE2OTkiLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9DTEktQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLUFVVEgtSURFTlRJRklFRCIsIlJPTEVfQ0xJLTFTVFBBUlRZIiwiUk9MRV9DTEktM1JEUEFSVFkiXSwiY2xpZW50X2lkIjoiNjg3MGU1OTJlMzg3OTg2NzZhODBhNjk5IiwibmJmIjoxNzYwMDMwNDcyLCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3Iiwic2VydmljZV9pZCI6IjY4NzBlNTkyMjY3MjZjN2NlZDJkM2VkOSIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsInNjb3BlIjpbIlJFQUQiLCJXUklURSJdLCJleHAiOjE3NjAwMzQwNzIsImlhdCI6MTc2MDAzMDQ3MiwiYXBwX2lkIjoiNjg3MGU1OTIyYTE2MmUwZjVjNGRjMzMxIiwianRpIjoiMDUxY2FmZmItNGU3NC00MDAzLTg3NWEtNzIwMWUwZjU0MDk1In0.UD18YRSkAL5vBK2IFXumW7TaIx5g4C_pAO7Pbl3WoHyXfC6r-CT1adJuQALrdNOjz3nWfu2OaTdbfIT9wELQkk37pmVc-VdvvWdJqONhW_qzHcl2q62j2N_-iAADYads2C0p9H19QHzkkKbCr7q8CRn6fnUqHv2UyWtManhHZVySpLhpr1DxtMcEzJgv1_4grvMXH4rU2QCfAwuS2IJS4IXtA2C4hHmlGwIn1Hd6Om3mn6lnOlrdR0culNhCb8W93amxxFZB2MPnWICA5_ImukYjLJrbzil_4xtP3FUHN_sYcelVChkKfFdu-L_RzpVq_4jbSD-PoT1v5nm_KSQYbg"],"complement":["ADDRESSES, PHONES, EMAILS"],"Content-Type":["application/json"],"num_document":["45181802000183"],"X-API-KEY":["xuZTpNRzEBUsLqo4EP6jJ7ql7Bujjlfu"]},"execution_time":835,"application_structure":{"class_name":"EITSBusinessRegistrationClient","method_name":"findBusinessRegistration(String,String,String)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE"],"exp":"2025-10-09T15:21:12","iat":"2025-10-09T14:21:12","authorities":["ROLE_CLI-AUTH-BASIC","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_CLI-3RDPARTY"]}},"truncated":false}
+2025-10-09 14:21:09.314 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","operation_status":{"status":"FAIL_EXCEPTION","exception_message":"Cannot invoke \"br.com.experian.swagger.etis.registration.model.ETISBusinessRegistrationDataTO.getNaFullName()\" ********\"businessRegistrationTO\" is null","stack_trace":"[\"java.lang.NullPointerException: Cannot invoke \\\"br.com.experian.swagger.etis.registration.model.ETISBusinessRegistrationDataTO.getNaFullName()\\\" ********\\\"businessRegistrationTO\\\" is null\",\"at br.com.experian.anticipation.infrastructure.integration.feign.adapter.EITSRegistrationAdapter.toBusiness(EITSRegistrationAdapter.java:21)\",\"at br.com.experian.anticipation.infrastructure.integration.feign.client.registration.EITSRegistrationClientServiceImpl.findBusinessInfo(EITSRegistrationClientServiceImpl.java:46)\",\"at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)\",\"at java.base/java.lang.reflect.Method.invoke(Method.java:580)\"]"},"application_structure":{"class_name":"br.com.experian.anticipation.domain.service.impl.OnboardingServiceImpl","method_name":"execute()"},"truncated":false}
+2025-10-09 14:21:09.363 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] c.e.h.RestResponseEntityExceptionHandler : http.response.body.content_json="[{code=500, message=Cannot invoke \"br.com.experian.swagger.etis.registration.model.ETISBusinessRegistrationDataTO.getNaFullName()\" ********\"businessRegistrationTO\" is null}]" http.response.status_code="500" message="Cannot invoke \"br.com.experian.swagger.etis.registration.model.ETISBusinessRegistrationDataTO.getNaFullName()\" ********\"businessRegistrationTO\" is null"
 
-New
-[BUG] The mapping for statusId in mapApiStatusToEnum has changed, including swapping mappings for key business statuses. Be sure these changes do not break business logic or introduce risk of incorrect onboarding status mapping. Test all affected flows thoroughly to avoid unintended side-effects. Example: verify that 'case 1' now means STARTED (New) instead of APPROVED (Active).
+java.lang.NullPointerException: Cannot invoke "br.com.experian.swagger.etis.registration.model.ETISBusinessRegistrationDataTO.getNaFullName()" because "businessRegistrationTO" is null
+	at br.com.experian.anticipation.infrastructure.integration.feign.adapter.EITSRegistrationAdapter.toBusiness(EITSRegistrationAdapter.java:21) ~[classes/:?]
+	at br.com.experian.anticipation.infrastructure.integration.feign.client.registration.EITSRegistrationClientServiceImpl.findBusinessInfo(EITSRegistrationClientServiceImpl.java:46) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.observability.aspect.LoggerAspect.log(LoggerAspect.java:67) ~[experian-observability-3.0.0.jar:3.0.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
+	at io.github.resilience4j.retry.Retry.lambda$decorateCheckedSupplier$1(Retry.java:135) ~[resilience4j-retry-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.retry.Retry.executeCheckedSupplier(Retry.java:350) ~[resilience4j-retry-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.handleDefaultJoinPoint(RetryAspect.java:175) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.proceed(RetryAspect.java:132) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.lambda$retryAroundAdvice$0(RetryAspect.java:116) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.fallback.FallbackExecutor.execute(FallbackExecutor.java:37) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at io.github.resilience4j.spring6.retry.configure.RetryAspect.retryAroundAdvice(RetryAspect.java:117) ~[resilience4j-spring6-2.2.0.jar:2.2.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.anticipation.infrastructure.integration.feign.client.registration.EITSRegistrationClientServiceImpl$$SpringCGLIB$$0.findBusinessInfo(<generated>) ~[classes/:?]
+	at br.com.experian.anticipation.domain.service.impl.OnboardingServiceImpl.execute(OnboardingServiceImpl.java:73) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.observability.aspect.LoggerAspect.log(LoggerAspect.java:67) ~[experian-observability-3.0.0.jar:3.0.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.pme.logging.interceptor.LogMethodInterceptor.handleMethodInterceptor(LogMethodInterceptor.java:78) ~[experian-pme-starter-logging-1.5.1.jar:?]
+	at br.com.experian.pme.logging.interceptor.LogMethodInterceptor.handleServiceInterceptor(LogMethodInterceptor.java:39) ~[experian-pme-starter-logging-1.5.1.jar:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.anticipation.domain.service.impl.OnboardingServiceImpl$$SpringCGLIB$$0.execute(<generated>) ~[classes/:?]
+	at br.com.experian.anticipation.application.rest.OnboardingController.accept(OnboardingController.java:47) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174) ~[spring-context-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.observability.aspect.LoggerAspect.log(LoggerAspect.java:67) ~[experian-observability-3.0.0.jar:3.0.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.proceed(AuthorizationManagerBeforeMethodInterceptor.java:269) ~[spring-security-core-6.3.10.jar:6.3.10]
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.attemptAuthorization(AuthorizationManagerBeforeMethodInterceptor.java:264) ~[spring-security-core-6.3.10.jar:6.3.10]
+	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.invoke(AuthorizationManagerBeforeMethodInterceptor.java:197) ~[spring-security-core-6.3.10.jar:6.3.10]
+	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44) ~[spring-security-config-6.3.10.jar:6.3.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.21.jar:6.1.21]
+	at br.com.experian.anticipation.application.rest.OnboardingController$$SpringCGLIB$$0.accept(<generated>) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:547) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.ShallowEtagHeaderFilter.doFilterInternal(ShallowEtagHeaderFilter.java:107) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at br.com.experian.observability.filter.MdcFilter.doFilter(MdcFilter.java:23) ~[experian-observability-3.0.0.jar:3.0.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at br.com.experian.spring.security.config.filter.BearerAuthenticationFilter.doFilterInternal(BearerAuthenticationFilter.java:54) ~[experian-spring-security-configuration-2.2.0.jar:2.2.0]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at br.com.experian.spring.security.config.filter.ExceptionHandlerFilter.doFilter(ExceptionHandlerFilter.java:24) ~[experian-spring-security-configuration-2.2.0.jar:2.2.0]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:117) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195) ~[spring-webmvc-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230) ~[spring-security-config-6.3.10.jar:6.3.10]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at io.opentelemetry.instrumentation.spring.webmvc.v6_0.WebMvcTelemetryProducingFilter.doFilterInternal(WebMvcTelemetryProducingFilter.java:67) ~[opentelemetry-spring-webmvc-6.0-2.6.0-alpha.jar:2.6.0-alpha]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101) ~[spring-web-6.1.21.jar:6.1.21]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
 
-Reply
-
-Resolve
-
-
-artemis
-artemis commented on a file21 mins ago
-src/main/java/br/com/experian/anticipation/application/rest/HistoryController.java
-    @LogMethod(LogMethod.LogType.FULL)
-    public ResponseEntity<HistoryResponseTO> findHistory(String capitalSourceDocument,
-                                                         LocalDate anticipationDate,
-    public ResponseEntity<HistoryResponseTO> findHistory(LocalDate anticipationDate,
-                                                         String statusId,
-                                                         String pageId,
-                                                         Integer pageSize) {
-                                                         Integer limit,
-                                                         Integer offset) {
-        final int pageLimit = limit != null ? limit : 10;
-        final int pageOffset = offset != null ? offset : 0;
-artemis
-artemis
-21 mins ago
-
-New
-[SECURITY] The default values for 'limit' and 'offset' (10 and 0) are hardcoded. Consider validating and constraining the values to prevent unintentional large queries, negative offsets, or possible resource exhaustion (CWE-770: Allocation of Resources Without Limits or Throttling). Example improvement:
-final int pageLimit = (limit != null && limit > 0 && limit <= 100) ? limit : 10;
-final int pageOffset = (offset != null && offset >= 0) ? offset : 0;
-
-Reply
-
-Resolve
-
-
-​
-        String anticipationDateStr = anticipationDate != null ? anticipationDate.toString() : null;
-​
-        Optional<HistoryResponseTO> historyOpt = this.historyService.findHistoryWithReceivables(capitalSourceDocument,
-                anticipationDateStr, null, statusId, pageId, pageSize);
-        Optional<HistoryResponseTO> historyOpt = this.historyService.findHistoryWithReceivables(
-                anticipationDateStr, null, statusId, pageOffset, pageLimit);
-​
-        if (historyOpt.isEmpty()) {
-            log.info("No anticipation history found for the given filters");
-artemis
-artemis commented on a file21 mins ago
-src/main/java/br/com/experian/anticipation/application/rest/HistoryController.java
-artemis
-artemis
-21 mins ago
-
-New
-[BUG] Potentially passing null (for the third argument) to historyService.findHistoryWithReceivables. If the receiving service does not handle nulls robustly, this can result in NullPointerExceptions (CWE-476: NULL Pointer Dereference). Consider verifying requirements of the API or documenting why null is being passed, or refactor to avoid nulls if possible.
-
-Reply
-
-Resolve
-
-
-artemis
-artemis commented on a file21 mins ago
-src/main/java/br/com/experian/anticipation/infrastructure/integration/feign/client/antecipa/AntecipaServiceImpl.java
-artemis
-artemis
-21 mins ago
-
-New
-[BUG] OnboardingStatus mapping for statusId=3 changed from REJECTED (Inactive) to PENDING (Pending). This can impact how the system handles rejected suppliers. Ensure this change is intentional and if not, update the mapping accordingly. Example: If REJECTED is expected, keep 'return OnboardingStatus.REJECTED;' for statusId=3.
-
-Reply
-
-Resolve
-
-
-artemis
-artemis commented on a file21 mins ago
-src/main/java/br/com/experian/anticipation/domain/service/impl/HistoryServiceImpl.java
-artemis
-artemis
-21 mins ago
-
-New
-[CODE SMELL] Overloading method names with similar signatures may cause confusion and maintenance difficulties. Both findHistoryWithReceivables methods only differ by parameter types/order, which can make the API harder to use and maintain. Consider using more descriptive method names or consolidating logic if possible. For example, use findHistoryWithReceivablesV2 for the new overload or clarify the naming based on their usage context.
-
-Reply
-
-Resolve
-
-
-artemis
-artemis commented on a file21 mins ago
-src/main/java/br/com/experian/anticipation/domain/service/HistoryService.java
-artemis
-artemis
-21 mins ago
-
-New
-[CODE SMELL] Overloaded method signatures are almost identical except for parameter names and types (pageId/pageSize vs offset/limit). This can lead to confusion and maintenance issues. Consider consolidating into a single method using a parameter object or standardized pagination parameters. Example: Create a PaginationParams class to encapsulate paging logic.
-
-Reply
-
-Resolve
-
-
-artemis
-artemis commented on a file21 mins ago
-src/main/java/br/com/experian/anticipation/domain/service/impl/HistoryServiceImpl.java
-        List<HistoryItemTO> historyItems = new ArrayList<>();
-​
-        for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
-            HistoryItemTO item = createHistoryItem(ext, supplierDocument, token);
-            historyItems.add(item);
-        }
-        return historyItems;
-    }
-​
-    private HistoryItemTO createHistoryItem(AntecipaAnticipationCardReceivableListDto ext, String supplierDocument, String token) {
-
-artemis
-21 mins ago
-
-New
-[SECURITY] Catching generic Exception swallows all exceptions including unchecked ones, making debugging and error handling harder (CWE-248: Uncaught Exception). Catch more specific exceptions or rethrow after logging. Example: catch (FeignException | IOException e) { ... }.
-
-Reply
-
-Resolve
-
-
-
-​
-        HistoryItemTO item = new HistoryItemTO();
-​
-​
-        String id = extractId(ext);
-        item.setId(id);
-​
-​
-        setRequestDate(item, ext);
-​
+2025-10-09 14:21:09.427 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/onboarding" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_CLI-AUTH-IDENTIFIED, ROLE_BUSINESS, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68b89e5e72111743ae657472" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.customer_id="69798" custom.experian.http.request.token.exp="1760033437" custom.experian.http.request.token.iat="1760029837" custom.experian.http.request.token.jti="549f4620-1c0d-4abe-869e-594b8731a749" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="b6112f79-2ca0-405d-a379-6d1d333d72db" custom.experian.http.request.token.sub="6005eac6d7b8585522baafa9" custom.experian.http.request.token.user_id="68b89e5e72111743ae657473" destination.address="0:0:0:0:0:0:0:1" destination.port="53257" http.request.method="POST" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/onboarding" http.response.body.content_json="[{code=500, message=Cannot invoke "br.com.experian.swagger.etis.registration.model.ETISBusinessRegistrationDataTO.getNaFullName()" ********"businessRegistrationTO" is null}]" http.response.status_code="500" server.address="*********"
+2025-10-09 14:21:09.484  INFO [experian-pme-bfm-receivables-anticipation-domain-services,59a5fcf52f4284642b6818d6d5062c9c,63285f43c33f5064,] 27756 --- [nio-8080-exec-2] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68b89e5e72111743ae657472","user_id":"68b89e5e72111743ae657473","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","customer_id":"69798","requester":"USER"},"operation_status":{"status":"FAIL_500"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/onboarding","http_method":"POST","http_status_response":500,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.OnboardingController","method_name":"accept()"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-10-09T15:10:37","iat":"2025-10-09T14:10:37","authorities":["ROLE_BUSINESSADMIN","ROLE_CLI-AUTH-IDENTIFIED","ROLE_BUSINESS","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJhbGciOiJSUzUxMiJ9.eyJqdGkiOiI1NDlmNDYyMC0xYzBkLTRhYmUtODY5ZS01OTRiODczMWE3NDkiLCJpYXQiOjE3NjAwMjk4MzcsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwidXNlcl9pZCI6IjY4Yjg5ZTVlNzIxMTE3NDNhZTY1NzQ3MyIsImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwiYXBwX2lkIjoiNWRlN2YzOTRlYzdmNTMwMDA5MWZhYmI0IiwiYnVzaW5lc3NfaWQiOiI2OGI4OWU1ZTcyMTExNzQzYWU2NTc0NzIiLCJzZXJ2aWNlX2lkIjoiNjAwNWVhYzY5ZmY3YzAzYjU2M2RiNWViIiwiYnVzaW5lc3NfdW5pdF9pZCI6IjYzODEyMTM3MTBkNGZiNzA3MzczZjUzNyIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImN1c3RvbWVyX2lkIjo2OTc5OCwiYXV0aG9yaXRpZXMiOlsiUk9MRV9CVVNJTkVTU0FETUlOIiwiUk9MRV9DTEktQVVUSC1JREVOVElGSUVEIiwiUk9MRV9CVVNJTkVTUyIsIlJPTEVfQ0xJLTFTVFBBUlRZIiwiUk9MRV9VU0VSIiwiUk9MRV9BVVRILUJBU0lDIiwiUk9MRV9DTEktM1JEUEFSVFkiLCJST0xFX1BFUlNPTiIsIlJPTEVfQlVTSU5FU1NVU0VSIiwiUk9MRV9BVVRILUlERU5USUZJRUQiXSwiZXhwIjoxNzYwMDMzNDM3LCJzdWIiOiI2MDA1ZWFjNmQ3Yjg1ODU1MjJiYWFmYTkiLCJzZXNzaW9uX2lkIjoiYjYxMTJmNzktMmNhMC00MDVkLWEzNzktNmQxZDMzM2Q3MmRiIn0.d9r3reDta7-7c6oG2741-ueFNFdo13ctigW8lRsEI0A-bVIZhFLKI-4j0VPItN1NqoEc7Fu-0kzgSSDLu7BGZxHQvcPNO2wu5hrkNWSeS_0s3Q2BPJ6NWr8rlVR1B_-VPRfHGjh2I5tdSw5gXNri9K6eVZrYTOJzExfLWXKHTIhOFd33ntJxvlKXh2YOcIpPDWnYiErxXU7N_s3TeMjZABFdf1HhZcpVQCjKwWjFPOKUxpOA7djj936v9I-Yb-w45ZRaAb8BmcG_r2dJiboOG_HnoWeNXBWoxwV4plY7W2zvNjq1NtTZggqaOTbfFb0NEdqXyhd2RPR2zr8X6A9RGw","content-length":"0","host":"localhost:8080","request-start-time":"1760030460556","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
