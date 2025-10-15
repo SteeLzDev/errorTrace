@@ -73,7 +73,7 @@ e para resposta o JSON abaixo.
       "associatedBrand": "Stone"
     }
   ],
-  "receivablesCount": 3, // Representa o número de unidades de recebíveis aprovadas (Count na lista retornada pela Antecipa)
+  "receivablesCount": 3, // Representa o número de unidades de recebíveis aprovadas (Count na lista retornada pela Antecipa) PS: Varrer toda a lista de ofertas e trazer quantos recebíveis me retornaram.(cardReceivables)
   "grossTotalAmount": 3150.00, // Soma do 'creditedAmount' da lista de 'bankAccounts' (valores com taxa). Trabalhar com BigDecimal para realizar a soma
   "totalDiscountAmount": 150.00, // Soma do campo 'discount' retornado na lista de ofertas pela antecipa. Trabalhar com BigDecimal para realizar a soma
   "netAmountToReceive": 3000.00 // Soma do campo 'finalAmount' retornado na lista de ofertas pela antecipa. Trabalhar com BigDecimal para realizar a soma
