@@ -6,8 +6,14 @@ Integração com endpoint da Antecipa que irá retornar a simulação dos receb
 Payload de exemplo:
 POST /simulate
 
-200 no Content
-201 response result
+Status CODE:
+201 Created, resposta da simulação 
+204 no Content (não tem ofertas)
+401, Unauthorized
+424, Failed Dependency
+500, Internal Server error
+
+
 
 O finalUsername vindo da Antecipa vai ser usado para a interface UserSecurityService, vamos pegar o getUserId para poder fornecer a informação que é o que vem de dentro do token, a chamada precisa ter o token, se não vai dar erro, ter as validações do Token no Controller para desencargo.
 
@@ -34,6 +40,8 @@ Para o request será isso, receber o CNPJ e os IDs dos recebíveis agrupados
 ]
 
 
+
+
 O parceiro (Antecipa) irá retornar as ofertas por credenciadora, a lista de ofertas vai retornar o nome do financiador porém o que importa é ID. cardReceivables são os
 recebíveis que foram  aprovados para antecipação 
 
@@ -45,7 +53,7 @@ e para resposta o JSON abaixo.
     "offer_id_2",
     "offer_id_3"
   ],
-  "cardBrands": [ // Lista de credenciadoras (Nome da Maquininha)
+  "cardBrands": [ // Lista de credenciadoras (Nome da Maquininha) PS: Antecipa irá definir a estrutura
     "Cielo",
     "Stone"
   ],
@@ -54,7 +62,7 @@ e para resposta o JSON abaixo.
       "bankName": "Bradesco", // Nome do banco
       "agencyNumber": "1234-5", // Número da agência
       "accountNumber": "1234567-8", // Número da conta
-      "creditedAmount": 1575.00, // Valor bruto respectivo à conta (valor com taxas) ***A DEFINIR
+      "creditedAmount": 1575.00, // Valor bruto respectivo à conta (valor com taxas) selectedAmount vindo da antecipa
       "associatedBrand": "Cielo" // Nome da credenciadora associada à conta
     },
     {
