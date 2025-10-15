@@ -1,3 +1,23 @@
+DoD:
+
+Mapear endpoint POST /simulate no swagger e disponibilizar para o frontend;
+Implementar POST /simulate;
+Integração com endpoint da Antecipa que irá retornar a simulação dos recebíveis antecipáveis (Integração já foi mapeada);
+Payload de exemplo:
+POST /simulate
+
+200 no Content
+201 response result
+
+O finalUsername vindo da Antecipa vai ser usado para a interface UserSecurityService, vamos pegar o getUserId para poder fornecer a informação que é o que vem de dentro do token, a chamada precisa ter o token, se não vai dar erro, ter as validações do Token no Controller para desencargo.
+
+
+
+cardReceivables vai pegar de acordo com o que vier da definição que vem do front. O Front vai definir algo parecido com isso.
+A primeira informação corresponde ao CNPJ da credenciadora e a lista vai ser o ID dos recebíveis.
+
+Para o request será isso, receber o CNPJ e os IDs dos recebíveis agrupados 
+
 [
   {
     "accreditingInstitutionDocument": "CNPJ_A",     #CNPJ da credenciadora (Maquininha)
@@ -13,6 +33,11 @@
   }
 ]
 
+
+O parceiro (Antecipa) irá retornar as ofertas por credenciadora, a lista de ofertas vai retornar o nome do financiador porém o que importa é ID. cardReceivables são os
+recebíveis que foram  aprovados para antecipação 
+
+e para resposta o JSON abaixo.
 
 {
   "receivableOfferIds": [ // Lista de IDs das ofertas retornadas pela antecipa.
@@ -45,3 +70,12 @@
   "totalDiscountAmount": 150.00, // Soma do campo 'discount' retornado na lista de ofertas pela antecipa. Trabalhar com BigDecimal para realizar a soma
   "netAmountToReceive": 3000.00 // Soma do campo 'finalAmount' retornado na lista de ofertas pela antecipa. Trabalhar com BigDecimal para realizar a soma
 }
+
+
+OBS: accreditingInstitution  não faz sentido não estar dentro da lista, porque para poder exibir as maquininhas o accreditingInstitution deve estar dentro da lista.
+
+unidades de recebíveis selecionadas URs:
+pode usar o cardReceivables e fazer o count de quantos tem. 
+
+
+
