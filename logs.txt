@@ -1,3 +1,165 @@
+package br.com.experian.anticipation.infrastructure.integration.feign.adapter;
+
+import br.com.experian.anticipation.domain.dto.response.BusinessRegistration;
+import br.com.experian.swagger.antecipa.model.AntecipaAddCapitalSourceSupplierRegistrationCommandViewModel;
+import br.com.experian.swagger.antecipa.model.AntecipaSupplierAddressViewModel;
+import br.com.experian.swagger.antecipa.model.AntecipaSupplierPartnerViewModel;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class AntecipaAdapter {
+
+    public static AntecipaAddCapitalSourceSupplierRegistrationCommandViewModel build(BusinessRegistration businessRegistration){
+        return new AntecipaAddCapitalSourceSupplierRegistrationCommandViewModel()
+                .name(businessRegistration.getCompanyName())
+                .corporateName(businessRegistration.getCompanyName())
+                .document(businessRegistration.getNationalRegistrationId())
+                .email(businessRegistration.getEmail())
+                .phoneNumber(businessRegistration.getPhoneNumber())
+                .address(getAddress(businessRegistration.getAddress()))
+                .partners(getPartners(businessRegistration.getPartners()));
+    }
+
+    private static AntecipaSupplierAddressViewModel getAddress(BusinessRegistration.Address address) {
+        return Objects.nonNull(address) ? new AntecipaSupplierAddressViewModel()
+                .street(address.getStreet())
+                .number(asNullableString(address.getNumber()))
+                .complement(asNullableString(address.getComplement()))
+                .neighborhood(address.getNeighborhood())
+                .city(address.getCity())
+                .state(address.getState())
+                .zipCode(address.getZipCode())
+                .country(address.getCountry()) : null;
+    }
+
+    private static List<AntecipaSupplierPartnerViewModel> getPartners(List<BusinessRegistration.Partner> partners) {
+        return partners
+                .stream()
+                .map(p -> new AntecipaSupplierPartnerViewModel()
+                        .name(p.getFullName())
+                        .document(p.getDocument())
+                        .email(p.getEmail())
+                        .phoneNumber(p.getPhoneNumber()))
+                .toList();
+    }
+
+    private static String asNullableString(Object value) {
+        if (value == null) return null;
+
+        //Optional Java
+        if (value instanceof Optional<?>) {
+            Optional<?> opt = (Optional<?>) value;
+            Object v = opt.orElse(null);
+            return v == null ? null : toStringOrNull(v);
+        }
+
+        //Optional Guava
+        if (value instanceof com.google.common.base.Optional){
+            com.google.common.base.Optional<?> opt = (com.google.common.base.Optional<?>) value;
+            Object v = opt.orNull();
+            return v == null ? null : toStringOrNull(v);
+
+        }
+        return toStringOrNull(value);
+
+    }
+
+    private static String toStringOrNull(Object v) {
+        String s = String.valueOf(v);
+        return s.isBlank() ? null : s;
+    }
+}
+
+package br.com.experian.anticipation.infrastructure.integration.feign.adapter;
+
+import br.com.experian.anticipation.domain.dto.response.BusinessRegistration;
+import br.com.experian.anticipation.domain.dto.response.PartnerAndManagerRegistration;
+import br.com.experian.swagger.etis.registration.model.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class EITSRegistrationAdapter {
+
+    private static final String MISSING_VALUE = "missing_value";
+
+    public static BusinessRegistration toBusiness(ETISBusinessRegistrationDataTO  businessRegistrationTO) {
+        return BusinessRegistration.builder()
+                .companyName(businessRegistrationTO.getNaFullName())
+                .companyAlias(businessRegistrationTO.getNaCompanyAlias())
+                .nationalRegistrationId(businessRegistrationTO.getNuDocument())
+                .phoneNumber(getPhoneNumber(businessRegistrationTO.getPhones()))
+                .email(getEmail(businessRegistrationTO.getEmails()))
+                .address(getAddress(businessRegistrationTO.getAddresses()))
+                .build();
+    }
+
+    public static List<PartnerAndManagerRegistration> toPartnerAndManagers(ETISPartnersAndManagersTO partnerAndManagersTO) {
+        return Optional.of(partnerAndManagersTO)
+                .map(ETISPartnersAndManagersTO::getContent)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(EITSRegistrationAdapter::buildPartnerAndManager)
+                .toList();
+    }
+
+    private static String getPhoneNumber(List<ETISBusinessRegistrationDataPhoneTO> phones) {
+        return phones
+                .stream()
+                .filter(p -> Integer.valueOf(1).equals(p.getNuPriority()))
+                .findFirst()
+                .map(phone -> String.format("%s%s", phone.getNuDddPhone(), phone.getNuPhone()))
+                .orElse("21999999999"); //TODO: remover assim que o parceiro remover a exigência desse campo. ADD MISSING_VALUE
+    }
+
+    private static String getEmail(List<ETISBusinessRegistrationDataEmailTO> emails) {
+        return emails
+                .stream()
+                .filter(p -> Integer.valueOf(1).equals(p.getNuPriority()))
+                .findFirst()
+                .map(ETISBusinessRegistrationDataEmailTO::getDeEmail)
+                .orElse("fulanodetal@br.experian.com"); //TODO: remover assim que o parceiro remover a exigência desse campo. ADD MISSING_VALUE
+    }
+
+    private static BusinessRegistration.Address getAddress(List<ETISBusinessRegistrationDataAddressTO> addresses) {
+        return addresses
+                .stream()
+                .filter(p -> Integer.valueOf(1).equals(p.getNuPriority()))
+                .findFirst()
+                .map(address -> BusinessRegistration.Address.builder()
+                        .street(address.getDeAddress())
+                        .complement(address.getDeAddressComplement())
+                        .neighborhood(address.getNaNeighborhood())
+                        .city(address.getNaCity())
+                        .state(address.getCoUf())
+                        .zipCode(String.valueOf(address.getNuZipCode()))
+                        .country("Brasil")
+                        .build())
+                .orElse(null);
+    }
+
+    private static PartnerAndManagerRegistration buildPartnerAndManager(ETISPartnerAndManagerTO partnerAndManagerTO) {
+        return PartnerAndManagerRegistration.builder()
+                .fullName(partnerAndManagerTO.getName())
+                .document(Objects.nonNull(partnerAndManagerTO.getDocument()) ? partnerAndManagerTO.getDocument().getDocumentId() : MISSING_VALUE)
+                .phoneNumber(MISSING_VALUE)
+                .email(MISSING_VALUE)
+                .build();
+    }
+}
+
+
+
 2025-10-20 16:34:46.636  INFO [experian-pme-bfm-receivables-anticipation-domain-services,2cc718e605a31a7cbcacba7bd97351fa,e184f17cea37d751,] 25928 --- [nio-8080-exec-2] b.c.e.a.a.r.OnboardingController         : log.origin.function="accept" message="Init method"
 2025-10-20 16:34:46.637  INFO [experian-pme-bfm-receivables-anticipation-domain-services,2cc718e605a31a7cbcacba7bd97351fa,e184f17cea37d751,] 25928 --- [nio-8080-exec-2] b.c.e.a.d.s.i.OnboardingServiceImpl      : log.origin.function="execute" message="Init method"
 2025-10-20 16:34:46.637  INFO [experian-pme-bfm-receivables-anticipation-domain-services,2cc718e605a31a7cbcacba7bd97351fa,e184f17cea37d751,] 25928 --- [nio-8080-exec-2] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getUserId" message="Init method"
@@ -562,3 +724,7 @@ Caused by: feign.FeignException$BadRequest: [400 Bad Request] during [POST] to [
 
 2025-10-20 16:34:48.127 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,2cc718e605a31a7cbcacba7bd97351fa,e184f17cea37d751,] 25928 --- [nio-8080-exec-2] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/onboarding" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_BUSINESS, ROLE_CLI-AUTH-IDENTIFIED, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_PERSON_VALIDATED, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68e941876084502a9b52e716" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.exp="1760989758" custom.experian.http.request.token.iat="1760986158" custom.experian.http.request.token.iss="http://experian-dp-iam-authorization-server-service.digital-identity-services-uat.svc" custom.experian.http.request.token.jti="ce0438d0-a086-4ad4-830c-1035cd3ed522" custom.experian.http.request.token.nbf="1760986158" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="49dd8967-d48f-4d1c-aa29-fe7bccbf93aa" custom.experian.http.request.token.sub="68e941876084502a9b52e717" custom.experian.http.request.token.tenant_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.user_id="68e941876084502a9b52e717" destination.address="0:0:0:0:0:0:0:1" destination.port="50703" http.request.method="POST" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/onboarding" http.response.body.content_json="[{code=500, message=Failure in communication with the anticipation service. Please try again later.}]" http.response.status_code="500" server.address="*********"
 2025-10-20 16:34:48.133  INFO [experian-pme-bfm-receivables-anticipation-domain-services,2cc718e605a31a7cbcacba7bd97351fa,e184f17cea37d751,] 25928 --- [nio-8080-exec-2] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68e941876084502a9b52e716","user_id":"68e941876084502a9b52e717","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","requester":"USER"},"operation_status":{"status":"FAIL_500"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/onboarding","http_method":"POST","http_status_response":500,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.OnboardingController","method_name":"accept()"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-10-20T16:49:18","iat":"2025-10-20T15:49:18","authorities":["ROLE_BUSINESSADMIN","ROLE_BUSINESS","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_PERSON_VALIDATED","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2OGU5NDE4NzYwODQ1MDJhOWI1MmU3MTciLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwic2Vzc2lvbl9pZCI6IjQ5ZGQ4OTY3LWQ0OGYtNGQxYy1hYTI5LWZlN2JjY2JmOTNhYSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQlVTSU5FU1NBRE1JTiIsIlJPTEVfQlVTSU5FU1MiLCJST0xFX0NMSS1BVVRILUlERU5USUZJRUQiLCJST0xFX0NMSS0xU1RQQVJUWSIsIlJPTEVfVVNFUiIsIlJPTEVfQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLTNSRFBBUlRZIiwiUk9MRV9QRVJTT04iLCJST0xFX0JVU0lORVNTVVNFUiIsIlJPTEVfUEVSU09OX1ZBTElEQVRFRCIsIlJPTEVfQVVUSC1JREVOVElGSUVEIl0sImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwibmJmIjoxNzYwOTg2MTU4LCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3IiwidXNlcl9pZCI6IjY4ZTk0MTg3NjA4NDUwMmE5YjUyZTcxNyIsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwic2VydmljZV9pZCI6IjYwMDVlYWM2OWZmN2MwM2I1NjNkYjVlYiIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImV4cCI6MTc2MDk4OTc1OCwiaWF0IjoxNzYwOTg2MTU4LCJidXNpbmVzc19pZCI6IjY4ZTk0MTg3NjA4NDUwMmE5YjUyZTcxNiIsImFwcF9pZCI6IjVkZTdmMzk0ZWM3ZjUzMDAwOTFmYWJiNCIsImp0aSI6ImNlMDQzOGQwLWEwODYtNGFkNC04MzBjLTEwMzVjZDNlZDUyMiJ9.Ehn2AZDfVqPIDSXCY0-q9XHbKA_Ggy6BNwBiY6CgpQoynn4pdZMySFHow7UUGQiOtukn4cow_j-0P2lv4hhzOTdoWhvMPXGe-OBROu2ZwIcLVOdtqE1bxDT2ZYI3NyGSkNeGnn5aPdqCUP1vcxjRDjQvO16TsE8eHAkqw_cQcDSvQMzZxM3lE79AdwazQq4VNurxEhmzdJ50cn8yrkYd1hxboBEmc6SRHuk_gqoYLvB4o3mM-ca4nNi2KCsQ2ONZdXxPcCcJLlwcjl3sNhOexDFDNJl4oGHyyQWwh_kWZhAU0Yf22mCXgbCl3p_QsozkAPrhvPdB0dMJxs26w5T8bQ","content-length":"0","host":"localhost:8080","request-start-time":"1760988886586","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
+
+
+
+
