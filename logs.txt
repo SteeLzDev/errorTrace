@@ -1,34 +1,196 @@
-http://localhost:8080/serasaempreendedor/receivables-anticipation/v1/simulate
-
 {
-  "cardReceivables" : [
+  "content": [
     {
-      "accreditingInstitutionDocument": "07475801000152",
-      "ids": [
-        "b9d4f808-738e-4f98-88ac-b7820b450dfe"
+      "paymentDate": "2025-10-15",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "f70eae14-9a0a-4282-a50f-b32674ba2de5",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-16",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "3a9d8429-0a9a-45e8-b03e-b0dfb18941bc",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-17",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "eb164a56-4e36-4a94-a118-99accceedee2",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-20",
+      "count": 3,
+      "totalAmountToReceive": 3000,
+      "items": [
+        {
+          "id": "2e7eb7bb-8b16-4433-81dc-b94e2cd874c0",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        },
+        {
+          "id": "2b595a4f-45c0-4d50-a04f-5794ca3c2da1",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        },
+        {
+          "id": "50c2495f-f65c-404e-b3e4-a84e4682e56c",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-21",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "68ba3c8c-1dca-4723-a355-d684b76e81c7",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-22",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "bb6f43a6-ee97-49d1-9df3-32ee4f37eef9",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-23",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "0630c100-579e-479f-b2b4-d958720c9e94",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-24",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "a7fc135f-aea8-4750-84fe-2d3054d8648c",
+          "nationalRegistrationId": "00000917000196",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
       ]
     }
-  ]
+  ],
+  "page": {
+    "size": 10,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 1
+  }
 }
-
-
-
-2025-10-27 17:13:50.227  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.a.a.r.SimulationController         : custom.experian.java.method.args="{request={"cardReceivables":[{"accreditingInstitutionDocument":"07475801000152","ids":["b9d4f808-738e-4f98-88ac-b7820b450dfe"]}]}}" custom.experian.java.method.args_count="1" log.origin.function="simulate" message="Init method"
-2025-10-27 17:13:50.229  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.a.a.r.SimulationController         : Received simulation request with 1 card receivable groups
-2025-10-27 17:13:50.229  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.a.d.s.i.SimulationServiceImpl      : custom.experian.java.method.args="{request={"cardReceivables":[{"accreditingInstitutionDocument":"07475801000152","ids":["b9d4f808-738e-4f98-88ac-b7820b450dfe"]}]}}" custom.experian.java.method.args_count="1" log.origin.function="simulate" message="Init method"
-2025-10-27 17:13:50.230  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getUserId" message="Init method"
-2025-10-27 17:13:50.230  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="0" log.origin.function="getUserId" message="Finish method"
-2025-10-27 17:13:50.230  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getBusinessId" message="Init method"
-2025-10-27 17:13:50.230  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="0" log.origin.function="getBusinessId" message="Finish method"
-2025-10-27 17:13:50.237  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.l.i.LogMongoInterceptor          : {"type":"DATABASE","database_operation":"AFTER_LOAD","collection":"Agreement","document":"{\"_id\": {\"$oid\": \"68654b1828a7e04c2467521d\"}, \"userId\": \"68e941876084502a9b52e717\", \"businessId\": \"68e941876084502a9b52e716\", \"nationalRegistrationId\": \"00000917000196\", \"status\": \"ACCEPTED\", \"platform\": \"ECOMMERCE\", \"version\": 2, \"url\": \"https://bfm-pme-uat.serasaexperian.com.br/assets/pdf/Termo_de_Consentimento_e_Autorizacao.pdf\", \"acceptedAt\": {\"$date\": \"2025-07-02T15:07:04.633Z\"}, \"_class\": \"br.com.experian.receivables.infrastructure.repository.document.AgreementDocument\"}","operation_status":{"status":"SUCCESS"},"truncated":false}
-2025-10-27 17:13:50.240  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getUserId" message="Init method"
-2025-10-27 17:13:50.240  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="1" log.origin.function="getUserId" message="Finish method"
-2025-10-27 17:13:50.240  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.a.d.s.i.SimulationServiceImpl      : Starting card receivable simulation for supplier: 00000917000196 with finalUsername: ************************
-2025-10-27 17:13:52.051  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Suppliers/00000917000196/Anticipations/Simulate","http_method":"POST","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiI5NDk4ZTA2NS02NGU3LTRmODAtYmFiMy1hYTYxNzJjMjM4MTkiLCJldmVudF9pZCI6IjRiMWFlYWQ2LWMxMWItNDJjNi1iMzJjLTg5Y2E2OTk0MmYzOCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjE1OTUzOTYsImV4cCI6MTc2MTYwMjU5NiwiaWF0IjoxNzYxNTk1Mzk2LCJqdGkiOiJmMzA2MDg5ZS05ZDZhLTQ4NTMtYjc0Ny0wOTIxNWY0NjE5OWUiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.P8gy5zt9KsmtArdVZpSLR3lCxiqFvwJ8AokksClF6OiP1QcGadRtm8XYcvzCudZDrFQw2LWBxB06lMprgqd9W9eWrUFkSWY3aezsuSd8w3BdBZ6q_44cAZ5UFyHJ4UKcy_KhJf2PhThqpNB4hPvbbRSVA4K-_xA-Xm39cXBvQfshvChpVRIL7oP4vW1UuY96eFQNS36DKbkqPy6I1r3LtyFYraEaYhP-xhhrEJA2XW9u2VKidtrCHjkg-4oXHWa19RC0pSsDmeC14xd26CFWFMSdKA-i6P7DcX2TMt5UohDfJ_echveqwov9pR7yNTSY60wRP_AGMqx3QO6P0tspuQ"],"Content-Length":["204"],"Content-Type":["application/json"]},"execution_time":1805,"request_payload":"{\"capitalSourceDocument\":\"17250006000110\",\"finalUserName\":\"************************\",\"cardReceivables\":[{\"accreditingInstitutionDocument\":\"07475801000152\",\"ids\":[\"b9d4f808-738e-4f98-88ac-b7820b450dfe\"]}]}","response":"[{\"id\":\"3ba0ac43-531e-49bd-b457-0f1e8a6a7aff\",\"accreditingInstitution\":{\"id\":\"170cd241-8a6e-4b9e-abd1-6f990f190c44\",\"name\":\"**********************\",\"document\":\"07475801000152\"},\"requestedAmount\":0.0,\"noOfferReason\":\"Apesar de haver valor à receber, as configurações de pagamento da fonte de capital não permitem a antecipação dessa(s) nota(s).\",\"offers\":[]}]","application_structure":{"class_name":"AntecipaClient","method_name":"simulate(String,String,AntecipaSimulateAnticipationCardReceivableCommandViewModel)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-10-27T19:03:16","iat":"2025-10-27T17:03:16"}},"truncated":false}
-2025-10-27 17:13:52.052  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.a.d.s.i.SimulationServiceImpl      : No Offers available for supplier: 00000917000196
-2025-10-27 17:13:52.052  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.a.d.s.i.SimulationServiceImpl      : custom.experian.java.method.duration="1823" custom.experian.java.method.result="null" log.origin.function="simulate" message="Finish method"
-2025-10-27 17:13:52.052  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.anticipation.domain.service.impl.SimulationServiceImpl","method_name":"simulate(br.com.experian.swagger.anticipation.model.SimulationRequestTO request)"},"entry_parameters":{"request":{"cardReceivables":[{"accreditingInstitutionDocument":"07475801000152","ids":["b9d4f808-738e-4f98-88ac-b7820b450dfe"]}]}},"return_object":{"optional":true},"truncated":false}
-2025-10-27 17:13:52.052  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.a.a.r.SimulationController         : No offers available, return 204 no content
-2025-10-27 17:13:52.052  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.a.a.r.SimulationController         : custom.experian.java.method.duration="1825" custom.experian.java.method.result="{\"headers\":{},\"body\":null,\"statusCode\":\"NO_CONTENT\",\"statusCodeValue\":204}" log.origin.function="simulate" message="Finish method"
-2025-10-27 17:13:52.055  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/simulate" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_BUSINESS, ROLE_CLI-AUTH-IDENTIFIED, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_PERSON_VALIDATED, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68e941876084502a9b52e716" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.exp="1761598989" custom.experian.http.request.token.iat="1761595389" custom.experian.http.request.token.iss="http://experian-dp-iam-authorization-server-service.digital-identity-services-uat.svc" custom.experian.http.request.token.jti="1172229b-3657-410d-8591-6b82f5c03ebd" custom.experian.http.request.token.nbf="1761595389" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="6d1510c7-a7e9-49be-9c01-93165bb31ee9" custom.experian.http.request.token.sub="68e941876084502a9b52e717" custom.experian.http.request.token.tenant_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.user_id="68e941876084502a9b52e717" destination.address="0:0:0:0:0:0:0:1" destination.port="58915" http.request.method="POST" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/simulate" http.response.status_code="204" server.address="*********"
-2025-10-27 17:13:52.057  INFO [experian-pme-bfm-receivables-anticipation-domain-services,fc74a4dee46d68e920c0e31baef413da,81382e40efc881aa,] 26636 --- [nio-8080-exec-8] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68e941876084502a9b52e716","user_id":"68e941876084502a9b52e717","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/simulate","http_method":"POST","http_status_response":204,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.SimulationController","method_name":"simulate(br.com.experian.swagger.anticipation.model.SimulationRequestTO request)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-10-27T18:03:09","iat":"2025-10-27T17:03:09","authorities":["ROLE_BUSINESSADMIN","ROLE_BUSINESS","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_PERSON_VALIDATED","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2OGU5NDE4NzYwODQ1MDJhOWI1MmU3MTciLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwic2Vzc2lvbl9pZCI6IjZkMTUxMGM3LWE3ZTktNDliZS05YzAxLTkzMTY1YmIzMWVlOSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQlVTSU5FU1NBRE1JTiIsIlJPTEVfQlVTSU5FU1MiLCJST0xFX0NMSS1BVVRILUlERU5USUZJRUQiLCJST0xFX0NMSS0xU1RQQVJUWSIsIlJPTEVfVVNFUiIsIlJPTEVfQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLTNSRFBBUlRZIiwiUk9MRV9QRVJTT04iLCJST0xFX0JVU0lORVNTVVNFUiIsIlJPTEVfUEVSU09OX1ZBTElEQVRFRCIsIlJPTEVfQVVUSC1JREVOVElGSUVEIl0sImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwibmJmIjoxNzYxNTk1Mzg5LCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3IiwidXNlcl9pZCI6IjY4ZTk0MTg3NjA4NDUwMmE5YjUyZTcxNyIsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwic2VydmljZV9pZCI6IjYwMDVlYWM2OWZmN2MwM2I1NjNkYjVlYiIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImV4cCI6MTc2MTU5ODk4OSwiaWF0IjoxNzYxNTk1Mzg5LCJidXNpbmVzc19pZCI6IjY4ZTk0MTg3NjA4NDUwMmE5YjUyZTcxNiIsImFwcF9pZCI6IjVkZTdmMzk0ZWM3ZjUzMDAwOTFmYWJiNCIsImp0aSI6IjExNzIyMjliLTM2NTctNDEwZC04NTkxLTZiODJmNWMwM2ViZCJ9.F4WyzfPW6-tVNRN1Ur4ZuT1fKcnoxG9OQgrfN31JNyoydAZsSSULmrcs6DlxJorp8NlZ4eYg13D3qk79WpIlHOEJOIgJHMglraO9IIov5uW0eFKNFYL_d-Nu5YVpRT_YGDOKS6uMTKz-GaKjSxl7uHR6R1kI3kCcvr9pBe1XsH7ACKKmgzt_utz0PKGq110byX64ciGsBvqk75lT61lbD-qlnCv70OHf8u5L5902D0AQDqWDaSSYCrxQ9w2l2QNM983xtX1ehIx1RzhN3d9WeZRsvg6cnAyE8r3cHV-wR5uvFjgIOEiVr_eHXVyjqmzxthO66uZb9gHbbJuwN3w7vw","content-length":"171","host":"localhost:8080","request-start-time":"1761596030180","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
