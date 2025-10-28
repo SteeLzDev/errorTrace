@@ -20,11 +20,27 @@ no /history apenas esses 2:
 teria que adequar a estrutura do history
  
 e validar como está a lógica para montar esses objetos:
-Rodrigues, Danilo
-no /receivables ele está assim:  "page": {  			"size": 10,  		    "totalElements": 50,  		    "totalPages": 5,  		    "number": 1  		}
-Rodrigues, Danilo
-no /history apenas esses 2:   📷
+
+no /receivables ele está assim:  
+"page": {  			
+"size": 10,  		    
+"totalElements": 50,  		    
+"totalPages": 5,  		    
+"number": 1  		
+}
+no /history apenas esses 2:
  
  
 ele deveria levar em consideração o que a Antecipa está retornando
+
+entendi que as duas paginações estavam com problema pelo que a Karina apresentou
  
+me parece que o maior problema está na lógica para devolver os dados da paginação para o front
+ 
+o de histórico vejo com mais simples, pois a paginação não agrupa os dados por data.
+ 
+já em /receivables, vai precisar pensar na melhor lógica que vai ter que aplicar pois a nossa paginação é diferente da paginação deles
+ 
+nossa paginação é agrupada e a deles não.
+ 
+
