@@ -1,250 +1,353 @@
-2025-10-29 09:54:36.758  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.args="{anticipationDate=null, statusId=null, offset=0, limit=10}" custom.experian.java.method.args_count="4" log.origin.function="findHistory" message="Init method"
-2025-10-29 09:54:36.761  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.a.d.s.i.HistoryServiceImpl         : log.origin.function="findHistoryWithReceivables" message="Init method"
-2025-10-29 09:54:36.762  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getUserId" message="Init method"
-2025-10-29 09:54:36.762  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="0" log.origin.function="getUserId" message="Finish method"
-2025-10-29 09:54:36.763  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.p.s.u.UserSecurityServiceImpl      : log.origin.function="getBusinessId" message="Init method"
-2025-10-29 09:54:36.763  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.p.s.u.UserSecurityServiceImpl      : custom.experian.java.method.duration="1" log.origin.function="getBusinessId" message="Finish method"
-2025-10-29 09:54:36.786  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.p.l.i.LogMongoInterceptor          : {"type":"DATABASE","database_operation":"AFTER_LOAD","collection":"Agreement","document":"{\"_id\": {\"$oid\": \"68654b1828a7e04c2467521d\"}, \"userId\": \"68e941876084502a9b52e717\", \"businessId\": \"68e941876084502a9b52e716\", \"nationalRegistrationId\": \"00000917000196\", \"status\": \"ACCEPTED\", \"platform\": \"ECOMMERCE\", \"version\": 2, \"url\": \"https://bfm-pme-uat.serasaexperian.com.br/assets/pdf/Termo_de_Consentimento_e_Autorizacao.pdf\", \"acceptedAt\": {\"$date\": \"2025-07-02T15:07:04.633Z\"}, \"_class\": \"br.com.experian.receivables.infrastructure.repository.document.AgreementDocument\"}","operation_status":{"status":"SUCCESS"},"truncated":false}
-2025-10-29 09:54:36.787  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.a.d.s.i.HistoryServiceImpl         : Fetching anticipation history with receivables for supplier: 00000917000196
-2025-10-29 09:54:38.146  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.p.l.i.LogFeignInterceptor          : {"type":"INTEGRATION","identifier":{"client_id":"2he0oks719p6bv9b5pinfgt0kp","requester":"APPLICATION"},"operation_status":{"status":"SUCCESS"},"uri_requested":"https://api.anticipation.sand.antecipa.com/v1/Originators/CardReceivables/Suppliers/00000917000196/Anticipations?PageSize=10","http_method":"GET","http_status_response":200,"request_headers":{"Authorization":["Bearer eyJraWQiOiJUMzBQblI5OXEzUlwvYit0TjUxNUMyYjNldW5ZamgxdmJ5YlwvTU40ZTRZbjg9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIyMzZjZWE4YS03MGUxLTcwYzMtYzU4ZC04NGIxMWY1Mjc2Y2EiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuc2EtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3NhLWVhc3QtMV95bFFOSzdEN3QiLCJjbGllbnRfaWQiOiIyaGUwb2tzNzE5cDZidjliNXBpbmZndDBrcCIsIm9yaWdpbl9qdGkiOiI1ODlkN2QwZi04MDVmLTQzMTUtOTA2OS0yMjM5Yjk4YTRkZWYiLCJldmVudF9pZCI6IjdhZWE5OTdiLWJmYTAtNDg3Zi1hZDY2LTJiMzJiNGMwYWViMiIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4iLCJhdXRoX3RpbWUiOjE3NjE3NDIxNDYsImV4cCI6MTc2MTc0OTM0NiwiaWF0IjoxNzYxNzQyMTQ2LCJqdGkiOiJjOTYzM2MxNS0wZTY0LTQyYjgtOWQwNS0wZTkyZDYxM2RjZDMiLCJ1c2VybmFtZSI6IjIzNmNlYThhLTcwZTEtNzBjMy1jNThkLTg0YjExZjUyNzZjYSJ9.bAJRF9zXM2CMPBnJKKcbeoh6IwyVjzgP9jsgtvhXlPqzVMm15hEoH-ewJDPAl8SPrqgwKEKYoqe8WrMCN6627iIJUZih85AyaWaRxMZA4hrJXDnGsydoSmmSdUtFwJq6cC-cfTva_heWpPbwcs74okQzzzeWcSj3ezAJYSTarEA_VFSY47IQiJQw0x2mM9I2KPb6SeNmnaJj7IlC1mc8f6Ihqb_8nOLIGj9g8cB5hPsK6RTJo1csbsJi5zP6T4Ifvc2RquHVKlm1etgDedjCXb9maJTBYHzaDU3QgBD3Yq7xIMT4y6t5tmUpnnl6cZs2ljcsTGNB8dZcpkZIYKphbA"]},"execution_time":1357,"response":"{\"items\":[{\"id\":\"5d931db6-25d8-4883-b197-0798a1e028b5\",\"accreditingInstitution\":{\"id\":\"170cd241-8a6e-4b9e-abd1-6f990f190c44\",\"name\":\"**********************\",\"document\":\"07475801000152\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"5edb1a03-aa8e-4029-96a9-395374c7bbb8\",\"name\":\"CBS COMERCIO BRASILEIRO DE SUCATAS LTDA\",\"document\":\"00000917000196\"},\"number\":\"1310\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"paymentDate\":\"2025-10-27T00:00:00+00:00\",\"createdAt\":\"2025-10-27T15:02:17.113+00:00\",\"effectiveRate\":0.0165,\"selectedAmount\":4000,\"receivedAmount\":0,\"anticipatedDiscount\":0},{\"id\":\"c219d4bd-eaeb-4818-b33f-e8f6799d2160\",\"accreditingInstitution\":{\"id\":\"170cd241-8a6e-4b9e-abd1-6f990f190c44\",\"name\":\"**********************\",\"document\":\"07475801000152\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"5edb1a03-aa8e-4029-96a9-395374c7bbb8\",\"name\":\"CBS COMERCIO BRASILEIRO DE SUCATAS LTDA\",\"document\":\"00000917000196\"},\"number\":\"1309\",\"statusId\":4,\"status\":\"Anticipated\",\"anticipatedOn\":\"2025-10-27T12:13:51.793+00:00\",\"paymentDate\":\"2025-10-27T00:00:00+00:00\",\"createdAt\":\"2025-10-27T14:59:18.819+00:00\",\"effectiveRate\":0.0172,\"selectedAmount\":4000,\"receivedAmount\":3857.2400000000000000000000083,\"anticipatedDiscount\":142.7599999999999999999999917},{\"id\":\"95e6905d-ed93-4c6d-87bf-2b052d54f7c4\",\"accreditingInstitution\":{\"id\":\"170cd241-8a6e-4b9e-abd1-6f990f190c44\",\"name\":\"**********************\",\"document\":\"07475801000152\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"5edb1a03-aa8e-4029-96a9-395374c7bbb8\",\"name\":\"CBS COMERCIO BRASILEIRO DE SUCATAS LTDA\",\"document\":\"00000917000196\"},\"number\":\"1308\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"paymentDate\":\"2025-10-23T00:00:00+00:00\",\"createdAt\":\"2025-10-23T19:11:24.75+00:00\",\"effectiveRate\":0.0177,\"selectedAmount\":2000,\"receivedAmount\":0,\"anticipatedDiscount\":0},{\"id\":\"5e29f3ef-5b06-4072-8e99-92e5b76a7cf4\",\"accreditingInstitution\":{\"id\":\"170cd241-8a6e-4b9e-abd1-6f990f190c44\",\"name\":\"**********************\",\"document\":\"07475801000152\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"5edb1a03-aa8e-4029-96a9-395374c7bbb8\",\"name\":\"CBS COMERCIO BRASILEIRO DE SUCATAS LTDA\",\"document\":\"00000917000196\"},\"number\":\"1307\",\"statusId\":4,\"status\":\"Anticipated\",\"anticipatedOn\":\"2025-10-23T15:58:50.981+00:00\",\"paymentDate\":\"2025-10-23T00:00:00+00:00\",\"createdAt\":\"2025-10-23T18:52:39.811+00:00\",\"effectiveRate\":0.017,\"selectedAmount\":4000,\"receivedAmount\":3863.4333333333333333333333253,\"anticipatedDiscount\":136.5666666666666666666666747},{\"id\":\"cefc9ef2-a1c2-47d2-91b4-dacb32156ab0\",\"accreditingInstitution\":{\"id\":\"170cd241-8a6e-4b9e-abd1-6f990f190c44\",\"name\":\"**********************\",\"document\":\"07475801000152\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"5edb1a03-aa8e-4029-96a9-395374c7bbb8\",\"name\":\"CBS COMERCIO BRASILEIRO DE SUCATAS LTDA\",\"document\":\"00000917000196\"},\"number\":\"1306\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"paymentDate\":\"2025-10-23T00:00:00+00:00\",\"createdAt\":\"2025-10-23T18:32:29.144+00:00\",\"effectiveRate\":0.0175,\"selectedAmount\":6000,\"receivedAmount\":0,\"anticipatedDiscount\":0},{\"id\":\"b8cf43f2-74f4-4c3e-93f6-2560f78a95d4\",\"accreditingInstitution\":{\"id\":\"170cd241-8a6e-4b9e-abd1-6f990f190c44\",\"name\":\"**********************\",\"document\":\"07475801000152\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"5edb1a03-aa8e-4029-96a9-395374c7bbb8\",\"name\":\"CBS COMERCIO BRASILEIRO DE SUCATAS LTDA\",\"document\":\"00000917000196\"},\"number\":\"1305\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"paymentDate\":\"2025-10-23T00:00:00+00:00\",\"createdAt\":\"2025-10-23T15:15:24.166+00:00\",\"effectiveRate\":0.0177,\"selectedAmount\":2000,\"receivedAmount\":0,\"anticipatedDiscount\":0},{\"id\":\"e5d14d47-3c33-4e9c-829e-d2781382d273\",\"accreditingInstitution\":{\"id\":\"170cd241-8a6e-4b9e-abd1-6f990f190c44\",\"name\":\"**********************\",\"document\":\"07475801000152\"},\"capitalSource\":{\"id\":\"3acee12c-fb7a-4759-9ea1-f72c80ff4073\",\"name\":\"**************\",\"document\":\"17250006000110\"},\"supplier\":{\"id\":\"5edb1a03-aa8e-4029-96a9-395374c7bbb8\",\"name\":\"CBS COMERCIO BRASILEIRO DE SUCATAS LTDA\",\"document\":\"00000917000196\"},\"number\":\"1304\",\"statusId\":6,\"status\":\"AnticipationFailed\",\"anticipatedOn\":null,\"paymentDate\":\"2025-10-23T00:00:00+00:00\",\"createdAt\":\"2025-10-23T15:13:57.701+00:00\",\"effectiveRate\":0.0176,\"selectedAmount\":4000,\"receivedAmount\":0,\"anticipatedDiscount\":0},{\"id\":\"1d0ee3b1-1d30-4d6f-ab02-130cde3c9339\",\"accreditingInstitution\":{\"id\":\"170cd241","application_structure":{"class_name":"AntecipaClient","method_name":"getAnticipations(String,String,String,String,String,String,String,Integer)"},"authorization":{"authentication_type":"BEARER","token":{"scope":"aws.cognito.signin.user.admin","exp":"2025-10-29T11:49:06","iat":"2025-10-29T09:49:06"}},"truncated":true}
-2025-10-29 09:54:38.165 ERROR [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.a.d.s.i.HistoryServiceImpl         : Error deserializing items list
+package br.com.experian.anticipation.domain.service.impl;
 
-com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto` (although at least one Creator exists): no int/Int-argument constructor/factory method to deserialize from Number value (10)
- at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 436] (through reference chain: java.util.ArrayList[1])
-	at com.fasterxml.jackson.databind.exc.MismatchedInputException.from(MismatchedInputException.java:63) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.DeserializationContext.reportInputMismatch(DeserializationContext.java:1781) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.DeserializationContext.handleMissingInstantiator(DeserializationContext.java:1406) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.ValueInstantiator.createFromInt(ValueInstantiator.java:337) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.std.StdValueInstantiator.createFromInt(StdValueInstantiator.java:398) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.BeanDeserializerBase.deserializeFromNumber(BeanDeserializerBase.java:1541) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.BeanDeserializer._deserializeOther(BeanDeserializer.java:191) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.BeanDeserializer.deserialize(BeanDeserializer.java:179) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.std.CollectionDeserializer._deserializeNoNullChecks(CollectionDeserializer.java:501) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.std.CollectionDeserializer._deserializeFromArray(CollectionDeserializer.java:358) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.std.CollectionDeserializer.deserialize(CollectionDeserializer.java:245) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.std.CollectionDeserializer.deserialize(CollectionDeserializer.java:29) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.deser.DefaultDeserializationContext.readRootValue(DefaultDeserializationContext.java:342) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:4971) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3965) ~[jackson-databind-2.19.1.jar:2.19.1]
-	at br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl.extractItems(HistoryServiceImpl.java:202) ~[classes/:?]
-	at br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl.findHistoryWithReceivables(HistoryServiceImpl.java:69) ~[classes/:?]
-	at br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl.findHistoryWithReceivables(HistoryServiceImpl.java:104) ~[classes/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
-	at br.com.experian.observability.aspect.LoggerAspect.log(LoggerAspect.java:67) ~[experian-observability-3.0.0.jar:3.0.0]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
-	at br.com.experian.pme.logging.interceptor.LogMethodInterceptor.handleMethodInterceptor(LogMethodInterceptor.java:78) ~[experian-pme-starter-logging-1.5.1.jar:?]
-	at br.com.experian.pme.logging.interceptor.LogMethodInterceptor.handleServiceInterceptor(LogMethodInterceptor.java:39) ~[experian-pme-starter-logging-1.5.1.jar:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.21.jar:6.1.21]
-	at br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl$$SpringCGLIB$$0.findHistoryWithReceivables(<generated>) ~[classes/:?]
-	at br.com.experian.anticipation.application.rest.HistoryController.findHistory(HistoryController.java:37) ~[classes/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:355) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.validation.beanvalidation.MethodValidationInterceptor.invoke(MethodValidationInterceptor.java:174) ~[spring-context-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89) ~[spring-aop-6.1.21.jar:6.1.21]
-	at br.com.experian.observability.aspect.LoggerAspect.log(LoggerAspect.java:67) ~[experian-observability-3.0.0.jar:3.0.0]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:641) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:631) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:71) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.proceed(AuthorizationManagerBeforeMethodInterceptor.java:269) ~[spring-security-core-6.3.10.jar:6.3.10]
-	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.attemptAuthorization(AuthorizationManagerBeforeMethodInterceptor.java:264) ~[spring-security-core-6.3.10.jar:6.3.10]
-	at org.springframework.security.authorization.method.AuthorizationManagerBeforeMethodInterceptor.invoke(AuthorizationManagerBeforeMethodInterceptor.java:197) ~[spring-security-core-6.3.10.jar:6.3.10]
-	at org.springframework.security.config.annotation.method.configuration.DeferringMethodInterceptor.invoke(DeferringMethodInterceptor.java:44) ~[spring-security-config-6.3.10.jar:6.3.10]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:769) ~[spring-aop-6.1.21.jar:6.1.21]
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:721) ~[spring-aop-6.1.21.jar:6.1.21]
-	at br.com.experian.anticipation.application.rest.HistoryController$$SpringCGLIB$$0.findHistory(<generated>) ~[classes/:?]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:527) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:614) ~[jakarta.servlet-api-6.0.0.jar:6.0.0]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.springframework.web.filter.ShallowEtagHeaderFilter.doFilterInternal(ShallowEtagHeaderFilter.java:107) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at br.com.experian.observability.filter.MdcFilter.doFilter(MdcFilter.java:23) ~[experian-observability-3.0.0.jar:3.0.0]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at br.com.experian.spring.security.config.filter.BearerAuthenticationFilter.doFilterInternal(BearerAuthenticationFilter.java:54) ~[experian-spring-security-configuration-2.2.0.jar:2.2.0]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at br.com.experian.spring.security.config.filter.ExceptionHandlerFilter.doFilter(ExceptionHandlerFilter.java:24) ~[experian-spring-security-configuration-2.2.0.jar:2.2.0]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:117) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.3.10.jar:6.3.10]
-	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195) ~[spring-webmvc-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230) ~[spring-security-config-6.3.10.jar:6.3.10]
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at io.opentelemetry.instrumentation.spring.webmvc.v6_0.WebMvcTelemetryProducingFilter.doFilterInternal(WebMvcTelemetryProducingFilter.java:67) ~[opentelemetry-spring-webmvc-6.0-2.6.0-alpha.jar:2.6.0-alpha]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:113) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:101) ~[spring-web-6.1.21.jar:6.1.21]
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
-	at java.base/java.lang.Thread.run(Thread.java:1583) ~[?:?]
+import br.com.experian.anticipation.domain.client.AccountClient;
+import br.com.experian.anticipation.domain.client.RegistrationClient;
+import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
+import br.com.experian.anticipation.domain.exception.ConflictException;
+import br.com.experian.anticipation.domain.model.Agreement;
+import br.com.experian.anticipation.domain.port.AuthenticationPort;
+import br.com.experian.anticipation.domain.repository.AgreementRepository;
+import br.com.experian.anticipation.domain.service.HistoryService;
+import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
+import br.com.experian.observability.annotation.LogMethod;
+import br.com.experian.swagger.antecipa.model.*;
+import br.com.experian.swagger.anticipation.model.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j2;
 
-2025-10-29 09:54:38.165  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.a.d.s.i.HistoryServiceImpl         : No anticipation history for supplier: br.com.experian.anticipation.domain.model.Agreement@712b34f
-2025-10-29 09:54:38.167  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.a.d.s.i.HistoryServiceImpl         : custom.experian.java.method.duration="1406" log.origin.function="findHistoryWithReceivables" message="Finish method"
-2025-10-29 09:54:38.167  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.p.l.i.LogMethodInterceptor         : {"type":"SERVICE","access_modifier":"PUBLIC","application_structure":{"class_name":"br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl","method_name":"findHistoryWithReceivables(java.lang.String startAnticipationDate, java.lang.String endAnticipationDate, java.lang.String statusId, java.lang.Integer offset, java.lang.Integer limit)"},"entry_parameters":{"offset":0,"limit":10},"return_object":{"optional":true},"truncated":false}
-2025-10-29 09:54:38.167  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.a.a.r.HistoryController            : No anticipation history found for the given filters
-2025-10-29 09:54:38.167  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.a.a.r.HistoryController            : custom.experian.java.method.duration="1410" custom.experian.java.method.result="{\"headers\":{},\"body\":null,\"statusCode\":\"NO_CONTENT\",\"statusCodeValue\":204}" log.origin.function="findHistory" message="Finish method"
-2025-10-29 09:54:38.167  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.o.i.HttpLogInterceptor             : custom.experian.http.request.mapping="/history" custom.experian.http.request.token.app_id="5de7f394ec7f5300091fabb4" custom.experian.http.request.token.authorities="[ROLE_BUSINESSADMIN, ROLE_BUSINESS, ROLE_CLI-AUTH-IDENTIFIED, ROLE_CLI-1STPARTY, ROLE_USER, ROLE_AUTH-BASIC, ROLE_CLI-3RDPARTY, ROLE_PERSON, ROLE_BUSINESSUSER, ROLE_PERSON_VALIDATED, ROLE_AUTH-IDENTIFIED]" custom.experian.http.request.token.business_id="68e941876084502a9b52e716" custom.experian.http.request.token.business_unit_id="6381213710d4fb707373f537" custom.experian.http.request.token.client_id="6005eac6d7b8585522baafa9" custom.experian.http.request.token.client_id_default="6005eac6d7b8585522baafa9" custom.experian.http.request.token.exp="1761745209" custom.experian.http.request.token.iat="1761741609" custom.experian.http.request.token.iss="http://experian-dp-iam-authorization-server-service.digital-identity-services-uat.svc" custom.experian.http.request.token.jti="9c5596e2-f551-400e-8b25-8e4062147558" custom.experian.http.request.token.nbf="1761741609" custom.experian.http.request.token.organization_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.scope="[READ, WRITE, USER_ACCOUNT_DELETE]" custom.experian.http.request.token.service_id="6005eac69ff7c03b563db5eb" custom.experian.http.request.token.session_id="10aa15ee-7ed8-4537-a8ed-5e277c56e43e" custom.experian.http.request.token.sub="68e941876084502a9b52e717" custom.experian.http.request.token.tenant_id="6234bf03ab14624d4807d6a5" custom.experian.http.request.token.user_id="68e941876084502a9b52e717" destination.address="0:0:0:0:0:0:0:1" destination.port="64251" http.request.method="GET" http.request.referrer="/serasaempreendedor/receivables-anticipation/v1/history" http.response.status_code="204" server.address="*********"
-2025-10-29 09:54:38.167  INFO [experian-pme-bfm-receivables-anticipation-domain-services,b3577eb411226e870922bb3c534217c4,c6e96a95249ccfb7,] 37772 --- [nio-8080-exec-7] b.c.e.p.l.i.LogRestControllerInterceptor : {"type":"CONTROLLER","identifier":{"business_id":"68e941876084502a9b52e716","user_id":"68e941876084502a9b52e717","client_id":"6005eac6d7b8585522baafa9","client_id_default":"6005eac6d7b8585522baafa9","app_id":"5de7f394ec7f5300091fabb4","service_id":"6005eac69ff7c03b563db5eb","requester":"USER"},"operation_status":{"status":"SUCCESS"},"uri_requested":"/serasaempreendedor/receivables-anticipation/v1/history","http_method":"GET","http_status_response":204,"application_structure":{"class_name":"br.com.experian.anticipation.application.rest.HistoryController","method_name":"findHistory(java.time.LocalDate anticipationDate, java.lang.String statusId, java.lang.Integer limit, java.lang.Integer offset)"},"authorization":{"authentication_type":"BEARER","token":{"scope":["READ","WRITE","USER_ACCOUNT_DELETE"],"exp":"2025-10-29T10:40:09","iat":"2025-10-29T09:40:09","authorities":["ROLE_BUSINESSADMIN","ROLE_BUSINESS","ROLE_CLI-AUTH-IDENTIFIED","ROLE_CLI-1STPARTY","ROLE_USER","ROLE_AUTH-BASIC","ROLE_CLI-3RDPARTY","ROLE_PERSON","ROLE_BUSINESSUSER","ROLE_PERSON_VALIDATED","ROLE_AUTH-IDENTIFIED"]}},"headers":{"authorization":"Bearer eyJ4NXQjUzI1NiI6IjVKb0RSSlYzaTdETnMxbVZTUG1ub3ZNNGxFRnlRU00xYURzdURQcUV2YXciLCJraWQiOiJzZXJhc2FzZWN1cml0eXN0ZyIsImFsZyI6IlJTNTEyIn0.eyJ0ZW5hbnRfaWQiOiI2MjM0YmYwM2FiMTQ2MjRkNDgwN2Q2YTUiLCJzdWIiOiI2OGU5NDE4NzYwODQ1MDJhOWI1MmU3MTciLCJpc3MiOiJodHRwOi8vZXhwZXJpYW4tZHAtaWFtLWF1dGhvcml6YXRpb24tc2VydmVyLXNlcnZpY2UuZGlnaXRhbC1pZGVudGl0eS1zZXJ2aWNlcy11YXQuc3ZjIiwic2Vzc2lvbl9pZCI6IjEwYWExNWVlLTdlZDgtNDUzNy1hOGVkLTVlMjc3YzU2ZTQzZSIsImF1dGhvcml0aWVzIjpbIlJPTEVfQlVTSU5FU1NBRE1JTiIsIlJPTEVfQlVTSU5FU1MiLCJST0xFX0NMSS1BVVRILUlERU5USUZJRUQiLCJST0xFX0NMSS0xU1RQQVJUWSIsIlJPTEVfVVNFUiIsIlJPTEVfQVVUSC1CQVNJQyIsIlJPTEVfQ0xJLTNSRFBBUlRZIiwiUk9MRV9QRVJTT04iLCJST0xFX0JVU0lORVNTVVNFUiIsIlJPTEVfUEVSU09OX1ZBTElEQVRFRCIsIlJPTEVfQVVUSC1JREVOVElGSUVEIl0sImNsaWVudF9pZCI6IjYwMDVlYWM2ZDdiODU4NTUyMmJhYWZhOSIsImNsaWVudF9pZF9kZWZhdWx0IjoiNjAwNWVhYzZkN2I4NTg1NTIyYmFhZmE5IiwibmJmIjoxNzYxNzQxNjA5LCJidXNpbmVzc191bml0X2lkIjoiNjM4MTIxMzcxMGQ0ZmI3MDczNzNmNTM3IiwidXNlcl9pZCI6IjY4ZTk0MTg3NjA4NDUwMmE5YjUyZTcxNyIsInNjb3BlIjpbIlJFQUQiLCJXUklURSIsIlVTRVJfQUNDT1VOVF9ERUxFVEUiXSwic2VydmljZV9pZCI6IjYwMDVlYWM2OWZmN2MwM2I1NjNkYjVlYiIsIm9yZ2FuaXphdGlvbl9pZCI6IjYyMzRiZjAzYWIxNDYyNGQ0ODA3ZDZhNSIsImV4cCI6MTc2MTc0NTIwOSwiaWF0IjoxNzYxNzQxNjA5LCJidXNpbmVzc19pZCI6IjY4ZTk0MTg3NjA4NDUwMmE5YjUyZTcxNiIsImFwcF9pZCI6IjVkZTdmMzk0ZWM3ZjUzMDAwOTFmYWJiNCIsImp0aSI6IjljNTU5NmUyLWY1NTEtNDAwZS04YjI1LThlNDA2MjE0NzU1OCJ9.DtCJ6s-FUNhT5X6tAYFKRE5weNg8abwnquldVrXXp7FXbvur5SBRLunXtZQMbwgWR0K7QCeiurOpyIvq70uHu8D3cjoYIs55ADV8y3f5nVyd6ijB9Rs53M9yDCITrs7wn27GEwB6Ur4jdJBwY_TgpfqSxAXE7Rb85oweq18xnwmU0QyxeMB53eelpwd_rV_2idaj4RQi7OrfaLFjxN_OBwBtBdqjhi3u5-gQQJO8HqqrIKtOict2ZHoF2vpi_jEGaPk3U14ffcWBFuvI-RtaVISRNP-RAe2H20TPEu8wRHXxa0TmIeWU-SRj_bZ-a3oQ5-w5AEaF9vuOH41tgSMg7g","host":"localhost:8080","request-start-time":"1761742476696","content-type":"application/json","connection":"keep-alive","accept-encoding":"gzip, compress, deflate, br","accept":"application/json, text/plain, */*","user-agent":"bruno-runtime/2.1.0"},"truncated":false}
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
+
+@Log4j2
+public class HistoryServiceImpl implements HistoryService {
+
+    private final AntecipaClient antecipaClient;
+    private final AgreementRepository agreementRepository;
+    private final AuthenticationPort authenticationPort;
+    private final ObjectMapper objectMapper;
+    private final AccountClient accountClient;
+    private final RegistrationClient registrationClient;
+
+    public HistoryServiceImpl(AntecipaClient antecipaClient,
+                              AgreementRepository agreementRepository, AuthenticationPort authenticationPort, ObjectMapper objectMapper, AccountClient accountClient,
+                              RegistrationClient registrationClient) {
+        this.antecipaClient = antecipaClient;
+        this.agreementRepository = agreementRepository;
+        this.authenticationPort = authenticationPort;
+        this.objectMapper = objectMapper;
+        this.accountClient = accountClient;
+        this.registrationClient = registrationClient;
+    }
+
+    @Override
+    @LogMethod
+    public Optional<HistoryResponseTO> findHistoryWithReceivables(String startAnticipationDate,
+                                                                  String endAnticipationDate,
+                                                                  String statusId,
+                                                                  String pageId,
+                                                                  Integer pageSize) {
+        Agreement agreement = this.getUserAgreement();
+        log.info("Fetching anticipation history with receivables for supplier: {}", agreement.getNationalRegistrationId());
+
+        try {
+            String token = "Bearer " + authenticationPort.getValidToken();
+
+            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse =
+                    antecipaClient.getAnticipations(token, agreement.getNationalRegistrationId(),
+                            null,
+                            startAnticipationDate,
+                            endAnticipationDate,
+                            statusId,
+                            pageId,
+                            pageSize);
+            List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(pagedResponse);
+
+            if (externalItems.isEmpty()) {
+                log.info("No anticipation history for supplier: {}", agreement);
+                return Optional.empty();
+            }
+
+            List<HistoryItemTO> historyItems = buildHistoryItems(externalItems, agreement.getNationalRegistrationId(), token);
+
+            HistoryResponseTO response = new HistoryResponseTO();
+            response.setItems(historyItems);
+
+            if (pagedResponse != null && pagedResponse.getPageNextId() != null) {
+                response.setNextPage(pagedResponse.getPageNextId());
+            } else {
+                response.setNextPage(null);
+            }
+
+            response.setPageSize(pageSize != null ? pageSize : 10);
+            log.info("Successfully retrieved {} anticipation records with receivables for supplier: {}", historyItems.size(), agreement.getNationalRegistrationId());
+            return Optional.of(response);
+        } catch (Exception e) {
+            log.error("Error fetching anticipation history for supplier: {}: {}", agreement.getNationalRegistrationId(), e.getMessage(), e);
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    @LogMethod
+    public Optional<HistoryResponseTO> findHistoryWithReceivables(String startAnticipationDate,
+                                                                  String endAnticipationDate,
+                                                                  String statusId,
+                                                                  Integer offset,
+                                                                  Integer limit) {
+        Integer pageSizeInt = limit != null && limit > 0 ? limit : 10;
+        return findHistoryWithReceivables(startAnticipationDate, endAnticipationDate, statusId, (String) null, pageSizeInt);
+    }
+
+    private List<HistoryItemTO> buildHistoryItems(List<AntecipaAnticipationCardReceivableListDto> externalItems,
+                                                  String supplierDocument,
+                                                  String token) {
+        List<HistoryItemTO> historyItems = new ArrayList<>();
+
+        for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
+            HistoryItemTO item = createHistoryItem(ext, supplierDocument, token);
+            historyItems.add(item);
+        }
+        return historyItems;
+    }
+
+    private HistoryItemTO createHistoryItem(AntecipaAnticipationCardReceivableListDto ext, String supplierDocument, String token) {
+        HistoryItemTO item = new HistoryItemTO();
+
+        String id = extractId(ext);
+        item.setId(id);
+
+        setRequestDate(item, ext);
+        setStatus(item, ext);
+        setReceivablesData(item, id, supplierDocument, token, ext);
+
+        return item;
+    }
+
+    private String extractId(AntecipaAnticipationCardReceivableListDto ext) {
+        if (ext.getId() != null) {
+            return String.valueOf(ext.getId());
+        }
+        return null;
+    }
+
+    private void setRequestDate(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
+        if (ext.getCreatedAt() != null) {
+            LocalDateTime ldt = parseToLocalDate(ext.getCreatedAt().toString());
+            if (ldt != null) {
+                String formattedDate = ldt.toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
+                item.setRequestDate(LocalDate.parse(formattedDate));
+            }
+        }
+    }
+
+    private void setStatus(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
+        if (ext.getStatusId() != null) {
+            String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
+            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
+        }
+    }
+
+    private void setReceivablesData(HistoryItemTO item, String id, String supplierDocument,
+                                    String token, AntecipaAnticipationCardReceivableListDto ext) {
+        if (id != null) {
+            try {
+                AntecipaAnticipationCardReceivableDto detail =
+                        antecipaClient.getAnticipationById(token, supplierDocument, id);
+
+                List<ReceivableItemTO> receivables = processReceivables(detail, ext);
+                item.setReceivables(receivables);
+
+                BigDecimal totalNetValue = calculateTotalNetValue(receivables);
+                item.setTotalNetValue(totalNetValue);
+                item.setReceivablesCount(receivables.size());
+
+            } catch (Exception e) {
+                log.warn("Failed to fetch receivables details for ID: {}", id, e);
+                setEmptyReceivablesData(item);
+            }
+        } else {
+            setEmptyReceivablesData(item);
+        }
+    }
+
+    private BigDecimal calculateTotalNetValue(List<ReceivableItemTO> receivables) {
+        return receivables.stream()
+                .map(ReceivableItemTO::getNetValue)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    private void setEmptyReceivablesData(HistoryItemTO item) {
+        item.setReceivables(new ArrayList<>());
+        item.setTotalNetValue(BigDecimal.ZERO);
+        item.setReceivablesCount(0);
+    }
+
+    private List<AntecipaAnticipationCardReceivableListDto> extractItems(
+            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
+
+        if (pagedResponse == null) return Collections.emptyList();
+
+        Object raw = pagedResponse.getItems();
+        if (!(raw instanceof List<?> rawList) || rawList.isEmpty()) return Collections.emptyList();
+
+        try {
+            byte[] bytes = objectMapper.writeValueAsBytes(rawList);
+            return objectMapper.readValue(bytes, new TypeReference<>() {
+            });
+
+        } catch (Exception e) {
+            log.error("Error deserializing items list", e);
+            return Collections.emptyList();
+        }
+    }
+
+    private List<ReceivableItemTO> processReceivables(AntecipaAnticipationCardReceivableDto detail,
+                                                      AntecipaAnticipationCardReceivableListDto listItem) {
+        List<ReceivableItemTO> receivables = new ArrayList<>();
+
+        if (detail == null) return receivables;
+
+        processAnticipatedItems(detail, listItem, receivables);
+        processNoAnticipatedItems(detail, listItem, receivables);
+
+        return receivables;
+    }
+
+    private void processAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
+                                         AntecipaAnticipationCardReceivableListDto listItem,
+                                         List<ReceivableItemTO> receivables) {
+
+        if (detail.getAnticipatedItems() != null) {
+            List<?> anticipatedItemsObj = detail.getAnticipatedItems().get();
+            if (anticipatedItemsObj != null) {
+                processReceivablesList(anticipatedItemsObj, detail, listItem, receivables);
+            }
+        }
+    }
+
+    private void processNoAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
+                                           AntecipaAnticipationCardReceivableListDto listItem,
+                                           List<ReceivableItemTO> receivables) {
+        if (detail.getNotAnticipatedItems() != null) {
+            List<?> notAnticipatedItemsObj = detail.getNotAnticipatedItems().get();
+            if (notAnticipatedItemsObj != null) {
+                processReceivablesList(notAnticipatedItemsObj, detail, listItem, receivables);
+            }
+        }
+    }
+
+    private void processReceivablesList(List<?> itemsList,
+                                        AntecipaAnticipationCardReceivableDto detail,
+                                        AntecipaAnticipationCardReceivableListDto listItem,
+                                        List<ReceivableItemTO> receivables) {
+        for (Object itemObj : itemsList) {
+            try {
+                AntecipaAnticipationCardReceivableItemDto sourceItem = convertToSourceItem(itemObj);
+                if (sourceItem != null) {
+                    ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
+                    if (item != null) {
+                        receivables.add(item);
+                    }
+                }
+            } catch (Exception e) {
+                log.error("Error converting anticipated item to DTO: {}", e.getMessage(), e);
+            }
+        }
+    }
+
+    private AntecipaAnticipationCardReceivableItemDto convertToSourceItem(Object itemObj) {
+        if (itemObj instanceof AntecipaAnticipationCardReceivableItemDto) {
+            return (AntecipaAnticipationCardReceivableItemDto) itemObj;
+        } else if (itemObj instanceof LinkedHashMap) {
+            return objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivableItemDto.class);
+        } else {
+            log.warn("Unexpected item type in anticipatedItems: {}", itemObj.getClass().getName());
+            return null;
+        }
+    }
+
+    private ReceivableItemTO convertToReceivableItem(AntecipaAnticipationCardReceivableItemDto sourceItem,
+                                                     AntecipaAnticipationCardReceivableDto parentDetail,
+                                                     AntecipaAnticipationCardReceivableListDto parentListItem) {
+        if (sourceItem == null) return null;
+
+        ReceivableItemTO item = new ReceivableItemTO();
+
+        setCnpj(item, parentDetail);
+        setAccreditingInstitution(item, parentDetail);
+        setBasicReceivableData(item, sourceItem);
+        return item;
+    }
+
+    private void setCnpj(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
+        if (parentDetail.getSupplier() != null && parentDetail.getSupplier().getDocument() != null) {
+            String document = parentDetail.getSupplier().getDocument().get();
+            if (document != null) {
+                item.setCnpj(document);
+            }
+        }
+    }
+
+    private void setAccreditingInstitution(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
+        if (parentDetail.getAccreditingInstitution() != null && parentDetail.getAccreditingInstitution().getName() != null) {
+            String name = parentDetail.getAccreditingInstitution().getName();
+            if (name != null) {
+                item.setAccreditingInstitution(name);
+            }
+        }
+    }
+
+    private void setBasicReceivableData(ReceivableItemTO item, AntecipaAnticipationCardReceivableItemDto sourceItem) {
+        item.setInstallments(1);
+
+        if (sourceItem.getSelectedAmount() != null) {
+            item.setInstallmentValue(BigDecimal.valueOf(sourceItem.getSelectedAmount()));
+        }
+
+        if (sourceItem.getEffectiveRate() != null) {
+            item.setFeePercentage(BigDecimal.valueOf(sourceItem.getEffectiveRate()));
+        }
+
+        if (sourceItem.getDiscount() != null) {
+            item.setDiscountValue(BigDecimal.valueOf(sourceItem.getDiscount()));
+        } else {
+            item.setDiscountValue(BigDecimal.ZERO);
+        }
+
+        if (sourceItem.getNetValue() != null) {
+            item.setNetValue(BigDecimal.valueOf(sourceItem.getNetValue()));
+        } else {
+            item.setNetValue(BigDecimal.ZERO);
+        }
+    }
+
+    private static LocalDateTime parseToLocalDate(String s) {
+        if (s == null || s.isBlank()) return null;
+        try {
+            return OffsetDateTime.parse(s).toLocalDateTime();
+        } catch (DateTimeParseException ignore) {
+        }
+        try {
+            return LocalDateTime.parse(s);
+        } catch (DateTimeParseException ignore) {
+        }
+        try {
+            return LocalDate.parse(s).atStartOfDay();
+        } catch (DateTimeParseException ignore) {
+        }
+
+        return null;
+    }
+
+    private Agreement getUserAgreement() {
+        return this.agreementRepository.getUserAgreement()
+                .orElseThrow(() -> new ConflictException("3"));
+    }
+}
