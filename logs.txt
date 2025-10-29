@@ -1,614 +1,557 @@
-/History
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: PME-Receivables-Anticipation-BR
+  description: >-
+    This API persist and returns the receivables information.
+  contact:
+    name: Squad Gestão Financeira
+    email: squadgestaofinanceira@br.experian.com
+host: sandbox-api.serasaexperian.com.br
+basePath: /serasaempreendedor/receivables-anticipation/v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  OauthSecurityUser:
+    type: oauth2
+    flow: password
+    tokenUrl: https://sandbox-api.serasaexperian.com.br/security/iam/v1/user-identities/login
+    scopes:
+      read: User read scope
 
-{
-  "items": [
-    {
-      "id": "5d931db6-25d8-4883-b197-0798a1e028b5",
-      "requestDate": "2025-10-27",
-      "status": "ERROR",
-      "receivablesCount": 4,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0165,
-          "discountValue": 31.9,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0165,
-          "discountValue": 32.45,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0165,
-          "discountValue": 28.05,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0165,
-          "discountValue": 28.6,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "c219d4bd-eaeb-4818-b33f-e8f6799d2160",
-      "requestDate": "2025-10-27",
-      "status": "CONCLUDED",
-      "receivablesCount": 4,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0172,
-          "discountValue": 34.4,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0172,
-          "discountValue": 36.12,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0172,
-          "discountValue": 36.12,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0172,
-          "discountValue": 36.12,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "95e6905d-ed93-4c6d-87bf-2b052d54f7c4",
-      "requestDate": "2025-10-23",
-      "status": "ERROR",
-      "receivablesCount": 2,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0177,
-          "discountValue": 39.53,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0177,
-          "discountValue": 39.53,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "5e29f3ef-5b06-4072-8e99-92e5b76a7cf4",
-      "requestDate": "2025-10-23",
-      "status": "CONCLUDED",
-      "receivablesCount": 4,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.017,
-          "discountValue": 34,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.017,
-          "discountValue": 34.56666666666667,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.017,
-          "discountValue": 34,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.017,
-          "discountValue": 34,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "cefc9ef2-a1c2-47d2-91b4-dacb32156ab0",
-      "requestDate": "2025-10-23",
-      "status": "ERROR",
-      "receivablesCount": 6,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0175,
-          "discountValue": 36.166666666666664,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0175,
-          "discountValue": 37.333333333333336,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0175,
-          "discountValue": 36.75,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0175,
-          "discountValue": 39.083333333333336,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0175,
-          "discountValue": 39.083333333333336,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0175,
-          "discountValue": 39.083333333333336,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "b8cf43f2-74f4-4c3e-93f6-2560f78a95d4",
-      "requestDate": "2025-10-23",
-      "status": "ERROR",
-      "receivablesCount": 2,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0177,
-          "discountValue": 39.53,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0177,
-          "discountValue": 39.53,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "e5d14d47-3c33-4e9c-829e-d2781382d273",
-      "requestDate": "2025-10-23",
-      "status": "ERROR",
-      "receivablesCount": 4,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0176,
-          "discountValue": 37.54666666666667,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0176,
-          "discountValue": 39.306666666666665,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0176,
-          "discountValue": 39.306666666666665,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0176,
-          "discountValue": 39.306666666666665,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "1d0ee3b1-1d30-4d6f-ab02-130cde3c9339",
-      "requestDate": "2025-10-23",
-      "status": "ERROR",
-      "receivablesCount": 3,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.017,
-          "discountValue": 34,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.017,
-          "discountValue": 34.56666666666667,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.017,
-          "discountValue": 34,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "a606583e-7d83-4590-903c-e42c0cf59c9a",
-      "requestDate": "2025-10-23",
-      "status": "ERROR",
-      "receivablesCount": 2,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0172,
-          "discountValue": 35.54666666666667,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0172,
-          "discountValue": 36.12,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    },
-    {
-      "id": "228cab51-ea3a-41f8-8119-7e2f050e681e",
-      "requestDate": "2025-10-23",
-      "status": "ERROR",
-      "receivablesCount": 4,
-      "receivables": [
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0176,
-          "discountValue": 37.54666666666667,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0176,
-          "discountValue": 39.306666666666665,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0176,
-          "discountValue": 39.306666666666665,
-          "netValue": 0
-        },
-        {
-          "cnpj": "00000917000196",
-          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
-          "installments": 1,
-          "installmentValue": 1000,
-          "feePercentage": 0.0176,
-          "discountValue": 39.306666666666665,
-          "netValue": 0
-        }
-      ],
-      "totalNetValue": 0
-    }
-  ],
-  "pageSize": 10
-}
+paths:
+  /onboarding:
+    get:
+      tags:
+        - Onboarding
+      description: Retrive onboarding status
+      summary: Retrive onboarding status
+      security:
+        - OauthSecurityUser:
+            - read
+      operationId: retrieveStatus
+      responses:
+        200:
+          description: The request was successful
+          schema:
+            $ref: "#/definitions/OnboardingResponse"
+        204:
+          description: Not started
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+    post:
+      tags:
+        - Onboarding
+      description: Start onboarding process
+      summary: Start onboarding process
+      security:
+        - OauthSecurityUser:
+            - read
+      operationId: accept
+      responses:
+        200:
+          description: The request was successful
+          schema:
+            $ref: "#/definitions/OnboardingExecutionResponse"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+  /history:
+    get:
+      tags:
+        - History
+      description: Retrieve anticipation history with receivables details including netValue
+      summary: Retrieve anticipation history
+      operationId: findHistory
+      parameters:
+        - name: anticipationDate
+          in: query
+          description: Anticipation date to filter (format YYYY-MM-DD)
+          required: false
+          type: string
+          format: date
+        - name: statusId
+          in: query
+          description: Status ID to filter anticipations
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Maximum number of records to return
+          required: false
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+        - name: offset
+          in: query
+          description: Number of records to skip for pagination
+          required: false
+          type: integer
+          minimum: 0
+          default: 0
+      responses:
+        200:
+          description: The Request was successful
+          schema:
+            $ref: "#/definitions/HistoryResponse"
+        204:
+          description: No Content
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+  /receivables:
+    get:
+      tags:
+        - Receivables
+      description: Retrieve available receivables grouped by payment date
+      summary: Retrieve available receivables
+      security:
+        - OauthSecurityUser:
+            - read
+      operationId: findAvailables
+      parameters:
+        - name: date
+          in: query
+          description: Payment date to filter receivables (format YYYY-MM-DD). Defaults to today's date if not provided.
+          required: false
+          type: string
+          format: date
+        - name: limit
+          in: query
+          description: Maximum number of receivables to return
+          required: false
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 10
+        - name: offset
+          in: query
+          description: Number of receivables to skip for pagination
+          required: false
+          type: integer
+          minimum: 0
+          default: 0
+      responses:
+        200:
+          description: The request was successful
+          schema:
+            $ref: "#/definitions/ReceivableGroupedResponse"
+        400:
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
+  /market-availability:
+    get:
+      tags:
+        - Market
+      description: Check if the market is available for operations based on business hours and holidays
+      summary: Check market availability
+      security:
+        - OauthSecurityUser:
+            - read
+      operationId: checkMarketAvailability
+      responses:
+        204:
+          description: Market is open and available for operations
+        410:
+          description: Market is closed (outside business hours or holiday)
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
 
+  /simulate:
+    post:
+      tags:
+        - Simulation
+      description: Simulate card receivables anticipation
+      summary: Simulate card receivables anticipation
+      security:
+        - OauthSecurityUser:
+            - read
+      operationId: simulate
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SimulationRequest'
+      responses:
+        201:
+          description: Simulation created successfully
+          schema:
+            $ref: "#/definitions/SimulationResponse"
+        204:
+          description: No offers available
+        401:
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        424:
+          description: Failed Dependency
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected Error
 
+definitions:
+  OnboardingResponse:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/OnboardingStatus'
+  OnboardingStatus:
+    type: string
+    enum:
+      - STARTED
+      - REVIEW
+      - PENDING
+      - APPROVED
+      - REJECTED
+  OnboardingExecutionResponse:
+    type: object
+    properties:
+      redirectUrl:
+        type: string
+        description: URL to redirect user to partner onboarding page
+        example: 'https://cadastro.pagbank.com.br/serasa-empreendedor'
+      partnerLogoUrl:
+        type: string
+        description: URL of the partner logo image
+        example: 'https://example.com/partner-logo.svg'
+    required:
+      - redirectUrl
+      - partnerLogoUrl
 
-/receivables
+  HistoryResponse:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/HistoryItem'
+      nextPage:
+        type: string
+        x-nullable: true
+      pageSize:
+        type: integer
+    required: [items, pageSize]
 
-{
-  "content": [
-    {
-      "paymentDate": "2025-10-15",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "f70eae14-9a0a-4282-a50f-b32674ba2de5",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-10-16",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "3a9d8429-0a9a-45e8-b03e-b0dfb18941bc",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-10-17",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "eb164a56-4e36-4a94-a118-99accceedee2",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-10-20",
-      "count": 3,
-      "totalAmountToReceive": 3000,
-      "items": [
-        {
-          "id": "2e7eb7bb-8b16-4433-81dc-b94e2cd874c0",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        },
-        {
-          "id": "2b595a4f-45c0-4d50-a04f-5794ca3c2da1",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        },
-        {
-          "id": "50c2495f-f65c-404e-b3e4-a84e4682e56c",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-10-21",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "68ba3c8c-1dca-4723-a355-d684b76e81c7",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-10-22",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "bb6f43a6-ee97-49d1-9df3-32ee4f37eef9",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-10-23",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "0630c100-579e-479f-b2b4-d958720c9e94",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-10-24",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "a7fc135f-aea8-4750-84fe-2d3054d8648c",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    }
-  ],
-  "page": {
-    "size": 10,
-    "totalElements": 10,
-    "totalPages": 1,
-    "number": 1
-  }
-}
+  HistoryItem:
+    type: object
+    properties:
+      id:
+        type: string
+      requestDate:
+        type: string
+        format: date
+        example: "2025-09-01"
+        x-field-extra-annotation: >
+          @com.fasterxml.jackson.annotation.JsonFormat(
+          shape = com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING,
+          pattern = "yyyy-MM-dd")
+      status:
+        type: string
+        enum: [PENDING, CONCLUDED, ERROR, PARTIALLY_APPROVED, REJECTED, PAID]
+      receivablesCount:
+        type: integer
+        description: Total count of receivables for this anticipation
+      accreditingInstitution:
+        type: string
+        example: 'Stone'
+      receivables:
+        type: array
+        items:
+          $ref: '#/definitions/ReceivableItem'
+      totalNetValue:
+        type: string
+        format: decimal
+        description: Sum of all netValue from receivables
+    required: [id, requestDate, status, receivablesCount, receivables, totalNetValue]
+
+  ReceivableItem:
+    type: object
+    properties:
+      cnpj:
+        type: string
+        example: '12.345.678/0001-00'
+      accreditingInstitution:
+        type: string
+        example: 'Stone'
+      installments:
+        type: integer
+        example: 3
+      installmentValue:
+        type: string
+        format: decimal
+        example: "500.00"
+      feePercentage:
+        type: string
+        format: decimal
+        example: "1.99"
+      discountValue:
+        type: string
+        format: decimal
+        example: "15.00"
+      netValue:
+        type: string
+        format: decimal
+        example: "485.00"
+        description: Same as receivedAmount from partner API
+    required: [cnpj, accreditingInstitution, installments, installmentValue, feePercentage, discountValue, netValue]
+
+  ReceivableGroupedResponse:
+    type: object
+    properties:
+      content:
+        type: array
+        items:
+          $ref: '#/definitions/ReceivableGroup'
+      page:
+        $ref: '#/definitions/Pagination'
+
+  ReceivableGroup:
+    type: object
+    properties:
+      paymentDate:
+        type: string
+        example: '2025-07-22'
+      count:
+        type: integer
+        example: 5
+      totalAmountToReceive:
+        type: number
+        example: '7422.25'
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ReceivableData'
+  ReceivableData:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 'f63985b1-619d-4514-ab19-bd1ec6f69ab0'
+      paymentDate:
+        type: string
+        example: '2025-07-22'
+      accreditingInstitutionName:
+        type: string
+        example: 'Cielo'
+      accreditingInstitutionDocument:
+        type: string
+        example: '01027058000191'
+        description: 'Accreditor CNPJ'
+      paymentType:
+        $ref: '#/definitions/PaymentType'
+      installment:
+        $ref: '#/definitions/InstallmentData'
+      discount:
+        type: number
+        example: '50.00'
+      amountToReceive:
+        type: number
+        example: '1484.45'
+  PaymentType:
+    type: string
+    enum:
+      - CREDIT_SINGLE
+      - CREDIT_INSTALLMENT
+    example: 'CREDIT_INSTALLMENT'
+  InstallmentData:
+    type: object
+    properties:
+      count:
+        type: integer
+        example: '3'
+      number:
+        type: integer
+        example: '1'
+      amount:
+        type: number
+        example: '1534.45'
+      paymentType:
+        $ref: '#/definitions/PaymentType'
+      discount:
+        type: number
+        example: '50.00'
+  Pagination:
+    type: object
+    properties:
+      size:
+        type: integer
+        example: 10
+      totalElements:
+        type: integer
+        example: 50
+      totalPages:
+        type: integer
+        example: 5
+      number:
+        type: integer
+        example: 1
+
+  ErrorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+
+  SimulationRequest:
+    type: object
+    properties:
+      cardReceivables:
+        type: array
+        items:
+          $ref: '#/definitions/CardReceivableGroup'
+    required:
+      [cardReceivables]
+
+  CardReceivableGroup:
+    type: object
+    properties:
+      accreditingInstitutionDocument:
+        type: string
+        description: CNPJ of the accrediting institution
+        example: '12345678000100'
+      ids:
+        type: array
+        items:
+          type: string
+        description: List of receivable IDs to be anticipated
+    required: [accreditingInstitutionDocument, ids]
+
+  SimulationResponse:
+    type: object
+    properties:
+      receivableOfferIds:
+        type: array
+        items:
+          type: string
+        description: List of receivable offer IDs created from the simulation
+      cardBrands:
+        type: array
+        items:
+          type: string
+          description: Accrediting institution card brands involved in the simulation
+        example: ['Cielo', 'Stone']
+      bankAccounts:
+        type: array
+        items:
+            $ref: '#/definitions/BankAccountInfo'
+            description: List of bank accounts associated with the simulation
+      receivablesCount:
+        type: integer
+        description: Total count of receivables approved
+        example: 3
+      grossTotalAmount:
+        type: string
+        format: decimal
+        description: Sum of all installment values before fees and discounts
+        example: "1500.00"
+      totalDiscountAmount:
+        type: string
+        format: decimal
+        description: Sum of all discounts applied
+        example: "30.00"
+      netAmountToReceive:
+        type: string
+        format: decimal
+        description: Sum of the finalAmount field returned in the list of offers
+        example: "1470.00"
+    required: [receivableOfferIds, cardBrands, bankAccounts, receivablesCount, grossTotalAmount, totalDiscountAmount, netAmountToReceive]
+
+  BankAccountInfo:
+    type: object
+    properties:
+      bankName:
+        type: string
+        description: Bank Name
+        example: 'Bradesco'
+      agencyNumber:
+        type: string
+        description: Bank agency number
+        example: '1234-5'
+      accountNumber:
+        type: string
+        description: Bank account number
+        example: '56789-0'
+      creditedAmount:
+        type: string
+        format: decimal
+        description: Gross value of the account
+        example: "1470.00"
+      associatedBrand:
+        type: string
+        description: Name of the accrediting institution associated with this bank account
+        example: 'Cielo'
+    required: [bankName, agencyNumber, accountNumber, creditedAmount, associatedBrand]
 
