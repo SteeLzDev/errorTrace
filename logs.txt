@@ -1,353 +1,265 @@
-package br.com.experian.anticipation.domain.service.impl;
+package br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa;
 
-import br.com.experian.anticipation.domain.client.AccountClient;
-import br.com.experian.anticipation.domain.client.RegistrationClient;
-import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
-import br.com.experian.anticipation.domain.exception.ConflictException;
-import br.com.experian.anticipation.domain.model.Agreement;
+
+import br.com.experian.anticipation.domain.constant.PaymentType;
+import br.com.experian.anticipation.domain.dto.*;
+import br.com.experian.anticipation.domain.model.ReceivablesPage;
 import br.com.experian.anticipation.domain.port.AuthenticationPort;
-import br.com.experian.anticipation.domain.repository.AgreementRepository;
-import br.com.experian.anticipation.domain.service.HistoryService;
-import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
-import br.com.experian.observability.annotation.LogMethod;
-import br.com.experian.swagger.antecipa.model.*;
-import br.com.experian.swagger.anticipation.model.*;
-import com.fasterxml.jackson.core.type.TypeReference;
+import br.com.experian.anticipation.domain.port.ReceivablesPort;
+import br.com.experian.anticipation.infrastructure.integration.feign.constant.Resilience4jConstant;
+import br.com.experian.swagger.antecipa.model.AntecipaCardReceivableListDto;
+import br.com.experian.swagger.antecipa.model.AntecipaCardReceivableListDtoPagedCollectionItems;
+import br.com.experian.swagger.anticipation.model.PaymentTypeTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j2
-public class HistoryServiceImpl implements HistoryService {
+@Component
+public class AntecipaReceivablesAdapter implements ReceivablesPort {
+
 
     private final AntecipaClient antecipaClient;
-    private final AgreementRepository agreementRepository;
     private final AuthenticationPort authenticationPort;
     private final ObjectMapper objectMapper;
-    private final AccountClient accountClient;
-    private final RegistrationClient registrationClient;
 
-    public HistoryServiceImpl(AntecipaClient antecipaClient,
-                              AgreementRepository agreementRepository, AuthenticationPort authenticationPort, ObjectMapper objectMapper, AccountClient accountClient,
-                              RegistrationClient registrationClient) {
+    public AntecipaReceivablesAdapter(AntecipaClient antecipaClient, AuthenticationPort authenticationPort, ObjectMapper objectMapper) {
         this.antecipaClient = antecipaClient;
-        this.agreementRepository = agreementRepository;
         this.authenticationPort = authenticationPort;
         this.objectMapper = objectMapper;
-        this.accountClient = accountClient;
-        this.registrationClient = registrationClient;
     }
 
     @Override
-    @LogMethod
-    public Optional<HistoryResponseTO> findHistoryWithReceivables(String startAnticipationDate,
-                                                                  String endAnticipationDate,
-                                                                  String statusId,
-                                                                  String pageId,
-                                                                  Integer pageSize) {
-        Agreement agreement = this.getUserAgreement();
-        log.info("Fetching anticipation history with receivables for supplier: {}", agreement.getNationalRegistrationId());
-
+    @Retry(name = Resilience4jConstant.ANTECIPA_CERC)
+    public Optional<ReceivablesPageDto> getReceivables(String supplierDocument, Integer limit, Integer offset) {
         try {
-            String token = "Bearer " + authenticationPort.getValidToken();
+            log.info("Consulting receivables in the API for document: {} with limit: {} and offset: {}", supplierDocument, limit, offset);
 
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse =
-                    antecipaClient.getAnticipations(token, agreement.getNationalRegistrationId(),
-                            null,
-                            startAnticipationDate,
-                            endAnticipationDate,
-                            statusId,
-                            pageId,
-                            pageSize);
-            List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(pagedResponse);
+            String bearerToken = "Bearer " + authenticationPort.getValidToken();
 
-            if (externalItems.isEmpty()) {
-                log.info("No anticipation history for supplier: {}", agreement);
+            String pageId = calculatePageId(offset, limit);
+
+            AntecipaCardReceivableListDtoPagedCollectionItems response = antecipaClient.getCardReceivables(
+                    bearerToken,
+                    supplierDocument,
+                    "1",
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    pageId,
+                    limit
+            );
+            if (response == null || response.getItems() == null || response.getItems().isEmpty()) {
+                log.info("API returned no receivables for document: {}", supplierDocument);
                 return Optional.empty();
             }
 
-            List<HistoryItemTO> historyItems = buildHistoryItems(externalItems, agreement.getNationalRegistrationId(), token);
+            ReceivablesPageDto receivablesPageDto = mapToReceivablesModel(response, limit, offset);
 
-            HistoryResponseTO response = new HistoryResponseTO();
-            response.setItems(historyItems);
-            
-            if (pagedResponse != null && pagedResponse.getPageNextId() != null && !pagedResponse.getPageNextId().isEmpty()) {
-                response.setNextPage(pagedResponse.getPageNextId());
-            } else {
-                response.setNextPage(null);
-            }
-            
-            response.setPageSize(pageSize != null ? pageSize : 10);
-            log.info("Successfully retrieved {} anticipation records with receivables for supplier: {}", historyItems.size(), agreement.getNationalRegistrationId());
-            return Optional.of(response);
-        } catch (Exception e) {
-            log.error("Error fetching anticipation history for supplier: {}: {}", agreement.getNationalRegistrationId(), e.getMessage(), e);
+            log.info("Successfully retrieved {} receivables for document: {}", receivablesPageDto.getGroups().stream()
+                    .mapToInt(ReceivablesGroupDto::getCount).sum(), supplierDocument);
+
+            return Optional.of(receivablesPageDto);
+        } catch (FeignException e) {
+            log.error("Error querying receivables for document: {} - Status: {}, Message: {}", supplierDocument, e.status(), e.getMessage(), e);
             return Optional.empty();
         }
     }
 
-    @Override
-    @LogMethod
-    public Optional<HistoryResponseTO> findHistoryWithReceivables(String startAnticipationDate,
-                                                                  String endAnticipationDate,
-                                                                  String statusId,
-                                                                  Integer offset,
-                                                                  Integer limit) {
-        Integer pageSizeInt = limit != null && limit > 0 ? limit : 10;
-        return findHistoryWithReceivables(startAnticipationDate, endAnticipationDate, statusId, (String) null, pageSizeInt);
-    }
-
-    private List<HistoryItemTO> buildHistoryItems(List<AntecipaAnticipationCardReceivableListDto> externalItems,
-                                                  String supplierDocument,
-                                                  String token) {
-        List<HistoryItemTO> historyItems = new ArrayList<>();
-
-        for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
-            HistoryItemTO item = createHistoryItem(ext, supplierDocument, token);
-            historyItems.add(item);
+    private String calculatePageId(Integer offset, Integer limit) {
+        if (offset == null || limit == null || offset == 0) {
+            return null;
         }
-        return historyItems;
+        return String.valueOf((offset / limit) + 1);
     }
 
-    private HistoryItemTO createHistoryItem(AntecipaAnticipationCardReceivableListDto ext, String supplierDocument, String token) {
-        HistoryItemTO item = new HistoryItemTO();
+    private ReceivablesPageDto mapToReceivablesModel(AntecipaCardReceivableListDtoPagedCollectionItems response, Integer limit, Integer offset) {
 
-        String id = extractId(ext);
-        item.setId(id);
+        List<AntecipaCardReceivableListDto> items = new ArrayList<>();
 
-        setRequestDate(item, ext);
-        setStatus(item, ext);
-        setReceivablesData(item, id, supplierDocument, token, ext);
-
-        return item;
-    }
-
-    private String extractId(AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getId() != null) {
-            return String.valueOf(ext.getId());
-        }
-        return null;
-    }
-
-    private void setRequestDate(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getCreatedAt() != null) {
-            LocalDateTime ldt = parseToLocalDate(ext.getCreatedAt().toString());
-            if (ldt != null) {
-                String formattedDate = ldt.toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-                item.setRequestDate(LocalDate.parse(formattedDate));
-            }
-        }
-    }
-
-    private void setStatus(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getStatusId() != null) {
-            String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
-            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
-        }
-    }
-
-    private void setReceivablesData(HistoryItemTO item, String id, String supplierDocument,
-                                    String token, AntecipaAnticipationCardReceivableListDto ext) {
-        if (id != null) {
-            try {
-                AntecipaAnticipationCardReceivableDto detail =
-                        antecipaClient.getAnticipationById(token, supplierDocument, id);
-
-                List<ReceivableItemTO> receivables = processReceivables(detail, ext);
-                item.setReceivables(receivables);
-
-                BigDecimal totalNetValue = calculateTotalNetValue(receivables);
-                item.setTotalNetValue(totalNetValue);
-                item.setReceivablesCount(receivables.size());
-
-            } catch (Exception e) {
-                log.warn("Failed to fetch receivables details for ID: {}", id, e);
-                setEmptyReceivablesData(item);
-            }
-        } else {
-            setEmptyReceivablesData(item);
-        }
-    }
-
-    private BigDecimal calculateTotalNetValue(List<ReceivableItemTO> receivables) {
-        return receivables.stream()
-                .map(ReceivableItemTO::getNetValue)
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private void setEmptyReceivablesData(HistoryItemTO item) {
-        item.setReceivables(new ArrayList<>());
-        item.setTotalNetValue(BigDecimal.ZERO);
-        item.setReceivablesCount(0);
-    }
-
-    private List<AntecipaAnticipationCardReceivableListDto> extractItems(
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
-
-        if (pagedResponse == null) return Collections.emptyList();
-
-        Object raw = pagedResponse.getItems();
-        if (!(raw instanceof List<?> rawList) || rawList.isEmpty()) return Collections.emptyList();
-
-        try {
-            byte[] bytes = objectMapper.writeValueAsBytes(rawList);
-            return objectMapper.readValue(bytes, new TypeReference<>() {
-            });
-
-        } catch (Exception e) {
-            log.error("Error deserializing items list", e);
-            return Collections.emptyList();
-        }
-    }
-
-    private List<ReceivableItemTO> processReceivables(AntecipaAnticipationCardReceivableDto detail,
-                                                      AntecipaAnticipationCardReceivableListDto listItem) {
-        List<ReceivableItemTO> receivables = new ArrayList<>();
-
-        if (detail == null) return receivables;
-
-        processAnticipatedItems(detail, listItem, receivables);
-        processNoAnticipatedItems(detail, listItem, receivables);
-
-        return receivables;
-    }
-
-    private void processAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
-                                         AntecipaAnticipationCardReceivableListDto listItem,
-                                         List<ReceivableItemTO> receivables) {
-
-        if (detail.getAnticipatedItems() != null) {
-            List<?> anticipatedItemsObj = detail.getAnticipatedItems();
-            if (anticipatedItemsObj != null) {
-                processReceivablesList(anticipatedItemsObj, detail, listItem, receivables);
-            }
-        }
-    }
-
-    private void processNoAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
-                                           AntecipaAnticipationCardReceivableListDto listItem,
-                                           List<ReceivableItemTO> receivables) {
-        if (detail.getNotAnticipatedItems() != null) {
-            List<?> notAnticipatedItemsObj = detail.getNotAnticipatedItems();
-            if (notAnticipatedItemsObj != null) {
-                processReceivablesList(notAnticipatedItemsObj, detail, listItem, receivables);
-            }
-        }
-    }
-
-    private void processReceivablesList(List<?> itemsList,
-                                        AntecipaAnticipationCardReceivableDto detail,
-                                        AntecipaAnticipationCardReceivableListDto listItem,
-                                        List<ReceivableItemTO> receivables) {
-        for (Object itemObj : itemsList) {
-            try {
-                AntecipaAnticipationCardReceivableItemDto sourceItem = convertToSourceItem(itemObj);
-                if (sourceItem != null) {
-                    ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
-                    if (item != null) {
-                        receivables.add(item);
-                    }
+        if (response.getItems() != null) {
+            List<?> rawItems = response.getItems();
+            log.debug("Processing {} raw items from response", rawItems.size());
+            for (Object rawItem : rawItems) {
+                try {
+                    AntecipaCardReceivableListDto dto = objectMapper.convertValue(rawItem, AntecipaCardReceivableListDto.class);
+                    items.add(dto);
+                    log.debug("Successfully converted item to AntecipaCardReceivableListDto: {}", dto);
+                } catch (IllegalArgumentException e) {
+                    log.warn("Failed to convert item to AntecipaCardReceivableListDto: {}", e.getMessage());
                 }
-            } catch (Exception e) {
-                log.error("Error converting anticipated item to DTO: {}", e.getMessage(), e);
             }
+            log.info("Successfully converted {} / {} items from API response", items.size(), rawItems.size());
         }
+        Map<LocalDate, List<ReceivablesPage>> receivablesByDate = items.stream()
+                .map(this::mapToReceivableModel)
+                .filter(receivable -> receivable.getPaymentDate() != null)
+                .collect(Collectors.groupingBy(ReceivablesPage::getPaymentDate));
+        log.info("Grouped receivables into {} different payment dates", receivablesByDate.size());
+
+        List<ReceivablesGroupDto> groups = receivablesByDate.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .map(entry -> {
+                    LocalDate date = entry.getKey();
+                    List<ReceivablesPage> receivablesForDate = entry.getValue();
+                    log.debug("Date: {} has {} receivables", date, receivablesForDate.size());
+                    Double totalAmountToReceive = receivablesForDate.stream()
+                            .mapToDouble(r -> r.getAmountToReceive() != null ? r.getAmountToReceive().doubleValue() : 0.0).sum();
+
+                    return ReceivablesGroupDto.builder()
+                            .date(date)
+                            .receivables(receivablesForDate)
+                            .count(receivablesForDate.size())
+                            .totalAmountToReceive(totalAmountToReceive)
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+
+        int currentPage = offset != null && limit != null ? (offset / limit): 0;
+        boolean hasNexPage = response.getPageNextId() != null &&
+                response.getPageNextId().isEmpty();
+        int totalPages = hasNexPage ? currentPage + 2 : currentPage + 1;
+
+        long totalElements = groups.stream().mapToLong(ReceivablesGroupDto::getCount).sum();
+
+        PageDto pagination  = PageDto.builder()
+                .size(limit != null ? limit : items.size())
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .number(currentPage)
+                .build();
+
+        return ReceivablesPageDto.builder()
+                .groups(groups)
+                .page(pagination)
+                .build();
     }
 
-    private AntecipaAnticipationCardReceivableItemDto convertToSourceItem(Object itemObj) {
-        if (itemObj instanceof AntecipaAnticipationCardReceivableItemDto) {
-            return (AntecipaAnticipationCardReceivableItemDto) itemObj;
-        } else if (itemObj instanceof LinkedHashMap) {
-            return objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivableItemDto.class);
-        } else {
-            log.warn("Unexpected item type in anticipatedItems: {}", itemObj.getClass().getName());
+    private ReceivablesPage mapToReceivableModel(AntecipaCardReceivableListDto item) {
+        PaymentTypeTO paymentTypeTO = mapPaymentType(item);
+        return ReceivablesPage.builder()
+                .id(item.getId())
+                .paymentDate(convertDueDateToLocalDate(item.getDueDate()))
+                .nationalRegistrationId(extractNationalRegistrationId(item))
+                .accreditingInstitutionName(extractAccreditingInstitutionName(item))
+                .accreditingInstitutionDocument(extractAccreditingInstitutionDocument(item))
+                .paymentTypeTO(paymentTypeTO)
+                .paymentType(mapToPaymentTypeEnum(paymentTypeTO))
+                .installment(mapInstallment(item))
+                .discount(calculateDiscount(item))
+                .amountToReceive(calculateAmountToReceive(item))
+                .build();
+    }
+
+    private LocalDate convertPaymentDateToLocalDate(AntecipaCardReceivableListDto item) {
+        if (item.getPaymentDate() == null) {
+            return null;
+        }
+        try {
+            String paymentDateStr = String.valueOf(item.getPaymentDate());
+            if (paymentDateStr == null || paymentDateStr.isEmpty()) {
+                return null;
+            }
+            return LocalDate.parse(paymentDateStr);
+        } catch (Exception e) {
+            log.warn("Erro parsing payment date: {}", item.getPaymentDate(), e);
             return null;
         }
     }
 
-    private ReceivableItemTO convertToReceivableItem(AntecipaAnticipationCardReceivableItemDto sourceItem,
-                                                     AntecipaAnticipationCardReceivableDto parentDetail,
-                                                     AntecipaAnticipationCardReceivableListDto parentListItem) {
-        if (sourceItem == null) return null;
-
-        ReceivableItemTO item = new ReceivableItemTO();
-
-        setCnpj(item, parentDetail);
-        setAccreditingInstitution(item, parentDetail);
-        setBasicReceivableData(item, sourceItem);
-        return item;
-    }
-
-    private void setCnpj(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
-        if (parentDetail.getSupplier() != null && parentDetail.getSupplier().getDocument() != null) {
-            String document = parentDetail.getSupplier().getDocument();
-            if (document != null) {
-                item.setCnpj(document);
-            }
-        }
-    }
-
-    private void setAccreditingInstitution(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
-        if (parentDetail.getAccreditingInstitution() != null && parentDetail.getAccreditingInstitution().getName() != null) {
-            String name = parentDetail.getAccreditingInstitution().getName();
-            if (name != null) {
-                item.setAccreditingInstitution(name);
-            }
-        }
-    }
-
-    private void setBasicReceivableData(ReceivableItemTO item, AntecipaAnticipationCardReceivableItemDto sourceItem) {
-        item.setInstallments(1);
-
-        if (sourceItem.getSelectedAmount() != null) {
-            item.setInstallmentValue(BigDecimal.valueOf(sourceItem.getSelectedAmount()));
-        }
-
-        if (sourceItem.getEffectiveRate() != null) {
-            item.setFeePercentage(BigDecimal.valueOf(sourceItem.getEffectiveRate()));
-        }
-
-        if (sourceItem.getDiscount() != null) {
-            item.setDiscountValue(BigDecimal.valueOf(sourceItem.getDiscount()));
-        } else {
-            item.setDiscountValue(BigDecimal.ZERO);
-        }
-
-        if (sourceItem.getNetValue() != null) {
-            item.setNetValue(BigDecimal.valueOf(sourceItem.getNetValue()));
-        } else {
-            item.setNetValue(BigDecimal.ZERO);
-        }
-    }
-
-    private static LocalDateTime parseToLocalDate(String s) {
-        if (s == null || s.isBlank()) return null;
-        try {
-            return OffsetDateTime.parse(s).toLocalDateTime();
-        } catch (DateTimeParseException ignore) {
+    private LocalDate convertDueDateToLocalDate(LocalDateTime dueDate) {
+        if (dueDate == null) {
+            return null;
         }
         try {
-            return LocalDateTime.parse(s);
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDate.parse(s).atStartOfDay();
-        } catch (DateTimeParseException ignore) {
-        }
+            LocalDate converted = dueDate.toLocalDate();
+            return converted;
 
+        } catch (Exception e) {
+            log.warn("Error parsing payment date: {}", dueDate, e);
+            return null;
+        }
+    }
+
+    private String extractNationalRegistrationId(AntecipaCardReceivableListDto item) {
+        if (item.getSupplier() != null && item.getSupplier().getDocument() != null) {
+            return item.getSupplier().getDocument();
+        }
         return null;
     }
 
-    private Agreement getUserAgreement() {
-        return this.agreementRepository.getUserAgreement()
-                .orElseThrow(() -> new ConflictException("3"));
+    private String extractAccreditingInstitutionName(AntecipaCardReceivableListDto item) {
+
+        if (item.getAccreditingInstitution() != null &&
+                item.getAccreditingInstitution().getName() != null) {
+            return item.getAccreditingInstitution().getName();
+
+        }
+        return null;
+
     }
+
+    private String extractAccreditingInstitutionDocument(AntecipaCardReceivableListDto item) {
+        if (item.getAccreditingInstitution() != null &&
+                item.getAccreditingInstitution().getDocument() != null) {
+            return item.getAccreditingInstitution().getDocument();
+
+    }
+    return null;
+}
+
+
+    private PaymentTypeTO mapPaymentType(AntecipaCardReceivableListDto item) {
+        return PaymentTypeTO.CREDIT_SINGLE;
+    }
+
+    private InstallmentDto mapInstallment(AntecipaCardReceivableListDto item) {
+        return InstallmentDto.builder()
+                .count(1)
+                .number(1)
+                .amount(item.getValue() != null ? BigDecimal.valueOf(item.getValue()) : BigDecimal.ZERO)
+                .build();
+    }
+
+    private BigDecimal calculateDiscount(AntecipaCardReceivableListDto item) {
+        if (item.getAnticipationSimulation() != null && item.getAnticipationSimulation().getDiscount() != null) {
+            return BigDecimal.valueOf(item.getAnticipationSimulation().getDiscount());
+        }
+        return BigDecimal.ZERO;
+    }
+
+    private BigDecimal calculateAmountToReceive(AntecipaCardReceivableListDto item) {
+        BigDecimal originalValue = item.getValue() != null ? BigDecimal.valueOf(item.getValue()) : BigDecimal.ZERO;
+        BigDecimal discount = calculateDiscount(item);
+        return originalValue.subtract(discount);
+    }
+
+    private PaymentType mapToPaymentTypeEnum(PaymentTypeTO paymentTypeTO) {
+        if (paymentTypeTO == null) {
+            return null;
+        }
+        switch (paymentTypeTO) {
+            case CREDIT_SINGLE:
+                return PaymentType.CREDIT_SINGLE;
+            case CREDIT_INSTALLMENT:
+                return PaymentType.CREDIT_INSTALLMENT;
+            default:
+                return null;
+        }
+    }
+
 }
