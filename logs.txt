@@ -1,5 +1,6 @@
 package br.com.experian.anticipation.domain.service.impl;
 
+import br.com.experian.anticipation.application.adapter.HistoryAdapter;
 import br.com.experian.anticipation.domain.client.AccountClient;
 import br.com.experian.anticipation.domain.client.RegistrationClient;
 import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
@@ -12,7 +13,6 @@ import br.com.experian.anticipation.infrastructure.integration.feign.client.ante
 import br.com.experian.observability.annotation.LogMethod;
 import br.com.experian.swagger.antecipa.model.*;
 import br.com.experian.swagger.anticipation.model.*;
-import br.com.experian.anticipation.application.adapter.HistoryAdapter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
@@ -30,7 +30,6 @@ import java.util.*;
 @Log4j2
 public class HistoryServiceImpl implements HistoryService {
 
-    private static final int DEFAULT_PAGE_SIZE = 10;
 
     private final AntecipaClient antecipaClient;
     private final AgreementRepository agreementRepository;
@@ -62,96 +61,39 @@ public class HistoryServiceImpl implements HistoryService {
         Agreement agreement = this.getUserAgreement();
         log.info("Fetching anticipation history with receivables for supplier: {}", agreement.getNationalRegistrationId());
 
+
         try {
             String token = "Bearer " + authenticationPort.getValidToken();
 
             AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse =
-                    antecipaClient.getAnticipations(
-                            token,
-                            agreement.getNationalRegistrationId(),
+                    antecipaClient.getAnticipations(token, agreement.getNationalRegistrationId(),
                             null,
                             startAnticipationDate,
                             endAnticipationDate,
                             statusId,
                             pageId,
-                            pageSize != null && pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE
-                    );
-
-            if (pagedResponse == null) {
-                log.info("No anticipation history for supplier: {}", agreement.getNationalRegistrationId());
-                return Optional.empty();
-            }
-
+                            pageSize);
             List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(pagedResponse);
 
             if (externalItems.isEmpty()) {
-                log.info("No anticipation history items for supplier: {}", agreement.getNationalRegistrationId());
+                log.info("No anticipation history for supplier: {}", agreement);
                 return Optional.empty();
             }
 
-            log.info("Retrieved {} items from Antecipa API for supplier: {}", externalItems.size(), agreement.getNationalRegistrationId());
-
             List<HistoryItemTO> historyItems = buildHistoryItems(externalItems, agreement.getNationalRegistrationId(), token);
 
-            Integer requestedPageSize = pageSize != null && pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE;
-            Integer currentPage = parsePageNumber(pageId);
-            Integer totalElements = extractTotalElements(pagedResponse, historyItems.size());
+            Integer totalElements = extractTotalElements (pagedResponse, historyItems.size());
+            Integer currentPage = calculateCurrentPage(pageId, pageSize, totalElements);
 
             HistoryResponseTO response = new HistoryResponseTO();
             response.setItems(historyItems);
 
-            HistoryAdapter.addPaginationToResponse(response, requestedPageSize, totalElements, currentPage);
-
-            log.info("Successfully retrieved {} items (page {}) for supplier: {}",
-                    historyItems.size(), currentPage, agreement.getNationalRegistrationId());
+            HistoryAdapter.addPaginationToResponse(response, pageSize, totalElements, currentPage);
+            log.info("Successfully retrieved {} anticipation records with receivables for supplier: {}", historyItems.size(), agreement.getNationalRegistrationId());
             return Optional.of(response);
         } catch (Exception e) {
             log.error("Error fetching anticipation history for supplier: {}: {}", agreement.getNationalRegistrationId(), e.getMessage(), e);
             return Optional.empty();
-        }
-    }
-
-    /**
-     * Extrai o total de elementos da resposta da API Antecipa.
-     * TODO: Verificar se a API Antecipa retorna um campo com o total de elementos (ex: totalCount, totalElements).
-     * Por enquanto, usa o tamanho dos itens da página atual como fallback.
-     *
-     * @param pagedResponse resposta paginada da API
-     * @param currentPageSize tamanho da página atual
-     * @return total de elementos
-     */
-    private Integer extractTotalElements(AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse,
-                                         int currentPageSize) {
-        if (pagedResponse == null) {
-            return 0;
-        }
-
-        // TODO: Verificar a estrutura real da resposta da API Antecipa
-        // Exemplo: se houver um campo como pagedResponse.getTotalCount(), use-o aqui
-        // return pagedResponse.getTotalCount();
-
-        // Por enquanto, retorna o tamanho da página atual
-        // Isso deve ser ajustado quando soubermos o campo correto da API
-        log.debug("Using current page size as totalElements. This should be replaced with actual API field.");
-        return currentPageSize;
-    }
-
-    /**
-     * Converte o pageId string para número inteiro.
-     *
-     * @param pageId identificador da página
-     * @return número da página
-     */
-    private Integer parsePageNumber(String pageId) {
-        if (pageId == null || pageId.isEmpty()) {
-            return 1;
-        }
-
-        try {
-            return Integer.parseInt(pageId);
-        } catch (NumberFormatException e) {
-            log.warn("Invalid pageId format: {}, defaulting to page 1", pageId);
-            return 1;
         }
     }
 
@@ -162,10 +104,8 @@ public class HistoryServiceImpl implements HistoryService {
                                                                   String statusId,
                                                                   Integer offset,
                                                                   Integer limit) {
-        String pageId = offset != null && offset > 0 ? String.valueOf(offset) : "1";
-        Integer pageSizeInt = limit != null && limit > 0 ? limit : DEFAULT_PAGE_SIZE;
-
-        return findHistoryWithReceivables(startAnticipationDate, endAnticipationDate, statusId, pageId, pageSizeInt);
+        Integer pageSizeInt = limit != null && limit > 0 ? limit : 10;
+        return findHistoryWithReceivables(startAnticipationDate, endAnticipationDate, statusId, (String) null, pageSizeInt);
     }
 
     private List<HistoryItemTO> buildHistoryItems(List<AntecipaAnticipationCardReceivableListDto> externalItems,
@@ -222,6 +162,7 @@ public class HistoryServiceImpl implements HistoryService {
     private void setStatus(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
         if (ext.getStatusId() != null) {
             String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
+            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
             item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
         }
     }
@@ -435,8 +376,34 @@ public class HistoryServiceImpl implements HistoryService {
         return null;
     }
 
+    private Integer extractTotalElements(AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse, int currentSize) {
+        if (pagedResponse == null) {
+            return currentSize;
+        }
+        try {
+            return currentSize;
+        } catch (Exception e) {
+            log.warn("Could not extract total elements from paged response, defaulting to current size: {}", e.getMessage());
+        }
+
+        return currentSize;
+    }
+
+    private Integer calculateCurrentPage(String pageId, Integer pageSize, Integer totalElements) {
+        if (pageId == null || pageId.isEmpty()) {
+            return 1;
+        }
+        try {
+            return Integer.parseInt(pageId);
+        } catch (NumberFormatException e) {
+            log.warn("Invalid pageId format: {}, defaulting to page 1", pageId);
+            return 1;
+        }
+    }
+
     private Agreement getUserAgreement() {
         return this.agreementRepository.getUserAgreement()
                 .orElseThrow(() -> new ConflictException("3"));
     }
+
 }
