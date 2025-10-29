@@ -1,46 +1,9 @@
-na hora de montar o response ele está considerando apenas os dados que o front passa para o backend
- 
-percebi que o objeto de paginação tambem é diferente
- 
-no /receivables ele está assim:
-"page": {
+'mapPartnerResponseToHistoryResponse(br.com.experian.swagger.antecipa.model.AntecipaCardReceivableListDtoPagedCollectionItems, java.lang.Integer)' in 'br.com.experian.anticipation.domain.service.impl.HistoryServiceImpl' cannot be applied to '(br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDtoPagedCollectionItems, java.lang.Integer)'
 
-			"size": 10,
 
-		    "totalElements": 50,
+Cannot resolve method 'setTotalGrossValue' in 'HistoryItemTO'
 
-		    "totalPages": 5,
+'setTotalNetValue(java.math.BigDecimal)' in 'br.com.experian.swagger.anticipation.model.HistoryItemTO' cannot be applied to '(java.lang.String)'
 
-		    "number": 1
-
-		}
- 
-no /history apenas esses 2:
- 
-teria que adequar a estrutura do history
- 
-e validar como está a lógica para montar esses objetos:
-
-no /receivables ele está assim:  
-"page": {  			
-"size": 10,  		    
-"totalElements": 50,  		    
-"totalPages": 5,  		    
-"number": 1  		
-}
-no /history apenas esses 2:
- 
- 
-ele deveria levar em consideração o que a Antecipa está retornando
-
-entendi que as duas paginações estavam com problema pelo que a Karina apresentou
- 
-me parece que o maior problema está na lógica para devolver os dados da paginação para o front
- 
-o de histórico vejo com mais simples, pois a paginação não agrupa os dados por data.
- 
-já em /receivables, vai precisar pensar na melhor lógica que vai ter que aplicar pois a nossa paginação é diferente da paginação deles
- 
-nossa paginação é agrupada e a deles não.
- 
+Cannot resolve method 'setTotalDiscount' in 'HistoryItemTO'
 
