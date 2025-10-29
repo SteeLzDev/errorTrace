@@ -1,353 +1,614 @@
-package br.com.experian.anticipation.domain.service.impl;
+/History
 
-import br.com.experian.anticipation.domain.client.AccountClient;
-import br.com.experian.anticipation.domain.client.RegistrationClient;
-import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
-import br.com.experian.anticipation.domain.exception.ConflictException;
-import br.com.experian.anticipation.domain.model.Agreement;
-import br.com.experian.anticipation.domain.port.AuthenticationPort;
-import br.com.experian.anticipation.domain.repository.AgreementRepository;
-import br.com.experian.anticipation.domain.service.HistoryService;
-import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
-import br.com.experian.observability.annotation.LogMethod;
-import br.com.experian.swagger.antecipa.model.*;
-import br.com.experian.swagger.anticipation.model.*;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.log4j.Log4j2;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
-
-@Log4j2
-public class HistoryServiceImpl implements HistoryService {
-
-    private final AntecipaClient antecipaClient;
-    private final AgreementRepository agreementRepository;
-    private final AuthenticationPort authenticationPort;
-    private final ObjectMapper objectMapper;
-    private final AccountClient accountClient;
-    private final RegistrationClient registrationClient;
-
-    public HistoryServiceImpl(AntecipaClient antecipaClient,
-                              AgreementRepository agreementRepository, AuthenticationPort authenticationPort, ObjectMapper objectMapper, AccountClient accountClient,
-                              RegistrationClient registrationClient) {
-        this.antecipaClient = antecipaClient;
-        this.agreementRepository = agreementRepository;
-        this.authenticationPort = authenticationPort;
-        this.objectMapper = objectMapper;
-        this.accountClient = accountClient;
-        this.registrationClient = registrationClient;
-    }
-
-    @Override
-    @LogMethod
-    public Optional<HistoryResponseTO> findHistoryWithReceivables(String startAnticipationDate,
-                                                                  String endAnticipationDate,
-                                                                  String statusId,
-                                                                  String pageId,
-                                                                  Integer pageSize) {
-        Agreement agreement = this.getUserAgreement();
-        log.info("Fetching anticipation history with receivables for supplier: {}", agreement.getNationalRegistrationId());
-
-        try {
-            String token = "Bearer " + authenticationPort.getValidToken();
-
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse =
-                    antecipaClient.getAnticipations(token, agreement.getNationalRegistrationId(),
-                            null,
-                            startAnticipationDate,
-                            endAnticipationDate,
-                            statusId,
-                            pageId,
-                            pageSize);
-            List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(pagedResponse);
-
-            if (externalItems.isEmpty()) {
-                log.info("No anticipation history for supplier: {}", agreement);
-                return Optional.empty();
-            }
-
-            List<HistoryItemTO> historyItems = buildHistoryItems(externalItems, agreement.getNationalRegistrationId(), token);
-
-            HistoryResponseTO response = new HistoryResponseTO();
-            response.setItems(historyItems);
-
-            if (pagedResponse != null && pagedResponse.getPageNextId() != null) {
-                response.setNextPage(pagedResponse.getPageNextId());
-            } else {
-                response.setNextPage(null);
-            }
-
-            response.setPageSize(pageSize != null ? pageSize : 10);
-            log.info("Successfully retrieved {} anticipation records with receivables for supplier: {}", historyItems.size(), agreement.getNationalRegistrationId());
-            return Optional.of(response);
-        } catch (Exception e) {
-            log.error("Error fetching anticipation history for supplier: {}: {}", agreement.getNationalRegistrationId(), e.getMessage(), e);
-            return Optional.empty();
+{
+  "items": [
+    {
+      "id": "5d931db6-25d8-4883-b197-0798a1e028b5",
+      "requestDate": "2025-10-27",
+      "status": "ERROR",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0165,
+          "discountValue": 31.9,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0165,
+          "discountValue": 32.45,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0165,
+          "discountValue": 28.05,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0165,
+          "discountValue": 28.6,
+          "netValue": 0
         }
-    }
-
-    @Override
-    @LogMethod
-    public Optional<HistoryResponseTO> findHistoryWithReceivables(String startAnticipationDate,
-                                                                  String endAnticipationDate,
-                                                                  String statusId,
-                                                                  Integer offset,
-                                                                  Integer limit) {
-        Integer pageSizeInt = limit != null && limit > 0 ? limit : 10;
-        return findHistoryWithReceivables(startAnticipationDate, endAnticipationDate, statusId, (String) null, pageSizeInt);
-    }
-
-    private List<HistoryItemTO> buildHistoryItems(List<AntecipaAnticipationCardReceivableListDto> externalItems,
-                                                  String supplierDocument,
-                                                  String token) {
-        List<HistoryItemTO> historyItems = new ArrayList<>();
-
-        for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
-            HistoryItemTO item = createHistoryItem(ext, supplierDocument, token);
-            historyItems.add(item);
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "c219d4bd-eaeb-4818-b33f-e8f6799d2160",
+      "requestDate": "2025-10-27",
+      "status": "CONCLUDED",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 34.4,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 36.12,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 36.12,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 36.12,
+          "netValue": 0
         }
-        return historyItems;
-    }
-
-    private HistoryItemTO createHistoryItem(AntecipaAnticipationCardReceivableListDto ext, String supplierDocument, String token) {
-        HistoryItemTO item = new HistoryItemTO();
-
-        String id = extractId(ext);
-        item.setId(id);
-
-        setRequestDate(item, ext);
-        setStatus(item, ext);
-        setReceivablesData(item, id, supplierDocument, token, ext);
-
-        return item;
-    }
-
-    private String extractId(AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getId() != null) {
-            return String.valueOf(ext.getId());
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "95e6905d-ed93-4c6d-87bf-2b052d54f7c4",
+      "requestDate": "2025-10-23",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0177,
+          "discountValue": 39.53,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0177,
+          "discountValue": 39.53,
+          "netValue": 0
         }
-        return null;
-    }
-
-    private void setRequestDate(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getCreatedAt() != null) {
-            LocalDateTime ldt = parseToLocalDate(ext.getCreatedAt().toString());
-            if (ldt != null) {
-                String formattedDate = ldt.toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-                item.setRequestDate(LocalDate.parse(formattedDate));
-            }
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "5e29f3ef-5b06-4072-8e99-92e5b76a7cf4",
+      "requestDate": "2025-10-23",
+      "status": "CONCLUDED",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.017,
+          "discountValue": 34,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.017,
+          "discountValue": 34.56666666666667,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.017,
+          "discountValue": 34,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.017,
+          "discountValue": 34,
+          "netValue": 0
         }
-    }
-
-    private void setStatus(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getStatusId() != null) {
-            String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
-            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "cefc9ef2-a1c2-47d2-91b4-dacb32156ab0",
+      "requestDate": "2025-10-23",
+      "status": "ERROR",
+      "receivablesCount": 6,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0175,
+          "discountValue": 36.166666666666664,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0175,
+          "discountValue": 37.333333333333336,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0175,
+          "discountValue": 36.75,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0175,
+          "discountValue": 39.083333333333336,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0175,
+          "discountValue": 39.083333333333336,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0175,
+          "discountValue": 39.083333333333336,
+          "netValue": 0
         }
-    }
-
-    private void setReceivablesData(HistoryItemTO item, String id, String supplierDocument,
-                                    String token, AntecipaAnticipationCardReceivableListDto ext) {
-        if (id != null) {
-            try {
-                AntecipaAnticipationCardReceivableDto detail =
-                        antecipaClient.getAnticipationById(token, supplierDocument, id);
-
-                List<ReceivableItemTO> receivables = processReceivables(detail, ext);
-                item.setReceivables(receivables);
-
-                BigDecimal totalNetValue = calculateTotalNetValue(receivables);
-                item.setTotalNetValue(totalNetValue);
-                item.setReceivablesCount(receivables.size());
-
-            } catch (Exception e) {
-                log.warn("Failed to fetch receivables details for ID: {}", id, e);
-                setEmptyReceivablesData(item);
-            }
-        } else {
-            setEmptyReceivablesData(item);
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "b8cf43f2-74f4-4c3e-93f6-2560f78a95d4",
+      "requestDate": "2025-10-23",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0177,
+          "discountValue": 39.53,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0177,
+          "discountValue": 39.53,
+          "netValue": 0
         }
-    }
-
-    private BigDecimal calculateTotalNetValue(List<ReceivableItemTO> receivables) {
-        return receivables.stream()
-                .map(ReceivableItemTO::getNetValue)
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private void setEmptyReceivablesData(HistoryItemTO item) {
-        item.setReceivables(new ArrayList<>());
-        item.setTotalNetValue(BigDecimal.ZERO);
-        item.setReceivablesCount(0);
-    }
-
-    private List<AntecipaAnticipationCardReceivableListDto> extractItems(
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
-
-        if (pagedResponse == null) return Collections.emptyList();
-
-        Object raw = pagedResponse.getItems();
-        if (!(raw instanceof List<?> rawList) || rawList.isEmpty()) return Collections.emptyList();
-
-        try {
-            byte[] bytes = objectMapper.writeValueAsBytes(rawList);
-            return objectMapper.readValue(bytes, new TypeReference<>() {
-            });
-
-        } catch (Exception e) {
-            log.error("Error deserializing items list", e);
-            return Collections.emptyList();
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "e5d14d47-3c33-4e9c-829e-d2781382d273",
+      "requestDate": "2025-10-23",
+      "status": "ERROR",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0176,
+          "discountValue": 37.54666666666667,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0176,
+          "discountValue": 39.306666666666665,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0176,
+          "discountValue": 39.306666666666665,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0176,
+          "discountValue": 39.306666666666665,
+          "netValue": 0
         }
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "1d0ee3b1-1d30-4d6f-ab02-130cde3c9339",
+      "requestDate": "2025-10-23",
+      "status": "ERROR",
+      "receivablesCount": 3,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.017,
+          "discountValue": 34,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.017,
+          "discountValue": 34.56666666666667,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.017,
+          "discountValue": 34,
+          "netValue": 0
+        }
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "a606583e-7d83-4590-903c-e42c0cf59c9a",
+      "requestDate": "2025-10-23",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 35.54666666666667,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 36.12,
+          "netValue": 0
+        }
+      ],
+      "totalNetValue": 0
+    },
+    {
+      "id": "228cab51-ea3a-41f8-8119-7e2f050e681e",
+      "requestDate": "2025-10-23",
+      "status": "ERROR",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0176,
+          "discountValue": 37.54666666666667,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0176,
+          "discountValue": 39.306666666666665,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0176,
+          "discountValue": 39.306666666666665,
+          "netValue": 0
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0176,
+          "discountValue": 39.306666666666665,
+          "netValue": 0
+        }
+      ],
+      "totalNetValue": 0
     }
-
-    private List<ReceivableItemTO> processReceivables(AntecipaAnticipationCardReceivableDto detail,
-                                                      AntecipaAnticipationCardReceivableListDto listItem) {
-        List<ReceivableItemTO> receivables = new ArrayList<>();
-
-        if (detail == null) return receivables;
-
-        processAnticipatedItems(detail, listItem, receivables);
-        processNoAnticipatedItems(detail, listItem, receivables);
-
-        return receivables;
-    }
-
-    private void processAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
-                                         AntecipaAnticipationCardReceivableListDto listItem,
-                                         List<ReceivableItemTO> receivables) {
-
-        if (detail.getAnticipatedItems() != null) {
-            List<?> anticipatedItemsObj = detail.getAnticipatedItems().get();
-            if (anticipatedItemsObj != null) {
-                processReceivablesList(anticipatedItemsObj, detail, listItem, receivables);
-            }
-        }
-    }
-
-    private void processNoAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
-                                           AntecipaAnticipationCardReceivableListDto listItem,
-                                           List<ReceivableItemTO> receivables) {
-        if (detail.getNotAnticipatedItems() != null) {
-            List<?> notAnticipatedItemsObj = detail.getNotAnticipatedItems().get();
-            if (notAnticipatedItemsObj != null) {
-                processReceivablesList(notAnticipatedItemsObj, detail, listItem, receivables);
-            }
-        }
-    }
-
-    private void processReceivablesList(List<?> itemsList,
-                                        AntecipaAnticipationCardReceivableDto detail,
-                                        AntecipaAnticipationCardReceivableListDto listItem,
-                                        List<ReceivableItemTO> receivables) {
-        for (Object itemObj : itemsList) {
-            try {
-                AntecipaAnticipationCardReceivableItemDto sourceItem = convertToSourceItem(itemObj);
-                if (sourceItem != null) {
-                    ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
-                    if (item != null) {
-                        receivables.add(item);
-                    }
-                }
-            } catch (Exception e) {
-                log.error("Error converting anticipated item to DTO: {}", e.getMessage(), e);
-            }
-        }
-    }
-
-    private AntecipaAnticipationCardReceivableItemDto convertToSourceItem(Object itemObj) {
-        if (itemObj instanceof AntecipaAnticipationCardReceivableItemDto) {
-            return (AntecipaAnticipationCardReceivableItemDto) itemObj;
-        } else if (itemObj instanceof LinkedHashMap) {
-            return objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivableItemDto.class);
-        } else {
-            log.warn("Unexpected item type in anticipatedItems: {}", itemObj.getClass().getName());
-            return null;
-        }
-    }
-
-    private ReceivableItemTO convertToReceivableItem(AntecipaAnticipationCardReceivableItemDto sourceItem,
-                                                     AntecipaAnticipationCardReceivableDto parentDetail,
-                                                     AntecipaAnticipationCardReceivableListDto parentListItem) {
-        if (sourceItem == null) return null;
-
-        ReceivableItemTO item = new ReceivableItemTO();
-
-        setCnpj(item, parentDetail);
-        setAccreditingInstitution(item, parentDetail);
-        setBasicReceivableData(item, sourceItem);
-        return item;
-    }
-
-    private void setCnpj(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
-        if (parentDetail.getSupplier() != null && parentDetail.getSupplier().getDocument() != null) {
-            String document = parentDetail.getSupplier().getDocument().get();
-            if (document != null) {
-                item.setCnpj(document);
-            }
-        }
-    }
-
-    private void setAccreditingInstitution(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
-        if (parentDetail.getAccreditingInstitution() != null && parentDetail.getAccreditingInstitution().getName() != null) {
-            String name = parentDetail.getAccreditingInstitution().getName();
-            if (name != null) {
-                item.setAccreditingInstitution(name);
-            }
-        }
-    }
-
-    private void setBasicReceivableData(ReceivableItemTO item, AntecipaAnticipationCardReceivableItemDto sourceItem) {
-        item.setInstallments(1);
-
-        if (sourceItem.getSelectedAmount() != null) {
-            item.setInstallmentValue(BigDecimal.valueOf(sourceItem.getSelectedAmount()));
-        }
-
-        if (sourceItem.getEffectiveRate() != null) {
-            item.setFeePercentage(BigDecimal.valueOf(sourceItem.getEffectiveRate()));
-        }
-
-        if (sourceItem.getDiscount() != null) {
-            item.setDiscountValue(BigDecimal.valueOf(sourceItem.getDiscount()));
-        } else {
-            item.setDiscountValue(BigDecimal.ZERO);
-        }
-
-        if (sourceItem.getNetValue() != null) {
-            item.setNetValue(BigDecimal.valueOf(sourceItem.getNetValue()));
-        } else {
-            item.setNetValue(BigDecimal.ZERO);
-        }
-    }
-
-    private static LocalDateTime parseToLocalDate(String s) {
-        if (s == null || s.isBlank()) return null;
-        try {
-            return OffsetDateTime.parse(s).toLocalDateTime();
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDateTime.parse(s);
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDate.parse(s).atStartOfDay();
-        } catch (DateTimeParseException ignore) {
-        }
-
-        return null;
-    }
-
-    private Agreement getUserAgreement() {
-        return this.agreementRepository.getUserAgreement()
-                .orElseThrow(() -> new ConflictException("3"));
-    }
+  ],
+  "pageSize": 10
 }
+
+
+
+/receivables
+
+{
+  "content": [
+    {
+      "paymentDate": "2025-10-15",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "f70eae14-9a0a-4282-a50f-b32674ba2de5",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-16",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "3a9d8429-0a9a-45e8-b03e-b0dfb18941bc",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-17",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "eb164a56-4e36-4a94-a118-99accceedee2",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-20",
+      "count": 3,
+      "totalAmountToReceive": 3000,
+      "items": [
+        {
+          "id": "2e7eb7bb-8b16-4433-81dc-b94e2cd874c0",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        },
+        {
+          "id": "2b595a4f-45c0-4d50-a04f-5794ca3c2da1",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        },
+        {
+          "id": "50c2495f-f65c-404e-b3e4-a84e4682e56c",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-21",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "68ba3c8c-1dca-4723-a355-d684b76e81c7",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-22",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "bb6f43a6-ee97-49d1-9df3-32ee4f37eef9",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-23",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "0630c100-579e-479f-b2b4-d958720c9e94",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-10-24",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "a7fc135f-aea8-4750-84fe-2d3054d8648c",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    }
+  ],
+  "page": {
+    "size": 10,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 1
+  }
+}
+
