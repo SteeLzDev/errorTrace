@@ -1,1 +1,21 @@
-919f51e1-0d8a-4b25-a614-d512e51953e2
+{
+  "receivableOfferIds": [
+    "ed477a97-f3b7-45a1-8bd4-5a1de9ac0a0c"
+  ],
+  "cardBrands": [
+    "JsonNullable[INSTITUTO MELHOR IDADE]"
+  ],
+  "bankAccounts": [
+    {
+      "bankName": "ITAÚ UNIBANCO S.A.",
+      "agencyNumber": "0001",
+      "accountNumber": "999999-9",
+      "creditedAmount": 958,
+      "associatedBrand": "JsonNullable[INSTITUTO MELHOR IDADE]"
+    }
+  ],
+  "receivablesCount": 1,
+  "grossTotalAmount": 958,
+  "totalDiscountAmount": 33.30966,
+  "netAmountToReceive": 924.69034
+}
