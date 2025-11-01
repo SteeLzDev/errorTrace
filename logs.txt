@@ -19,3 +19,201 @@
   "totalDiscountAmount": 33.30966,
   "netAmountToReceive": 924.69034
 }
+
+
+{
+  "content": [
+    {
+      "paymentDate": "2025-12-22",
+      "count": 1,
+      "totalAmountToReceive": 966,
+      "items": [
+        {
+          "id": "505d0728-f063-4271-a1bd-d9bd9e72ae1e",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 966
+          },
+          "discount": 0,
+          "amountToReceive": 966
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-12-23",
+      "count": 1,
+      "totalAmountToReceive": 965.4333333333333,
+      "items": [
+        {
+          "id": "697a6179-268e-449f-8d74-f01cd4c8a52a",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 965.4333333333333
+          },
+          "discount": 0,
+          "amountToReceive": 965.4333333333333
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-12-24",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "b4c4e807-54ea-4a61-b8f5-dc30da7d91f8",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-12-25",
+      "count": 1,
+      "totalAmountToReceive": 1000,
+      "items": [
+        {
+          "id": "558ac461-cae5-41c2-94e3-403fe8a426ad",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 1000
+          },
+          "discount": 0,
+          "amountToReceive": 1000
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-12-26",
+      "count": 1,
+      "totalAmountToReceive": 965.6,
+      "items": [
+        {
+          "id": "6e92cba4-8b7d-440a-a475-399e7ecfb48f",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 965.6
+          },
+          "discount": 0,
+          "amountToReceive": 965.6
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-12-29",
+      "count": 3,
+      "totalAmountToReceive": 2891.64,
+      "items": [
+        {
+          "id": "418c9cd2-49ad-41ed-9efc-8f1caac0fd5a",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 963.88
+          },
+          "discount": 0,
+          "amountToReceive": 963.88
+        },
+        {
+          "id": "1d57676f-f2d7-4085-a7d4-0ad7626e23c9",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 963.88
+          },
+          "discount": 0,
+          "amountToReceive": 963.88
+        },
+        {
+          "id": "43c37aa0-700b-4787-8c2a-4752430f598a",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 963.88
+          },
+          "discount": 0,
+          "amountToReceive": 963.88
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-12-30",
+      "count": 1,
+      "totalAmountToReceive": 958.6,
+      "items": [
+        {
+          "id": "d3b19326-e8af-40ba-bcd5-1ac07f9e4ae9",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 958.6
+          },
+          "discount": 0,
+          "amountToReceive": 958.6
+        }
+      ]
+    },
+    {
+      "paymentDate": "2025-12-31",
+      "count": 1,
+      "totalAmountToReceive": 958,
+      "items": [
+        {
+          "id": "919f51e1-0d8a-4b25-a614-d512e51953e2",
+          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
+          "accreditingInstitutionDocument": "07475801000152",
+          "paymentType": "CREDIT_SINGLE",
+          "installment": {
+            "count": 1,
+            "number": 1,
+            "amount": 958
+          },
+          "discount": 0,
+          "amountToReceive": 958
+        }
+      ]
+    }
+  ],
+  "page": {
+    "size": 10,
+    "totalElements": 10,
+    "totalPages": 1,
+    "number": 1
+  }
+}
