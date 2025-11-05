@@ -1,219 +1,318 @@
-{
-  "receivableOfferIds": [
-    "ed477a97-f3b7-45a1-8bd4-5a1de9ac0a0c"
-  ],
-  "cardBrands": [
-    "JsonNullable[INSTITUTO MELHOR IDADE]"
-  ],
-  "bankAccounts": [
-    {
-      "bankName": "ITAÚ UNIBANCO S.A.",
-      "agencyNumber": "0001",
-      "accountNumber": "999999-9",
-      "creditedAmount": 958,
-      "associatedBrand": "JsonNullable[INSTITUTO MELHOR IDADE]"
-    }
-  ],
-  "receivablesCount": 1,
-  "grossTotalAmount": 958,
-  "totalDiscountAmount": 33.30966,
-  "netAmountToReceive": 924.69034
-}
-
+host: http://localhost:8080/serasaempreendedor/receivables-anticipation/v1/history?limit=10&offset=2
 
 {
-  "content": [
+  "items": [
     {
-      "paymentDate": "2025-12-22",
-      "count": 1,
-      "totalAmountToReceive": 966,
-      "items": [
+      "id": "d5c113da-f363-4060-803c-7051c8ebe11a",
+      "requestDate": "2025-11-04",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
         {
-          "id": "505d0728-f063-4271-a1bd-d9bd9e72ae1e",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 966
-          },
-          "discount": 0,
-          "amountToReceive": 966
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-12-23",
-      "count": 1,
-      "totalAmountToReceive": 965.4333333333333,
-      "items": [
-        {
-          "id": "697a6179-268e-449f-8d74-f01cd4c8a52a",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 965.4333333333333
-          },
-          "discount": 0,
-          "amountToReceive": 965.4333333333333
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-12-24",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "b4c4e807-54ea-4a61-b8f5-dc30da7d91f8",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-12-25",
-      "count": 1,
-      "totalAmountToReceive": 1000,
-      "items": [
-        {
-          "id": "558ac461-cae5-41c2-94e3-403fe8a426ad",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 1000
-          },
-          "discount": 0,
-          "amountToReceive": 1000
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-12-26",
-      "count": 1,
-      "totalAmountToReceive": 965.6,
-      "items": [
-        {
-          "id": "6e92cba4-8b7d-440a-a475-399e7ecfb48f",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 965.6
-          },
-          "discount": 0,
-          "amountToReceive": 965.6
-        }
-      ]
-    },
-    {
-      "paymentDate": "2025-12-29",
-      "count": 3,
-      "totalAmountToReceive": 2891.64,
-      "items": [
-        {
-          "id": "418c9cd2-49ad-41ed-9efc-8f1caac0fd5a",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 963.88
-          },
-          "discount": 0,
-          "amountToReceive": 963.88
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958.6,
+          "feePercentage": 0.0166,
+          "discountValue": 29.703818666666667,
+          "netValue": 928.8961813333333
         },
         {
-          "id": "1d57676f-f2d7-4085-a7d4-0ad7626e23c9",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 963.88
-          },
-          "discount": 0,
-          "amountToReceive": 963.88
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958,
+          "feePercentage": 0.0166,
+          "discountValue": 30.21532,
+          "netValue": 927.78468
+        }
+      ],
+      "totalNetValue": 1856.6808613333333
+    },
+    {
+      "id": "08a88eb6-483b-47e6-9a6e-1e96054129ad",
+      "requestDate": "2025-11-04",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958.6,
+          "feePercentage": 0.0166,
+          "discountValue": 29.703818666666667,
+          "netValue": 928.8961813333333
         },
         {
-          "id": "43c37aa0-700b-4787-8c2a-4752430f598a",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 963.88
-          },
-          "discount": 0,
-          "amountToReceive": 963.88
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958,
+          "feePercentage": 0.0166,
+          "discountValue": 30.21532,
+          "netValue": 927.78468
         }
-      ]
+      ],
+      "totalNetValue": 1856.6808613333333
     },
     {
-      "paymentDate": "2025-12-30",
-      "count": 1,
-      "totalAmountToReceive": 958.6,
-      "items": [
+      "id": "556dfc5f-d0e6-4e40-86d8-971e2f80679d",
+      "requestDate": "2025-11-04",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
         {
-          "id": "d3b19326-e8af-40ba-bcd5-1ac07f9e4ae9",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 958.6
-          },
-          "discount": 0,
-          "amountToReceive": 958.6
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958.6,
+          "feePercentage": 0.0166,
+          "discountValue": 29.703818666666667,
+          "netValue": 928.8961813333333
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958,
+          "feePercentage": 0.0166,
+          "discountValue": 30.21532,
+          "netValue": 927.78468
         }
-      ]
+      ],
+      "totalNetValue": 1856.6808613333333
     },
     {
-      "paymentDate": "2025-12-31",
-      "count": 1,
-      "totalAmountToReceive": 958,
-      "items": [
+      "id": "58b46ce2-d24b-469d-855a-80b71c42fece",
+      "requestDate": "2025-11-04",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
         {
-          "id": "919f51e1-0d8a-4b25-a614-d512e51953e2",
-          "accreditingInstitutionName": "INSTITUTO MELHOR IDADE",
-          "accreditingInstitutionDocument": "07475801000152",
-          "paymentType": "CREDIT_SINGLE",
-          "installment": {
-            "count": 1,
-            "number": 1,
-            "amount": 958
-          },
-          "discount": 0,
-          "amountToReceive": 958
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958.6,
+          "feePercentage": 0.0166,
+          "discountValue": 29.703818666666667,
+          "netValue": 928.8961813333333
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958,
+          "feePercentage": 0.0166,
+          "discountValue": 30.21532,
+          "netValue": 927.78468
         }
-      ]
+      ],
+      "totalNetValue": 1856.6808613333333
+    },
+    {
+      "id": "e93f5258-612a-400c-8673-b696ba1f66a4",
+      "requestDate": "2025-11-04",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958.6,
+          "feePercentage": 0.0166,
+          "discountValue": 29.703818666666667,
+          "netValue": 928.8961813333333
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958,
+          "feePercentage": 0.0166,
+          "discountValue": 30.21532,
+          "netValue": 927.78468
+        }
+      ],
+      "totalNetValue": 1856.6808613333333
+    },
+    {
+      "id": "0cdb0006-2e54-4617-8a53-6ec8ed3656bf",
+      "requestDate": "2025-11-04",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958.6,
+          "feePercentage": 0.0166,
+          "discountValue": 29.703818666666667,
+          "netValue": 928.8961813333333
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958,
+          "feePercentage": 0.0166,
+          "discountValue": 30.21532,
+          "netValue": 927.78468
+        }
+      ],
+      "totalNetValue": 1856.6808613333333
+    },
+    {
+      "id": "a5c6d947-64eb-4076-9975-2554ef138acd",
+      "requestDate": "2025-11-03",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958.6,
+          "feePercentage": 0.0167,
+          "discountValue": 30.416378,
+          "netValue": 928.183622
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958,
+          "feePercentage": 0.0167,
+          "discountValue": 30.930626666666665,
+          "netValue": 927.0693733333334
+        }
+      ],
+      "totalNetValue": 1855.2529953333335
+    },
+    {
+      "id": "12f2aac2-7379-4632-a050-f307e968c4b3",
+      "requestDate": "2025-10-31",
+      "status": "ERROR",
+      "receivablesCount": 2,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958.6,
+          "feePercentage": 0.017,
+          "discountValue": 32.5924,
+          "netValue": 926.0076
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 958,
+          "feePercentage": 0.017,
+          "discountValue": 33.114866666666664,
+          "netValue": 924.8851333333333
+        }
+      ],
+      "totalNetValue": 1850.8927333333334
+    },
+    {
+      "id": "5d931db6-25d8-4883-b197-0798a1e028b5",
+      "requestDate": "2025-10-27",
+      "status": "ERROR",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0165,
+          "discountValue": 31.9,
+          "netValue": 968.1
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0165,
+          "discountValue": 32.45,
+          "netValue": 967.55
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0165,
+          "discountValue": 28.05,
+          "netValue": 971.95
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0165,
+          "discountValue": 28.6,
+          "netValue": 971.4
+        }
+      ],
+      "totalNetValue": 3879
+    },
+    {
+      "id": "c219d4bd-eaeb-4818-b33f-e8f6799d2160",
+      "requestDate": "2025-10-27",
+      "status": "CONCLUDED",
+      "receivablesCount": 4,
+      "receivables": [
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 34.4,
+          "netValue": 965.6
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 36.12,
+          "netValue": 963.88
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 36.12,
+          "netValue": 963.88
+        },
+        {
+          "cnpj": "00000917000196",
+          "accreditingInstitution": "INSTITUTO MELHOR IDADE",
+          "installments": 1,
+          "installmentValue": 1000,
+          "feePercentage": 0.0172,
+          "discountValue": 36.12,
+          "netValue": 963.88
+        }
+      ],
+      "totalNetValue": 3857.24
     }
   ],
   "page": {
     "size": 10,
-    "totalElements": 10,
-    "totalPages": 1,
+    "totalElements": 11,
+    "totalPages": 2,
     "number": 1
   }
 }
