@@ -1,388 +1,120 @@
-package br.com.experian.anticipation.domain.service.impl;
+eConsig - Alterar o uso do Twillo para o Zenvia
+ Editar
+ Adicionar comentário
+Atribuir
+Mais
+Priorizado
+SLA Report
+Compartilhar este item
+ Exportar
+Detalhes do Item
+Tipo: Tarefa
+Resolução:Não Resolvido
+Prioridade: Alta
+Versões Corrigidas:Nenhum
+Versões Afetadas:Nenhum
+Componente(s):Nenhum
+Nível de Segurança:Interna
+Rótulos:
+EPICO_SUBSTITUICAO_ENVIO_SMS_ZENVIA FY26Q02 FY26Q04 squad_econsig_produto
+AA Sistema eConsig:
+Geral |
+Tipo Desenvolvimento:Modificação
+Descrição de comportamento:
+Como: produto eConsig
+Quero: alterar a biblioteca de envio de SMS para Zenvia
+Para: reduzir custos com envio de SMS
+
+Sugestão de Implementação:
+1) Criar 2 parâmetros de sistema (Domínio: Int):
+1.1) um para configurar o limite inferior de envios de SMS por mês;
+1.2) outro para configurar o limite superior de envios de SMS por mês, que bloqueia a operação.
+ 
+2) Criar novo tipo de ocorrência para registrar o envio de SMS.
+ 
+3) Atualmente o eConsig integra a Twillio para realizar o envio de SMS. Alterar para que passe a integrar com a Zenvia.
+3.1) Realização o levantamento dos pontos que enviam SMS no sistema para fazer a alteração. Verificar se há mais cenários.
+3.1.1) Alguns pontos levantados:
+mensagem.sms.servidor.codigo.unico
+mensagem.sms.novo.boleto.servidor
+mensagem.sms.consignacao.aprovada
+mensagem.sms.operacao.realizada.consignacao
+mensagem.sms.nova.comunicacao.enviada
+mensagem.sms.resumo.consignacao
+mensagem.sms.reserva.margem
+mensagem.sms.vencimento.autorizacao
+mensagem.sms.senha.servidor.reiniciada
+mensagem.sms.senha.servidor.alterada
+mensagem.sms.senha.app.servidor.alterada
+3.2) Documentação: https://zenvia.github.io/zenvia-openapi-spec/v2/#tag/SMS/paths/~1channels~1sms~1messages/post
+3.3) Token de autenticação para a conta eConsig: 9xubNLZbHly0Uhk3BwclP8QfUBL7ZqAnk9IO
+3.4) Enviar "econsign" no parâmetro "from".
+3.5) Exemplo de requisição:
+
+curl -request POST --url https://api.zenvia.com/v2/channels/sms/messages --header 'Content-Type: application/json' --header 'X-API-TOKEN: 9xubNLZbHly0Uhk3BwclP8QfUBL7ZqAnk9IO' --data '{
+  "from":"econsign",
+  "to":"5531984555555",
+  "contents": [
+ 
+{     "type": "text",     "text": "Teste de envio de SMS via Zenvia+"   }
+]
+}'
+ 
+3.6) Exemplo Response:
+ 
+
+{"from":"econsign","to":"5531984555555","contents":[
+ 
+{"type":"text","text":"Teste de envio de SMS via Zenvia+"}
+],"id":"f46b1034-93c0-40e8-a529-c39daa2a186b","direction":"OUT"}-
+ 
+3.7) É possível utilizar como referência a classe de integração com a Zenvia da Salaryfits que foi feita na DESENV-24666.
+ 
+4) Antes de realizar o envio, verificar se a quantidade de ocorrências do tipo do item 2 no mês atual ainda não atingiu o limite inferior definido no parâmetro criado no item 1.1.
+4.1) Se não tiver atingido, realizar o envio do SMS e após registrar ocorrência do tipo criado no item 2.
+4.2) Se já tiver atingido o limite inferior definido no parâmetro criado no item 1.1, mas não tiver atingido o limite do parâmetro superior criado no item 1.2, realizar o envio do SMS, registrar ocorrência do tipo criado no item 2 e enviar e-mail para o destinatário cadastrado no parâmetro de "Sistema 207 - E-mail do suporte do sistema", comunicando que o limite inferior foi atingido para sistema. Cadastrar o modelo de e-mail na tb_modelo_email. No modelo deve ser possível exibir o <@nome_sistema>.
+4.3) Se além do limite inferior, também tiver atingido o limite superior definido no parâmetro criado no item 1.2, não enviar o SMS, exibir erro na operação e enviar e-mail para o destinatário cadastrado no parâmetro de "Sistema 207 - E-mail do suporte do sistema", comunicando que o limite superior foi atingido para sistema. Cadastrar o modelo de e-mail na tb_modelo_email. No modelo deve ser possível exibir o <@nome_sistema>.
+
+Critérios de aceitação:
+I) Scenario: Enviar SMS
+Given: que os parâmetros de limite inferior e superior de envios de SMS por mês estão configurados
+When: é realizada uma ação que envia SMS
+And: o número de ocorrências de envio no mês não atingiu o limite inferior
+Then: o sistema envia o SMS
+And: registra a ocorrência de consignante de envio de SMS
+ 
+II) Scenario: Enviar SMS e comunicar que atingiu o limite inferior
+Given: que os parâmetros de limite inferior e superior de envios de SMS por mês estão configurados
+When: é realizada uma ação que envia SMS
+And: o número de ocorrências de envio no mês atingiu o limite inferior
+But: não atingiu o limite superior
+Then: o sistema envia o SMS
+And: registra a ocorrência de consignante de envio de SMS
+And: envia e-mail para o suporte comunicando que o limite inferior foi atingido para o sistema
+ 
+III) Scenario: Não enviar SMS
+Given: que os parâmetros de limite inferior e superior de envios de SMS por mês estão configurados
+When: é realizada uma ação que envia SMS
+And: o número de ocorrências de envio no mês atingiu o limite superior
+Then: o sistema não envia o SMS
+And:  exibe mensagem de erro na operação
+And: envia e-mail para o suporte comunicando que o limite superior foi atingido para o sistema
+
+Release Notes:
+Modificação do serviço de integração de envio de SMS da Twilio para Zenvia. Inclusão de parâmetros de sistema para configurar o limite inferior de envio de SMS, que apenas alerta sobre o limite excedido, e o limite superior, que bloqueio o envio de SMS.
+Quais sistemas sofrem impacto?:
+eConsig
+Estimativa AR:3
+Estimativa HH:51
+Complexidade:Alta
+Complexidade de Teste:Alta
+Complexidade Considerada:Alta
+Risco:Baixa
+Empresa:Salt
+Área Solicitante:Diretoria Técnica
+Classificar:Maintenance
+Descrição
+A Serasa possui um contrato com a Zenvia. Precisamos alterar a integração para utilizar com o objetivo de reduzir custos.
+
+Em anexo a documentação.
 
-import br.com.experian.anticipation.application.adapter.HistoryAdapter;
-import br.com.experian.anticipation.domain.constant.HistoryStatusMapping;
-import br.com.experian.anticipation.domain.model.Agreement;
-import br.com.experian.anticipation.domain.service.AgreementService;
-import br.com.experian.anticipation.domain.service.HistoryService;
-import br.com.experian.anticipation.infrastructure.integration.feign.client.antecipa.AntecipaClient;
-import br.com.experian.observability.annotation.LogMethod;
-import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableDto;
-import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableItemDto;
-import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDto;
-import br.com.experian.swagger.antecipa.model.AntecipaAnticipationCardReceivableListDtoPagedCollectionItems;
-import br.com.experian.swagger.anticipation.model.HistoryItemTO;
-import br.com.experian.swagger.anticipation.model.HistoryResponseTO;
-import br.com.experian.swagger.anticipation.model.ReceivableItemTO;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.log4j.Log4j2;
-import org.openapitools.jackson.nullable.JsonNullable;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
-
-@Log4j2
-public class HistoryServiceImpl implements HistoryService {
-
-    private final AntecipaClient antecipaClient;
-    private final AgreementService agreementService;
-    private final ObjectMapper objectMapper;
-
-    public HistoryServiceImpl(AntecipaClient antecipaClient,
-                              AgreementService agreementService,
-                              ObjectMapper objectMapper) {
-        this.antecipaClient = antecipaClient;
-        this.agreementService = agreementService;
-        this.objectMapper = objectMapper;
-    }
-
-    @Override
-    @LogMethod
-    public Optional<HistoryResponseTO> findHistoryWithReceivables(String startAnticipationDate,
-                                                                  String endAnticipationDate,
-                                                                  String statusId,
-                                                                  String pageId,
-                                                                  Integer pageSize) {
-
-        Integer limit = pageSize != null && pageSize > 0 ? pageSize : 10;
-        Integer offset = 1;
-
-
-        return findHistoryWithReceivablesInternal(startAnticipationDate, endAnticipationDate, statusId, offset, limit);
-    }
-    @Override
-    @LogMethod
-    public Optional<HistoryResponseTO> findHistoryWithReceivables(String startAnticipationDate,
-                                                                           String endAnticipationDate,
-                                                                           String statusId,
-                                                                           Integer offset,
-                                                                           Integer limit) {
-        Integer validLimit = limit != null && limit > 0 ? limit : 10;
-        Integer validOffset = offset != null && offset > 0 ? offset : 1;
-
-        return findHistoryWithReceivablesInternal(startAnticipationDate, endAnticipationDate, statusId, validOffset, validLimit);
-
-    }
-
-    private Optional<HistoryResponseTO> findHistoryWithReceivablesInternal(String startAnticipationDate,
-                                                                           String endAnticipationDate,
-                                                                           String statusId,
-                                                                           Integer offset,
-                                                                           Integer limit) {
-
-        Agreement agreement = this.agreementService.getByLoggedUser();
-
-        log.info("Fetching anticipation history with receivables for supplier: {}", agreement.getNationalRegistrationId());
-
-        try {
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse =
-                    antecipaClient.getAnticipations(agreement.getNationalRegistrationId(),
-                            null,
-                            startAnticipationDate,
-                            endAnticipationDate,
-                            statusId,
-                            null,
-                            100);
-
-            List<AntecipaAnticipationCardReceivableListDto> externalItems = extractItems(pagedResponse);
-
-            if (externalItems.isEmpty()) {
-                log.info("No anticipation history for supplier: {}", agreement);
-                return Optional.empty();
-            }
-
-            List<HistoryItemTO> allHistoryItems = buildHistoryItems(externalItems, agreement.getNationalRegistrationId());
-
-            int totalElements = allHistoryItems.size();
-            int  fromIndex = Math.max((offset - 1) * limit, 0);
-            int toIndex = Math.min(fromIndex + limit, totalElements);
-
-            List<HistoryItemTO> paginatedHistoryItems = allHistoryItems.subList(fromIndex, toIndex);
-
-            int totalPages = (int) Math.ceil((double) totalElements / limit);
-            int currentPage = offset;
-
-            HistoryResponseTO response = new HistoryResponseTO();
-            response.setItems(paginatedHistoryItems);
-
-            HistoryAdapter.addPaginationToResponse(response, limit, totalElements, currentPage);
-            log.info("Successfully retrieved {} of {} anticipation records with receivables for supplier: {} (page {} of {})", paginatedHistoryItems.size(), totalElements, agreement.getNationalRegistrationId(), currentPage, totalPages);
-            return Optional.of(response);
-        } catch (Exception e) {
-            log.error("Error fetching anticipation history for supplier: {}: {}", agreement.getNationalRegistrationId(), e.getMessage(), e);
-            return Optional.empty();
-        }
-    }
-
-    private List<HistoryItemTO> buildHistoryItems(List<AntecipaAnticipationCardReceivableListDto> externalItems,
-                                                  String supplierDocument) {
-        List<HistoryItemTO> historyItems = new ArrayList<>();
-
-        for (AntecipaAnticipationCardReceivableListDto ext : externalItems) {
-            HistoryItemTO item = createHistoryItem(ext, supplierDocument);
-            historyItems.add(item);
-        }
-        return historyItems;
-    }
-
-    private HistoryItemTO createHistoryItem(AntecipaAnticipationCardReceivableListDto ext, String supplierDocument) {
-
-        HistoryItemTO item = new HistoryItemTO();
-
-
-        String id = extractId(ext);
-        item.setId(id);
-
-
-        setRequestDate(item, ext);
-
-
-        setStatus(item, ext);
-
-
-        setReceivablesData(item, id, supplierDocument, ext);
-
-        return item;
-    }
-
-
-    private String extractId(AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getId() != null && ext.getId().isPresent()) {
-            return String.valueOf(ext.getId().get());
-        }
-        return null;
-    }
-
-
-    private void setRequestDate(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getCreatedAt() != null) {
-            LocalDateTime ldt = parseToLocalDate(ext.getCreatedAt().toString());
-            if (ldt != null) {
-                String formattedDate = ldt.toLocalDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-                item.setRequestDate(LocalDate.parse(formattedDate));
-            }
-        }
-    }
-
-    private void setStatus(HistoryItemTO item, AntecipaAnticipationCardReceivableListDto ext) {
-        if (ext.getStatusId() != null) {
-            String mappedStatus = HistoryStatusMapping.mapExternalIdToResponseStatus(ext.getStatusId());
-            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
-            item.setStatus(HistoryItemTO.StatusEnum.valueOf(mappedStatus));
-        }
-    }
-
-    private void setReceivablesData(HistoryItemTO item, String id, String supplierDocument, AntecipaAnticipationCardReceivableListDto ext) {
-        if (id != null) {
-
-            try {
-                AntecipaAnticipationCardReceivableDto detail =
-                        antecipaClient.getAnticipationById(supplierDocument, id);
-
-
-                List<ReceivableItemTO> receivables = processReceivables(detail, ext);
-                item.setReceivables(receivables);
-
-
-                BigDecimal totalNetValue = calculateTotalNetValue(receivables);
-                item.setTotalNetValue(totalNetValue);
-                item.setReceivablesCount(receivables.size());
-
-            } catch (Exception e) {
-                log.warn("Failed to fetch receivables details for ID: {}", id, e);
-                setEmptyReceivablesData(item);
-            }
-        } else {
-            setEmptyReceivablesData(item);
-        }
-    }
-
-    private BigDecimal calculateTotalNetValue(List<ReceivableItemTO> receivables) {
-        return receivables.stream()
-                .map(ReceivableItemTO::getNetValue)
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    private void setEmptyReceivablesData(HistoryItemTO item) {
-        item.setReceivables(new ArrayList<>());
-        item.setTotalNetValue(BigDecimal.ZERO);
-        item.setReceivablesCount(0);
-    }
-
-    private List<AntecipaAnticipationCardReceivableListDto> extractItems(
-            AntecipaAnticipationCardReceivableListDtoPagedCollectionItems pagedResponse) {
-
-        if (pagedResponse == null) return Collections.emptyList();
-
-        var itemsNullable = pagedResponse.getItems();
-
-        Object raw = itemsNullable.get();
-        if (!(raw instanceof List<?> rawList) || rawList.isEmpty()) return Collections.emptyList();
-
-        try {
-            byte[] bytes = objectMapper.writeValueAsBytes(rawList);
-            return objectMapper.readValue(bytes, new TypeReference<>() {
-            });
-
-        } catch (Exception e) {
-            log.error("Error deserializing items list", e);
-            return Collections.emptyList();
-        }
-    }
-
-
-    private List<ReceivableItemTO> processReceivables(AntecipaAnticipationCardReceivableDto detail,
-                                                      AntecipaAnticipationCardReceivableListDto listItem) {
-        List<ReceivableItemTO> receivables = new ArrayList<>();
-
-        if (detail == null) return receivables;
-
-        processAnticipatedItems(detail, listItem, receivables);
-        processNoAnticipatedItems(detail, listItem, receivables);
-
-        return receivables;
-    }
-
-    private void processAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
-                                         AntecipaAnticipationCardReceivableListDto listItem,
-                                         List<ReceivableItemTO> receivables) {
-
-        if (detail.getAnticipatedItems() != null && detail.getAnticipatedItems().isPresent()) {
-            List<?> anticipatedItemsObj = detail.getAnticipatedItems().get();
-            if (anticipatedItemsObj != null) {
-
-                processReceivablesList(anticipatedItemsObj, detail, listItem, receivables);
-            }
-        }
-    }
-
-    private void processNoAnticipatedItems(AntecipaAnticipationCardReceivableDto detail,
-                                           AntecipaAnticipationCardReceivableListDto listItem,
-                                           List<ReceivableItemTO> receivables) {
-        if (detail.getNotAnticipatedItems() != null && detail.getNotAnticipatedItems().isPresent()) {
-            List<?> notAnticipatedItemsObj = detail.getNotAnticipatedItems().get();
-            if (notAnticipatedItemsObj != null) {
-                processReceivablesList(notAnticipatedItemsObj, detail, listItem, receivables);
-            }
-        }
-    }
-
-    private void processReceivablesList(List<?> itemsList,
-                                        AntecipaAnticipationCardReceivableDto detail,
-                                        AntecipaAnticipationCardReceivableListDto listItem,
-                                        List<ReceivableItemTO> receivables) {
-        for (Object itemObj : itemsList) {
-
-            try {
-                AntecipaAnticipationCardReceivableItemDto sourceItem = convertToSourceItem(itemObj);
-                if (sourceItem != null) {
-                    ReceivableItemTO item = convertToReceivableItem(sourceItem, detail, listItem);
-                    if (item != null) {
-                        receivables.add(item);
-                    }
-                }
-            } catch (Exception e) {
-                log.error("Error converting anticipated item to DTO: {}", e.getMessage(), e);
-            }
-        }
-    }
-
-    private AntecipaAnticipationCardReceivableItemDto convertToSourceItem(Object itemObj) {
-        if (itemObj instanceof AntecipaAnticipationCardReceivableItemDto) {
-            return (AntecipaAnticipationCardReceivableItemDto) itemObj;
-        } else if (itemObj instanceof LinkedHashMap) {
-            return objectMapper.convertValue(itemObj, AntecipaAnticipationCardReceivableItemDto.class);
-        } else {
-            log.warn("Unexpected item type in anticipatedItems: {}", itemObj.getClass().getName());
-            return null;
-        }
-    }
-
-    private ReceivableItemTO convertToReceivableItem(AntecipaAnticipationCardReceivableItemDto sourceItem,
-                                                     AntecipaAnticipationCardReceivableDto parentDetail,
-                                                     AntecipaAnticipationCardReceivableListDto parentListItem) {
-        if (sourceItem == null) return null;
-
-        ReceivableItemTO item = new ReceivableItemTO();
-
-        setCnpj(item, parentDetail);
-        setAccreditingInstitution(item, parentDetail);
-        setBasicReceivableData(item, sourceItem);
-        return item;
-
-    }
-
-    private void setCnpj(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
-        if (parentDetail.getSupplier() != null && parentDetail.getSupplier().getDocument() != null) {
-            JsonNullable<String> documentNullable = parentDetail.getSupplier().getDocument();
-            if (documentNullable.isPresent()) {
-                item.setCnpj(documentNullable.get());
-            }
-        }
-    }
-
-    private void setAccreditingInstitution(ReceivableItemTO item, AntecipaAnticipationCardReceivableDto parentDetail) {
-
-        if (parentDetail.getAccreditingInstitution() != null && parentDetail.getAccreditingInstitution().getName() != null) {
-            JsonNullable<String> nameNullable = parentDetail.getAccreditingInstitution().getName();
-            if (nameNullable.isPresent()) {
-                item.setAccreditingInstitution(nameNullable.get());
-            }
-        }
-    }
-
-    private void setBasicReceivableData(ReceivableItemTO item, AntecipaAnticipationCardReceivableItemDto sourceItem) {
-
-
-        item.setInstallments(1);
-
-
-        if (sourceItem.getSelectedAmount() != null) {
-            item.setInstallmentValue(BigDecimal.valueOf(sourceItem.getSelectedAmount()));
-        }
-
-
-        if (sourceItem.getEffectiveRate() != null) {
-            item.setFeePercentage(BigDecimal.valueOf(sourceItem.getEffectiveRate()));
-        }
-
-
-        if (sourceItem.getDiscount() != null) {
-            item.setDiscountValue(BigDecimal.valueOf(sourceItem.getDiscount()));
-        } else {
-            item.setDiscountValue(BigDecimal.ZERO);
-        }
-
-        if (sourceItem.getReceivedAmount() != null) {
-            item.setNetValue(BigDecimal.valueOf(sourceItem.getReceivedAmount()));
-        } else {
-            item.setNetValue(BigDecimal.ZERO);
-        }
-    }
-
-    private static LocalDateTime parseToLocalDate(String s) {
-        if (s == null || s.isBlank()) return null;
-        try {
-            return OffsetDateTime.parse(s).toLocalDateTime();
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDateTime.parse(s);
-        } catch (DateTimeParseException ignore) {
-        }
-        try {
-            return LocalDate.parse(s).atStartOfDay();
-        } catch (DateTimeParseException ignore) {
-
-        }
-
-        return null;
-    }
-}
