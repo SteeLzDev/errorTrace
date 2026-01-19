@@ -1,14 +1,4 @@
-eConsig - Alterar o uso do Twillo para o Zenvia
- Editar
- Adicionar comentário
-Atribuir
-Mais
-Priorizado
-SLA Report
-Compartilhar este item
- Exportar
-Detalhes do Item
-Tipo: Tarefa
+ Tarefa
 Resolução:Não Resolvido
 Prioridade: Alta
 Versões Corrigidas:Nenhum
@@ -47,11 +37,11 @@ mensagem.sms.senha.servidor.reiniciada
 mensagem.sms.senha.servidor.alterada
 mensagem.sms.senha.app.servidor.alterada
 3.2) Documentação: https://zenvia.github.io/zenvia-openapi-spec/v2/#tag/SMS/paths/~1channels~1sms~1messages/post
-3.3) Token de autenticação para a conta eConsig: 9xubNLZbHly0Uhk3BwclP8QfUBL7ZqAnk9IO
+3.3) Token de autenticação para a conta eConsig: K8guNCbncrNofo62UjHeGWzMGEeiJhSSmXq3
 3.4) Enviar "econsign" no parâmetro "from".
 3.5) Exemplo de requisição:
 
-curl -request POST --url https://api.zenvia.com/v2/channels/sms/messages --header 'Content-Type: application/json' --header 'X-API-TOKEN: 9xubNLZbHly0Uhk3BwclP8QfUBL7ZqAnk9IO' --data '{
+curl -request POST --url https://api.zenvia.com/v2/channels/sms/messages --header 'Content-Type: application/json' --header 'X-API-TOKEN: K8guNCbncrNofo62UjHeGWzMGEeiJhSSmXq3' --data '{
   "from":"econsign",
   "to":"5531984555555",
   "contents": [
@@ -106,18 +96,49 @@ Quais sistemas sofrem impacto?:
 eConsig
 Estimativa AR:3
 Estimativa HH:51
+Velocidade:6.294444444433334
 Complexidade:Alta
 Complexidade de Teste:Alta
 Complexidade Considerada:Alta
 Risco:Baixa
+Dificuldades:Não recebimento de emails externos para recebimento de convite e uso do painel do Zenvia
 Empresa:Salt
 Área Solicitante:Diretoria Técnica
 Classificar:Maintenance
-Descrição
-A Serasa possui um contrato com a Zenvia. Precisamos alterar a integração para utilizar com o objetivo de reduzir custos.
-
-Em anexo a documentação.
 
 
-mSyM-zu4BaeVo4rEICFKiaqIHWuopkHiVyOu
 
+
+Request:
+Headers
+content-type:  application/json
+x-api-token: K8guNCbncrNofo62UjHeGWzMGEeiJhSSmXq3
+
+{
+  "from": "econsign",
+  "to": "+5521969246900",
+  "encodingStrategy": "MORE_CHARACTER_SUPPORT",
+  "contents": [
+    {
+      "type": "text",
+      "text": "O seu código de verificação para eConsig é: 784874"
+    }
+  ]
+}
+
+
+Response
+
+{
+  "from": "econsign",
+  "to": "+5521969246900",
+  "encodingStrategy": "MORE_CHARACTER_SUPPORT",
+  "contents": [
+    {
+      "type": "text",
+      "text": "O seu código de verificação para eConsig é: 784874"
+    }
+  ],
+  "id": "bb45ee7c-35bf-4113-bef8-56237e69eda8",
+  "direction": "OUT"
+}
