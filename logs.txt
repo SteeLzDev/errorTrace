@@ -1,1 +1,4 @@
-'ZetraException(java.lang.Throwable)' in 'com.zetra.econsig.exception.ZetraException' cannot be applied to '(java.lang.String)'
+# SMS Integration
+sms.provider.zenvia.url= https://api.zenvia.com/v2/channels/sms/messages
+sms.provider.zenvia.api-token= K8guNCbncrNofo62UjHeGWzMGEeiJhSSmXq3
+sms.provider.zenvia.default-from= econsign
