@@ -1,39 +1,11 @@
-services:
-  #
-  # MySQL
-  # https://hub.docker.com/_/percona
-  #
-  mysql-server:
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - TZ=America/Sao_Paulo
-    hostname: mysql
-    image: percona:ps-8
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "200m"
-        max-file: "10"
-    ports:
-      - 3306:3306
-    restart: unless-stopped
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - /opt/mysql/config:/etc/my.cnf.d
-      - /opt/mysql/data:/var/lib/mysql
-      - /opt/mysql/dump:/dump
-  dragonfly:
-    image: 'docker.dragonflydb.io/dragonflydb/dragonfly:v1.30.0'
-    ulimits:
-      memlock: -1
-    ports:
-      - "6379:6379"
-    # For better performance, consider `host` mode instead `port` to avoid docker NAT.
-    # `host` mode is NOT currently supported in Swarm Mode.
-    # https://docs.docker.com/compose/compose-file/compose-file-v3/#network_mode
-    # network_mode: "host"
-    volumes:
-      - dragonflydata:/data
-volumes:
-  dragonflydata:
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| consig             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
