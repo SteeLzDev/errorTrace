@@ -1,3 +1,83 @@
+mysql> show tables like '%param%';
++--------------------------------+
+| Tables_in_consig (%param%)     |
++--------------------------------+
+| ht_param_servico_autorizacao   |
+| tb_grupo_param_sist_cse        |
+| tb_nivel_seguranca_param_sist  |
+| tb_ocorrencia_param_sist_cse   |
+| tb_param_consignataria         |
+| tb_param_convenio_registro_ser |
+| tb_param_csa_registro_ser      |
+| tb_param_nse_registro_ser      |
+| tb_param_orgao                 |
+| tb_param_pontuacao_rse         |
+| tb_param_pontuacao_rse_csa     |
+| tb_param_posto_csa_svc         |
+| tb_param_senha_externa         |
+| tb_param_servico_autorizacao   |
+| tb_param_servico_registro_ser  |
+| tb_param_sist_consignante      |
+| tb_param_svc_consignante       |
+| tb_param_svc_consignataria     |
+| tb_param_tarif_admin           |
+| tb_param_tarif_consignante     |
+| tb_param_validacao_arq_cse     |
+| tb_param_validacao_arq_est     |
+| tb_param_validacao_arq_org     |
+| tb_parametro_agendamento       |
+| tb_parametro_agendamento_old   |
+| tb_parametro_plano             |
+| tb_perfil_param_sist_cse       |
+| tb_tipo_param_consignataria    |
+| tb_tipo_param_orgao            |
+| tb_tipo_param_pontuacao        |
+| tb_tipo_param_sist_consignante |
+| tb_tipo_param_svc              |
+| tb_tipo_param_tarif_cse        |
+| tb_tipo_param_validacao_arq    |
+| tb_tipo_parametro_plano        |
+| tmp_param_senha_externa        |
+| tmp_param_sist_consignante     |
+| tmp_tb_param_consignataria_267 |
+| tmp_tb_param_senha_externa     |
+| tmp_tb_param_sist_consignante  |
++--------------------------------+
+40 rows in set (0.00 sec)
+
+mysql> show tables like '%param_sist%';
++---------------------------------+
+| Tables_in_consig (%param_sist%) |
++---------------------------------+
+| tb_grupo_param_sist_cse         |
+| tb_nivel_seguranca_param_sist   |
+| tb_ocorrencia_param_sist_cse    |
+| tb_param_sist_consignante       |
+| tb_perfil_param_sist_cse        |
+| tb_tipo_param_sist_consignante  |
+| tmp_param_sist_consignante      |
+| tmp_tb_param_sist_consignante   |
++---------------------------------+
+8 rows in set (0.01 sec)
+
+mysql> show tables like '%tipo_param%';
++---------------------------------+
+| Tables_in_consig (%tipo_param%) |
++---------------------------------+
+| tb_tipo_param_consignataria     |
+| tb_tipo_param_orgao             |
+| tb_tipo_param_pontuacao         |
+| tb_tipo_param_sist_consignante  |
+| tb_tipo_param_svc               |
+| tb_tipo_param_tarif_cse         |
+| tb_tipo_param_validacao_arq     |
+| tb_tipo_parametro_plano         |
++---------------------------------+
+8 rows in set (0.01 sec)
+
+
+
+
 mysql> show databases;
 +--------------------+
 | Database           |
@@ -711,3 +791,4 @@ mysql> show tables;
 | tmp_valor_correcao_saldo_devedor             |
 +----------------------------------------------+
 695 rows in set (0.01 sec)
+
