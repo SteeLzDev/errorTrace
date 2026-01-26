@@ -1,3 +1,30 @@
+mysql> describe tb_param_sist_consignante;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| tpc_codigo | varchar(32)   | NO   | PRI |         |       |
+| cse_codigo | varchar(32)   | NO   | PRI |         |       |
+| PSI_VLR    | varchar(1000) | NO   |     |         |       |
++------------+---------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> describe tb_tipo_param_sist_consignante;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| tpc_codigo       | varchar(32)  | NO   | PRI |         |       |
+| TPC_DESCRICAO    | varchar(200) | NO   |     | NULL    |       |
+| TPC_DOMINIO      | varchar(100) | YES  |     | NULL    |       |
+| tpc_cse_altera   | char(1)      | YES  |     | NULL    |       |
+| TPC_CSE_CONSULTA | char(1)      | YES  |     | NULL    |       |
+| TPC_VLR_DEFAULT  | varchar(255) | YES  |     | NULL    |       |
+| TPC_SUP_ALTERA   | char(1)      | YES  |     | NULL    |       |
+| TPC_SUP_CONSULTA | char(1)      | YES  |     | NULL    |       |
+| GPS_CODIGO       | varchar(32)  | YES  | MUL | NULL    |       |
++------------------+--------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+
 mysql> show tables like '%param%';
 +--------------------------------+
 | Tables_in_consig (%param%)     |
@@ -791,4 +818,5 @@ mysql> show tables;
 | tmp_valor_correcao_saldo_devedor             |
 +----------------------------------------------+
 695 rows in set (0.01 sec)
+
 
