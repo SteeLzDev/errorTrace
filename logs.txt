@@ -8,3 +8,6 @@ Icon=/home/idea-IC243.26053.27/bin/idea.png
 Terminal=false
 Categories=Development;IDE;
 StartupWMClass=jetbrains-idea
+
+
+chmod +x ~/.local/share/applications/intellij-idea.desktop
