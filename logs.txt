@@ -84,7 +84,7 @@ Então ao mandar o primeiro SMS desse novo modelo, não tem dado adicional nem p
 OBS: Antes de enviar o SMS, a  tarefa pede para averiguar alguns limites, 
 OBS2: A ocorrência do usuário vai ser criada lá, mas o quantitativo é aqui.
 OBS3: pesquisa o dado adicional do consignante findDadoAdicionalConsignante
-Criar o método de criar o dado adicional do consignante na ConsignanteControllerBean => Não chamamos a entidade home (DadosConsignanteHome) direto nas camadas, colocamos na camada de negócio no Bean e o nosso Bean é como se fosse o ServiceImpl da entidade. Vamos criar o método de criar dentro de ConsignanteControllerBean método findDadoAdicionalConsignante vamos usar o método de criar 
+Criar o método de criar o dado adicional do consignante na ConsignanteControllerBean => Não chamamos a entidade home (DadosConsignanteHome) direto nas camadas, colocamos na camada de negócio no Bean e o nosso Bean é como se fosse o ServiceImpl da entidade. método create dentro do ConsignanteControllerBean . E dentro deste método create você irá chamar o DadosConsignanteHome 
  
 
 Sobre onde guardar as informações da API do Zenvia, vamos guardar nos properties do projeto invés do banco
@@ -96,4 +96,5 @@ Imputar dados no banco:
 o eConsig tem um padrão para imputar dados no banco, econsig não tem o flyway nele porém tem um flyway modificado pela econsig. O que é feito: tem um controle de versionamento que fica em src/main/resources/db/0.0.0/onde colocamos todas alterações de modelo de dados, temos o ddl (quando tem alterações de modelo. CREATE, ALTER TABLE) e também tem o dml (quando tem alterações de modelo. INSERT, UPDATE). Então vai ser criado um dml com o padrão 
 
  o nome do arquivo fica como o modelo de data o nome do banco  a data e o número da tarefa. EX: dml_all_2026_01_28_DESENV_24832.sql
+
 
