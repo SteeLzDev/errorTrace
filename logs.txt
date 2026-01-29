@@ -1,100 +1,113 @@
-Quem Poderá ajudar sobre o Zenvia
-
-Pessoal do SalaryFits ou o Nolasco, já que o Alexandre irá entrar de férias.
-
-
-1 - Controle de envio vai continuar fazendo ele, só não vamos fazer o controle de envio contabilizando  .... Continuar registrando ocorrência para o servidor, o SMS Vamos enviar para o servidor (colaborador, o usuário que está usando o sistema, o destinatário dele). Como essa ocorrência de envio, vamos enviar só para o servidor 
-
-
-
-
-
-
-Provavelmente vai ter que ter uma camada acima do SMSHelper e depois chamar ele:
-
-Porque quando usa eConsig, temos mais de 1 (chamamos de papel) que é a consignatária = banco. usuário servidor = servidor público ou colaborador do sistema privado. consignante = gestor dos sistema (responsável pelo sistema). Temos esses papéis. Também tem o papel de suporte, que é o suporte de SMS. Temos o sistema de ocorrência para cada um deles. tb_ocorrencia_consignataria, tb_ocorrencia_consignante, tb_ocorrencia_servidor. Temos uma tabela de ocorrência para cada tipo de entidades. 
-
-O Lugar correto para enviar SMS para o servidor, é na ocorrência de servidor "mandei sms para o servidor" e aí tenho o código que é a PK desse servidor (SER_CODIGO)que é da tabela de servidor, para eu saber quem é essa pessoa que recebeu o SMS e a mesma coisa para consignante, que é a PK MFK (CSE_CODIGO) e tem da consignatária (CSA_CODIGO)
-
-O que podemos fazer, eu tenho uma ocorrência de usuário, a ocorrência de usuário é a ocorrência de qualquer usuário do sistema, independente do papel dele. a partir desse USU_CODIGO eu consigo saber quem é essa pessoa, se ele é consignante, qual usuário consignante ele é.
-
-Sugestão: ao enviar SMS, vamos armazenar na tabela de ocorrência de usuário, falando que foi enviado um SMS para ele. Como saber esse USU_CODIGO, quem que é essa pessoa? 
-
-a camada SMSHelper pode não me atender porque ela não tem quem é a pessoa que está usando o sistema, sem saber quem é, não conseguimos armazenar o USU_CODIGO dele (chave do usuário), temos um objeto que é o "AcessoSistema", ele tem tudas informações da pessoa  que está usando o sistema. 
-
-Sugestão: Achar onde está usando o SMSHelper, antes de fazer o envio dele, no método chamar  AcessoSistema responsável, pegar o usuCodigo dentro do objeto tem um get.usuCodigo "responsavel.gtUsuCodigo();" ou seja, conseguimos criar uma tabela de ocorrência de usuário.
-
-Tem um método no sistema que já cria ocorrência para o usuário "tb_ocorrencia_usuario"?  sim. no createOcorrenciaUsuario, podemos usar esse objeto.
-
-
-No SMSHelper, mudar o método para ele receber o responsável, com isso vou precisar mudar a classe, colocando anotations para permitir que eu utilize as classes de implementação, fazer o @Autowired ou chamar a classe bean, usamos o ApplicationContextProvider.getApplicationContext().containsBean(conteudo) que chama direto a classe.
-
-Apenas para entendimento:
-
-
-final UsuarioController usuarioController = ApplicationContextProvider.getApplicationContext().getBean(UsuarioController.class);
-        final OcorrenciaUsuarioTransferObject ocorrencia = new OcorrenciaUsuarioTransferObject();
-        ocorrencia.setUsuCodigo(responsavel.getUsuCodigo());
-        ocorrencia.setTocCodigo(CodedValues.TOC_AUT_CADASTRO_EMAIL_SERVIDOR_TOTEM);
-        ocorrencia.setOusObs(ApplicationResourcesHelper.getMessage("mensagem.ocorrencia.ous.obs.autorizacao.cadastro.email.servidor.host.a.host", usuarioSuporteResponsavel, protocoloCodigo.replace("_EMAIL", "")));
-        ocorrencia.setOusIpAcesso(responsavel.getIpUsuario());
-        usuarioController.createOcorrenciaUsuario(null, null);
-
-Esse objeto é a chave para conseguir as informações do usuário para ter referência 
-
-Por que está sendo sugerido criar aqui, porque tem muitos locais que usam o SMSHelper, e teria que trocar em muitos locais, isso aumentaria a complexidade da tarefa podendo só trocar no send, só passar o responsavel no parâmetro que todo o sistema tem.
-
-Outra coisa é se usasse o objeto AcessoSistema, colocar como parâmetro no método send do SMSHelper (padrão é chamar ele de responssavel)
-
-
-
-A ocorrência vai ser registrada assim que o método send da classe SMSHelper terminar. 
-
-
-Na minha tarefa, fala pra registrar a ocorrência, vai continuar registrando, mas registrando na tb_ocorrencia_usuario, so que o controle dessa ocorrência, vamos ter que fazer em outro local, pra não ter que toda que mandar um SMS ir no banco, fazer um count para descobrir se chegou no limite ou não. O que foi pensado, o controle é do sistema quando fazemos o controle do sistema, o consignante para nós ele representa um sistema. Existe no sistema uma tabela chamada tb_tipo_dado_adicional. 
-
-Esta tb_tipo_dado_adicional é como se fosse uma tabela que as vezes querem criar campos para alguma entidade que ficaria de forma inviável liberar versão com alter table, por causa de um campo novo, por isso temos a tabela auxiliar.
-Foi pensado: criar mais dois dados adicionais e esses dados adicionais, irão ser: 
-
-SELECT * FROM tb_tipo_dado_adicional ttda ;
--- tb_tipo_dado_adicional
--- 1 Dado adicional com a data do mês corrente
--- 1 Dado adicional com o quantitativo de envios
--- CodedValues = TDA_ (criar 2 TDA com final "96" e "97")
--- tb_dados_consignante
--- Jan => Tem data no dado adicional? Não.
--- Jan = > 2026-01 - 1 dado adicional
--- Jan => 1 - outro dado adicional com quantitativo, ou seja 1 envio.
-
--- Jan => Tem data no dado adicional? Sim.
--- Jan => Data de envio é igual a data no dado adicional de data? Sim. Então contabiliza mais.
--- Jan = > 2026-01
--- Jan => 2
-
--- Fev => Tem data no dado adicional? Sim.
--- Fev => Data de envio é igual a data no dado adicional de data? Não. Então, atualiza o dado adicional para o mês corrente => 2026-02
--- Fev => 2026-02
--- Fev => 1
-
--- Quando for verificar, invés de dar um count para saber quantos tem, filtrando por data. No exemplo acima, em 1 SELECT vamos trazer os 2 campos, ai verifica se atingiu o limite ou não e atualiza as informações que devem ser atualizadas
-
-Na tb_dados_consignante eu tenho CSE_CODIGO eo TDA_CODIGO (é o código do tipo dado) DAC_VALOR que é o valor do tipo dado, então 1 dado na tb_consignante vai ter a data e o outro dado vai ter o quantitativo que vai contando no mês.
-Então ao mandar o primeiro SMS desse novo modelo, não tem dado adicional nem pra data e nem pelo quantitativo
-
-OBS: Antes de enviar o SMS, a  tarefa pede para averiguar alguns limites, 
-OBS2: A ocorrência do usuário vai ser criada lá, mas o quantitativo é aqui.
-OBS3: pesquisa o dado adicional do consignante findDadoAdicionalConsignante
-Criar o método de criar o dado adicional do consignante na ConsignanteControllerBean => Não chamamos a entidade home (DadosConsignanteHome) direto nas camadas, colocamos na camada de negócio no Bean e o nosso Bean é como se fosse o ServiceImpl da entidade. método create dentro do ConsignanteControllerBean . E dentro deste método create você irá chamar o DadosConsignanteHome 
- 
-
-Sobre onde guardar as informações da API do Zenvia, vamos guardar nos properties do projeto invés do banco
-apiUrl: https://api.zenvia.com/v2/channels/sms/messages
-apiToken: K8guNCbncrNofo62UjHeGWzMGEeiJhSSmXq3
-fromNumber: econsign
-
-Imputar dados no banco:
-o eConsig tem um padrão para imputar dados no banco, econsig não tem o flyway nele porém tem um flyway modificado pela econsig. O que é feito: tem um controle de versionamento que fica em src/main/resources/db/0.0.0/onde colocamos todas alterações de modelo de dados, temos o ddl (quando tem alterações de modelo. CREATE, ALTER TABLE) e também tem o dml (quando tem alterações de modelo. INSERT, UPDATE). Então vai ser criado um dml com o padrão 
-
- o nome do arquivo fica como o modelo de data o nome do banco  a data e o número da tarefa. EX: dml_all_2026_01_28_DESENV_24832.sql
-
-
+2026-01-29 20:52:31,701 [eConsig] [INFO] [com.zetra.econsig.web.listener.AtualizarBancoDeDadosListener.onApplicationEvent(155)] | Novo arquivo SQL encontrado: 0.0.0/dml_all_20260128_DESENV-24832.sql
+Hibernate: select tpsc1_0.gps_codigo,gpsc1_0.gps_descricao,trim(BOTH from tpsc1_0.tpc_codigo),tpsc1_0.tpc_descricao,tpsc1_0.tpc_dominio,pscs1_0.psi_vlr,coalesce(tpsc1_0.tpc_vlr_default,'') from tb_tipo_param_sist_consignante tpsc1_0 left join tb_grupo_param_sist_cse gpsc1_0 on gpsc1_0.gps_codigo=tpsc1_0.gps_codigo left join tb_param_sist_consignante pscs1_0 on tpsc1_0.tpc_codigo=pscs1_0.tpc_codigo where 1=1 order by coalesce(tpsc1_0.gps_codigo,'999'),tpsc1_0.tpc_descricao
+Hibernate: select c1_0.cse_codigo,c1_0.bco_codigo,c1_0.cse_ativo,c1_0.cse_bairro,c1_0.cse_cep,c1_0.cse_certificado_central_mobile,c1_0.cse_certificado_centralizador,c1_0.cse_cidade,c1_0.cse_cnpj,c1_0.cse_compl,c1_0.cse_data_atualizacao_cadastral,c1_0.cse_data_cobranca,c1_0.cse_ddns_acesso,c1_0.cse_email,c1_0.cse_email_folha,c1_0.cse_email_validar_servidor,c1_0.cse_fax,c1_0.cse_folha,c1_0.cse_identificador,c1_0.cse_identificador_interno,c1_0.cse_ip_acesso,c1_0.cse_licenca,c1_0.cse_logradouro,c1_0.cse_nome,c1_0.cse_nro,c1_0.cse_projeto_inadimplencia,c1_0.cse_resp_cargo,c1_0.cse_resp_cargo_2,c1_0.cse_resp_cargo_3,c1_0.cse_resp_telefone,c1_0.cse_resp_telefone_2,c1_0.cse_resp_telefone_3,c1_0.cse_responsavel,c1_0.cse_responsavel_2,c1_0.cse_responsavel_3,c1_0.cse_sistema_folha,c1_0.cse_tel,c1_0.cse_uf,c1_0.tce_codigo from tb_consignante c1_0 where c1_0.cse_codigo=?
+2026-01-29 20:52:32,198 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.start(42)] | INICIANDO PROCESSAMENTO: Thu Jan 29 20:52:32 BRT 2026
+2026-01-29 20:52:32,199 [eConsig] [WARN] [com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(40)] | Início: Iniciando atualização de sistema.
+2026-01-29 20:52:32,199 [eConsig] [INFO] [com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(46)] | Executando arquivo SQL "0.0.0/dml_all_20260128_DESENV-24832.sql"
+Hibernate: select do1_0.dbo_codigo,do1_0.dbo_arquivo,do1_0.dbo_data from tb_db_ocorrencia do1_0 where do1_0.dbo_arquivo like replace(?,'\\','\\\\')
+Hibernate: select to1_0.toc_codigo,to1_0.toc_descricao from tb_tipo_ocorrencia to1_0 where to1_0.toc_codigo=?
+2026-01-29 20:52:32,215 [eConsig] [INFO] [com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(76)] |  INSERT INTO tb_tipo_ocorrencia (TOC_CODIGO, TOC_DESCRICAO) VALUES ('261','Envio de SMS via Zenvia')
+2026-01-29 20:52:32,216 [eConsig] [DEBUG] [com.zetra.econsig.helper.sistema.DebugHelper.debug(163)] | [GenericBatchScriptDAO.executeBatch(85)]  INSERT INTO tb_tipo_ocorrencia (TOC_CODIGO, TOC_DESCRICAO) VALUES ('261','Envio de SMS via Zenvia')
+2026-01-29 20:52:32,220 [eConsig] [INFO] [com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(76)] |  INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA, TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALERTA, TDA_CSA_ALTERA, TDA_SER_ALTERA) VALUES ('96', '2', 'Data mes/ano de envio de SMS', 'DATA', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N')
+2026-01-29 20:52:32,221 [eConsig] [DEBUG] [com.zetra.econsig.helper.sistema.DebugHelper.debug(163)] | [GenericBatchScriptDAO.executeBatch(85)]  INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA, TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALERTA, TDA_CSA_ALTERA, TDA_SER_ALTERA) VALUES ('96', '2', 'Data mes/ano de envio de SMS', 'DATA', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N')
+2026-01-29 20:52:32,244 [eConsig] [ERROR] [com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(90)] | Error Code: "1054"
+Hibernate: select ts1_0.tex_chave,ts1_0.tex_texto,ts1_0.tex_data_alteracao from tb_texto_sistema ts1_0 where 1=1 order by ts1_0.tex_chave
+Hibernate: select ts1_0.tex_chave,ts1_0.tex_texto,ts1_0.tex_data_alteracao from tb_texto_sistema ts1_0 where 1=1 order by ts1_0.tex_chave
+2026-01-29 20:52:32,694 [eConsig] [ERROR] [com.zetra.econsig.service.sistema.SistemaControllerBean.executarBatchScript(426)] | Verifique o processo.
+com.zetra.econsig.exception.DAOException: Verifique o processo.
+	at com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(GenericBatchScriptDAO.java:135) ~[classes/:?]
+	at com.zetra.econsig.service.sistema.SistemaControllerBean.executarBatchScript(SistemaControllerBean.java:418) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) [spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) [spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) [spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) [spring-aop-6.2.10.jar:6.2.10]
+	at com.zetra.econsig.service.sistema.SistemaControllerBean$$SpringCGLIB$$0.executarBatchScript(<generated>) [classes/:?]
+	at com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(ProcessaAtualizacaoBaseDeDados.java:49) [classes/:?]
+	at com.zetra.econsig.job.process.Processo.run(Processo.java:36) [classes/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'TDA_CSE_ALERTA' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:837) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:685) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95) ~[HikariCP-6.3.2.jar:?]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-6.3.2.jar:?]
+	at com.zetra.econsig.persistence.jdbc.AuditedStatement.execute(AuditedStatement.java:121) ~[classes/:?]
+	at com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(GenericBatchScriptDAO.java:85) ~[classes/:?]
+	... 13 more
+2026-01-29 20:52:32,707 [eConsig] [ERROR] [com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(53)] | Ocorreram erros ao executar o arquivos SQL "0.0.0/dml_all_20260128_DESENV-24832.sql"
+com.zetra.econsig.exception.ConsignanteControllerException: Verifique o processo.
+	at com.zetra.econsig.service.sistema.SistemaControllerBean.executarBatchScript(SistemaControllerBean.java:427) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.10.jar:6.2.10]
+	at com.zetra.econsig.service.sistema.SistemaControllerBean$$SpringCGLIB$$0.executarBatchScript(<generated>) ~[classes/:?]
+	at com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(ProcessaAtualizacaoBaseDeDados.java:49) [classes/:?]
+	at com.zetra.econsig.job.process.Processo.run(Processo.java:36) [classes/:?]
+Caused by: com.zetra.econsig.exception.DAOException: Verifique o processo.
+	at com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(GenericBatchScriptDAO.java:135) ~[classes/:?]
+	at com.zetra.econsig.service.sistema.SistemaControllerBean.executarBatchScript(SistemaControllerBean.java:418) ~[classes/:?]
+	... 12 more
+Caused by: java.sql.SQLSyntaxErrorException: Unknown column 'TDA_CSE_ALERTA' in 'field list'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:112) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:837) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:685) ~[mysql-connector-j-9.1.0.jar:9.1.0]
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:95) ~[HikariCP-6.3.2.jar:?]
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-6.3.2.jar:?]
+	at com.zetra.econsig.persistence.jdbc.AuditedStatement.execute(AuditedStatement.java:121) ~[classes/:?]
+	at com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(GenericBatchScriptDAO.java:85) ~[classes/:?]
+	at com.zetra.econsig.service.sistema.SistemaControllerBean.executarBatchScript(SistemaControllerBean.java:418) ~[classes/:?]
+	... 12 more
+Hibernate: select tpsc1_0.gps_codigo,gpsc1_0.gps_descricao,trim(BOTH from tpsc1_0.tpc_codigo),tpsc1_0.tpc_descricao,tpsc1_0.tpc_dominio,pscs1_0.psi_vlr,coalesce(tpsc1_0.tpc_vlr_default,'') from tb_tipo_param_sist_consignante tpsc1_0 left join tb_grupo_param_sist_cse gpsc1_0 on gpsc1_0.gps_codigo=tpsc1_0.gps_codigo left join tb_param_sist_consignante pscs1_0 on tpsc1_0.tpc_codigo=pscs1_0.tpc_codigo where 1=1 order by coalesce(tpsc1_0.gps_codigo,'999'),tpsc1_0.tpc_descricao
+Hibernate: select null,to1_0.toc_descricao from tb_tipo_ocorrencia to1_0 where to1_0.toc_codigo=?
+Hibernate: insert into tb_ocorrencia_consignante (cse_codigo,oce_data,oce_ip_acesso,oce_obs,toc_codigo,usu_codigo) values (?,?,?,?,?,?)
+Hibernate: select cp1_0.pap_codigo_destinatario,cp1_0.pap_codigo_remetente from tb_comunicacao_permitida cp1_0
+Hibernate: select cp1_0.pap_codigo_destinatario,cp1_0.pap_codigo_remetente from tb_comunicacao_permitida cp1_0
+Hibernate: select te1_0.ten_codigo,te1_0.ten_auditoria,te1_0.ten_campo_ent_00,te1_0.ten_campo_ent_01,te1_0.ten_campo_ent_02,te1_0.ten_campo_ent_03,te1_0.ten_campo_ent_04,te1_0.ten_campo_ent_05,te1_0.ten_campo_ent_06,te1_0.ten_campo_ent_07,te1_0.ten_campo_ent_08,te1_0.ten_campo_ent_09,te1_0.ten_campo_ent_10,te1_0.ten_descricao,te1_0.ten_titulo from tb_tipo_entidade te1_0
+Hibernate: select te1_0.ten_codigo,te1_0.ten_auditoria,te1_0.ten_campo_ent_00,te1_0.ten_campo_ent_01,te1_0.ten_campo_ent_02,te1_0.ten_campo_ent_03,te1_0.ten_campo_ent_04,te1_0.ten_campo_ent_05,te1_0.ten_campo_ent_06,te1_0.ten_campo_ent_07,te1_0.ten_campo_ent_08,te1_0.ten_campo_ent_09,te1_0.ten_campo_ent_10,te1_0.ten_descricao,te1_0.ten_titulo from tb_tipo_entidade te1_0
+2026-01-29 20:52:32,825 [eConsig] [WARN] [com.zetra.econsig.helper.parametro.ParamSist.getDiretorioRaizArquivos(175)] | Valor invalido parametro de sistema 5. Assumindo valor default.
+Hibernate: select hp1_0.hpr_codigo,hp1_0.est_codigo,hp1_0.hpr_arquivo_margem,hp1_0.hpr_arquivo_retorno,hp1_0.hpr_chave_identificacao,hp1_0.hpr_conf_entrada_margem,hp1_0.hpr_conf_entrada_retorno,hp1_0.hpr_conf_tradutor_margem,hp1_0.hpr_conf_tradutor_retorno,hp1_0.hpr_data_fim,hp1_0.hpr_data_ini,hp1_0.hpr_linhas_arquivo_margem,hp1_0.hpr_linhas_arquivo_retorno,hp1_0.hpr_ordem_exc_campos_chave,hp1_0.hpr_periodo,hp1_0.org_codigo from tb_historico_processamento hp1_0 where hp1_0.hpr_data_fim is null order by hp1_0.hpr_data_ini
+Hibernate: select r1_0.rel_codigo,r1_0.rel_titulo,r1_0.rel_ativo,r1_0.rel_agendado,r1_0.rel_classe_relatorio,r1_0.rel_classe_processo,r1_0.rel_classe_agendamento,r1_0.rel_template_jasper,r1_0.rel_template_dinamico,r1_0.rel_template_subrelatorio,r1_0.fun_codigo,r1_0.tag_codigo,r1_0.rel_template_sql,r1_0.rel_qtd_dias_limpeza,r1_0.rel_customizado,r1_0.rel_agrupamento from tb_relatorio r1_0 where 1=1
+2026-01-29 20:52:32,883 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.start(42)] | INICIANDO PROCESSAMENTO: Thu Jan 29 20:52:32 BRT 2026
+2026-01-29 20:52:32,884 [eConsig] [INFO] [com.zetra.econsig.web.listener.ValidarAmbienteListener.onApplicationEvent(30)] | Validação do Ambiente do eConsig
+2026-01-29 20:52:32,884 [eConsig] [DEBUG] [com.zetra.econsig.job.process.ProcessoAgendadoPeriodico.executar(35)] | Executa Processo Agendado Periodico: Thu Jan 29 20:52:32 BRT 2026
+2026-01-29 20:52:32,884 [eConsig] [DEBUG] [com.zetra.econsig.job.process.agendado.ProcessaControleProcessamentoLote.executa(44)] | Início da análise dos lotes em processamento
+2026-01-29 20:52:32,884 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.start(42)] | INICIANDO PROCESSAMENTO: Thu Jan 29 20:52:32 BRT 2026
+2026-01-29 20:52:32,910 [eConsig] [INFO] [com.zetra.econsig.EconsigApplication.logStarted(59)] | Started EconsigApplication in 25.185 seconds (process running for 27.184)
+2026-01-29 20:52:32,913 [eConsig] [DEBUG] [com.zetra.econsig.job.process.ProcessoAgendadoPeriodico.executar(35)] | Executa Processo Agendado Periodico: Thu Jan 29 20:52:32 BRT 2026
+2026-01-29 20:52:32,913 [eConsig] [DEBUG] [com.zetra.econsig.job.process.agendado.ProcessaValidacaoAmbiente.executa(29)] | Verifica se o ambiente está preparado para a execução do eConsig
+Hibernate: select r1_0.rel_codigo,r1_0.rel_titulo,r1_0.rel_ativo,r1_0.rel_agendado,r1_0.rel_classe_relatorio,r1_0.rel_classe_processo,r1_0.rel_classe_agendamento,r1_0.rel_template_jasper,r1_0.rel_template_dinamico,r1_0.rel_template_subrelatorio,r1_0.fun_codigo,r1_0.tag_codigo,r1_0.rel_template_sql,r1_0.rel_qtd_dias_limpeza,r1_0.rel_customizado,r1_0.rel_agrupamento from tb_relatorio r1_0 where 1=1
+Hibernate: select pse1_0.psx_chave,pse1_0.psx_valor from tb_param_senha_externa pse1_0 order by pse1_0.psx_chave
+Hibernate: select ns1_0.nse_codigo,ns1_0.nse_codigo_pai,ns1_0.nse_descricao,ns1_0.nse_descricao_portal,ns1_0.nse_imagem,ns1_0.nse_ordem_beneficio,ns1_0.nse_retem_verba,ns1_0.nse_texto_detalhe_rodape,ns1_0.nse_texto_detalhe_topo,ns1_0.nse_titulo_carousel_provedor,ns1_0.nse_titulo_detalhe_rodape,ns1_0.nse_titulo_detalhe_topo,ns1_0.nse_transferir_ade from tb_natureza_servico ns1_0
+Hibernate: select rva1_0.rea_codigo,rva1_0.rea_descricao,rva1_0.rea_ativo,rva1_0.rea_data_cadastro,rva1_0.rea_java_class_name,rva1_0.rea_sequencia,rva1_0.rea_bloqueia_sistema from tb_regra_validacao_ambiente rva1_0 where 1=1 and rva1_0.rea_ativo=? order by rva1_0.rea_sequencia
+Hibernate: select ns1_0.nse_codigo,ns1_0.nse_codigo_pai,ns1_0.nse_descricao,ns1_0.nse_descricao_portal,ns1_0.nse_imagem,ns1_0.nse_ordem_beneficio,ns1_0.nse_retem_verba,ns1_0.nse_texto_detalhe_rodape,ns1_0.nse_texto_detalhe_topo,ns1_0.nse_titulo_carousel_provedor,ns1_0.nse_titulo_detalhe_rodape,ns1_0.nse_titulo_detalhe_topo,ns1_0.nse_transferir_ade from tb_natureza_servico ns1_0
+2026-01-29 20:52:33,021 [eConsig] [DEBUG] [com.zetra.econsig.helper.web.JspHelper.limparCacheParametros(1730)] | Duration of limparCacheParametros(): 313 ms
+2026-01-29 20:52:33,021 [eConsig] [WARN] [com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(74)] | Término com erro: Erro na atualização do sistema.
+2026-01-29 20:52:33,022 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.run(37)] | FINALIZANDO PROCESSAMENTO: Thu Jan 29 20:52:33 BRT 2026
+Hibernate: SHOW VARIABLES LIKE 'have_innodb'
+2026-01-29 20:52:33,100 [eConsig] [DEBUG] [com.zetra.econsig.helper.validacaoambiente.RegraValidacaoVersaoJava.executar(35)] | JVM: 21.0.10
+Hibernate: select ts1_0.tex_chave,ts1_0.tex_texto,ts1_0.tex_data_alteracao from tb_texto_sistema ts1_0 where 1=1 order by ts1_0.tex_chave
+Hibernate: select cpl1_0.cpl_arquivo_econsig,cpl1_0.cpl_status,cpl1_0.cpl_data,cpl1_0.cpl_canal,cpl1_0.cpl_parametros,cpl1_0.usu_codigo,case when exists(select 1 from tb_bloco_processamento_lote bpls1_0 where bpls1_0.sbp_codigo=? and cpl1_0.cpl_arquivo_econsig=bpls1_0.cpl_arquivo_econsig) then 'S' else 'N' end from tb_controle_processamento_lote cpl1_0 order by cpl1_0.cpl_data
+2026-01-29 20:52:33,192 [eConsig] [INFO] [com.zetra.econsig.job.process.agendado.ProcessaControleProcessamentoLote.executa(62)] | Lote não finalizado '/home/eConsig/arquivos/lote/csa/3700808080808080808080808080A538/lote.txt' iniciado por '5400808080808080808080808080C98B' em '29/12/2025 18:55:01' pelo canal 'REST' sem blocos pendentes
+2026-01-29 20:52:33,192 [eConsig] [ERROR] [com.zetra.econsig.job.process.agendado.ProcessaControleProcessamentoLote.executa(80)] | Lote '/home/eConsig/arquivos/lote/csa/3700808080808080808080808080A538/lote.txt' não encontrado na pasta de entrada
+2026-01-29 20:52:33,192 [eConsig] [DEBUG] [com.zetra.econsig.job.process.agendado.ProcessaControleProcessamentoLote.executa(148)] | Fim da análise dos lotes em processamento
+Hibernate: select ts1_0.tex_chave,ts1_0.tex_texto,ts1_0.tex_data_alteracao from tb_texto_sistema ts1_0 where 1=1 order by ts1_0.tex_chave
+Hibernate: SELECT 'exists' as variable, 'true' as value FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_SCHEMA = DATABASE() AND TRIGGER_NAME = 'trg_atualiza_ade_data_status'
+Hibernate: insert into tb_ocorrencia_agendamento (agd_codigo,oag_data_fim,oag_data_inicio,oag_ip_acesso,oag_obs,toc_codigo,usu_codigo,oag_codigo) values (?,?,?,?,?,?,?,?)
+Hibernate: insert into tb_ocorrencia_agendamento (agd_codigo,oag_data_fim,oag_data_inicio,oag_ip_acesso,oag_obs,toc_codigo,usu_codigo,oag_codigo) values (?,?,?,?,?,?,?,?)
+2026-01-29 20:52:33,464 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.run(37)] | FINALIZANDO PROCESSAMENTO: Thu Jan 29 20:52:33 BRT 2026
+2026-01-29 20:52:33,472 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.run(37)] | FINALIZANDO PROCESSAMENTO: Thu Jan 29 20:52:33 BRT 2026
+2026-01-29 20:53:00,003 [eConsig] [INFO] [com.zetra.econsig.job.ControladorAgendamentosJob.executar(45)] | Controlador de Agendamentos.
+Hibernate: select c1_0.cse_codigo,c1_0.bco_codigo,c1_0.cse_ativo,c1_0.cse_bairro,c1_0.cse_cep,c1_0.cse_certificado_central_mobile,c1_0.cse_certificado_centralizador,c1_0.cse_cidade,c1_0.cse_cnpj,c1_0.cse_compl,c1_0.cse_data_atualizacao_cadastral,c1_0.cse_data_cobranca,c1_0.cse_ddns_acesso,c1_0.cse_email,c1_0.cse_email_folha,c1_0.cse_email_validar_servidor,c1_0.cse_fax,c1_0.cse_folha,c1_0.cse_identificador,c1_0.cse_identificador_interno,c1_0.cse_ip_acesso,c1_0.cse_licenca,c1_0.cse_logradouro,c1_0.cse_nome,c1_0.cse_nro,c1_0.cse_projeto_inadimplencia,c1_0.cse_resp_cargo,c1_0.cse_resp_cargo_2,c1_0.cse_resp_cargo_3,c1_0.cse_resp_telefone,c1_0.cse_resp_telefone_2,c1_0.cse_resp_telefone_3,c1_0.cse_responsavel,c1_0.cse_responsavel_2,c1_0.cse_responsavel_3,c1_0.cse_sistema_folha,c1_0.cse_tel,c1_0.cse_uf,c1_0.tce_codigo from tb_consignante c1_0 where c1_0.cse_codigo=?
+2026-01-29 20:53:00,021 [eConsig] [INFO] [com.zetra.econsig.job.ControladorAgendamentosJob.executar(65)] | Sistema bloqueado ou inativo, processos não podem ser agendados.
