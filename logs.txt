@@ -1,61 +1,26 @@
-2026-01-29 21:06:51,531 [eConsig] [INFO] [com.zetra.econsig.web.listener.AtualizarBancoDeDadosListener.onApplicationEvent(155)] | Novo arquivo SQL encontrado: 0.0.0/dml_all_20260128_DESENV-24832.sql
-Hibernate: select tpsc1_0.gps_codigo,gpsc1_0.gps_descricao,trim(BOTH from tpsc1_0.tpc_codigo),tpsc1_0.tpc_descricao,tpsc1_0.tpc_dominio,pscs1_0.psi_vlr,coalesce(tpsc1_0.tpc_vlr_default,'') from tb_tipo_param_sist_consignante tpsc1_0 left join tb_grupo_param_sist_cse gpsc1_0 on gpsc1_0.gps_codigo=tpsc1_0.gps_codigo left join tb_param_sist_consignante pscs1_0 on tpsc1_0.tpc_codigo=pscs1_0.tpc_codigo where 1=1 order by coalesce(tpsc1_0.gps_codigo,'999'),tpsc1_0.tpc_descricao
-Hibernate: select c1_0.cse_codigo,c1_0.bco_codigo,c1_0.cse_ativo,c1_0.cse_bairro,c1_0.cse_cep,c1_0.cse_certificado_central_mobile,c1_0.cse_certificado_centralizador,c1_0.cse_cidade,c1_0.cse_cnpj,c1_0.cse_compl,c1_0.cse_data_atualizacao_cadastral,c1_0.cse_data_cobranca,c1_0.cse_ddns_acesso,c1_0.cse_email,c1_0.cse_email_folha,c1_0.cse_email_validar_servidor,c1_0.cse_fax,c1_0.cse_folha,c1_0.cse_identificador,c1_0.cse_identificador_interno,c1_0.cse_ip_acesso,c1_0.cse_licenca,c1_0.cse_logradouro,c1_0.cse_nome,c1_0.cse_nro,c1_0.cse_projeto_inadimplencia,c1_0.cse_resp_cargo,c1_0.cse_resp_cargo_2,c1_0.cse_resp_cargo_3,c1_0.cse_resp_telefone,c1_0.cse_resp_telefone_2,c1_0.cse_resp_telefone_3,c1_0.cse_responsavel,c1_0.cse_responsavel_2,c1_0.cse_responsavel_3,c1_0.cse_sistema_folha,c1_0.cse_tel,c1_0.cse_uf,c1_0.tce_codigo from tb_consignante c1_0 where c1_0.cse_codigo=?
-2026-01-29 21:06:51,988 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.start(42)] | INICIANDO PROCESSAMENTO: Thu Jan 29 21:06:51 BRT 2026
-2026-01-29 21:06:51,995 [eConsig] [WARN] [com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(40)] | Início: Iniciando atualização de sistema.
-2026-01-29 21:06:51,996 [eConsig] [INFO] [com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(46)] | Executando arquivo SQL "0.0.0/dml_all_20260128_DESENV-24832.sql"
-Hibernate: select to1_0.toc_codigo,to1_0.toc_descricao from tb_tipo_ocorrencia to1_0 where to1_0.toc_codigo=?
-Hibernate: select do1_0.dbo_codigo,do1_0.dbo_arquivo,do1_0.dbo_data from tb_db_ocorrencia do1_0 where do1_0.dbo_arquivo like replace(?,'\\','\\\\')
-2026-01-29 21:06:52,020 [eConsig] [INFO] [com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(76)] |  INSERT INTO tb_tipo_ocorrencia (TOC_CODIGO, TOC_DESCRICAO) VALUES ('261','Envio de SMS via Zenvia')
-2026-01-29 21:06:52,021 [eConsig] [DEBUG] [com.zetra.econsig.helper.sistema.DebugHelper.debug(163)] | [GenericBatchScriptDAO.executeBatch(85)]  INSERT INTO tb_tipo_ocorrencia (TOC_CODIGO, TOC_DESCRICAO) VALUES ('261','Envio de SMS via Zenvia')
-2026-01-29 21:06:52,060 [eConsig] [INFO] [com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(76)] |  INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA, TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALTERA, TDA_CSA_ALTERA, TDA_SER_ALTERA) VALUES ('96', '2', 'Data mes/ano de envio de SMS', 'DATA', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N')
-2026-01-29 21:06:52,060 [eConsig] [DEBUG] [com.zetra.econsig.helper.sistema.DebugHelper.debug(163)] | [GenericBatchScriptDAO.executeBatch(85)]  INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA, TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALTERA, TDA_CSA_ALTERA, TDA_SER_ALTERA) VALUES ('96', '2', 'Data mes/ano de envio de SMS', 'DATA', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N')
-2026-01-29 21:06:52,083 [eConsig] [INFO] [com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(76)] |  INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA, TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALTERA, TDA_CSA_ALTERA, TDA_SER_ALTERA) VALUES ('97', '2', 'Quantidade de SMS enviados no mes', 'INT', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N')
-2026-01-29 21:06:52,084 [eConsig] [DEBUG] [com.zetra.econsig.helper.sistema.DebugHelper.debug(163)] | [GenericBatchScriptDAO.executeBatch(85)]  INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA, TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALTERA, TDA_CSA_ALTERA, TDA_SER_ALTERA) VALUES ('97', '2', 'Quantidade de SMS enviados no mes', 'INT', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N')
-2026-01-29 21:06:52,085 [eConsig] [INFO] [com.zetra.econsig.persistence.dao.generic.GenericBatchScriptDAO.executeBatch(76)] |  -- Fim do script
-2026-01-29 21:06:52,085 [eConsig] [DEBUG] [com.zetra.econsig.helper.sistema.DebugHelper.debug(163)] | [GenericBatchScriptDAO.executeBatch(85)]  -- Fim do script
-Hibernate: select do1_0.dbo_codigo,do1_0.dbo_arquivo,do1_0.dbo_data from tb_db_ocorrencia do1_0 where do1_0.dbo_arquivo like replace(?,'\\','\\\\')
-Hibernate: insert into tb_db_ocorrencia (dbo_arquivo,dbo_data) values (?,?)
-Hibernate: select ts1_0.tex_chave,ts1_0.tex_texto,ts1_0.tex_data_alteracao from tb_texto_sistema ts1_0 where 1=1 order by ts1_0.tex_chave
-2026-01-29 21:06:52,213 [eConsig] [INFO] [com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(50)] | Arquivo SQL "0.0.0/dml_all_20260128_DESENV-24832.sql" executado com sucesso
-Hibernate: select tpsc1_0.gps_codigo,gpsc1_0.gps_descricao,trim(BOTH from tpsc1_0.tpc_codigo),tpsc1_0.tpc_descricao,tpsc1_0.tpc_dominio,pscs1_0.psi_vlr,coalesce(tpsc1_0.tpc_vlr_default,'') from tb_tipo_param_sist_consignante tpsc1_0 left join tb_grupo_param_sist_cse gpsc1_0 on gpsc1_0.gps_codigo=tpsc1_0.gps_codigo left join tb_param_sist_consignante pscs1_0 on tpsc1_0.tpc_codigo=pscs1_0.tpc_codigo where 1=1 order by coalesce(tpsc1_0.gps_codigo,'999'),tpsc1_0.tpc_descricao
-Hibernate: select cp1_0.pap_codigo_destinatario,cp1_0.pap_codigo_remetente from tb_comunicacao_permitida cp1_0
-Hibernate: select cp1_0.pap_codigo_destinatario,cp1_0.pap_codigo_remetente from tb_comunicacao_permitida cp1_0
-Hibernate: select te1_0.ten_codigo,te1_0.ten_auditoria,te1_0.ten_campo_ent_00,te1_0.ten_campo_ent_01,te1_0.ten_campo_ent_02,te1_0.ten_campo_ent_03,te1_0.ten_campo_ent_04,te1_0.ten_campo_ent_05,te1_0.ten_campo_ent_06,te1_0.ten_campo_ent_07,te1_0.ten_campo_ent_08,te1_0.ten_campo_ent_09,te1_0.ten_campo_ent_10,te1_0.ten_descricao,te1_0.ten_titulo from tb_tipo_entidade te1_0
-Hibernate: select te1_0.ten_codigo,te1_0.ten_auditoria,te1_0.ten_campo_ent_00,te1_0.ten_campo_ent_01,te1_0.ten_campo_ent_02,te1_0.ten_campo_ent_03,te1_0.ten_campo_ent_04,te1_0.ten_campo_ent_05,te1_0.ten_campo_ent_06,te1_0.ten_campo_ent_07,te1_0.ten_campo_ent_08,te1_0.ten_campo_ent_09,te1_0.ten_campo_ent_10,te1_0.ten_descricao,te1_0.ten_titulo from tb_tipo_entidade te1_0
-2026-01-29 21:06:52,330 [eConsig] [WARN] [com.zetra.econsig.helper.parametro.ParamSist.getDiretorioRaizArquivos(175)] | Valor invalido parametro de sistema 5. Assumindo valor default.
-Hibernate: select r1_0.rel_codigo,r1_0.rel_titulo,r1_0.rel_ativo,r1_0.rel_agendado,r1_0.rel_classe_relatorio,r1_0.rel_classe_processo,r1_0.rel_classe_agendamento,r1_0.rel_template_jasper,r1_0.rel_template_dinamico,r1_0.rel_template_subrelatorio,r1_0.fun_codigo,r1_0.tag_codigo,r1_0.rel_template_sql,r1_0.rel_qtd_dias_limpeza,r1_0.rel_customizado,r1_0.rel_agrupamento from tb_relatorio r1_0 where 1=1
-Hibernate: select ts1_0.tex_chave,ts1_0.tex_texto,ts1_0.tex_data_alteracao from tb_texto_sistema ts1_0 where 1=1 order by ts1_0.tex_chave
-Hibernate: select r1_0.rel_codigo,r1_0.rel_titulo,r1_0.rel_ativo,r1_0.rel_agendado,r1_0.rel_classe_relatorio,r1_0.rel_classe_processo,r1_0.rel_classe_agendamento,r1_0.rel_template_jasper,r1_0.rel_template_dinamico,r1_0.rel_template_subrelatorio,r1_0.fun_codigo,r1_0.tag_codigo,r1_0.rel_template_sql,r1_0.rel_qtd_dias_limpeza,r1_0.rel_customizado,r1_0.rel_agrupamento from tb_relatorio r1_0 where 1=1
-Hibernate: select pse1_0.psx_chave,pse1_0.psx_valor from tb_param_senha_externa pse1_0 order by pse1_0.psx_chave
-Hibernate: select ns1_0.nse_codigo,ns1_0.nse_codigo_pai,ns1_0.nse_descricao,ns1_0.nse_descricao_portal,ns1_0.nse_imagem,ns1_0.nse_ordem_beneficio,ns1_0.nse_retem_verba,ns1_0.nse_texto_detalhe_rodape,ns1_0.nse_texto_detalhe_topo,ns1_0.nse_titulo_carousel_provedor,ns1_0.nse_titulo_detalhe_rodape,ns1_0.nse_titulo_detalhe_topo,ns1_0.nse_transferir_ade from tb_natureza_servico ns1_0
-Hibernate: select ns1_0.nse_codigo,ns1_0.nse_codigo_pai,ns1_0.nse_descricao,ns1_0.nse_descricao_portal,ns1_0.nse_imagem,ns1_0.nse_ordem_beneficio,ns1_0.nse_retem_verba,ns1_0.nse_texto_detalhe_rodape,ns1_0.nse_texto_detalhe_topo,ns1_0.nse_titulo_carousel_provedor,ns1_0.nse_titulo_detalhe_rodape,ns1_0.nse_titulo_detalhe_topo,ns1_0.nse_transferir_ade from tb_natureza_servico ns1_0
-2026-01-29 21:06:52,379 [eConsig] [DEBUG] [com.zetra.econsig.helper.web.JspHelper.limparCacheParametros(1730)] | Duration of limparCacheParametros(): 165 ms
-2026-01-29 21:06:52,379 [eConsig] [WARN] [com.zetra.econsig.job.process.ProcessaAtualizacaoBaseDeDados.executar(72)] | Término com sucesso: Finalizando atualização de sistema.
-2026-01-29 21:06:52,379 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.run(37)] | FINALIZANDO PROCESSAMENTO: Thu Jan 29 21:06:52 BRT 2026
-Hibernate: select null,to1_0.toc_descricao from tb_tipo_ocorrencia to1_0 where to1_0.toc_codigo=?
-Hibernate: insert into tb_ocorrencia_consignante (cse_codigo,oce_data,oce_ip_acesso,oce_obs,toc_codigo,usu_codigo) values (?,?,?,?,?,?)
-Hibernate: select hp1_0.hpr_codigo,hp1_0.est_codigo,hp1_0.hpr_arquivo_margem,hp1_0.hpr_arquivo_retorno,hp1_0.hpr_chave_identificacao,hp1_0.hpr_conf_entrada_margem,hp1_0.hpr_conf_entrada_retorno,hp1_0.hpr_conf_tradutor_margem,hp1_0.hpr_conf_tradutor_retorno,hp1_0.hpr_data_fim,hp1_0.hpr_data_ini,hp1_0.hpr_linhas_arquivo_margem,hp1_0.hpr_linhas_arquivo_retorno,hp1_0.hpr_ordem_exc_campos_chave,hp1_0.hpr_periodo,hp1_0.org_codigo from tb_historico_processamento hp1_0 where hp1_0.hpr_data_fim is null order by hp1_0.hpr_data_ini
-2026-01-29 21:06:52,630 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.start(42)] | INICIANDO PROCESSAMENTO: Thu Jan 29 21:06:52 BRT 2026
-2026-01-29 21:06:52,631 [eConsig] [DEBUG] [com.zetra.econsig.job.process.ProcessoAgendadoPeriodico.executar(35)] | Executa Processo Agendado Periodico: Thu Jan 29 21:06:52 BRT 2026
-2026-01-29 21:06:52,631 [eConsig] [DEBUG] [com.zetra.econsig.job.process.agendado.ProcessaControleProcessamentoLote.executa(44)] | Início da análise dos lotes em processamento
-2026-01-29 21:06:52,631 [eConsig] [INFO] [com.zetra.econsig.web.listener.ValidarAmbienteListener.onApplicationEvent(30)] | Validação do Ambiente do eConsig
-2026-01-29 21:06:52,632 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.start(42)] | INICIANDO PROCESSAMENTO: Thu Jan 29 21:06:52 BRT 2026
-2026-01-29 21:06:52,632 [eConsig] [DEBUG] [com.zetra.econsig.job.process.ProcessoAgendadoPeriodico.executar(35)] | Executa Processo Agendado Periodico: Thu Jan 29 21:06:52 BRT 2026
-2026-01-29 21:06:52,632 [eConsig] [DEBUG] [com.zetra.econsig.job.process.agendado.ProcessaValidacaoAmbiente.executa(29)] | Verifica se o ambiente está preparado para a execução do eConsig
-2026-01-29 21:06:52,632 [eConsig] [INFO] [com.zetra.econsig.EconsigApplication.logStarted(59)] | Started EconsigApplication in 24.826 seconds (process running for 26.758)
-Hibernate: select rva1_0.rea_codigo,rva1_0.rea_descricao,rva1_0.rea_ativo,rva1_0.rea_data_cadastro,rva1_0.rea_java_class_name,rva1_0.rea_sequencia,rva1_0.rea_bloqueia_sistema from tb_regra_validacao_ambiente rva1_0 where 1=1 and rva1_0.rea_ativo=? order by rva1_0.rea_sequencia
-Hibernate: SHOW VARIABLES LIKE 'have_innodb'
-2026-01-29 21:06:52,794 [eConsig] [DEBUG] [com.zetra.econsig.helper.validacaoambiente.RegraValidacaoVersaoJava.executar(35)] | JVM: 21.0.10
-Hibernate: select ts1_0.tex_chave,ts1_0.tex_texto,ts1_0.tex_data_alteracao from tb_texto_sistema ts1_0 where 1=1 order by ts1_0.tex_chave
-Hibernate: select cpl1_0.cpl_arquivo_econsig,cpl1_0.cpl_status,cpl1_0.cpl_data,cpl1_0.cpl_canal,cpl1_0.cpl_parametros,cpl1_0.usu_codigo,case when exists(select 1 from tb_bloco_processamento_lote bpls1_0 where bpls1_0.sbp_codigo=? and cpl1_0.cpl_arquivo_econsig=bpls1_0.cpl_arquivo_econsig) then 'S' else 'N' end from tb_controle_processamento_lote cpl1_0 order by cpl1_0.cpl_data
-Hibernate: select ts1_0.tex_chave,ts1_0.tex_texto,ts1_0.tex_data_alteracao from tb_texto_sistema ts1_0 where 1=1 order by ts1_0.tex_chave
-2026-01-29 21:06:53,036 [eConsig] [INFO] [com.zetra.econsig.job.process.agendado.ProcessaControleProcessamentoLote.executa(62)] | Lote não finalizado '/home/eConsig/arquivos/lote/csa/3700808080808080808080808080A538/lote.txt' iniciado por '5400808080808080808080808080C98B' em '29/12/2025 18:55:01' pelo canal 'REST' sem blocos pendentes
-2026-01-29 21:06:53,037 [eConsig] [ERROR] [com.zetra.econsig.job.process.agendado.ProcessaControleProcessamentoLote.executa(80)] | Lote '/home/eConsig/arquivos/lote/csa/3700808080808080808080808080A538/lote.txt' não encontrado na pasta de entrada
-2026-01-29 21:06:53,037 [eConsig] [DEBUG] [com.zetra.econsig.job.process.agendado.ProcessaControleProcessamentoLote.executa(148)] | Fim da análise dos lotes em processamento
-Hibernate: SELECT 'exists' as variable, 'true' as value FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_SCHEMA = DATABASE() AND TRIGGER_NAME = 'trg_atualiza_ade_data_status'
-Hibernate: insert into tb_ocorrencia_agendamento (agd_codigo,oag_data_fim,oag_data_inicio,oag_ip_acesso,oag_obs,toc_codigo,usu_codigo,oag_codigo) values (?,?,?,?,?,?,?,?)
-Hibernate: insert into tb_ocorrencia_agendamento (agd_codigo,oag_data_fim,oag_data_inicio,oag_ip_acesso,oag_obs,toc_codigo,usu_codigo,oag_codigo) values (?,?,?,?,?,?,?,?)
-2026-01-29 21:06:53,202 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.run(37)] | FINALIZANDO PROCESSAMENTO: Thu Jan 29 21:06:53 BRT 2026
-2026-01-29 21:06:53,207 [eConsig] [DEBUG] [com.zetra.econsig.job.process.Processo.run(37)] | FINALIZANDO PROCESSAMENTO: Thu Jan 29 21:06:53 BRT 2026
-2026-01-29 21:07:00,001 [eConsig] [INFO] [com.zetra.econsig.job.ControladorAgendamentosJob.executar(45)] | Controlador de Agendamentos.
+mysql> SELECT * FROM tb_tipo_ocorrencia WHERE toc_codigo = '261';
++------------+-------------------------+
+| toc_codigo | TOC_DESCRICAO           |
++------------+-------------------------+
+| 261        | Envio de SMS via Zenvia |
++------------+-------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM tb_tipo_dado_adicional WHERE tda_codigo IN ('96', '97');
++------------+------------+-----------------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
+| TDA_CODIGO | TEN_CODIGO | TDA_DESCRICAO                     | TDA_EXPORTA | TDA_SUP_CONSULTA | TDA_CSE_CONSULTA | TDA_CSA_CONSULTA | TDA_SER_CONSULTA | TDA_SUP_ALTERA | TDA_CSE_ALTERA | TDA_CSA_ALTERA | TDA_SER_ALTERA | TDA_DOMINIO | TDA_ORDENACAO |
++------------+------------+-----------------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
+| 96         | 2          | Data mes/ano de envio de SMS      | N           | S                | S                | N                | N                | N              | N              | N              | N              | DATA        |             0 |
+| 97         | 2          | Quantidade de SMS enviados no mes | N           | S                | S                | N                | N                | N              | N              | N              | N              | INT         |             0 |
++------------+------------+-----------------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM tb_db_ocorrencia WHERE dbo_arquivo LIKE '%dml_all_20260128_DESENV-24832.sql' ORDER BY dbo_data DESC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC�' at line 1
+mysql> SELECT * FROM tb_db_ocorrencia WHERE dbo_arquivo LIKE '%dml_all_20260128_DESENV-24832.sql' ORDER BY dbo_data DESC;
++------------+---------------------+-----------------------------------------+
+| DBO_CODIGO | DBO_DATA            | DBO_ARQUIVO                             |
++------------+---------------------+-----------------------------------------+
+|       1947 | 2026-01-29 21:06:52 | 0.0.0/dml_all_20260128_DESENV-24832.sql |
++------------+---------------------+-----------------------------------------+
+1 row in set (0.00 sec)
