@@ -1,26 +1,8 @@
-mysql> SELECT * FROM tb_tipo_ocorrencia WHERE toc_codigo = '261';
-+------------+-------------------------+
-| toc_codigo | TOC_DESCRICAO           |
-+------------+-------------------------+
-| 261        | Envio de SMS via Zenvia |
-+------------+-------------------------+
-1 row in set (0.00 sec)
-
-mysql> SELECT * FROM tb_tipo_dado_adicional WHERE tda_codigo IN ('96', '97');
-+------------+------------+-----------------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
-| TDA_CODIGO | TEN_CODIGO | TDA_DESCRICAO                     | TDA_EXPORTA | TDA_SUP_CONSULTA | TDA_CSE_CONSULTA | TDA_CSA_CONSULTA | TDA_SER_CONSULTA | TDA_SUP_ALTERA | TDA_CSE_ALTERA | TDA_CSA_ALTERA | TDA_SER_ALTERA | TDA_DOMINIO | TDA_ORDENACAO |
-+------------+------------+-----------------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
-| 96         | 2          | Data mes/ano de envio de SMS      | N           | S                | S                | N                | N                | N              | N              | N              | N              | DATA        |             0 |
-| 97         | 2          | Quantidade de SMS enviados no mes | N           | S                | S                | N                | N                | N              | N              | N              | N              | INT         |             0 |
-+------------+------------+-----------------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
-2 rows in set (0.00 sec)
-
-mysql> SELECT * FROM tb_db_ocorrencia WHERE dbo_arquivo LIKE '%dml_all_20260128_DESENV-24832.sql' ORDER BY dbo_data DESC;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC�' at line 1
-mysql> SELECT * FROM tb_db_ocorrencia WHERE dbo_arquivo LIKE '%dml_all_20260128_DESENV-24832.sql' ORDER BY dbo_data DESC;
-+------------+---------------------+-----------------------------------------+
-| DBO_CODIGO | DBO_DATA            | DBO_ARQUIVO                             |
-+------------+---------------------+-----------------------------------------+
-|       1947 | 2026-01-29 21:06:52 | 0.0.0/dml_all_20260128_DESENV-24832.sql |
-+------------+---------------------+-----------------------------------------+
-1 row in set (0.00 sec)
+Isamara Santos adicionou um comentário - há 4 dias
+Para o controle de envio ficou acordado que serão criados 2 registros na tb_dados_consignante: uma para registrar o mês do envio de SMS e outro para registrar a quantidade de envio no mês.
+Quando for feito um envio de SMS, deve verificar se para o mês atual existe o registro com a data de envio.
+Se não houver, criar o registro de data e também registrar a quantidade de envio.
+Se já houver no mesmo mês, apenas incrementar a quantidade de envio.
+Se já houver mas for em outro mês, atualizar a data para o mês atual e reiniciar a contagem da quantidade de envio.
+O registo de quantidade de envio e data devem ser utilizados para comparar com os parâmetros de limite inferior e superior de envio de SMS.
+Em todos os casos deve-se registrar ocorrência de usuário (tb_ocorrencia_usuario) para cada envio de SMS.
