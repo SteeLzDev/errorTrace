@@ -1,8 +1,269 @@
-Isamara Santos adicionou um comentário - há 4 dias
-Para o controle de envio ficou acordado que serão criados 2 registros na tb_dados_consignante: uma para registrar o mês do envio de SMS e outro para registrar a quantidade de envio no mês.
-Quando for feito um envio de SMS, deve verificar se para o mês atual existe o registro com a data de envio.
-Se não houver, criar o registro de data e também registrar a quantidade de envio.
-Se já houver no mesmo mês, apenas incrementar a quantidade de envio.
-Se já houver mas for em outro mês, atualizar a data para o mês atual e reiniciar a contagem da quantidade de envio.
-O registo de quantidade de envio e data devem ser utilizados para comparar com os parâmetros de limite inferior e superior de envio de SMS.
-Em todos os casos deve-se registrar ocorrência de usuário (tb_ocorrencia_usuario) para cada envio de SMS.
+package com.zetra.econsig.helper.sms;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zetra.econsig.dto.entidade.OcorrenciaUsuarioTransferObject;
+import com.zetra.econsig.exception.UpdateException;
+import com.zetra.econsig.exception.ZetraException;
+
+import com.zetra.econsig.helper.seguranca.AcessoSistema;
+import com.zetra.econsig.helper.sms.request.SmsRequest;
+import com.zetra.econsig.helper.texto.DateHelper;
+import com.zetra.econsig.helper.texto.TextHelper;
+import com.zetra.econsig.persistence.entity.AbstractEntityHome;
+import com.zetra.econsig.persistence.entity.DadosConsignante;
+import com.zetra.econsig.persistence.entity.DadosConsignanteHome;
+import com.zetra.econsig.persistence.entity.DadosConsignanteId;
+import com.zetra.econsig.service.usuario.UsuarioController;
+import com.zetra.econsig.values.CodedValues;
+import com.zetra.econsig.web.ApplicationContextProvider;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.python.antlr.ast.If;
+import org.python.modules._csv._csv;
+import org.springframework.http.*;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * <p>Title: SMSHelper</p>
+ * <p>Description: Classe auxiliar para envio de SMS (Migrado para Zenvia)</p>
+ * <p>Copyright: Copyright (c) 2006</p>
+ * <p>Company: Zetrasoft</p>
+ * $Author$
+ * $Revision$
+ * $Date$
+ */
+
+public class SMSHelper {
+
+    private static final Log LOG = LogFactory.getLog(SMSHelper.class);
+
+    private static final String DATE_FORMAT_MES_ANO = "yyyy-MM";
+
+    private final String apiUrl;
+    private final String apiToken;
+    private final String fromNumber;
+
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+    /**
+     * Construtor com injeção de configuração
+     *
+     * @param apiUrl     URL da API da Zenvia
+     * @param apiToken   Token de Autenticação da API
+     * @param fromNumber Remetente configurado
+     */
+    public SMSHelper(String apiUrl, String apiToken, String fromNumber) {
+        this.apiUrl = apiUrl;
+        this.apiToken = apiToken;
+        this.fromNumber = fromNumber;
+
+        //Configuracão do manual do RestTemplate com timeouts para evitar travamentos
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(5000); // 5 segundos
+        factory.setReadTimeout(10000);    // 10 segundos
+        this.restTemplate = new RestTemplate(factory);
+        this.objectMapper = new ObjectMapper();
+    }
+
+    /**
+     * Envia SMS utilizando o serviço da Zenvia
+     * Registra ocorrência para o usuário  e atualiza o controle de quantitativo mensal.
+     *
+     * @param to   Número do destino (telefone do servidor/destinatário)
+     */
+
+    public final void send (String to, String conteudo, AcessoSistema responsavel) throws ZetraException {
+        LOG.debug("Iniciando envio SMS Zenvia: " + DateHelper.getSystemDatetime());
+
+        try {
+            //Cria o objeto de requisição
+            SmsRequest smsRequest = new SmsRequest(this.fromNumber, to, conteudo);
+            String jsonBody = objectMapper.writeValueAsString(smsRequest);
+
+            //Configura o headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("X-API-TOKEN", this.apiToken);
+
+            HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
+
+            //Realiza a chamada POST
+            ResponseEntity<String> response = restTemplate.exchange(
+                    this.apiUrl,
+                    HttpMethod.POST,
+                    entity,
+                    String.class
+            );
+
+            //Verifica o status da resposta (2xx)
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                throw new Exception("Erro Zenvia HTTP Code: " + response.getStatusCode() + " - Body: " + response.getBody());
+            }
+
+            registrarOcorrenciaUsuario(to, conteudo, responsavel);
+
+            atualizarQuantitativoSms(responsavel);
+
+        } catch (Exception ex) {
+            LOG.error("Erro ao enviar SMS via Zenvia: " + ex.getMessage(), ex);
+            throw ZetraException.byMessage(ex.getMessage(), ex);
+        }
+
+        LOG.debug("Fim envio SMS Zenvia: " + DateHelper.getSystemDatetime());
+
+    }
+
+    /**
+     * Registra ocorrência de envio de SMS na tabela tb_ocorrencia_usuario
+     * Utiliza o tipo de ocorrencia TOC_ENVIO_SMS (261)
+     * registro é feito para o usuário responsável pela operaçao (usuário logado)
+     */
+    private void registrarOcorrenciaUsuario(String telefoneDestino, String conteudo, AcessoSistema responsavel) {
+        try {
+            if (responsavel == null || TextHelper.isNull(responsavel.getUsuCodigo())) {
+                LOG.warn("Não foi possível registrar ocorrência SMS: responsavel ou usuCodigo nulo");
+                return;
+            }
+
+            UsuarioController usuarioController = ApplicationContextProvider.getApplicationContext()
+                    .getBean(UsuarioController.class);
+
+            OcorrenciaUsuarioTransferObject ocorrencia = new OcorrenciaUsuarioTransferObject();
+            ocorrencia.setUsuCodigo(responsavel.getUsuCodigo());
+            ocorrencia.setTocCodigo(CodedValues.TOC_ENVIO_SMS);
+            ocorrencia.setOusObs("SMS enviado para: " + telefoneDestino);
+            ocorrencia.setOusIpAcesso(responsavel.getIpUsuario());
+
+            usuarioController.createOcorrenciaUsuario(ocorrencia, responsavel);
+
+            LOG.debug("Ocorrência de envio SMS registrada para usuário: " +  responsavel.getUsuCodigo());
+        } catch (Exception ex) {
+            LOG.warn("Erro ao registrar ocorrencia de SMS: " + ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     *Atualiza o controle de quantitativo de SMS  mensal em tb_dados_consignante.
+     * Utiliza dois dados adicionais
+     * - TDA_DATA_MES_ENVIO_SMS (96): Armazena o mês/ano corrente (yyyy-MM)
+     * - TDA_QTD_ENVIOS_SMS_MES (97): Armazena a quantidade de SMS enviados no mês
+     *
+     * Lógica:
+     * -Se não existir dado adicional de data, cria ambos (data e qtd=1)
+     * -Se existir e for do mes corrente, incrementa a quantidade
+     * -Se existir e for de outro mês, reinicia para o mês corrente com qtd=1
+     *
+     * @param responsavel Objeto AcessoSistema com cseCodigo do consignante
+     */
+
+    private void atualizarQuantitativoSms(AcessoSistema responsavel) {
+        try {
+            if (responsavel == null || TextHelper.isNull(responsavel.getCseCodigo())) {
+                LOG.warn("Não foi possível atualizar quantitativo SMS: responsavel ou cseCodigoNulo");
+                return;
+            }
+            String cseCodigo = responsavel.getCseCodigo();
+            String mesAnoAtual = new SimpleDateFormat(DATE_FORMAT_MES_ANO).format(new Date());
+
+            DadosConsignante dadoData = findDadoAdicional(cseCodigo, CodedValues.TDA_DATA_MES_ENVIO_SMS);
+            DadosConsignante dadoQtd = findDadoAdicional(cseCodigo, CodedValues.TDA_QTD_ENVIOS_SMS_MES);
+
+            if (dadoData == null) {
+                DadosConsignanteHome.create(cseCodigo, CodedValues.TDA_DATA_MES_ENVIO_SMS, mesAnoAtual);
+                DadosConsignanteHome.create(cseCodigo, CodedValues.TDA_QTD_ENVIOS_SMS_MES, "1");
+                LOG.debug("Criados dados adicionais de SMS para consignante: " + cseCodigo);
+
+            } else if (mesAnoAtual.equals(dadoData.getDacValor())) {
+                int qtdAtual = dadoQtd != null ? Integer.parseInt(dadoQtd.getDacValor()) : 0;
+                int novaQtd = qtdAtual + 1;
+
+                if (dadoQtd != null) {
+                    dadoQtd.setDacValor(String.valueOf(novaQtd));
+                    persistirDadoAdicional(dadoQtd);
+                } else {
+                    DadosConsignanteHome.create(cseCodigo, CodedValues.TDA_QTD_ENVIOS_SMS_MES, String.valueOf(novaQtd));
+                }
+                LOG.debug("Quantitativo SMS atualizado para: " + novaQtd + "(consignante: " + cseCodigo +")");
+            } else {
+                dadoData.setDacValor(mesAnoAtual);
+                persistirDadoAdicional(dadoData);
+
+                if (dadoQtd != null) {
+                    dadoQtd.setDacValor("1");
+                    persistirDadoAdicional(dadoQtd);
+                } else {
+                    DadosConsignanteHome.create(cseCodigo, CodedValues.TDA_QTD_ENVIOS_SMS_MES, "1");
+                }
+                LOG.debug("Mês resetado para " + mesAnoAtual + "com quantitativos 1 (consignante: " + cseCodigo + ")");
+            }
+        } catch (Exception ex) {
+            LOG.error("Erro ao atualizar quantitativo de SMS " + ex.getMessage(), ex);
+        }
+
+    }
+
+    /**
+     * Persiste as alteracoes de um dado adicional no banco de dados
+     *
+     * @param dado DadosConsignante a ser persistido
+     */
+
+    private void persistirDadoAdicional(DadosConsignante dado) {
+        try {
+            AbstractEntityHome.update(dado);
+        } catch (UpdateException ex) {
+            LOG.error("Erro ao persistir dado adicional: " + ex.getMessage(), ex);
+        }
+    }
+
+    /**
+     * Busca um dado adicional do consignante pela chave primária composta
+     *
+     * @param cseCodigo Código do consignante
+     * @param tdaCodigo Código do tipo de dado adicional
+     * @return DadosConsignante encontrado ou null se não existir
+     */
+
+    private DadosConsignante findDadoAdicional (String cseCodigo, String tdaCodigo) {
+        try {
+            DadosConsignanteId id = new DadosConsignanteId(cseCodigo, tdaCodigo);
+            return DadosConsignanteHome.findByPrimaryKey(id);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    /**
+     * Obtém a quantidade de SMS enviados no mês corrente para um consignante
+     * Útil para verificar limites antes do envio.
+     *
+     * @param cseCodigo Código do consignante
+     * @return Quantidade de SMS enviados no mês corrente, ou  0 se não houver registro
+     */
+
+    public int getQuantidadeSmsNoMes(String cseCodigo) {
+        try {
+            String mesAnoAtual = new SimpleDateFormat(DATE_FORMAT_MES_ANO).format(new Date());
+            DadosConsignante dadoData = findDadoAdicional(cseCodigo, CodedValues.TDA_DATA_MES_ENVIO_SMS);
+            if (dadoData == null || !mesAnoAtual.equals(dadoData.getDacValor())) {
+                return 0;
+            }
+
+            DadosConsignante dadoQtd = findDadoAdicional(cseCodigo, CodedValues.TDA_QTD_ENVIOS_SMS_MES);
+            if (dadoQtd != null && !TextHelper.isNull(dadoQtd.getDacValor())) {
+                return Integer.parseInt(dadoQtd.getDacValor());
+            }
+            return 0;
+        } catch (Exception ex) {
+            LOG.error("Erro ao obter quantidade de SMS no mês: " + ex.getMessage(), ex);
+            return 0;
+        }
+    }
+
+}
+
