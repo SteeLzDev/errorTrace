@@ -1,10 +1,1 @@
--- Modelos de e-mail para alertas de limite de SMS (tb_modelo_email)
--- Modelo para alerta de limite inferior atingido
-INSERT INTO tb_modelo_email (MEM_CODIGO, MEM_TITULO, MEM_TEXTO) 
-VALUES ('enviarEmailLimiteInfSmsAtingido', '<@nome_sistema>: Alerta - Limite Inferior de SMS Atingido', 
-'<html><body><p>Prezado(a),</p><p>O sistema <b><@nome_sistema></b> atingiu o limite inferior de envio de SMS configurado para o mes atual.</p><p>Quantidade de SMS enviados no mes: <b><@qtd_sms_enviados></b></p><p>Limite inferior configurado: <b><@limite_inferior></b></p><p>Limite superior configurado: <b><@limite_superior></b></p><p>Atencao: O envio de SMS continuara funcionando ate atingir o limite superior.</p><p>Atenciosamente,<br>Equipe <@nome_sistema></p></body></html>');
-
--- Modelo para alerta de limite superior atingido (bloqueio)
-INSERT INTO tb_modelo_email (MEM_CODIGO, MEM_TITULO, MEM_TEXTO) 
-VALUES ('enviarEmailLimiteSupSmsAtingido', '<@nome_sistema>: BLOQUEIO - Limite Superior de SMS Atingido', 
-'<html><body><p>Prezado(a),</p><p>O sistema <b><@nome_sistema></b> atingiu o limite superior de envio de SMS configurado para o mes atual.</p><p>Quantidade de SMS enviados no mes: <b><@qtd_sms_enviados></b></p><p>Limite superior configurado: <b><@limite_superior></b></p><p><b>ATENCAO: O envio de SMS esta BLOQUEADO ate o proximo mes.</b></p><p>Atenciosamente,<br>Equipe <@nome_sistema></p></body></html>');
+M1nE4GYwL0TL0pghaAL6mwPBqzpCZQMtXQ_i
