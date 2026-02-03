@@ -33,3 +33,20 @@
 | 2026-02-03 10:44:28 | 79         | 9          | 111111     | A��o: Consulta de simula��o<BR>CONSULTANDO SIMULA��O: valor liberado 2000.00, prazo 5                                      |
 +---------------------+------------+------------+------------+----------------------------------------------------------------------------------------------------------------------------+
 30 rows in set (7.07 sec)
+
+
+
++---------------------+------------+------------+------------+----------------------------------------------------------------------------------------------------------------------------+
+| log_data            | fun_codigo | tlo_codigo | usu_codigo | log_obs                                                                                                                    |
++---------------------+------------+------------+------------+----------------------------------------------------------------------------------------------------------------------------+
+| 2026-02-03 11:24:26 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
+| 2026-02-03 11:12:21 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
+| 2026-02-03 11:02:07 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
+| 2026-02-03 10:56:56 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
+| 2026-02-03 10:53:11 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
+| 2026-02-03 10:45:31 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
+| 2026-02-03 10:40:40 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
+| 2026-02-03 10:25:21 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
+| 2026-02-03 10:19:55 | 63         | 1          | 111111     | A��o: Criando Entidade<BR>Erro: Usu�rio tentou fazer uma solicita��o via simulador alterando os valores de forma indevida. |
++---------------------+------------+------------+------------+----------------------------------------------------------------------------------------------------------------------------+
+9 rows in set, 18812 warnings (2.42 sec)
