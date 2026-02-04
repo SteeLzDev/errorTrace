@@ -1,149 +1,61 @@
-package com.zetra.econsig.sms;
+package com.zetra.econsig.debug;
 
-import com.zetra.econsig.helper.seguranca.AcessoSistema;
-import com.zetra.econsig.helper.sms.SMSHelper;
 import com.zetra.econsig.exception.ZetraException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.boot.test.context.SpringBootTest;
+import com.zetra.econsig.helper.sms.SMSHelper;
+import com.zetra.econsig.model.acesso.AcessoSistema;
+import com.zetra.econsig.persistence.dao.AcessoSistemaDAO;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+@Component
+@Profile("dev_mysql") // só roda nesse profile
+public class SmsFluxoCommandLineRunner implements CommandLineRunner {
 
-import static org.junit.jupiter.api.Assertions.*;
+    private final SMSHelper smsHelper;
+    private final AcessoSistemaDAO acessoSistemaDAO;
 
-@SpringBootTest
-@ActiveProfiles("dev_mysql") // use o mesmo profile que você usa localmente
-class SmsQuotaFlowIT {
-
-    private final JdbcTemplate jdbc;
-    private final Environment env;
-
-    SmsQuotaFlowIT(JdbcTemplate jdbc, Environment env) {
-        this.jdbc = jdbc;
-        this.env = env;
+    public SmsFluxoCommandLineRunner(
+            SMSHelper smsHelper,
+            AcessoSistemaDAO acessoSistemaDAO
+    ) {
+        this.smsHelper = smsHelper;
+        this.acessoSistemaDAO = acessoSistemaDAO;
     }
 
-    // >>>> AJUSTE AQUI se quiser usar outro usuário/consignante <<<<
-    private static final String CSE_CODIGO = "1";
-    private static final String USU_CODIGO = "111111"; // string, como o AcessoSistema usa
+    @Override
+    public void run(String... args) throws Exception {
 
-    private static final String TDA_MES_ANO = "96";
-    private static final String TDA_QTD_MES = "97";
-    private static final String TDA_ALERTA_INF = "98";
-    private static final String TDA_ALERTA_SUP = "99";
+        System.out.println("===== INICIANDO TESTE ISOLADO DE SMS =====");
 
-    private static final String TPC_LIMITE_INF = "1016";
-    private static final String TPC_LIMITE_SUP = "1017";
+        // 🔹 Usuário REAL do banco
+        Long usuCodigo = 111111L;   // ajuste se necessário
 
-    @BeforeEach
-    void setup() {
-        // 1) Limites baixos para teste
-        upsertParametroConsignante(CSE_CODIGO, TPC_LIMITE_INF, "2"); // alerta a partir do 2
-        upsertParametroConsignante(CSE_CODIGO, TPC_LIMITE_SUP, "5"); // bloqueia a partir do 5
+        AcessoSistema acesso = acessoSistemaDAO.buscarPorUsuario(usuCodigo);
 
-        // 2) Limpa TDAs de controle para simular "mês zerado"
-        jdbc.update("""
-            DELETE FROM tb_dados_consignante
-            WHERE cse_codigo = ? AND tda_codigo IN ('96','97','98','99')
-        """, CSE_CODIGO);
-    }
-
-    @Test
-    void deveTestarFluxoCompletoLimiteInferiorSuperiorEBloqueio() throws Exception {
-        // Propriedades do application.properties
-        String apiUrl = required("zenvia.sms.api.url");
-        String apiToken = required("zenvia.sms.api.token");
-        String from = required("zenvia.sms.from");
-
-        SMSHelper smsHelper = new SMSHelper(apiUrl, apiToken, from);
-
-        // Responsável "logado" corretamente (SEM setCseCodigo; é tipoEntidade + codigoEntidade)
-        AcessoSistema responsavel = new AcessoSistema(USU_CODIGO);
-        responsavel.setTipoEntidade(AcessoSistema.ENTIDADE_CSE);
-        responsavel.setCodigoEntidade(CSE_CODIGO);
-        responsavel.setIpOrigem("127.0.0.1");
-
-        // Número (use um seu pra receber)
-        String telefone = "+5521999999999";
-
-        // 1º envio -> qtd = 1, sem alertas
-        smsHelper.send(telefone, "Teste 1 - IT", responsavel);
-        assertQtdMes(1);
-        assertFlagMes(TDA_ALERTA_INF, false);
-        assertFlagMes(TDA_ALERTA_SUP, false);
-
-        // 2º envio -> qtd = 2, deve marcar alerta inferior (98)
-        smsHelper.send(telefone, "Teste 2 - IT", responsavel);
-        assertQtdMes(2);
-        assertFlagMes(TDA_ALERTA_INF, true);
-        assertFlagMes(TDA_ALERTA_SUP, false);
-
-        // 3º envio -> qtd = 3, não deve “repetir” alerta inferior (segue marcado, ok)
-        smsHelper.send(telefone, "Teste 3 - IT", responsavel);
-        assertQtdMes(3);
-        assertFlagMes(TDA_ALERTA_INF, true);
-
-        // 4º envio -> qtd = 4, ainda permitido
-        smsHelper.send(telefone, "Teste 4 - IT", responsavel);
-        assertQtdMes(4);
-
-        // 5º envio -> permitido (a checagem de bloqueio ocorre ANTES e bloqueia quando >= limiteSuperior)
-        smsHelper.send(telefone, "Teste 5 - IT", responsavel);
-        assertQtdMes(5);
-
-        // 6º envio -> deve BLOQUEAR e marcar alerta superior (99)
-        ZetraException ex = assertThrows(ZetraException.class,
-            () -> smsHelper.send(telefone, "Teste 6 - IT (deve bloquear)", responsavel)
-        );
-        assertTrue(ex.getMessage().toLowerCase().contains("limite superior"),
-            "Mensagem deveria mencionar limite superior. Veio: " + ex.getMessage());
-
-        assertFlagMes(TDA_ALERTA_SUP, true);
-    }
-
-    // ---------------- helpers ----------------
-
-    private void upsertParametroConsignante(String cseCodigo, String tpcCodigo, String valor) {
-        // tb_param_sist_consignante geralmente tem PK (cse_codigo, tpc_codigo)
-        jdbc.update("""
-            INSERT INTO tb_param_sist_consignante (cse_codigo, tpc_codigo, psi_vlr)
-            VALUES (?, ?, ?)
-            ON DUPLICATE KEY UPDATE psi_vlr = VALUES(psi_vlr)
-        """, cseCodigo, tpcCodigo, valor);
-    }
-
-    private void assertQtdMes(int esperado) {
-        Integer qtd = jdbc.queryForObject("""
-            SELECT CAST(dac_valor AS SIGNED)
-            FROM tb_dados_consignante
-            WHERE cse_codigo = ? AND tda_codigo = ?
-        """, Integer.class, CSE_CODIGO, TDA_QTD_MES);
-
-        assertNotNull(qtd, "TDA 97 não encontrado (contador do mês).");
-        assertEquals(esperado, qtd);
-    }
-
-    private void assertFlagMes(String tdaCodigo, boolean esperadoExistir) {
-        Integer count = jdbc.queryForObject("""
-            SELECT COUNT(*)
-            FROM tb_dados_consignante
-            WHERE cse_codigo = ? AND tda_codigo = ?
-        """, Integer.class, CSE_CODIGO, tdaCodigo);
-
-        boolean existe = count != null && count > 0;
-        assertEquals(esperadoExistir, existe,
-            "Flag " + tdaCodigo + " deveria existir? " + esperadoExistir);
-    }
-
-    private String required(String key) {
-        String v = env.getProperty(key);
-        if (v == null || v.isBlank()) {
-            fail("Faltou configurar property: " + key + " (no application.properties do profile dev_mysql)");
+        if (acesso == null) {
+            throw new RuntimeException("AcessoSistema não encontrado para usuCodigo=" + usuCodigo);
         }
-        return v.trim();
+
+        System.out.println("Usuário carregado:");
+        System.out.println("usuCodigo = " + acesso.getUsuCodigo());
+        System.out.println("cseCodigo = " + acesso.getCseCodigo());
+
+        String telefone = "+55XXXXXXXXXXX"; // SEU telefone real
+        String mensagem = "Teste de SMS - fluxo completo eConsig";
+
+        try {
+            smsHelper.send(
+                    telefone,
+                    mensagem,
+                    acesso
+            );
+            System.out.println("SMS enviado com sucesso");
+        } catch (ZetraException ex) {
+            System.out.println("ZetraException capturada:");
+            System.out.println(ex.getMessage());
+        }
+
+        System.out.println("===== FIM DO TESTE ISOLADO =====");
     }
 }
