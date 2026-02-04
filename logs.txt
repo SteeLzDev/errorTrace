@@ -1,220 +1,432 @@
-/usr/lib/jvm/java-21-zulu-openjdk/bin/java -javaagent:/home/serasa.intranet/c18132q/ideaIC-2024.3.5/idea-IC-243.26053.27/lib/idea_rt.jar=35139 -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 -classpath /home/serasa.intranet/c18132q/Documents/Workspace-Serasa/experian-nb-econsig-margin-manager/target/classes:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-data-redis/3.5.5/spring-boot-starter-data-redis-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter/3.5.5/spring-boot-starter-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/io/lettuce/lettuce-core/6.6.0.RELEASE/lettuce-core-6.6.0.RELEASE.jar:/home/serasa.intranet/c18132q/.m2/redis/clients/authentication/redis-authx-core/0.1.1-beta2/redis-authx-core-0.1.1-beta2.jar:/home/serasa.intranet/c18132q/.m2/io/projectreactor/reactor-core/3.7.9/reactor-core-3.7.9.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/data/spring-data-redis/3.5.3/spring-data-redis-3.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/data/spring-data-keyvalue/3.5.3/spring-data-keyvalue-3.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-tx/6.2.10/spring-tx-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/session/spring-session-data-redis/3.5.2/spring-session-data-redis-3.5.2.jar:/home/serasa.intranet/c18132q/.m2/redis/clients/jedis/5.2.0/jedis-5.2.0.jar:/home/serasa.intranet/c18132q/.m2/org/slf4j/slf4j-api/2.0.17/slf4j-api-2.0.17.jar:/home/serasa.intranet/c18132q/.m2/org/apache/commons/commons-pool2/2.12.1/commons-pool2-2.12.1.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/session/spring-session-core/3.5.2/spring-session-core-3.5.2.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-jcl/6.2.10/spring-jcl-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/redisson/redisson-spring-data-31/3.45.0/redisson-spring-data-31-3.45.0.jar:/home/serasa.intranet/c18132q/.m2/org/redisson/redisson/3.45.0/redisson-3.45.0.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-resolver-dns/4.1.124.Final/netty-resolver-dns-4.1.124.Final.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-codec-dns/4.1.124.Final/netty-codec-dns-4.1.124.Final.jar:/home/serasa.intranet/c18132q/.m2/javax/cache/cache-api/1.1.1/cache-api-1.1.1.jar:/home/serasa.intranet/c18132q/.m2/org/reactivestreams/reactive-streams/1.0.4/reactive-streams-1.0.4.jar:/home/serasa.intranet/c18132q/.m2/io/reactivex/rxjava3/rxjava/3.1.11/rxjava-3.1.11.jar:/home/serasa.intranet/c18132q/.m2/com/esotericsoftware/kryo/5.6.2/kryo-5.6.2.jar:/home/serasa.intranet/c18132q/.m2/com/esotericsoftware/reflectasm/1.11.9/reflectasm-1.11.9.jar:/home/serasa.intranet/c18132q/.m2/org/objenesis/objenesis/3.4/objenesis-3.4.jar:/home/serasa.intranet/c18132q/.m2/com/esotericsoftware/minlog/1.3.1/minlog-1.3.1.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.19.2/jackson-dataformat-yaml-2.19.2.jar:/home/serasa.intranet/c18132q/.m2/org/jodd/jodd-util/6.3.0/jodd-util-6.3.0.jar:/home/serasa.intranet/c18132q/.m2/net/java/dev/jna/jna/5.16.0/jna-5.16.0.jar:/home/serasa.intranet/c18132q/.m2/jakarta/servlet/jakarta.servlet-api/6.1.0/jakarta.servlet-api-6.1.0.jar:/home/serasa.intranet/c18132q/.m2/jakarta/servlet/jsp/jakarta.servlet.jsp-api/4.0.0/jakarta.servlet.jsp-api-4.0.0.jar:/home/serasa.intranet/c18132q/.m2/jakarta/ws/rs/jakarta.ws.rs-api/4.0.0/jakarta.ws.rs-api-4.0.0.jar:/home/serasa.intranet/c18132q/.m2/jakarta/json/jakarta.json-api/2.1.3/jakarta.json-api-2.1.3.jar:/home/serasa.intranet/c18132q/.m2/org/eclipse/parsson/parsson/1.1.7/parsson-1.1.7.jar:/home/serasa.intranet/c18132q/.m2/jakarta/activation/jakarta.activation-api/2.1.3/jakarta.activation-api-2.1.3.jar:/home/serasa.intranet/c18132q/.m2/jakarta/xml/rpc/jakarta.xml.rpc-api/1.1.4/jakarta.xml.rpc-api-1.1.4.jar:/home/serasa.intranet/c18132q/.m2/jakarta/annotation/jakarta.annotation-api/3.0.0/jakarta.annotation-api-3.0.0.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-data-jpa/3.5.5/spring-boot-starter-data-jpa-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-jdbc/3.5.5/spring-boot-starter-jdbc-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/com/zaxxer/HikariCP/6.3.2/HikariCP-6.3.2.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-jdbc/6.2.10/spring-jdbc-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/hibernate/orm/hibernate-core/6.6.26.Final/hibernate-core-6.6.26.Final.jar:/home/serasa.intranet/c18132q/.m2/jakarta/persistence/jakarta.persistence-api/3.1.0/jakarta.persistence-api-3.1.0.jar:/home/serasa.intranet/c18132q/.m2/jakarta/transaction/jakarta.transaction-api/2.0.1/jakarta.transaction-api-2.0.1.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/classmate/1.7.0/classmate-1.7.0.jar:/home/serasa.intranet/c18132q/.m2/jakarta/inject/jakarta.inject-api/2.0.1/jakarta.inject-api-2.0.1.jar:/home/serasa.intranet/c18132q/.m2/org/antlr/antlr4-runtime/4.13.0/antlr4-runtime-4.13.0.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/data/spring-data-jpa/3.5.3/spring-data-jpa-3.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/data/spring-data-commons/3.5.3/spring-data-commons-3.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-orm/6.2.10/spring-orm-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-context/6.2.10/spring-context-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-beans/6.2.10/spring-beans-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-aspects/6.2.10/spring-aspects-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/aspectj/aspectjweaver/1.9.24/aspectjweaver-1.9.24.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-mail/3.5.5/spring-boot-starter-mail-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-context-support/6.2.10/spring-context-support-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/eclipse/angus/jakarta.mail/2.0.4/jakarta.mail-2.0.4.jar:/home/serasa.intranet/c18132q/.m2/org/eclipse/angus/angus-activation/2.0.2/angus-activation-2.0.2.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-log4j2/3.5.5/spring-boot-starter-log4j2-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/apache/logging/log4j/log4j-slf4j2-impl/2.24.3/log4j-slf4j2-impl-2.24.3.jar:/home/serasa.intranet/c18132q/.m2/org/apache/logging/log4j/log4j-core/2.24.3/log4j-core-2.24.3.jar:/home/serasa.intranet/c18132q/.m2/org/apache/logging/log4j/log4j-jul/2.24.3/log4j-jul-2.24.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-web/3.5.5/spring-boot-starter-web-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-json/3.5.5/spring-boot-starter-json-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/module/jackson-module-parameter-names/2.19.2/jackson-module-parameter-names-2.19.2.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-web/6.2.10/spring-web-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/io/micrometer/micrometer-observation/1.15.3/micrometer-observation-1.15.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-webmvc/6.2.10/spring-webmvc-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-expression/6.2.10/spring-expression-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-security/3.5.5/spring-boot-starter-security-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-aop/6.2.10/spring-aop-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/security/spring-security-config/6.5.3/spring-security-config-6.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/security/spring-security-core/6.5.3/spring-security-core-6.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/security/spring-security-crypto/6.5.3/spring-security-crypto-6.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/security/spring-security-web/6.5.3/spring-security-web-6.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-cache/3.5.5/spring-boot-starter-cache-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/commons-codec/commons-codec/1.18.0/commons-codec-1.18.0.jar:/home/serasa.intranet/c18132q/.m2/org/apache/commons/commons-fileupload2-jakarta/2.0.0-M1/commons-fileupload2-jakarta-2.0.0-M1.jar:/home/serasa.intranet/c18132q/.m2/org/apache/commons/commons-fileupload2-core/2.0.0-M4/commons-fileupload2-core-2.0.0-M4.jar:/home/serasa.intranet/c18132q/.m2/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar:/home/serasa.intranet/c18132q/.m2/org/apache/commons/commons-lang3/3.18.0/commons-lang3-3.18.0.jar:/home/serasa.intranet/c18132q/.m2/org/apache/httpcomponents/client5/httpclient5/5.4.4/httpclient5-5.4.4.jar:/home/serasa.intranet/c18132q/.m2/org/apache/httpcomponents/core5/httpcore5-h2/5.3.4/httpcore5-h2-5.3.4.jar:/home/serasa.intranet/c18132q/.m2/org/apache/httpcomponents/core5/httpcore5/5.3.3/httpcore5-5.3.3.jar:/home/serasa.intranet/c18132q/.m2/org/hibernate/orm/hibernate-envers/6.6.26.Final/hibernate-envers-6.6.26.Final.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/logging/jboss-logging/3.6.1.Final/jboss-logging-3.6.1.Final.jar:/home/serasa.intranet/c18132q/.m2/org/hibernate/common/hibernate-commons-annotations/7.0.3.Final/hibernate-commons-annotations-7.0.3.Final.jar:/home/serasa.intranet/c18132q/.m2/io/smallrye/jandex/3.2.0/jandex-3.2.0.jar:/home/serasa.intranet/c18132q/.m2/org/dhatim/business-hours/1.3.0/business-hours-1.3.0.jar:/home/serasa.intranet/c18132q/.m2/org/jsoup/jsoup/1.19.1/jsoup-1.19.1.jar:/home/serasa.intranet/c18132q/.m2/org/owasp/encoder/encoder/1.3.1/encoder-1.3.1.jar:/home/serasa.intranet/c18132q/.m2/org/commonjava/googlecode/markdown4j/markdown4j/2.2-cj-1.1/markdown4j-2.2-cj-1.1.jar:/home/serasa.intranet/c18132q/.m2/com/google/code/gson/gson/2.12.1/gson-2.12.1.jar:/home/serasa.intranet/c18132q/.m2/com/google/errorprone/error_prone_annotations/2.36.0/error_prone_annotations-2.36.0.jar:/home/serasa.intranet/c18132q/.m2/com/googlecode/json-simple/json-simple/1.1.1/json-simple-1.1.1.jar:/home/serasa.intranet/c18132q/.m2/junit/junit/4.13.2/junit-4.13.2.jar:/home/serasa.intranet/c18132q/.m2/io/jsonwebtoken/jjwt-jackson/0.11.2/jjwt-jackson-0.11.2.jar:/home/serasa.intranet/c18132q/.m2/io/jsonwebtoken/jjwt-api/0.11.2/jjwt-api-0.11.2.jar:/home/serasa.intranet/c18132q/.m2/com/auth0/java-jwt/4.5.0/java-jwt-4.5.0.jar:/home/serasa.intranet/c18132q/.m2/net/glxn/qrgen/1.4/qrgen-1.4.jar:/home/serasa.intranet/c18132q/.m2/com/google/zxing/javase/3.0.0/javase-3.0.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/zxing/core/3.0.0/core-3.0.0.jar:/home/serasa.intranet/c18132q/.m2/de/idyl/winzipaes/1.0.1/winzipaes-1.0.1.jar:/home/serasa.intranet/c18132q/.m2/wsdl4j/wsdl4j/1.6.3/wsdl4j-1.6.3.jar:/home/serasa.intranet/c18132q/.m2/org/apache/httpcomponents/httpmime/4.5.14/httpmime-4.5.14.jar:/home/serasa.intranet/c18132q/.m2/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-properties-migrator/3.5.5/spring-boot-properties-migrator-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot/3.5.5/spring-boot-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-configuration-metadata/3.5.5/spring-boot-configuration-metadata-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/com/google/cloud/google-cloud-dialogflow/4.84.0/google-cloud-dialogflow-4.84.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-api/1.71.0/grpc-api-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-stub/1.71.0/grpc-stub-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/org/codehaus/mojo/animal-sniffer-annotations/1.24/animal-sniffer-annotations-1.24.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-protobuf/1.71.0/grpc-protobuf-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-protobuf-lite/1.71.0/grpc-protobuf-lite-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/api/api-common/2.54.0/api-common-2.54.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/auto/value/auto-value-annotations/1.11.0/auto-value-annotations-1.11.0.jar:/home/serasa.intranet/c18132q/.m2/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar:/home/serasa.intranet/c18132q/.m2/com/google/j2objc/j2objc-annotations/3.1/j2objc-annotations-3.1.jar:/home/serasa.intranet/c18132q/.m2/com/google/protobuf/protobuf-java/3.25.8/protobuf-java-3.25.8.jar:/home/serasa.intranet/c18132q/.m2/com/google/api/grpc/proto-google-common-protos/2.62.0/proto-google-common-protos-2.62.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/api/grpc/proto-google-cloud-dialogflow-v2/4.84.0/proto-google-cloud-dialogflow-v2-4.84.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/api/grpc/proto-google-cloud-dialogflow-v2beta1/0.182.0/proto-google-cloud-dialogflow-v2beta1-0.182.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/guava/guava/33.5.0-jre/guava-33.5.0-jre.jar:/home/serasa.intranet/c18132q/.m2/com/google/guava/failureaccess/1.0.3/failureaccess-1.0.3.jar:/home/serasa.intranet/c18132q/.m2/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/home/serasa.intranet/c18132q/.m2/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/api/gax/2.71.0/gax-2.71.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/auth/google-auth-library-credentials/1.40.0/google-auth-library-credentials-1.40.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/protobuf/protobuf-java-util/3.25.8/protobuf-java-util-3.25.8.jar:/home/serasa.intranet/c18132q/.m2/io/opencensus/opencensus-api/0.31.1/opencensus-api-0.31.1.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-context/1.71.0/grpc-context-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/auth/google-auth-library-oauth2-http/1.40.0/google-auth-library-oauth2-http-1.40.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/api/gax-grpc/2.71.0/gax-grpc-2.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-inprocess/1.71.0/grpc-inprocess-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-core/1.71.0/grpc-core-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/android/annotations/4.1.1.4/annotations-4.1.1.4.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-alts/1.71.0/grpc-alts-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-grpclb/1.71.0/grpc-grpclb-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-auth/1.71.0/grpc-auth-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-netty-shaded/1.71.0/grpc-netty-shaded-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-util/1.71.0/grpc-util-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/perfmark/perfmark-api/0.27.0/perfmark-api-0.27.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-googleapis/1.71.0/grpc-googleapis-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/io/grpc/grpc-services/1.71.0/grpc-services-1.71.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/re2j/re2j/1.8/re2j-1.8.jar:/home/serasa.intranet/c18132q/.m2/com/google/api/gax-httpjson/2.71.0/gax-httpjson-2.71.0.jar:/home/serasa.intranet/c18132q/.m2/com/google/http-client/google-http-client/2.0.2/google-http-client-2.0.2.jar:/home/serasa.intranet/c18132q/.m2/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar:/home/serasa.intranet/c18132q/.m2/io/opencensus/opencensus-contrib-http-util/0.31.1/opencensus-contrib-http-util-0.31.1.jar:/home/serasa.intranet/c18132q/.m2/com/google/http-client/google-http-client-gson/2.0.2/google-http-client-gson-2.0.2.jar:/home/serasa.intranet/c18132q/.m2/org/threeten/threetenbp/1.7.0/threetenbp-1.7.0.jar:/home/serasa.intranet/c18132q/.m2/eu/medsea/mimeutil/mime-util/2.1.3/mime-util-2.1.3.jar:/home/serasa.intranet/c18132q/.m2/org/apache/tika/tika-parser-text-module/3.1.0/tika-parser-text-module-3.1.0.jar:/home/serasa.intranet/c18132q/.m2/com/github/albfernandez/juniversalchardet/2.5.0/juniversalchardet-2.5.0.jar:/home/serasa.intranet/c18132q/.m2/org/apache/commons/commons-csv/1.13.0/commons-csv-1.13.0.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-web-services/3.5.5/spring-boot-starter-web-services-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/com/sun/xml/messaging/saaj/saaj-impl/3.0.4/saaj-impl-3.0.4.jar:/home/serasa.intranet/c18132q/.m2/org/jvnet/staxex/stax-ex/2.1.0/stax-ex-2.1.0.jar:/home/serasa.intranet/c18132q/.m2/jakarta/xml/ws/jakarta.xml.ws-api/4.0.2/jakarta.xml.ws-api-4.0.2.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-oxm/6.2.10/spring-oxm-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/ws/spring-ws-core/4.1.1/spring-ws-core-4.1.1.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/ws/spring-xml/4.1.1/spring-xml-4.1.1.jar:/home/serasa.intranet/c18132q/.m2/com/sun/xml/bind/jaxb-impl/4.0.5/jaxb-impl-4.0.5.jar:/home/serasa.intranet/c18132q/.m2/com/sun/xml/bind/jaxb-core/4.0.5/jaxb-core-4.0.5.jar:/home/serasa.intranet/c18132q/.m2/org/apache/ws/xmlschema/xmlschema-core/2.3.1/xmlschema-core-2.3.1.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/core/jackson-core/2.18.3/jackson-core-2.18.3.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/core/jackson-annotations/2.18.3/jackson-annotations-2.18.3.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/core/jackson-databind/2.18.3/jackson-databind-2.18.3.jar:/home/serasa.intranet/c18132q/.m2/jakarta/xml/bind/jakarta.xml.bind-api/4.0.2/jakarta.xml.bind-api-4.0.2.jar:/home/serasa.intranet/c18132q/.m2/com/github/librepdf/openpdf/2.0.3/openpdf-2.0.3.jar:/home/serasa.intranet/c18132q/.m2/org/jfree/jfreechart/1.5.6/jfreechart-1.5.6.jar:/home/serasa.intranet/c18132q/.m2/net/sf/jasperreports/jasperreports/7.0.3/jasperreports-7.0.3.jar:/home/serasa.intranet/c18132q/.m2/org/apache/commons/commons-collections4/4.4/commons-collections4-4.4.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.19.2/jackson-dataformat-xml-2.19.2.jar:/home/serasa.intranet/c18132q/.m2/org/codehaus/woodstox/stax2-api/4.2.2/stax2-api-4.2.2.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/woodstox/woodstox-core/7.1.1/woodstox-core-7.1.1.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-anim/1.18/batik-anim-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-ext/1.18/batik-ext-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-parser/1.18/batik-parser-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-shared-resources/1.18/batik-shared-resources-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-bridge/1.18/batik-bridge-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-script/1.18/batik-script-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-xml/1.18/batik-xml-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/xmlgraphics-commons/2.10/xmlgraphics-commons-2.10.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-dom/1.18/batik-dom-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-svg-dom/1.18/batik-svg-dom-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-awt-util/1.18/batik-awt-util-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-gvt/1.18/batik-gvt-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-util/1.18/batik-util-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-constants/1.18/batik-constants-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-css/1.18/batik-css-1.18.jar:/home/serasa.intranet/c18132q/.m2/xml-apis/xml-apis-ext/1.3.04/xml-apis-ext-1.3.04.jar:/home/serasa.intranet/c18132q/.m2/commons-beanutils/commons-beanutils/1.11.0/commons-beanutils-1.11.0.jar:/home/serasa.intranet/c18132q/.m2/commons-logging/commons-logging/1.3.5/commons-logging-1.3.5.jar:/home/serasa.intranet/c18132q/.m2/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar:/home/serasa.intranet/c18132q/.m2/net/sf/jasperreports/jasperreports-chart-customizers/7.0.3/jasperreports-chart-customizers-7.0.3.jar:/home/serasa.intranet/c18132q/.m2/net/sf/jasperreports/jasperreports-barbecue/7.0.3/jasperreports-barbecue-7.0.3.jar:/home/serasa.intranet/c18132q/.m2/net/sourceforge/barbecue/barbecue/1.5-beta1/barbecue-1.5-beta1.jar:/home/serasa.intranet/c18132q/.m2/net/sf/jasperreports/jasperreports-charts/7.0.3/jasperreports-charts-7.0.3.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-svggen/1.18/batik-svggen-1.18.jar:/home/serasa.intranet/c18132q/.m2/org/apache/xmlgraphics/batik-i18n/1.18/batik-i18n-1.18.jar:/home/serasa.intranet/c18132q/.m2/net/sf/jasperreports/jasperreports-jdt/7.0.3/jasperreports-jdt-7.0.3.jar:/home/serasa.intranet/c18132q/.m2/net/sf/jasperreports/jasperreports-pdf/7.0.3/jasperreports-pdf-7.0.3.jar:/home/serasa.intranet/c18132q/.m2/com/adobe/xmp/xmpcore/6.1.11/xmpcore-6.1.11.jar:/home/serasa.intranet/c18132q/.m2/com/mpobjects/jasperreports/font/jasperreports-fonts-liberation/2.1.2/jasperreports-fonts-liberation-2.1.2.jar:/home/serasa.intranet/c18132q/.m2/net/sf/jasperreports/jasperreports-fonts/7.0.3/jasperreports-fonts-7.0.3.jar:/home/serasa.intranet/c18132q/Documents/Workspace-Serasa/experian-nb-econsig-margin-manager/lib/eConsigToten-client.jar:/home/serasa.intranet/c18132q/Documents/Workspace-Serasa/experian-nb-econsig-margin-manager/lib/jasperreports-fonts-msttcorefonts.jar:/home/serasa.intranet/c18132q/Documents/Workspace-Serasa/experian-nb-econsig-margin-manager/lib/jiraEConsig-2.4.0.jar:/home/serasa.intranet/c18132q/Documents/Workspace-Serasa/experian-nb-econsig-margin-manager/lib/nostrum-dynamic-jasper-1.0.0.jar:/home/serasa.intranet/c18132q/Documents/Workspace-Serasa/experian-nb-econsig-margin-manager/lib/nostrum-ee9-taglibs-standard-impl-1.2.5.jar:/home/serasa.intranet/c18132q/Documents/Workspace-Serasa/experian-nb-econsig-margin-manager/lib/simplecaptcha-1.2.1.jar:/home/serasa.intranet/c18132q/Documents/Workspace-Serasa/experian-nb-econsig-margin-manager/lib/SimplETL-3.4.0.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-devtools/3.5.5/spring-boot-devtools-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-autoconfigure/3.5.5/spring-boot-autoconfigure-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/spring-core/6.2.10/spring-core-6.2.10.jar:/home/serasa.intranet/c18132q/.m2/org/apache/commons/commons-compress/1.28.0/commons-compress-1.28.0.jar:/home/serasa.intranet/c18132q/.m2/jakarta/xml/soap/jakarta.xml.soap-api/3.0.2/jakarta.xml.soap-api-3.0.2.jar:/home/serasa.intranet/c18132q/.m2/jakarta/servlet/jsp/jstl/jakarta.servlet.jsp.jstl-api/3.0.2/jakarta.servlet.jsp.jstl-api-3.0.2.jar:/home/serasa.intranet/c18132q/.m2/jakarta/el/jakarta.el-api/5.0.0/jakarta.el-api-5.0.0.jar:/home/serasa.intranet/c18132q/.m2/org/apache/poi/poi/5.4.0/poi-5.4.0.jar:/home/serasa.intranet/c18132q/.m2/org/apache/commons/commons-math3/3.6.1/commons-math3-3.6.1.jar:/home/serasa.intranet/c18132q/.m2/com/zaxxer/SparseBitSet/1.3/SparseBitSet-1.3.jar:/home/serasa.intranet/c18132q/.m2/org/apache/logging/log4j/log4j-api/2.24.3/log4j-api-2.24.3.jar:/home/serasa.intranet/c18132q/.m2/org/jdom/jdom2/2.0.6.1/jdom2-2.0.6.1.jar:/home/serasa.intranet/c18132q/.m2/com/mysql/mysql-connector-j/9.1.0/mysql-connector-j-9.1.0.jar:/home/serasa.intranet/c18132q/.m2/com/h2database/h2/2.3.232/h2-2.3.232.jar:/home/serasa.intranet/c18132q/.m2/com/oracle/database/jdbc/ojdbc10/19.25.0.0/ojdbc10-19.25.0.0.jar:/home/serasa.intranet/c18132q/.m2/org/yaml/snakeyaml/2.4/snakeyaml-2.4.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-handler/4.1.119.Final/netty-handler-4.1.119.Final.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-common/4.1.124.Final/netty-common-4.1.124.Final.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-resolver/4.1.124.Final/netty-resolver-4.1.124.Final.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-buffer/4.1.124.Final/netty-buffer-4.1.124.Final.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-transport/4.1.124.Final/netty-transport-4.1.124.Final.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-transport-native-unix-common/4.1.124.Final/netty-transport-native-unix-common-4.1.124.Final.jar:/home/serasa.intranet/c18132q/.m2/io/netty/netty-codec/4.1.124.Final/netty-codec-4.1.124.Final.jar:/home/serasa.intranet/c18132q/.m2/org/json/json/20250107/json-20250107.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-validation/3.5.5/spring-boot-starter-validation-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/hibernate/validator/hibernate-validator/8.0.3.Final/hibernate-validator-8.0.3.Final.jar:/home/serasa.intranet/c18132q/.m2/net/bytebuddy/byte-buddy/1.17.7/byte-buddy-1.17.7.jar:/home/serasa.intranet/c18132q/.m2/org/apache/neethi/neethi/3.2.1/neethi-3.2.1.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/resteasy/resteasy-servlet-spring-boot-starter/6.3.0.Final/resteasy-servlet-spring-boot-starter-6.3.0.Final.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/resteasy/resteasy-core/6.2.11.Final/resteasy-core-6.2.11.Final.jar:/home/serasa.intranet/c18132q/.m2/com/ibm/async/asyncutil/0.1.0/asyncutil-0.1.0.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/resteasy/resteasy-core-spi/6.2.11.Final/resteasy-core-spi-6.2.11.Final.jar:/home/serasa.intranet/c18132q/.m2/jakarta/validation/jakarta.validation-api/3.0.2/jakarta.validation-api-3.0.2.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/resteasy/resteasy-spring-boot-starter-common/6.3.0.Final/resteasy-spring-boot-starter-common-6.3.0.Final.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/resteasy/spring/resteasy-spring/3.2.0.Final/resteasy-spring-3.2.0.Final.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/resteasy/resteasy-client/6.2.11.Final/resteasy-client-6.2.11.Final.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/resteasy/resteasy-client-api/6.2.11.Final/resteasy-client-api-6.2.11.Final.jar:/home/serasa.intranet/c18132q/.m2/org/jboss/resteasy/resteasy-jackson2-provider/6.2.11.Final/resteasy-jackson2-provider-6.2.11.Final.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.19.2/jackson-datatype-jsr310-2.19.2.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.19.2/jackson-datatype-jdk8-2.19.2.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/jakarta/rs/jackson-jakarta-rs-base/2.19.2/jackson-jakarta-rs-base-2.19.2.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/jakarta/rs/jackson-jakarta-rs-json-provider/2.19.2/jackson-jakarta-rs-json-provider-2.19.2.jar:/home/serasa.intranet/c18132q/.m2/com/fasterxml/jackson/module/jackson-module-jakarta-xmlbind-annotations/2.19.2/jackson-module-jakarta-xmlbind-annotations-2.19.2.jar:/home/serasa.intranet/c18132q/.m2/com/github/java-json-tools/json-patch/1.13/json-patch-1.13.jar:/home/serasa.intranet/c18132q/.m2/org/python/jython-slim/2.7.4/jython-slim-2.7.4.jar:/home/serasa.intranet/c18132q/.m2/org/antlr/antlr/3.5.3/antlr-3.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/antlr/ST4/4.3.1/ST4-4.3.1.jar:/home/serasa.intranet/c18132q/.m2/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar:/home/serasa.intranet/c18132q/.m2/org/antlr/antlr-runtime/3.5.3/antlr-runtime-3.5.3.jar:/home/serasa.intranet/c18132q/.m2/org/ow2/asm/asm/9.7/asm-9.7.jar:/home/serasa.intranet/c18132q/.m2/org/ow2/asm/asm-commons/9.7/asm-commons-9.7.jar:/home/serasa.intranet/c18132q/.m2/org/ow2/asm/asm-tree/9.7/asm-tree-9.7.jar:/home/serasa.intranet/c18132q/.m2/org/ow2/asm/asm-util/9.7/asm-util-9.7.jar:/home/serasa.intranet/c18132q/.m2/org/ow2/asm/asm-analysis/9.7/asm-analysis-9.7.jar:/home/serasa.intranet/c18132q/.m2/com/ibm/icu/icu4j/75.1/icu4j-75.1.jar:/home/serasa.intranet/c18132q/.m2/com/carrotsearch/java-sizeof/0.0.5/java-sizeof-0.0.5.jar:/home/serasa.intranet/c18132q/.m2/com/github/jnr/jffi/1.3.13/jffi-1.3.13.jar:/home/serasa.intranet/c18132q/.m2/com/github/jnr/jnr-constants/0.10.4/jnr-constants-0.10.4.jar:/home/serasa.intranet/c18132q/.m2/com/github/jnr/jnr-ffi/2.2.16/jnr-ffi-2.2.16.jar:/home/serasa.intranet/c18132q/.m2/com/github/jnr/jffi/1.3.13/jffi-1.3.13-native.jar:/home/serasa.intranet/c18132q/.m2/com/github/jnr/jnr-a64asm/1.0.0/jnr-a64asm-1.0.0.jar:/home/serasa.intranet/c18132q/.m2/com/github/jnr/jnr-x86asm/1.0.2/jnr-x86asm-1.0.2.jar:/home/serasa.intranet/c18132q/.m2/com/github/jnr/jnr-netdb/1.2.0/jnr-netdb-1.2.0.jar:/home/serasa.intranet/c18132q/.m2/com/github/jnr/jnr-posix/3.1.19/jnr-posix-3.1.19.jar:/home/serasa.intranet/c18132q/.m2/jline/jline/2.14.6/jline-2.14.6.jar:/home/serasa.intranet/c18132q/.m2/org/apache/ant/ant/1.10.14/ant-1.10.14.jar:/home/serasa.intranet/c18132q/.m2/org/apache/ant/ant-launcher/1.10.14/ant-launcher-1.10.14.jar:/home/serasa.intranet/c18132q/.m2/org/bouncycastle/bcpkix-jdk18on/1.81/bcpkix-jdk18on-1.81.jar:/home/serasa.intranet/c18132q/.m2/org/bouncycastle/bcutil-jdk18on/1.81/bcutil-jdk18on-1.81.jar:/home/serasa.intranet/c18132q/.m2/org/bouncycastle/bcprov-jdk18on/1.81/bcprov-jdk18on-1.81.jar:/home/serasa.intranet/c18132q/.m2/io/micrometer/micrometer-commons/1.15.3/micrometer-commons-1.15.3.jar:/home/serasa.intranet/c18132q/.m2/org/apache/tomcat/embed/tomcat-embed-jasper/10.1.49/tomcat-embed-jasper-10.1.49.jar:/home/serasa.intranet/c18132q/.m2/org/apache/tomcat/embed/tomcat-embed-el/10.1.44/tomcat-embed-el-10.1.44.jar:/home/serasa.intranet/c18132q/.m2/org/eclipse/jdt/ecj/3.33.0/ecj-3.33.0.jar:/home/serasa.intranet/c18132q/.m2/org/apache/tomcat/embed/tomcat-embed-core/10.1.49/tomcat-embed-core-10.1.49.jar:/home/serasa.intranet/c18132q/.m2/org/apache/tomcat/tomcat-annotations-api/10.1.44/tomcat-annotations-api-10.1.44.jar:/home/serasa.intranet/c18132q/.m2/org/springframework/boot/spring-boot-starter-tomcat/3.5.5/spring-boot-starter-tomcat-3.5.5.jar:/home/serasa.intranet/c18132q/.m2/org/apache/tomcat/embed/tomcat-embed-websocket/10.1.44/tomcat-embed-websocket-10.1.44.jar com.zetra.econsig.helper.sms.SMSFlowTestSimple
-╔══════════════════════════════════════════════════════════════╗
-║       TESTE COMPLETO DO FLUXO SMS ZENVIA - ECONSIG           ║
-╠══════════════════════════════════════════════════════════════╣
-║ Este teste simula TODO o fluxo do SMSHelper:                 ║
-║ - Envio de SMS via API Zenvia                                ║
-║ - Verificação de limites (TPC 1016/1017)                     ║
-║ - Controle de contador mensal (TDA 96/97)                    ║
-║ - Flags de alerta único por mês (TDA 98/99)                  ║
-╚══════════════════════════════════════════════════════════════╝
+package com.zetra.econsig.helper.sms;
 
-2026-02-04T15:55:48.215200766Z main ERROR Unable to create file /var/log/eConsig.log java.io.IOException: Permission denied
-	at java.base/java.io.UnixFileSystem.createFileExclusively0(Native Method)
-	at java.base/java.io.UnixFileSystem.createFileExclusively(UnixFileSystem.java:258)
-	at java.base/java.io.File.createNewFile(File.java:1045)
-	at org.apache.logging.log4j.core.appender.rolling.RollingFileManager$RollingFileManagerFactory.createManager(RollingFileManager.java:864)
-	at org.apache.logging.log4j.core.appender.rolling.RollingFileManager$RollingFileManagerFactory.createManager(RollingFileManager.java:844)
-	at org.apache.logging.log4j.core.appender.AbstractManager.getManager(AbstractManager.java:146)
-	at org.apache.logging.log4j.core.appender.OutputStreamManager.getManager(OutputStreamManager.java:112)
-	at org.apache.logging.log4j.core.appender.rolling.RollingFileManager.getFileManager(RollingFileManager.java:307)
-	at org.apache.logging.log4j.core.appender.RollingFileAppender$Builder.build(RollingFileAppender.java:144)
-	at org.apache.logging.log4j.core.appender.RollingFileAppender$Builder.build(RollingFileAppender.java:65)
-	at org.apache.logging.log4j.core.config.plugins.util.PluginBuilder.build(PluginBuilder.java:124)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createPluginObject(AbstractConfiguration.java:1180)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:1099)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:1091)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.doConfigure(AbstractConfiguration.java:695)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.initialize(AbstractConfiguration.java:270)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.start(AbstractConfiguration.java:319)
-	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:673)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:762)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
-	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
-	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:138)
-	at org.apache.commons.logging.LogAdapter$Log4jLog.<clinit>(LogAdapter.java:146)
-	at org.apache.commons.logging.LogAdapter$Log4jAdapter.createLog(LogAdapter.java:113)
-	at org.apache.commons.logging.LogAdapter.createLog(LogAdapter.java:95)
-	at org.apache.commons.logging.LogFactory.getLog(LogFactory.java:67)
-	at org.springframework.http.HttpLogging.<clinit>(HttpLogging.java:45)
-	at org.springframework.http.client.support.HttpAccessor.<init>(HttpAccessor.java:54)
-	at org.springframework.http.client.support.InterceptingHttpAccessor.<init>(InterceptingHttpAccessor.java:45)
-	at org.springframework.web.client.RestTemplate.<init>(RestTemplate.java:186)
-	at org.springframework.web.client.RestTemplate.<init>(RestTemplate.java:248)
-	at com.zetra.econsig.helper.sms.SMSFlowTestSimple.<init>(SMSFlowTestSimple.java:62)
-	at com.zetra.econsig.helper.sms.SMSFlowTestSimple.main(SMSFlowTestSimple.java:69)
+import com.zetra.econsig.context.ApplicationContextProvider;
+import com.zetra.econsig.exception.ZetraException;
+import com.zetra.econsig.helper.parametro.ParamSist;
+import com.zetra.econsig.helper.seguranca.AcessoSistema;
+import com.zetra.econsig.persistence.entity.DadosConsignante;
+import com.zetra.econsig.persistence.entity.DadosConsignanteHome;
+import com.zetra.econsig.persistence.entity.DadosConsignanteId;
+import com.zetra.econsig.values.CodedValues;
 
-2026-02-04T15:55:48.226629943Z main ERROR Could not create plugin of type class org.apache.logging.log4j.core.appender.RollingFileAppender for element RollingFile: java.lang.IllegalStateException: ManagerFactory [org.apache.logging.log4j.core.appender.rolling.RollingFileManager$RollingFileManagerFactory@4ee203eb] unable to create manager for [/var/log/eConsig.log] with data [org.apache.logging.log4j.core.appender.rolling.RollingFileManager$FactoryData@1a5a4e19[pattern=/var/log/eConsig-%d{yyyy-MM-dd}-%i.log.gz, append=true, bufferedIO=true, bufferSize=8192, policy=CompositeTriggeringPolicy(policies=[OnStartupTriggeringPolicy, SizeBasedTriggeringPolicy(size=104857600), TimeBasedTriggeringPolicy(nextRolloverMillis=0, interval=1, modulate=false)]), strategy=DefaultRolloverStrategy(min=1, max=100, useMax=true), advertiseURI=null, layout=%d [eConsig] [%p] [%c{1}.%M(%L)] | %m\n, filePermissions=null, fileOwner=null]] java.lang.IllegalStateException: ManagerFactory [org.apache.logging.log4j.core.appender.rolling.RollingFileManager$RollingFileManagerFactory@4ee203eb] unable to create manager for [/var/log/eConsig.log] with data [org.apache.logging.log4j.core.appender.rolling.RollingFileManager$FactoryData@1a5a4e19[pattern=/var/log/eConsig-%d{yyyy-MM-dd}-%i.log.gz, append=true, bufferedIO=true, bufferSize=8192, policy=CompositeTriggeringPolicy(policies=[OnStartupTriggeringPolicy, SizeBasedTriggeringPolicy(size=104857600), TimeBasedTriggeringPolicy(nextRolloverMillis=0, interval=1, modulate=false)]), strategy=DefaultRolloverStrategy(min=1, max=100, useMax=true), advertiseURI=null, layout=%d [eConsig] [%p] [%c{1}.%M(%L)] | %m\n, filePermissions=null, fileOwner=null]]
-	at org.apache.logging.log4j.core.appender.AbstractManager.getManager(AbstractManager.java:148)
-	at org.apache.logging.log4j.core.appender.OutputStreamManager.getManager(OutputStreamManager.java:112)
-	at org.apache.logging.log4j.core.appender.rolling.RollingFileManager.getFileManager(RollingFileManager.java:307)
-	at org.apache.logging.log4j.core.appender.RollingFileAppender$Builder.build(RollingFileAppender.java:144)
-	at org.apache.logging.log4j.core.appender.RollingFileAppender$Builder.build(RollingFileAppender.java:65)
-	at org.apache.logging.log4j.core.config.plugins.util.PluginBuilder.build(PluginBuilder.java:124)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createPluginObject(AbstractConfiguration.java:1180)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:1099)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:1091)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.doConfigure(AbstractConfiguration.java:695)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.initialize(AbstractConfiguration.java:270)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.start(AbstractConfiguration.java:319)
-	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:673)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:762)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
-	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
-	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:138)
-	at org.apache.commons.logging.LogAdapter$Log4jLog.<clinit>(LogAdapter.java:146)
-	at org.apache.commons.logging.LogAdapter$Log4jAdapter.createLog(LogAdapter.java:113)
-	at org.apache.commons.logging.LogAdapter.createLog(LogAdapter.java:95)
-	at org.apache.commons.logging.LogFactory.getLog(LogFactory.java:67)
-	at org.springframework.http.HttpLogging.<clinit>(HttpLogging.java:45)
-	at org.springframework.http.client.support.HttpAccessor.<init>(HttpAccessor.java:54)
-	at org.springframework.http.client.support.InterceptingHttpAccessor.<init>(InterceptingHttpAccessor.java:45)
-	at org.springframework.web.client.RestTemplate.<init>(RestTemplate.java:186)
-	at org.springframework.web.client.RestTemplate.<init>(RestTemplate.java:248)
-	at com.zetra.econsig.helper.sms.SMSFlowTestSimple.<init>(SMSFlowTestSimple.java:62)
-	at com.zetra.econsig.helper.sms.SMSFlowTestSimple.main(SMSFlowTestSimple.java:69)
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 
-2026-02-04T15:55:48.229265763Z main ERROR Unable to invoke factory method in class org.apache.logging.log4j.core.appender.RollingFileAppender for element RollingFile: java.lang.IllegalStateException: No factory method found for class org.apache.logging.log4j.core.appender.RollingFileAppender java.lang.IllegalStateException: No factory method found for class org.apache.logging.log4j.core.appender.RollingFileAppender
-	at org.apache.logging.log4j.core.config.plugins.util.PluginBuilder.findFactoryMethod(PluginBuilder.java:268)
-	at org.apache.logging.log4j.core.config.plugins.util.PluginBuilder.build(PluginBuilder.java:140)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createPluginObject(AbstractConfiguration.java:1180)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:1099)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.createConfiguration(AbstractConfiguration.java:1091)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.doConfigure(AbstractConfiguration.java:695)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.initialize(AbstractConfiguration.java:270)
-	at org.apache.logging.log4j.core.config.AbstractConfiguration.start(AbstractConfiguration.java:319)
-	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:673)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:762)
-	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:784)
-	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:300)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:153)
-	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:46)
-	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:138)
-	at org.apache.commons.logging.LogAdapter$Log4jLog.<clinit>(LogAdapter.java:146)
-	at org.apache.commons.logging.LogAdapter$Log4jAdapter.createLog(LogAdapter.java:113)
-	at org.apache.commons.logging.LogAdapter.createLog(LogAdapter.java:95)
-	at org.apache.commons.logging.LogFactory.getLog(LogFactory.java:67)
-	at org.springframework.http.HttpLogging.<clinit>(HttpLogging.java:45)
-	at org.springframework.http.client.support.HttpAccessor.<init>(HttpAccessor.java:54)
-	at org.springframework.http.client.support.InterceptingHttpAccessor.<init>(InterceptingHttpAccessor.java:45)
-	at org.springframework.web.client.RestTemplate.<init>(RestTemplate.java:186)
-	at org.springframework.web.client.RestTemplate.<init>(RestTemplate.java:248)
-	at com.zetra.econsig.helper.sms.SMSFlowTestSimple.<init>(SMSFlowTestSimple.java:62)
-	at com.zetra.econsig.helper.sms.SMSFlowTestSimple.main(SMSFlowTestSimple.java:69)
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Scanner;
 
-2026-02-04T15:55:48.230293472Z main ERROR Null object returned for RollingFile in Appenders.
-2026-02-04T15:55:48.246576798Z main ERROR Unable to locate appender "RollingFile" for logger config "root"
-🔌 Conectando ao banco de dados...
-   ✅ Conectado a: jdbc:mysql://localhost:3306/consig
+/**
+ * TESTE DE INTEGRAÇÃO COM CLASSES REAIS DO SISTEMA ECONSIG
+ * 
+ * Este teste utiliza as classes REAIS do sistema:
+ * - SMSHelper: Envio de SMS via Zenvia + verificação de limites
+ * - MailHelper: Envio de emails de alerta
+ * - ModeloEmailHome: Busca templates de email
+ * - DadosConsignanteHome: Controle de contadores
+ * - ParamSist: Leitura de parâmetros de sistema
+ * 
+ * PRÉ-REQUISITOS:
+ * 1. Banco de dados configurado e acessível
+ * 2. Parâmetros TPC 1016 e 1017 cadastrados para o consignante de teste
+ * 3. Modelos de email 260 e 261 cadastrados
+ * 4. Parâmetro TPC 207 com email de suporte configurado
+ * 5. application.properties com configurações Zenvia:
+ *    - zenvia.sms.api.url
+ *    - zenvia.sms.api.token
+ *    - zenvia.sms.from
+ * 
+ * COMO EXECUTAR:
+ * 1. Configure as constantes TELEFONE_TESTE e CSE_CODIGO abaixo
+ * 2. Execute via Maven:
+ *    mvn exec:java -Dexec.mainClass="com.zetra.econsig.helper.sms.SMSIntegrationRealTest"
+ * 3. Ou execute diretamente no IntelliJ/Eclipse como classe main
+ */
+public class SMSIntegrationRealTest {
 
-📋 MENU:
-1. Executar fluxo completo de testes (7 cenários)
-2. Enviar 1 SMS (com verificação de limites)
-3. Ver estado atual (contador, flags, limites)
-4. Limpar dados de teste
-5. Enviar SMS direto (sem verificação de limites)
-0. Sair
+    // ════════════════════════════════════════════════════════════════
+    // CONFIGURAÇÕES DE TESTE - EDITE AQUI
+    // ════════════════════════════════════════════════════════════════
+    
+    private static final String TELEFONE_TESTE = "+5521992755726";  // <-- EDITE COM SEU NÚMERO
+    private static final String CSE_CODIGO = "1";  // <-- CÓDIGO DO CONSIGNANTE PARA TESTE
+    
+    // Classe de aplicação Spring Boot (ajuste se necessário)
+    private static final String SPRING_BOOT_APP_CLASS = "com.zetra.econsig.Application";
+    
+    // ════════════════════════════════════════════════════════════════
 
-Escolha: 1
+    private ConfigurableApplicationContext springContext;
+    private SMSHelper smsHelper;
+    private AcessoSistema acessoSistema;
 
-═══════════════════════════════════════════════════════════════
-EXECUTANDO FLUXO COMPLETO
-═══════════════════════════════════════════════════════════════
-📋 Configuração:
-   Limite Inferior (TPC 1016): 2
-   Limite Superior (TPC 1017): 5
-   Telefone: +5521992755726
-   Consignante: 1
+    public static void main(String[] args) {
+        System.out.println("╔══════════════════════════════════════════════════════════════╗");
+        System.out.println("║    TESTE DE INTEGRAÇÃO SMS ZENVIA - CLASSES REAIS            ║");
+        System.out.println("╠══════════════════════════════════════════════════════════════╣");
+        System.out.println("║ Este teste usa as classes REAIS do eConsig:                  ║");
+        System.out.println("║ - SMSHelper (envio SMS + verificação de limites)             ║");
+        System.out.println("║ - MailHelper (envio de emails de alerta)                     ║");
+        System.out.println("║ - ModeloEmailHome (templates de email)                       ║");
+        System.out.println("║ - DadosConsignanteHome (contadores TDA 96/97/98/99)          ║");
+        System.out.println("║ - ParamSist (parâmetros TPC 1016/1017/207)                   ║");
+        System.out.println("╚══════════════════════════════════════════════════════════════╝");
+        System.out.println();
 
-📋 PREPARAÇÃO:
-   ✅ Removidos 0 registros
+        SMSIntegrationRealTest test = new SMSIntegrationRealTest();
+        Scanner scanner = new Scanner(System.in);
 
-───────────────────────────────────────────────────────────────
-CT-01: Enviar 1º SMS (abaixo do limite inferior)
-───────────────────────────────────────────────────────────────
-   Contador atual: 0
-   📤 Enviando SMS...
-   ✅ SMS enviado com sucesso!
-   📊 Novo contador: 1
+        try {
+            test.inicializarSpringContext();
+            test.configurarSMSHelper();
+            test.configurarAcessoSistema();
+            test.mostrarConfiguracoes();
+            test.mostrarMenu(scanner);
+        } catch (Exception e) {
+            System.err.println("❌ ERRO: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            test.fecharSpringContext();
+            scanner.close();
+        }
+    }
 
-───────────────────────────────────────────────────────────────
-CT-02: Enviar 2º SMS (atinge limite inferior = 2)
-───────────────────────────────────────────────────────────────
-   Contador atual: 1
-   📤 Enviando SMS...
-   ✅ SMS enviado com sucesso!
-   📊 Novo contador: 2
-   📧 Enviaria EMAIL de alerta INFERIOR
+    /**
+     * Inicializa o contexto Spring Boot completo.
+     */
+    private void inicializarSpringContext() {
+        System.out.println("🔌 Inicializando contexto Spring Boot...");
+        try {
+            Class<?> appClass = Class.forName(SPRING_BOOT_APP_CLASS);
+            springContext = SpringApplication.run(appClass, new String[]{});
+            System.out.println("   ✅ Contexto Spring inicializado!");
+        } catch (ClassNotFoundException e) {
+            System.err.println("   ⚠️ Classe de aplicação não encontrada: " + SPRING_BOOT_APP_CLASS);
+            System.err.println("   ⚠️ Tentando inicializar sem Spring Boot completo...");
+            // O teste pode funcionar se o ApplicationContextProvider já estiver configurado
+        }
+    }
 
-───────────────────────────────────────────────────────────────
-CT-03: Enviar 3º SMS (intermediário)
-───────────────────────────────────────────────────────────────
-   Contador atual: 2
-   📤 Enviando SMS...
-   ✅ SMS enviado com sucesso!
-   📊 Novo contador: 3
+    /**
+     * Configura o SMSHelper usando as propriedades do application.properties.
+     */
+    private void configurarSMSHelper() {
+        System.out.println("\n📱 Configurando SMSHelper...");
+        
+        Environment env = ApplicationContextProvider.getApplicationContext().getEnvironment();
+        
+        String apiUrl = env.getProperty(CodedValues.PROP_ZENVIA_API_URL);
+        String apiToken = env.getProperty(CodedValues.PROP_ZENVIA_API_TOKEN);
+        String fromId = env.getProperty(CodedValues.PROP_ZENVIA_FROM);
 
-───────────────────────────────────────────────────────────────
-CT-04: Enviar 4º SMS (intermediário)
-───────────────────────────────────────────────────────────────
-   Contador atual: 3
-   📤 Enviando SMS...
-   ✅ SMS enviado com sucesso!
-   📊 Novo contador: 4
+        if (apiUrl == null || apiToken == null || fromId == null) {
+            throw new RuntimeException("Configurações Zenvia não encontradas no application.properties!\n" +
+                    "Verifique: zenvia.sms.api.url, zenvia.sms.api.token, zenvia.sms.from");
+        }
 
-───────────────────────────────────────────────────────────────
-CT-05: Enviar 5º SMS (deve ser BLOQUEADO)
-───────────────────────────────────────────────────────────────
-   Contador atual: 4
-   📤 Enviando SMS...
-   ✅ SMS enviado com sucesso!
-   📊 Novo contador: 5
-   ❌ ERRO: Esperava bloqueio, mas enviou!
+        smsHelper = new SMSHelper(apiUrl, apiToken, fromId);
+        System.out.println("   ✅ SMSHelper configurado!");
+        System.out.println("      URL: " + apiUrl);
+        System.out.println("      From: " + fromId);
+    }
 
-───────────────────────────────────────────────────────────────
-CT-06: Enviar 6º SMS (continua bloqueado)
-───────────────────────────────────────────────────────────────
-   Contador atual: 5
-   🚫 BLOQUEADO pelo limite superior!
-   ✅ Comportamento correto (esperado bloqueio)
-   📧 Enviaria EMAIL de alerta SUPERIOR
+    /**
+     * Configura o AcessoSistema para simular um usuário consignante.
+     */
+    private void configurarAcessoSistema() {
+        System.out.println("\n👤 Configurando AcessoSistema...");
+        
+        acessoSistema = new AcessoSistema();
+        acessoSistema.setTipoEntidade(AcessoSistema.ENTIDADE_CSE);
+        acessoSistema.setCodigoEntidade(CSE_CODIGO);
+        acessoSistema.setUsuCodigo("999");
+        acessoSistema.setUsuNome("Usuario Teste SMS");
+        acessoSistema.setUsuEmail("teste@econsig.com.br");
+        acessoSistema.setIpUsuario("127.0.0.1");
+        
+        System.out.println("   ✅ AcessoSistema configurado!");
+        System.out.println("      Tipo: " + acessoSistema.getTipoEntidade());
+        System.out.println("      CSE: " + acessoSistema.getCseCodigo());
+    }
 
-───────────────────────────────────────────────────────────────
-CT-07: Verificação do estado final
-───────────────────────────────────────────────────────────────
+    /**
+     * Mostra as configurações atuais (limites, email, contadores).
+     */
+    private void mostrarConfiguracoes() {
+        System.out.println("\n📋 CONFIGURAÇÕES ATUAIS:");
+        
+        try {
+            // Limites
+            Object limInf = ParamSist.getInstance().getParam(CodedValues.TPC_LIMITE_INFERIOR_ENVIO_SMS_MES, acessoSistema);
+            Object limSup = ParamSist.getInstance().getParam(CodedValues.TPC_LIMITE_SUPERIOR_ENVIO_SMS_MES, acessoSistema);
+            Object emailSuporte = ParamSist.getInstance().getParam(CodedValues.TPC_EMAIL_SUPORTE_ZETRASOFT, acessoSistema);
+            
+            System.out.println("   Limite Inferior (TPC 1016): " + (limInf != null ? limInf : "NÃO CONFIGURADO"));
+            System.out.println("   Limite Superior (TPC 1017): " + (limSup != null ? limSup : "NÃO CONFIGURADO"));
+            System.out.println("   Email Suporte (TPC 207): " + (emailSuporte != null ? emailSuporte : "NÃO CONFIGURADO"));
+            
+            // Contador atual
+            int contador = smsHelper.getQuantidadeSmsNoMes(CSE_CODIGO);
+            System.out.println("   Contador SMS atual: " + contador);
+            
+            // Flags de alerta
+            DadosConsignante flagInf = findDadoAdicional(CSE_CODIGO, CodedValues.TDA_ALERTA_LIMITE_INF_SMS);
+            DadosConsignante flagSup = findDadoAdicional(CSE_CODIGO, CodedValues.TDA_ALERTA_LIMITE_SUP_SMS);
+            
+            System.out.println("   Flag Alerta Inferior (TDA 98): " + (flagInf != null ? flagInf.getDacValor() : "NÃO ENVIADO"));
+            System.out.println("   Flag Alerta Superior (TDA 99): " + (flagSup != null ? flagSup.getDacValor() : "NÃO ENVIADO"));
+            
+        } catch (Exception e) {
+            System.err.println("   ⚠️ Erro ao obter configurações: " + e.getMessage());
+        }
+    }
 
-📊 ESTADO ATUAL:
-   ┌─────────┬──────────────────────────────┬─────────────┐
-   │ TDA     │ Descrição                    │ Valor       │
-   ├─────────┼──────────────────────────────┼─────────────┤
-   │ 96      │ Mês/Ano de controle          │ 2026-02     │
-   │ 97      │ Contador de SMS no mês       │ 5           │
-   │ 98      │ Flag alerta inferior         │ 2026-02     │
-   │ 99      │ Flag alerta superior         │ 2026-02     │
-   └─────────┴──────────────────────────────┴─────────────┘
+    private void mostrarMenu(Scanner scanner) throws Exception {
+        while (true) {
+            System.out.println("\n📋 MENU:");
+            System.out.println("1. Executar fluxo completo de testes (envia SMS e emails reais)");
+            System.out.println("2. Enviar 1 SMS (com verificação de limites)");
+            System.out.println("3. Ver estado atual (contador, flags, limites)");
+            System.out.println("4. Limpar dados de teste (TDA 96/97/98/99)");
+            System.out.println("5. Enviar SMS direto (sem limites - teste básico)");
+            System.out.println("0. Sair");
+            System.out.print("\nEscolha: ");
+            
+            String opcao = scanner.nextLine().trim();
+            
+            switch (opcao) {
+                case "1": executarFluxoCompleto(); break;
+                case "2": enviarSmsComLimites(); break;
+                case "3": mostrarConfiguracoes(); break;
+                case "4": limparDadosTeste(); break;
+                case "5": enviarSmsDireto(); break;
+                case "0": return;
+                default: System.out.println("Opção inválida!");
+            }
+        }
+    }
 
-📋 LIMITES:
-   Limite Inferior (TPC 1016): 2
-   Limite Superior (TPC 1017): 5
+    /**
+     * Executa o fluxo completo de testes usando as classes reais.
+     */
+    private void executarFluxoCompleto() throws Exception {
+        System.out.println("\n" + "═".repeat(63));
+        System.out.println("EXECUTANDO FLUXO COMPLETO COM CLASSES REAIS");
+        System.out.println("═".repeat(63));
+        
+        // Busca limites
+        Object limInfObj = ParamSist.getInstance().getParam(CodedValues.TPC_LIMITE_INFERIOR_ENVIO_SMS_MES, acessoSistema);
+        Object limSupObj = ParamSist.getInstance().getParam(CodedValues.TPC_LIMITE_SUPERIOR_ENVIO_SMS_MES, acessoSistema);
+        
+        int limiteInferior = limInfObj != null ? Integer.parseInt(limInfObj.toString()) : 2;
+        int limiteSuperior = limSupObj != null ? Integer.parseInt(limSupObj.toString()) : 5;
+        
+        System.out.println("📋 Configuração:");
+        System.out.println("   Limite Inferior (TPC 1016): " + limiteInferior);
+        System.out.println("   Limite Superior (TPC 1017): " + limiteSuperior);
+        System.out.println("   Telefone: " + TELEFONE_TESTE);
+        System.out.println("   Consignante: " + CSE_CODIGO);
+        
+        // Limpa dados
+        System.out.println("\n📋 PREPARAÇÃO:");
+        limparDadosTeste();
+        
+        int testesOk = 0;
+        int testesFalha = 0;
 
-═══════════════════════════════════════════════════════════════
-📊 RESULTADO FINAL
-═══════════════════════════════════════════════════════════════
-   ✅ Testes OK: 6
-   ❌ Testes com falha: 1
+        // Envia SMS até atingir o limite superior
+        for (int i = 1; i <= limiteSuperior; i++) {
+            System.out.println("\n" + "─".repeat(63));
+            
+            if (i < limiteInferior) {
+                System.out.println("CT-0" + i + ": Enviar " + i + "º SMS (abaixo do limite inferior)");
+            } else if (i == limiteInferior) {
+                System.out.println("CT-0" + i + ": Enviar " + i + "º SMS (atinge limite inferior - EMAIL DE ALERTA!)");
+            } else if (i < limiteSuperior) {
+                System.out.println("CT-0" + i + ": Enviar " + i + "º SMS (intermediário)");
+            } else {
+                System.out.println("CT-0" + i + ": Enviar " + i + "º SMS (último permitido - atinge limite superior)");
+            }
+            
+            System.out.println("─".repeat(63));
+            
+            try {
+                String mensagem = "Teste CT-" + String.format("%02d", i) + " - " + new SimpleDateFormat("HH:mm:ss").format(new Date());
+                smsHelper.send(TELEFONE_TESTE, mensagem, acessoSistema);
+                
+                System.out.println("   ✅ SMS enviado com sucesso!");
+                int contador = smsHelper.getQuantidadeSmsNoMes(CSE_CODIGO);
+                System.out.println("   📊 Novo contador: " + contador);
+                
+                // Verifica se deveria ter enviado email de alerta
+                if (contador == limiteInferior) {
+                    DadosConsignante flagInf = findDadoAdicional(CSE_CODIGO, CodedValues.TDA_ALERTA_LIMITE_INF_SMS);
+                    if (flagInf != null) {
+                        System.out.println("   📧 EMAIL de alerta INFERIOR enviado! (TDA 98 = " + flagInf.getDacValor() + ")");
+                    }
+                }
+                
+                if (contador == limiteSuperior) {
+                    DadosConsignante flagSup = findDadoAdicional(CSE_CODIGO, CodedValues.TDA_ALERTA_LIMITE_SUP_SMS);
+                    if (flagSup != null) {
+                        System.out.println("   📧 EMAIL de alerta SUPERIOR enviado! (TDA 99 = " + flagSup.getDacValor() + ")");
+                    }
+                }
+                
+                testesOk++;
+                
+            } catch (ZetraException e) {
+                if (e.getMessage().contains("Limite superior")) {
+                    System.out.println("   🚫 SMS BLOQUEADO: " + e.getMessage());
+                    // Se for o último, é esperado ser bloqueado? Na verdade não deveria ser bloqueado até atingir o limite
+                    testesFalha++;
+                } else {
+                    System.out.println("   ❌ ERRO: " + e.getMessage());
+                    testesFalha++;
+                }
+            }
+        }
+        
+        // Tenta enviar mais um (deve ser bloqueado)
+        System.out.println("\n" + "─".repeat(63));
+        System.out.println("CT-0" + (limiteSuperior + 1) + ": Enviar " + (limiteSuperior + 1) + "º SMS (deve ser BLOQUEADO)");
+        System.out.println("─".repeat(63));
+        
+        try {
+            String mensagem = "Teste BLOQUEIO - " + new SimpleDateFormat("HH:mm:ss").format(new Date());
+            smsHelper.send(TELEFONE_TESTE, mensagem, acessoSistema);
+            System.out.println("   ❌ ERRO: Deveria ter sido bloqueado, mas foi enviado!");
+            testesFalha++;
+        } catch (ZetraException e) {
+            if (e.getMessage().contains("Limite superior")) {
+                System.out.println("   🚫 SMS BLOQUEADO corretamente!");
+                System.out.println("   ✅ Comportamento esperado!");
+                testesOk++;
+            } else {
+                System.out.println("   ❌ ERRO inesperado: " + e.getMessage());
+                testesFalha++;
+            }
+        }
+        
+        // Mostra estado final
+        System.out.println("\n" + "─".repeat(63));
+        System.out.println("CT-FINAL: Verificação do estado final");
+        System.out.println("─".repeat(63));
+        mostrarConfiguracoes();
+        
+        // Resumo
+        System.out.println("\n" + "═".repeat(63));
+        System.out.println("📊 RESULTADO FINAL");
+        System.out.println("═".repeat(63));
+        System.out.println("   ✅ Testes OK: " + testesOk);
+        System.out.println("   ❌ Testes com falha: " + testesFalha);
+        
+        if (testesFalha == 0) {
+            System.out.println("\n🎉 TODOS OS TESTES PASSARAM!");
+        } else {
+            System.out.println("\n⚠️ Alguns testes falharam. Verifique os logs acima.");
+        }
+        
+        System.out.println("\n📧 VERIFICAÇÃO DE EMAILS:");
+        System.out.println("   Verifique a caixa de entrada do email configurado em TPC 207");
+        System.out.println("   Devem ter chegado 2 emails:");
+        System.out.println("   1. Alerta de limite INFERIOR atingido");
+        System.out.println("   2. Alerta de limite SUPERIOR atingido (bloqueio)");
+    }
 
-⚠️ Alguns testes falharam. Verifique os logs acima.
+    /**
+     * Envia um SMS usando o método real com verificação de limites.
+     */
+    private void enviarSmsComLimites() {
+        System.out.println("\n📤 Enviando SMS com verificação de limites...");
+        
+        try {
+            int contadorAntes = smsHelper.getQuantidadeSmsNoMes(CSE_CODIGO);
+            System.out.println("   Contador antes: " + contadorAntes);
+            
+            String mensagem = "Teste manual - " + new SimpleDateFormat("HH:mm:ss").format(new Date());
+            smsHelper.send(TELEFONE_TESTE, mensagem, acessoSistema);
+            
+            int contadorDepois = smsHelper.getQuantidadeSmsNoMes(CSE_CODIGO);
+            System.out.println("   ✅ SMS enviado com sucesso!");
+            System.out.println("   📊 Novo contador: " + contadorDepois);
+            System.out.println("   📱 Verifique o celular: " + TELEFONE_TESTE);
+            
+        } catch (ZetraException e) {
+            System.out.println("   🚫 " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("   ❌ ERRO: " + e.getMessage());
+        }
+    }
 
-📋 MENU:
-1. Executar fluxo completo de testes (7 cenários)
-2. Enviar 1 SMS (com verificação de limites)
-3. Ver estado atual (contador, flags, limites)
-4. Limpar dados de teste
-5. Enviar SMS direto (sem verificação de limites)
-0. Sair
+    /**
+     * Envia um SMS diretamente sem verificação de limites (teste básico).
+     */
+    private void enviarSmsDireto() {
+        System.out.println("\n📤 Enviando SMS diretamente (sem verificação de limites)...");
+        
+        try {
+            // Cria um AcessoSistema sem cseCodigo para bypassar a verificação de limites
+            AcessoSistema acessoSemCse = new AcessoSistema();
+            acessoSemCse.setUsuCodigo("999");
+            acessoSemCse.setUsuNome("Usuario Teste Direto");
+            // Não seta tipoEntidade nem codigoEntidade
+            
+            String mensagem = "Teste direto - " + new SimpleDateFormat("HH:mm:ss").format(new Date());
+            smsHelper.send(TELEFONE_TESTE, mensagem, acessoSemCse);
+            
+            System.out.println("   ✅ SMS enviado com sucesso!");
+            System.out.println("   📱 Verifique o celular: " + TELEFONE_TESTE);
+            
+        } catch (Exception e) {
+            System.out.println("   ❌ ERRO: " + e.getMessage());
+        }
+    }
 
-Escolha: 
+    /**
+     * Limpa os dados de teste (TDA 96, 97, 98, 99).
+     */
+    private void limparDadosTeste() {
+        System.out.println("   🧹 Limpando dados de teste...");
+        
+        try {
+            deleteDadoAdicional(CSE_CODIGO, CodedValues.TDA_DATA_MES_ENVIO_SMS);
+            deleteDadoAdicional(CSE_CODIGO, CodedValues.TDA_QTD_ENVIOS_SMS_MES);
+            deleteDadoAdicional(CSE_CODIGO, CodedValues.TDA_ALERTA_LIMITE_INF_SMS);
+            deleteDadoAdicional(CSE_CODIGO, CodedValues.TDA_ALERTA_LIMITE_SUP_SMS);
+            
+            System.out.println("   ✅ Dados limpos!");
+            
+        } catch (Exception e) {
+            System.out.println("   ⚠️ Erro ao limpar dados: " + e.getMessage());
+        }
+    }
+
+    private DadosConsignante findDadoAdicional(String cseCodigo, String tdaCodigo) {
+        try {
+            DadosConsignanteId id = new DadosConsignanteId(cseCodigo, tdaCodigo);
+            return DadosConsignanteHome.findByPrimaryKey(id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private void deleteDadoAdicional(String cseCodigo, String tdaCodigo) {
+        try {
+            DadosConsignante dado = findDadoAdicional(cseCodigo, tdaCodigo);
+            if (dado != null) {
+                DadosConsignanteHome.delete(dado);
+            }
+        } catch (Exception e) {
+            // Ignora se não existir
+        }
+    }
+
+    private void fecharSpringContext() {
+        if (springContext != null) {
+            System.out.println("\n🔌 Fechando contexto Spring...");
+            springContext.close();
+        }
+    }
+}
