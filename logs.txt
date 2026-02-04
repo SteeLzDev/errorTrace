@@ -83,4 +83,61 @@ mysql> select mem_codigo from tb_modelo_email where mem_codigo in ('enviarEmailL
 2 rows in set (0.00 sec)
 
 
+-- DESENV-24832 Migração SMS Twilio para Zenvia
+-- Script insere os tipos de dados adicionais e tipo de ocorrencia para controle de SMS
+
+
+-- Tipo de ocorrencia para registrar envio de SMS (tb_ocorrencia_usuario)
+INSERT INTO tb_tipo_ocorrencia (TOC_CODIGO, TOC_DESCRICAO)
+VALUES ('261','Envio de SMS');
+
+-- Tipos de dados adicionais para controle de quantitativo mensal de SMS (tb_dados_consignante)
+-- TDA 96: Armazena o mes/ano corrente (formato yyyy-MM)
+INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA,
+TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALTERA, TDA_CSA_ALTERA, TDA_SER_ALTERA)
+VALUES ('96', '2', 'Data mes/ano de envio de SMS', 'DATA', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N');
+ 
+--TDA 97: Armazena a quantidade de SMS enviados no mes corrente
+INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA,
+TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALTERA, TDA_CSA_ALTERA, TDA_SER_ALTERA)
+VALUES ('97', '2', 'Quantidade de SMS enviados no mes', 'INT', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N');
+
+--TDA 98: Flag para controle de envio de alerta de limite inferior(armazena MES/Ano do ultimo alerta enviado)
+INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA,
+TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALTERA, TDA_CSA_ALTERA, TDA_SER_ALTERA)
+VALUES ('98', '2', 'Mes/ano ultimo alerta limite superior SMS', 'DATA', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N');
+
+--TDA 99: Flag para controle de envio de alerta de limite superior(armazena MES/Ano do ultimo alerta enviado)
+INSERT INTO tb_tipo_dado_adicional (TDA_CODIGO, TEN_CODIGO, TDA_DESCRICAO, TDA_DOMINIO, TDA_EXPORTA, TDA_SUP_CONSULTA,
+TDA_CSE_CONSULTA, TDA_CSA_CONSULTA, TDA_SER_CONSULTA, TDA_SUP_ALTERA, TDA_CSE_ALTERA, TDA_CSA_ALTERA, TDA_SER_ALTERA)
+VALUES ('99', '2', 'Mes/ano ultimo alerta limite superior SMS', 'DATA', 'N', 'S', 'S', 'N', 'N', 'N', 'N', 'N', 'N');
+
+
+-- NOTA: As configurações  da API Zenvia (URL, Token, From) sao gerenciadas via application.properties e não via banco de dados.
+-- as constantes PROP_ZENVIA_* estao no CodedValues do sistema.
+
+-- Parametros de sistema para controle de envio de SM por mes (tb_tipo_param_sist_consignante)
+-- TPC 1016: Limite inferior de SMS por mes (apenas alerta)
+INSERT INTO tb_tipo_param_sist_consignante (TPC_CODIGO, TPC_DESCRICAO, TPC_DOMINIO, TPC_CSE_ALTERA, TPC_CSE_CONSULTA, TPC_VLR_DEFAULT,
+TPC_SUP_ALTERA, TPC_SUP_CONSULTA)
+VALUES ('1016', 'Limite inferior de envios de SMS por mes (apenas alerta)', 'INT', 'S', 'S', '1000', 'S', 'S');
+
+-- TPC 1017: Limite superior de SMS por mes (bloqueia envio)
+INSERT INTO tb_tipo_param_sist_consignante (TPC_CODIGO, TPC_DESCRICAO, TPC_DOMINIO, TPC_CSE_ALTERA, TPC_CSE_CONSULTA, TPC_VLR_DEFAULT,
+TPC_SUP_ALTERA, TPC_SUP_CONSULTA)
+VALUES ('1017', 'Limite superior de envios de SMS por mes (bloqueia envio)', 'INT', 'S', 'S', '5000', 'S', 'S');
+
+
+-- Modelos de e-mail para alertas de limite de SMS (tb_modelo_email)
+-- Modelo para alerta de limite inferior atingido
+INSERT INTO tb_modelo_email (MEM_CODIGO, MEM_TITULO, MEM_TEXTO)
+VALUES ('enviarEmailLimiteInfSmsAtingido', '<@nome_sistema>: Alerta - Limite Inferior de SMS Atingido',
+'<html><body><p>Prezado(a),</p><p>O sistema <b><@nome_sistema></b> atingiu o limite inferior de envio de SMS configurado para o mes atual.</p><p>Quantidade de SMS enviados no mes: <b><@qtd_sms_enviados></b></p><p>Limite inferior configurado: <b><@limite_inferior></b></p><p>Limite superior configurado: <b><@limite_superior></b></p><p>Atencao: O envio de SMS continuara funcionando ate atingir o limite superior.</p><p>Atenciosamente,<br>Equipe <@nome_sistema></p></body></html>');
+
+-- Modelo para alerta de limite superior atingido (bloqueio)
+INSERT INTO tb_modelo_email (MEM_CODIGO, MEM_TITULO, MEM_TEXTO)
+VALUES ('enviarEmailLimiteSupSmsAtingido', '<@nome_sistema>: BLOQUEIO - Limite Superior de SMS Atingido',
+'<html><body><p>Prezado(a),</p><p>O sistema <b><@nome_sistema></b> atingiu o limite superior de envio de SMS configurado para o mes atual.</p><p>Quantidade de SMS enviados no mes: <b><@qtd_sms_enviados></b></p><p>Limite superior configurado: <b><@limite_superior></b></p><p><b>ATENCAO: O envio de SMS esta BLOQUEADO ate o proximo mes.</b></p><p>Atenciosamente,<br>Equipe <@nome_sistema></p></body></html>');
+
+-- Fim do script
 
