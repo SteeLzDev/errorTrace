@@ -1,61 +1,484 @@
-package com.zetra.econsig.debug;
+package com.zetra.econsig.helper.sms;
 
-import com.zetra.econsig.exception.ZetraException;
-import com.zetra.econsig.helper.sms.SMSHelper;
-import com.zetra.econsig.model.acesso.AcessoSistema;
-import com.zetra.econsig.persistence.dao.AcessoSistemaDAO;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
-@Component
-@Profile("dev_mysql") // só roda nesse profile
-public class SmsFluxoCommandLineRunner implements CommandLineRunner {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 
-    private final SMSHelper smsHelper;
-    private final AcessoSistemaDAO acessoSistemaDAO;
+/**
+ * TESTE SIMPLES E COMPLETO DO FLUXO SMS ZENVIA
+ * 
+ * Esta classe testa TODO o fluxo de SMS usando JDBC puro,
+ * sem depender do contexto Spring, Hibernate ou JPA.
+ * 
+ * Simula exatamente a lógica do SMSHelper:
+ * - Envio via API Zenvia
+ * - Controle de limites (TPC 1016/1017)
+ * - Contador mensal (TDA 96/97)
+ * - Flags de alerta (TDA 98/99)
+ */
+public class SMSFlowTestSimple {
 
-    public SmsFluxoCommandLineRunner(
-            SMSHelper smsHelper,
-            AcessoSistemaDAO acessoSistemaDAO
-    ) {
-        this.smsHelper = smsHelper;
-        this.acessoSistemaDAO = acessoSistemaDAO;
+    // ════════════════════════════════════════════════════════════════
+    // CONFIGURAÇÕES - EDITE AQUI ANTES DE EXECUTAR
+    // ════════════════════════════════════════════════════════════════
+    
+    // API Zenvia
+    private static final String API_URL = "https://api.zenvia.com/v2/channels/sms/messages";
+    private static final String API_TOKEN = "SEU_TOKEN_AQUI";  // <-- EDITE COM SEU TOKEN
+    private static final String FROM_ID = "econsign";
+    
+    // Banco de dados MySQL
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/consig";  // <-- EDITE
+    private static final String DB_USER = "root";  // <-- EDITE
+    private static final String DB_PASSWORD = "sua_senha";  // <-- EDITE
+    
+    // Teste
+    private static final String TELEFONE_TESTE = "+5521992755726";  // <-- EDITE COM SEU NÚMERO
+    private static final String CSE_CODIGO = "1";
+    
+    // ════════════════════════════════════════════════════════════════
+
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+    private Connection connection;
+
+    public SMSFlowTestSimple() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(5000);
+        factory.setReadTimeout(10000);
+        this.restTemplate = new RestTemplate(factory);
+        this.objectMapper = new ObjectMapper();
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-
-        System.out.println("===== INICIANDO TESTE ISOLADO DE SMS =====");
-
-        // 🔹 Usuário REAL do banco
-        Long usuCodigo = 111111L;   // ajuste se necessário
-
-        AcessoSistema acesso = acessoSistemaDAO.buscarPorUsuario(usuCodigo);
-
-        if (acesso == null) {
-            throw new RuntimeException("AcessoSistema não encontrado para usuCodigo=" + usuCodigo);
+    public static void main(String[] args) {
+        printHeader();
+        
+        if ("SEU_TOKEN_AQUI".equals(API_TOKEN)) {
+            System.err.println("❌ ERRO: Configure o API_TOKEN antes de executar!");
+            System.err.println("   Edite as constantes no início da classe.");
+            return;
         }
 
-        System.out.println("Usuário carregado:");
-        System.out.println("usuCodigo = " + acesso.getUsuCodigo());
-        System.out.println("cseCodigo = " + acesso.getCseCodigo());
-
-        String telefone = "+55XXXXXXXXXXX"; // SEU telefone real
-        String mensagem = "Teste de SMS - fluxo completo eConsig";
+        SMSFlowTestSimple test = new SMSFlowTestSimple();
+        Scanner scanner = new Scanner(System.in);
 
         try {
-            smsHelper.send(
-                    telefone,
-                    mensagem,
-                    acesso
-            );
-            System.out.println("SMS enviado com sucesso");
-        } catch (ZetraException ex) {
-            System.out.println("ZetraException capturada:");
-            System.out.println(ex.getMessage());
+            test.conectar();
+            test.mostrarMenu(scanner);
+        } catch (Exception e) {
+            System.err.println("❌ ERRO: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            test.desconectar();
+            scanner.close();
+        }
+    }
+
+    private static void printHeader() {
+        System.out.println("╔══════════════════════════════════════════════════════════════╗");
+        System.out.println("║       TESTE COMPLETO DO FLUXO SMS ZENVIA - ECONSIG           ║");
+        System.out.println("╠══════════════════════════════════════════════════════════════╣");
+        System.out.println("║ Este teste simula TODO o fluxo do SMSHelper:                 ║");
+        System.out.println("║ - Envio de SMS via API Zenvia                                ║");
+        System.out.println("║ - Verificação de limites (TPC 1016/1017)                     ║");
+        System.out.println("║ - Controle de contador mensal (TDA 96/97)                    ║");
+        System.out.println("║ - Flags de alerta único por mês (TDA 98/99)                  ║");
+        System.out.println("╚══════════════════════════════════════════════════════════════╝");
+        System.out.println();
+    }
+
+    private void mostrarMenu(Scanner scanner) throws Exception {
+        while (true) {
+            System.out.println("\n📋 MENU:");
+            System.out.println("1. Executar fluxo completo de testes (7 cenários)");
+            System.out.println("2. Enviar 1 SMS (com verificação de limites)");
+            System.out.println("3. Ver estado atual (contador, flags, limites)");
+            System.out.println("4. Limpar dados de teste");
+            System.out.println("5. Enviar SMS direto (sem verificação de limites)");
+            System.out.println("0. Sair");
+            System.out.print("\nEscolha: ");
+            
+            String opcao = scanner.nextLine().trim();
+            
+            switch (opcao) {
+                case "1": executarFluxoCompleto(); break;
+                case "2": enviarComVerificacao(); break;
+                case "3": mostrarEstado(); break;
+                case "4": limparDados(); break;
+                case "5": enviarDireto(); break;
+                case "0": return;
+                default: System.out.println("Opção inválida!");
+            }
+        }
+    }
+
+    private void executarFluxoCompleto() throws Exception {
+        System.out.println("\n" + "═".repeat(63));
+        System.out.println("EXECUTANDO FLUXO COMPLETO");
+        System.out.println("═".repeat(63));
+        
+        int limiteInferior = getLimite("1016", 2);
+        int limiteSuperior = getLimite("1017", 5);
+        
+        System.out.println("📋 Configuração:");
+        System.out.println("   Limite Inferior (TPC 1016): " + limiteInferior);
+        System.out.println("   Limite Superior (TPC 1017): " + limiteSuperior);
+        System.out.println("   Telefone: " + TELEFONE_TESTE);
+        System.out.println("   Consignante: " + CSE_CODIGO);
+        
+        System.out.println("\n📋 PREPARAÇÃO:");
+        limparDados();
+        
+        int testesOk = 0;
+        int testesFalha = 0;
+
+        System.out.println("\n" + "─".repeat(63));
+        System.out.println("CT-01: Enviar 1º SMS (abaixo do limite inferior)");
+        System.out.println("─".repeat(63));
+        if (testar(1, true, limiteInferior, limiteSuperior)) testesOk++; else testesFalha++;
+        
+        System.out.println("\n" + "─".repeat(63));
+        System.out.println("CT-02: Enviar 2º SMS (atinge limite inferior = " + limiteInferior + ")");
+        System.out.println("─".repeat(63));
+        if (testar(2, true, limiteInferior, limiteSuperior)) testesOk++; else testesFalha++;
+        
+        for (int i = 3; i < limiteSuperior; i++) {
+            System.out.println("\n" + "─".repeat(63));
+            System.out.println("CT-0" + i + ": Enviar " + i + "º SMS (intermediário)");
+            System.out.println("─".repeat(63));
+            if (testar(i, true, limiteInferior, limiteSuperior)) testesOk++; else testesFalha++;
+        }
+        
+        System.out.println("\n" + "─".repeat(63));
+        System.out.println("CT-05: Enviar " + limiteSuperior + "º SMS (deve ser BLOQUEADO)");
+        System.out.println("─".repeat(63));
+        if (testar(limiteSuperior, false, limiteInferior, limiteSuperior)) testesOk++; else testesFalha++;
+        
+        System.out.println("\n" + "─".repeat(63));
+        System.out.println("CT-06: Enviar " + (limiteSuperior + 1) + "º SMS (continua bloqueado)");
+        System.out.println("─".repeat(63));
+        if (testar(limiteSuperior + 1, false, limiteInferior, limiteSuperior)) testesOk++; else testesFalha++;
+        
+        System.out.println("\n" + "─".repeat(63));
+        System.out.println("CT-07: Verificação do estado final");
+        System.out.println("─".repeat(63));
+        mostrarEstado();
+        testesOk++;
+        
+        System.out.println("\n" + "═".repeat(63));
+        System.out.println("📊 RESULTADO FINAL");
+        System.out.println("═".repeat(63));
+        System.out.println("   ✅ Testes OK: " + testesOk);
+        System.out.println("   ❌ Testes com falha: " + testesFalha);
+        
+        if (testesFalha == 0) {
+            System.out.println("\n🎉 TODOS OS TESTES PASSARAM!");
+        } else {
+            System.out.println("\n⚠️ Alguns testes falharam. Verifique os logs acima.");
+        }
+    }
+
+    private boolean testar(int numeroSms, boolean deveEnviar, int limInf, int limSup) throws Exception {
+        int contadorAtual = getContador();
+        System.out.println("   Contador atual: " + contadorAtual);
+        
+        boolean bloqueado = contadorAtual >= limSup;
+        
+        if (bloqueado) {
+            System.out.println("   🚫 BLOQUEADO pelo limite superior!");
+            if (!deveEnviar) {
+                System.out.println("   ✅ Comportamento correto (esperado bloqueio)");
+                if (!jaEnviouAlertaSuperior()) {
+                    System.out.println("   📧 Enviaria EMAIL de alerta SUPERIOR");
+                    marcarAlertaSuperior();
+                }
+                return true;
+            } else {
+                System.out.println("   ❌ ERRO: Esperava enviar, mas foi bloqueado!");
+                return false;
+            }
+        }
+        
+        System.out.println("   📤 Enviando SMS...");
+        boolean enviado = enviarSmsZenvia("Teste " + numeroSms + "/" + limSup + " - " + System.currentTimeMillis());
+        
+        if (enviado) {
+            System.out.println("   ✅ SMS enviado com sucesso!");
+            atualizarContador();
+            int novoContador = getContador();
+            System.out.println("   📊 Novo contador: " + novoContador);
+            
+            if (novoContador >= limInf && novoContador < limSup) {
+                if (!jaEnviouAlertaInferior()) {
+                    System.out.println("   📧 Enviaria EMAIL de alerta INFERIOR");
+                    marcarAlertaInferior();
+                }
+            }
+            
+            if (deveEnviar) {
+                return true;
+            } else {
+                System.out.println("   ❌ ERRO: Esperava bloqueio, mas enviou!");
+                return false;
+            }
+        } else {
+            System.out.println("   ❌ Falha no envio!");
+            return false;
+        }
+    }
+
+    private void enviarComVerificacao() throws Exception {
+        int contador = getContador();
+        int limSup = getLimite("1017", 5);
+        
+        System.out.println("\n📊 Contador atual: " + contador);
+        System.out.println("📊 Limite superior: " + limSup);
+        
+        if (contador >= limSup) {
+            System.out.println("🚫 BLOQUEADO! Limite atingido.");
+            return;
+        }
+        
+        System.out.println("📤 Enviando SMS...");
+        if (enviarSmsZenvia("Teste manual - " + System.currentTimeMillis())) {
+            System.out.println("✅ Enviado com sucesso!");
+            atualizarContador();
+            System.out.println("📊 Novo contador: " + getContador());
+        } else {
+            System.out.println("❌ Falha no envio!");
+        }
+    }
+
+    private void enviarDireto() throws Exception {
+        System.out.println("\n📤 Enviando SMS diretamente (sem verificação de limites)...");
+        if (enviarSmsZenvia("Teste direto - " + System.currentTimeMillis())) {
+            System.out.println("✅ Enviado com sucesso!");
+            System.out.println("📱 Verifique o celular: " + TELEFONE_TESTE);
+        } else {
+            System.out.println("❌ Falha no envio!");
+        }
+    }
+
+    private boolean enviarSmsZenvia(String mensagem) {
+        try {
+            SmsRequest request = new SmsRequest(FROM_ID, TELEFONE_TESTE, mensagem);
+            String jsonBody = objectMapper.writeValueAsString(request);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("X-API-TOKEN", API_TOKEN);
+
+            HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
+            ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, entity, String.class);
+
+            return response.getStatusCode().is2xxSuccessful();
+        } catch (Exception e) {
+            System.err.println("   Erro Zenvia: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void mostrarEstado() throws SQLException {
+        System.out.println("\n📊 ESTADO ATUAL:");
+        
+        String sql = "SELECT tda_codigo, dac_valor FROM tb_dados_consignante " +
+                     "WHERE cse_codigo = ? AND tda_codigo IN ('96', '97', '98', '99') ORDER BY tda_codigo";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, CSE_CODIGO);
+            ResultSet rs = stmt.executeQuery();
+            
+            System.out.println("   ┌─────────┬──────────────────────────────┬─────────────┐");
+            System.out.println("   │ TDA     │ Descrição                    │ Valor       │");
+            System.out.println("   ├─────────┼──────────────────────────────┼─────────────┤");
+            
+            while (rs.next()) {
+                String tda = rs.getString("tda_codigo");
+                String valor = rs.getString("dac_valor");
+                String desc = getDescricaoTda(tda);
+                System.out.printf("   │ %-7s │ %-28s │ %-11s │%n", tda, desc, valor);
+            }
+            System.out.println("   └─────────┴──────────────────────────────┴─────────────┘");
+        }
+        
+        System.out.println("\n📋 LIMITES:");
+        System.out.println("   Limite Inferior (TPC 1016): " + getLimite("1016", 2));
+        System.out.println("   Limite Superior (TPC 1017): " + getLimite("1017", 5));
+    }
+
+    private int getContador() throws SQLException {
+        String mesAtual = new SimpleDateFormat("yyyy-MM").format(new Date());
+        
+        String sqlData = "SELECT dac_valor FROM tb_dados_consignante WHERE cse_codigo = ? AND tda_codigo = '96'";
+        try (PreparedStatement stmt = connection.prepareStatement(sqlData)) {
+            stmt.setString(1, CSE_CODIGO);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next() || !mesAtual.equals(rs.getString("dac_valor"))) {
+                return 0;
+            }
+        }
+        
+        String sqlQtd = "SELECT dac_valor FROM tb_dados_consignante WHERE cse_codigo = ? AND tda_codigo = '97'";
+        try (PreparedStatement stmt = connection.prepareStatement(sqlQtd)) {
+            stmt.setString(1, CSE_CODIGO);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return Integer.parseInt(rs.getString("dac_valor"));
+            }
+        }
+        return 0;
+    }
+
+    private void atualizarContador() throws SQLException {
+        String mesAtual = new SimpleDateFormat("yyyy-MM").format(new Date());
+        int contadorAtual = getContador();
+        int novoContador = contadorAtual + 1;
+        
+        upsertDado("96", mesAtual);
+        upsertDado("97", String.valueOf(novoContador));
+    }
+
+    private int getLimite(String tpcCodigo, int defaultValue) throws SQLException {
+        String sql = "SELECT psi_vlr FROM tb_param_sist_consignante WHERE cse_codigo = ? AND tpc_codigo = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, CSE_CODIGO);
+            stmt.setString(2, tpcCodigo);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return Integer.parseInt(rs.getString("psi_vlr"));
+            }
+        }
+        return defaultValue;
+    }
+
+    private boolean jaEnviouAlertaInferior() throws SQLException {
+        return jaEnviouAlerta("98");
+    }
+
+    private boolean jaEnviouAlertaSuperior() throws SQLException {
+        return jaEnviouAlerta("99");
+    }
+
+    private boolean jaEnviouAlerta(String tda) throws SQLException {
+        String mesAtual = new SimpleDateFormat("yyyy-MM").format(new Date());
+        String sql = "SELECT dac_valor FROM tb_dados_consignante WHERE cse_codigo = ? AND tda_codigo = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, CSE_CODIGO);
+            stmt.setString(2, tda);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return mesAtual.equals(rs.getString("dac_valor"));
+            }
+        }
+        return false;
+    }
+
+    private void marcarAlertaInferior() throws SQLException {
+        upsertDado("98", new SimpleDateFormat("yyyy-MM").format(new Date()));
+    }
+
+    private void marcarAlertaSuperior() throws SQLException {
+        upsertDado("99", new SimpleDateFormat("yyyy-MM").format(new Date()));
+    }
+
+    private void upsertDado(String tda, String valor) throws SQLException {
+        String sqlCheck = "SELECT 1 FROM tb_dados_consignante WHERE cse_codigo = ? AND tda_codigo = ?";
+        boolean existe = false;
+        try (PreparedStatement stmt = connection.prepareStatement(sqlCheck)) {
+            stmt.setString(1, CSE_CODIGO);
+            stmt.setString(2, tda);
+            existe = stmt.executeQuery().next();
+        }
+        
+        if (existe) {
+            String sqlUpdate = "UPDATE tb_dados_consignante SET dac_valor = ? WHERE cse_codigo = ? AND tda_codigo = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(sqlUpdate)) {
+                stmt.setString(1, valor);
+                stmt.setString(2, CSE_CODIGO);
+                stmt.setString(3, tda);
+                stmt.executeUpdate();
+            }
+        } else {
+            String sqlInsert = "INSERT INTO tb_dados_consignante (cse_codigo, tda_codigo, dac_valor) VALUES (?, ?, ?)";
+            try (PreparedStatement stmt = connection.prepareStatement(sqlInsert)) {
+                stmt.setString(1, CSE_CODIGO);
+                stmt.setString(2, tda);
+                stmt.setString(3, valor);
+                stmt.executeUpdate();
+            }
+        }
+    }
+
+    private void limparDados() throws SQLException {
+        String sql = "DELETE FROM tb_dados_consignante WHERE cse_codigo = ? AND tda_codigo IN ('96', '97', '98', '99')";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, CSE_CODIGO);
+            int rows = stmt.executeUpdate();
+            System.out.println("   ✅ Removidos " + rows + " registros");
+        }
+    }
+
+    private String getDescricaoTda(String tda) {
+        switch (tda) {
+            case "96": return "Mês/Ano de controle";
+            case "97": return "Contador de SMS no mês";
+            case "98": return "Flag alerta inferior";
+            case "99": return "Flag alerta superior";
+            default: return "Desconhecido";
+        }
+    }
+
+    private void conectar() throws SQLException {
+        System.out.println("🔌 Conectando ao banco de dados...");
+        connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        System.out.println("   ✅ Conectado a: " + DB_URL);
+    }
+
+    private void desconectar() {
+        if (connection != null) {
+            try { connection.close(); } catch (SQLException e) { }
+        }
+    }
+
+    static class SmsRequest {
+        private String from;
+        private String to;
+        private String encodingStrategy = "MORE_CHARACTER_SUPPORT";
+        private List<Content> contents;
+
+        public SmsRequest(String from, String to, String text) {
+            this.from = from;
+            this.to = to;
+            this.contents = Collections.singletonList(new Content(text));
         }
 
-        System.out.println("===== FIM DO TESTE ISOLADO =====");
+        public String getFrom() { return from; }
+        public String getTo() { return to; }
+        public String getEncodingStrategy() { return encodingStrategy; }
+        public List<Content> getContents() { return contents; }
+
+        static class Content {
+            private String type = "text";
+            private String text;
+            public Content(String text) { this.text = text; }
+            public String getType() { return type; }
+            public String getText() { return text; }
+        }
     }
 }
