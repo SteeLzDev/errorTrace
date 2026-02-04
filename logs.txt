@@ -1,22 +1,112 @@
-╔══════════════════════════════════════════════════════════════╗
-║    TESTE DE INTEGRAÇÃO SMS ZENVIA - CLASSES REAIS            ║
-╠══════════════════════════════════════════════════════════════╣
-║ Este teste usa as classes REAIS do eConsig:                  ║
-║ - SMSHelper (envio SMS + verificação de limites)             ║
-║ - MailHelper (envio de emails de alerta)                     ║
-║ - ModeloEmailHome (templates de email)                       ║
-║ - DadosConsignanteHome (contadores TDA 96/97/98/99)          ║
-║ - ParamSist (parâmetros TPC 1016/1017/207)                   ║
-╚══════════════════════════════════════════════════════════════╝
+1
 
-🔌 Inicializando contexto Spring Boot...
+═══════════════════════════════════════════════════════════════
+EXECUTANDO FLUXO COMPLETO COM CLASSES REAIS
+═══════════════════════════════════════════════════════════════
+📋 Configuração:
+   Limite Inferior (TPC 1016): 2
+   Limite Superior (TPC 1017): 5
+   Telefone: +5521992755726
+   Consignante: 1
 
-📱 Configurando SMSHelper...
-   ⚠️ Classe de aplicação não encontrada: com.zetra.econsig.Application
-   ⚠️ Tentando inicializar sem Spring Boot completo...
-❌ ERRO: Cannot invoke "org.springframework.context.ApplicationContext.getEnvironment()" because the return value of "com.zetra.econsig.web.ApplicationContextProvider.getApplicationContext()" is null
-java.lang.NullPointerException: Cannot invoke "org.springframework.context.ApplicationContext.getEnvironment()" because the return value of "com.zetra.econsig.web.ApplicationContextProvider.getApplicationContext()" is null
-	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.configurarSMSHelper(SMSIntegrationRealTest.java:99)
-	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:64)
+📋 PREPARAÇÃO:
+   🧹 Limpando dados de teste...
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   ✅ Dados limpos!
 
-Process finished with exit code 0
+───────────────────────────────────────────────────────────────
+CT-01: Enviar 1º SMS (abaixo do limite inferior)
+───────────────────────────────────────────────────────────────
+2026-02-04 18:08:30,727 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Wed Feb 04 18:08:30 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   ❌ ERRO: Limite de  envio de SMS atingido (5).Envio bloqueado
+
+───────────────────────────────────────────────────────────────
+CT-02: Enviar 2º SMS (atinge limite inferior - EMAIL DE ALERTA!)
+───────────────────────────────────────────────────────────────
+2026-02-04 18:08:30,734 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Wed Feb 04 18:08:30 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   ❌ ERRO: Limite de  envio de SMS atingido (5).Envio bloqueado
+
+───────────────────────────────────────────────────────────────
+CT-03: Enviar 3º SMS (intermediário)
+───────────────────────────────────────────────────────────────
+2026-02-04 18:08:30,741 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Wed Feb 04 18:08:30 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   ❌ ERRO: Limite de  envio de SMS atingido (5).Envio bloqueado
+
+───────────────────────────────────────────────────────────────
+CT-04: Enviar 4º SMS (intermediário)
+───────────────────────────────────────────────────────────────
+2026-02-04 18:08:30,745 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Wed Feb 04 18:08:30 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   ❌ ERRO: Limite de  envio de SMS atingido (5).Envio bloqueado
+
+───────────────────────────────────────────────────────────────
+CT-05: Enviar 5º SMS (último permitido - atinge limite superior)
+───────────────────────────────────────────────────────────────
+2026-02-04 18:08:30,748 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Wed Feb 04 18:08:30 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   ❌ ERRO: Limite de  envio de SMS atingido (5).Envio bloqueado
+
+───────────────────────────────────────────────────────────────
+CT-06: Enviar 6º SMS (deve ser BLOQUEADO)
+───────────────────────────────────────────────────────────────
+2026-02-04 18:08:30,753 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Wed Feb 04 18:08:30 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   ❌ ERRO inesperado: Limite de  envio de SMS atingido (5).Envio bloqueado
+
+───────────────────────────────────────────────────────────────
+CT-FINAL: Verificação do estado final
+───────────────────────────────────────────────────────────────
+
+📋 CONFIGURAÇÕES ATUAIS:
+   Limite Inferior (TPC 1016): 2
+   Limite Superior (TPC 1017): 5
+   Email Suporte (TPC 207): davi.soliveira@br.experian.com
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   Contador SMS atual: 5
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   Flag Alerta Inferior (TDA 98): 2026-02
+   Flag Alerta Superior (TDA 99): 2026-02
+
+═══════════════════════════════════════════════════════════════
+📊 RESULTADO FINAL
+═══════════════════════════════════════════════════════════════
+   ✅ Testes OK: 0
+   ❌ Testes com falha: 6
+
+⚠️ Alguns testes falharam. Verifique os logs acima.
+
+📧 VERIFICAÇÃO DE EMAILS:
+   Verifique a caixa de entrada do email configurado em TPC 207
+   Devem ter chegado 2 emails:
+   1. Alerta de limite INFERIOR atingido
+   2. Alerta de limite SUPERIOR atingido (bloqueio)
+
+📋 MENU:
+1. Executar fluxo completo de testes (envia SMS e emails reais)
+2. Enviar 1 SMS (com verificação de limites)
+3. Ver estado atual (contador, flags, limites)
+4. Limpar dados de teste (TDA 96/97/98/99)
+5. Enviar SMS direto (sem limites - teste básico)
+0. Sair
+
+Escolha: 2026-02-04 18:09:00,001 [eConsig] [INFO] [com.zetra.econsig.job.ControladorAgendamentosJob.executar(45)] | Controlador de Agendamentos.
