@@ -1,2 +1,439 @@
-echo | openssl s_client -connect api.zenvia.com:443 -servername api.zenvia.com -showcerts 2>/dev/null \
-| awk '/BEGIN CERTIFICATE/{i++} {print > ("cert" i ".pem")}'
+1
+
+═══════════════════════════════════════════════════════════════
+EXECUTANDO FLUXO COMPLETO COM CLASSES REAIS
+═══════════════════════════════════════════════════════════════
+📋 Configuração:
+   Limite Inferior (TPC 1016): 2
+   Limite Superior (TPC 1017): 5
+   Telefone: +5521992755726
+   Consignante: 1
+
+📋 PREPARAÇÃO:
+   🧹 Limpando dados de teste...
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   ✅ Dados limpos!
+
+───────────────────────────────────────────────────────────────
+CT-01: Enviar 1º SMS (abaixo do limite inferior)
+───────────────────────────────────────────────────────────────
+2026-02-05 10:06:28,680 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Thu Feb 05 10:06:28 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:28,827 [eConsig] [WARN] [com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(322)] | Erro ao registrar ocorrencia de SMS: id to load is required for loading
+java.lang.IllegalArgumentException: id to load is required for loading
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:77) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:43) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:183) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.doGetReference(IdentifierLoadAccessImpl.java:133) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.lambda$getReference$0(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.perform(IdentifierLoadAccessImpl.java:113) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.internal.SessionImpl.getReference(SessionImpl.java:2572) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:320) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.getReference(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.OcorrenciaUsuarioHome.create(OcorrenciaUsuarioHome.java:61) ~[classes/:?]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean.createOcorrenciaUsuario(UsuarioControllerBean.java:3980) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.10.jar:6.2.10]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean$$SpringCGLIB$$0.createOcorrenciaUsuario(<generated>) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(SMSHelper.java:318) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:113) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:28,830 [eConsig] [ERROR] [com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(381)] | Erro ao atualizar quantitativo de SMS null
+com.zetra.econsig.exception.CreateException: null
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:54) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:34) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.DadosConsignanteHome.create(DadosConsignanteHome.java:50) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(SMSHelper.java:353) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:115) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Caused by: jakarta.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread - cannot reliably process 'persist' call
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:304) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.persist(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:49) ~[classes/:?]
+	... 10 more
+2026-02-05 10:06:28,830 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(133)] | FIm envio SMS Zenvia: Thu Feb 05 10:06:28 BRT 2026
+   ✅ SMS enviado com sucesso!
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   📊 Novo contador: 0
+
+───────────────────────────────────────────────────────────────
+CT-02: Enviar 2º SMS (atinge limite inferior - EMAIL DE ALERTA!)
+───────────────────────────────────────────────────────────────
+2026-02-05 10:06:28,831 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Thu Feb 05 10:06:28 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:28,903 [eConsig] [WARN] [com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(322)] | Erro ao registrar ocorrencia de SMS: id to load is required for loading
+java.lang.IllegalArgumentException: id to load is required for loading
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:77) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:43) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:183) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.doGetReference(IdentifierLoadAccessImpl.java:133) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.lambda$getReference$0(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.perform(IdentifierLoadAccessImpl.java:113) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.internal.SessionImpl.getReference(SessionImpl.java:2572) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:320) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.getReference(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.OcorrenciaUsuarioHome.create(OcorrenciaUsuarioHome.java:61) ~[classes/:?]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean.createOcorrenciaUsuario(UsuarioControllerBean.java:3980) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.10.jar:6.2.10]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean$$SpringCGLIB$$0.createOcorrenciaUsuario(<generated>) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(SMSHelper.java:318) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:113) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:28,907 [eConsig] [ERROR] [com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(381)] | Erro ao atualizar quantitativo de SMS null
+com.zetra.econsig.exception.CreateException: null
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:54) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:34) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.DadosConsignanteHome.create(DadosConsignanteHome.java:50) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(SMSHelper.java:353) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:115) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Caused by: jakarta.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread - cannot reliably process 'persist' call
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:304) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.persist(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:49) ~[classes/:?]
+	... 10 more
+2026-02-05 10:06:28,907 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(133)] | FIm envio SMS Zenvia: Thu Feb 05 10:06:28 BRT 2026
+   ✅ SMS enviado com sucesso!
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   📊 Novo contador: 0
+
+───────────────────────────────────────────────────────────────
+CT-03: Enviar 3º SMS (intermediário)
+───────────────────────────────────────────────────────────────
+2026-02-05 10:06:28,909 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Thu Feb 05 10:06:28 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:28,997 [eConsig] [WARN] [com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(322)] | Erro ao registrar ocorrencia de SMS: id to load is required for loading
+java.lang.IllegalArgumentException: id to load is required for loading
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:77) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:43) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:183) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.doGetReference(IdentifierLoadAccessImpl.java:133) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.lambda$getReference$0(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.perform(IdentifierLoadAccessImpl.java:113) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.internal.SessionImpl.getReference(SessionImpl.java:2572) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:320) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.getReference(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.OcorrenciaUsuarioHome.create(OcorrenciaUsuarioHome.java:61) ~[classes/:?]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean.createOcorrenciaUsuario(UsuarioControllerBean.java:3980) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.10.jar:6.2.10]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean$$SpringCGLIB$$0.createOcorrenciaUsuario(<generated>) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(SMSHelper.java:318) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:113) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:29,001 [eConsig] [ERROR] [com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(381)] | Erro ao atualizar quantitativo de SMS null
+com.zetra.econsig.exception.CreateException: null
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:54) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:34) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.DadosConsignanteHome.create(DadosConsignanteHome.java:50) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(SMSHelper.java:353) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:115) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Caused by: jakarta.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread - cannot reliably process 'persist' call
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:304) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.persist(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:49) ~[classes/:?]
+	... 10 more
+2026-02-05 10:06:29,002 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(133)] | FIm envio SMS Zenvia: Thu Feb 05 10:06:29 BRT 2026
+   ✅ SMS enviado com sucesso!
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   📊 Novo contador: 0
+
+───────────────────────────────────────────────────────────────
+CT-04: Enviar 4º SMS (intermediário)
+───────────────────────────────────────────────────────────────
+2026-02-05 10:06:29,003 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Thu Feb 05 10:06:29 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:29,108 [eConsig] [WARN] [com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(322)] | Erro ao registrar ocorrencia de SMS: id to load is required for loading
+java.lang.IllegalArgumentException: id to load is required for loading
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:77) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:43) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:183) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.doGetReference(IdentifierLoadAccessImpl.java:133) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.lambda$getReference$0(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.perform(IdentifierLoadAccessImpl.java:113) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.internal.SessionImpl.getReference(SessionImpl.java:2572) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:320) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.getReference(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.OcorrenciaUsuarioHome.create(OcorrenciaUsuarioHome.java:61) ~[classes/:?]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean.createOcorrenciaUsuario(UsuarioControllerBean.java:3980) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.10.jar:6.2.10]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean$$SpringCGLIB$$0.createOcorrenciaUsuario(<generated>) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(SMSHelper.java:318) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:113) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:29,121 [eConsig] [ERROR] [com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(381)] | Erro ao atualizar quantitativo de SMS null
+com.zetra.econsig.exception.CreateException: null
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:54) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:34) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.DadosConsignanteHome.create(DadosConsignanteHome.java:50) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(SMSHelper.java:353) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:115) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Caused by: jakarta.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread - cannot reliably process 'persist' call
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:304) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.persist(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:49) ~[classes/:?]
+	... 10 more
+2026-02-05 10:06:29,121 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(133)] | FIm envio SMS Zenvia: Thu Feb 05 10:06:29 BRT 2026
+   ✅ SMS enviado com sucesso!
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   📊 Novo contador: 0
+
+───────────────────────────────────────────────────────────────
+CT-05: Enviar 5º SMS (último permitido - atinge limite superior)
+───────────────────────────────────────────────────────────────
+2026-02-05 10:06:29,124 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Thu Feb 05 10:06:29 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:29,295 [eConsig] [WARN] [com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(322)] | Erro ao registrar ocorrencia de SMS: id to load is required for loading
+java.lang.IllegalArgumentException: id to load is required for loading
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:77) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:43) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:183) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.doGetReference(IdentifierLoadAccessImpl.java:133) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.lambda$getReference$0(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.perform(IdentifierLoadAccessImpl.java:113) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.internal.SessionImpl.getReference(SessionImpl.java:2572) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:320) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.getReference(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.OcorrenciaUsuarioHome.create(OcorrenciaUsuarioHome.java:61) ~[classes/:?]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean.createOcorrenciaUsuario(UsuarioControllerBean.java:3980) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.10.jar:6.2.10]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean$$SpringCGLIB$$0.createOcorrenciaUsuario(<generated>) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(SMSHelper.java:318) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:113) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:29,299 [eConsig] [ERROR] [com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(381)] | Erro ao atualizar quantitativo de SMS null
+com.zetra.econsig.exception.CreateException: null
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:54) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:34) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.DadosConsignanteHome.create(DadosConsignanteHome.java:50) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(SMSHelper.java:353) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:115) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:238) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Caused by: jakarta.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread - cannot reliably process 'persist' call
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:304) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.persist(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:49) ~[classes/:?]
+	... 10 more
+2026-02-05 10:06:29,300 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(133)] | FIm envio SMS Zenvia: Thu Feb 05 10:06:29 BRT 2026
+   ✅ SMS enviado com sucesso!
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   📊 Novo contador: 0
+
+───────────────────────────────────────────────────────────────
+CT-06: Enviar 6º SMS (deve ser BLOQUEADO)
+───────────────────────────────────────────────────────────────
+2026-02-05 10:06:29,301 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(88)] | Iniciando envio SMS Zenvia: Thu Feb 05 10:06:29 BRT 2026
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:29,390 [eConsig] [WARN] [com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(322)] | Erro ao registrar ocorrencia de SMS: id to load is required for loading
+java.lang.IllegalArgumentException: id to load is required for loading
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:77) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.event.spi.LoadEvent.<init>(LoadEvent.java:43) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:183) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.doGetReference(IdentifierLoadAccessImpl.java:133) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.lambda$getReference$0(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.perform(IdentifierLoadAccessImpl.java:113) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.loader.internal.IdentifierLoadAccessImpl.getReference(IdentifierLoadAccessImpl.java:89) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at org.hibernate.internal.SessionImpl.getReference(SessionImpl.java:2572) ~[hibernate-core-6.6.26.Final.jar:6.6.26.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:320) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.getReference(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.OcorrenciaUsuarioHome.create(OcorrenciaUsuarioHome.java:61) ~[classes/:?]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean.createOcorrenciaUsuario(UsuarioControllerBean.java:3980) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:360) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.10.jar:6.2.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.10.jar:6.2.10]
+	at com.zetra.econsig.service.usuario.UsuarioControllerBean$$SpringCGLIB$$0.createOcorrenciaUsuario(<generated>) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.registrarOcorrenciaUsuario(SMSHelper.java:318) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:113) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:280) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+2026-02-05 10:06:29,394 [eConsig] [ERROR] [com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(381)] | Erro ao atualizar quantitativo de SMS null
+com.zetra.econsig.exception.CreateException: null
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:54) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:34) ~[classes/:?]
+	at com.zetra.econsig.persistence.entity.DadosConsignanteHome.create(DadosConsignanteHome.java:50) ~[classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.atualizarQuantitativoSms(SMSHelper.java:353) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSHelper.send(SMSHelper.java:115) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.executarFluxoCompleto(SMSIntegrationRealTest.java:280) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.mostrarMenu(SMSIntegrationRealTest.java:181) [classes/:?]
+	at com.zetra.econsig.helper.sms.SMSIntegrationRealTest.main(SMSIntegrationRealTest.java:67) [classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) [spring-boot-devtools-3.5.5.jar:3.5.5]
+Caused by: jakarta.persistence.TransactionRequiredException: No EntityManager with actual transaction available for current thread - cannot reliably process 'persist' call
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:304) ~[spring-orm-6.2.10.jar:6.2.10]
+	at jdk.proxy3/jdk.proxy3.$Proxy178.persist(Unknown Source) ~[?:?]
+	at com.zetra.econsig.persistence.entity.AbstractEntityHome.create(AbstractEntityHome.java:49) ~[classes/:?]
+	... 10 more
+2026-02-05 10:06:29,394 [eConsig] [DEBUG] [com.zetra.econsig.helper.sms.SMSHelper.send(133)] | FIm envio SMS Zenvia: Thu Feb 05 10:06:29 BRT 2026
+   ❌ ERRO: Deveria ter sido bloqueado, mas foi enviado!
+
+───────────────────────────────────────────────────────────────
+CT-FINAL: Verificação do estado final
+───────────────────────────────────────────────────────────────
+
+📋 CONFIGURAÇÕES ATUAIS:
+   Limite Inferior (TPC 1016): 2
+   Limite Superior (TPC 1017): 5
+   Email Suporte (TPC 207): davi.soliveira@br.experian.com
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   Contador SMS atual: 0
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+Hibernate: select dc1_0.cse_codigo,dc1_0.tda_codigo,dc1_0.dac_valor from tb_dados_consignante dc1_0 where (dc1_0.cse_codigo,dc1_0.tda_codigo) in ((?,?))
+   Flag Alerta Inferior (TDA 98): NÃO ENVIADO
+   Flag Alerta Superior (TDA 99): NÃO ENVIADO
+
+═══════════════════════════════════════════════════════════════
+📊 RESULTADO FINAL
+═══════════════════════════════════════════════════════════════
+   ✅ Testes OK: 5
+   ❌ Testes com falha: 1
+
+⚠️ Alguns testes falharam. Verifique os logs acima.
+
+📧 VERIFICAÇÃO DE EMAILS:
+   Verifique a caixa de entrada do email configurado em TPC 207
+   Devem ter chegado 2 emails:
+   1. Alerta de limite INFERIOR atingido
+   2. Alerta de limite SUPERIOR atingido (bloqueio)
+
+📋 MENU:
+1. Executar fluxo completo de testes (envia SMS e emails reais)
+2. Enviar 1 SMS (com verificação de limites)
+3. Ver estado atual (contador, flags, limites)
+4. Limpar dados de teste (TDA 96/97/98/99)
+5. Enviar SMS direto (sem limites - teste básico)
+0. Sair
+
+Escolha: 
