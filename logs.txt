@@ -1,4 +1,4 @@
-mysql> select table_name, column_name from information_schema.columns where table_schema = database() and column_name like '%ser_codigo%';
+mysql> select table_name, column_name from information_schema.columns where table_schema = database() and column_name in ('ser_codigo', 'SER_CODIGO','cse_codigo', 'CSE_CODIGO') order by table_name, column_name;
 +-------------------------------------+-------------+
 | TABLE_NAME                          | COLUMN_NAME |
 +-------------------------------------+-------------+
@@ -7,60 +7,22 @@ mysql> select table_name, column_name from information_schema.columns where tabl
 | ta_beneficiario                     | SER_CODIGO  |
 | ta_endereco_servidor                | SER_CODIGO  |
 | tb_arquivo_ser                      | SER_CODIGO  |
-| tb_beneficiario                     | SER_CODIGO  |
-| tb_boleto_servidor                  | SER_CODIGO  |
-| tb_comunicacao_ser                  | SER_CODIGO  |
-| tb_dados_servidor                   | SER_CODIGO  |
-| tb_destinatario_email_ser           | SER_CODIGO  |
-| tb_dirf_servidor                    | SER_CODIGO  |
-| tb_endereco_servidor                | SER_CODIGO  |
-| tb_informacao_csa_servidor          | SER_CODIGO  |
-| tb_ocorrencia_dados_servidor        | SER_CODIGO  |
-| tb_ocorrencia_servidor              | SER_CODIGO  |
-| tb_registro_servidor                | ser_codigo  |
-| tb_registro_servidor_temporarios    | ser_codigo  |
-| tb_rel_aud_matricula_especial       | SER_CODIGO  |
-| tb_rel_auditoria                    | SER_CODIGO  |
-| tb_rel_auditoria_0                  | SER_CODIGO  |
-| tb_rel_auditoria_1                  | SER_CODIGO  |
-| tb_rel_auditoria_10                 | SER_CODIGO  |
-| tb_rel_auditoria_11                 | SER_CODIGO  |
-| tb_rel_auditoria_12                 | SER_CODIGO  |
-| tb_rel_auditoria_13                 | SER_CODIGO  |
-| tb_rel_auditoria_19                 | SER_CODIGO  |
-| tb_rel_auditoria_2                  | SER_CODIGO  |
-| tb_rel_auditoria_20                 | SER_CODIGO  |
-| tb_rel_auditoria_21                 | SER_CODIGO  |
-| tb_rel_auditoria_3                  | SER_CODIGO  |
-| tb_rel_auditoria_4                  | SER_CODIGO  |
-| tb_rel_auditoria_5                  | SER_CODIGO  |
-| tb_rel_auditoria_6                  | SER_CODIGO  |
-| tb_rel_auditoria_7                  | SER_CODIGO  |
-| tb_rel_auditoria_8                  | SER_CODIGO  |
-| tb_rel_auditoria_9                  | SER_CODIGO  |
-| tb_rel_auditoria_matricula_especial | SER_CODIGO  |
-| tb_servidor                         | ser_codigo  |
-| tb_tmp_exportacao                   | ser_codigo  |
-| tb_usuario_ser                      | ser_codigo  |
-| tmp_boleto_servidor                 | SER_CODIGO  |
-| tmp_registro_servidor               | ser_codigo  |
-| tmp_tb_tmp_exportacao               | ser_codigo  |
-| tmp_usuario_ser                     | ser_codigo  |
-+-------------------------------------+-------------+
-
-mysql> select table_name, column_name from information_schema.columns where table_schema = database() and column_name like '%cse_codigo%';
-+-------------------------------------+-------------+
-| TABLE_NAME                          | COLUMN_NAME |
-+-------------------------------------+-------------+
 | tb_auditoria_cse                    | CSE_CODIGO  |
 | tb_auditoria_sup                    | CSE_CODIGO  |
+| tb_beneficiario                     | SER_CODIGO  |
+| tb_boleto_servidor                  | SER_CODIGO  |
 | tb_calendario_beneficio_cse         | CSE_CODIGO  |
 | tb_calendario_folha_cse             | CSE_CODIGO  |
 | tb_comunicacao_cse                  | CSE_CODIGO  |
+| tb_comunicacao_ser                  | SER_CODIGO  |
 | tb_consignante                      | cse_codigo  |
 | tb_cse                              | cse_codigo  |
 | tb_dados_consignante                | CSE_CODIGO  |
+| tb_dados_servidor                   | SER_CODIGO  |
 | tb_destinatario_email_cse           | CSE_CODIGO  |
+| tb_destinatario_email_ser           | SER_CODIGO  |
+| tb_dirf_servidor                    | SER_CODIGO  |
+| tb_endereco_servidor                | SER_CODIGO  |
 | tb_estabelecimento                  | cse_codigo  |
 | tb_funcao_auditavel_cse             | CSE_CODIGO  |
 | tb_funcao_auditavel_sup             | CSE_CODIGO  |
@@ -68,40 +30,72 @@ mysql> select table_name, column_name from information_schema.columns where tabl
 | tb_funcao_perfil_sup                | CSE_CODIGO  |
 | tb_historico_arquivo_cse            | CSE_CODIGO  |
 | tb_historico_proc_margem_cse        | CSE_CODIGO  |
+| tb_informacao_csa_servidor          | SER_CODIGO  |
 | tb_ocorrencia_consignante           | CSE_CODIGO  |
+| tb_ocorrencia_dados_servidor        | SER_CODIGO  |
 | tb_ocorrencia_param_sist_cse        | CSE_CODIGO  |
+| tb_ocorrencia_servidor              | SER_CODIGO  |
 | tb_param_sist_consignante           | cse_codigo  |
 | tb_param_svc_consignante            | cse_codigo  |
 | tb_param_tarif_consignante          | cse_codigo  |
 | tb_param_validacao_arq_cse          | CSE_CODIGO  |
 | tb_perfil_cse                       | cse_codigo  |
 | tb_perfil_sup                       | CSE_CODIGO  |
+| tb_registro_servidor                | ser_codigo  |
+| tb_registro_servidor_temporarios    | ser_codigo  |
 | tb_rel_aud_matricula_especial       | CSE_CODIGO  |
+| tb_rel_aud_matricula_especial       | SER_CODIGO  |
 | tb_rel_auditoria                    | CSE_CODIGO  |
+| tb_rel_auditoria                    | SER_CODIGO  |
 | tb_rel_auditoria_0                  | CSE_CODIGO  |
+| tb_rel_auditoria_0                  | SER_CODIGO  |
 | tb_rel_auditoria_1                  | CSE_CODIGO  |
+| tb_rel_auditoria_1                  | SER_CODIGO  |
 | tb_rel_auditoria_10                 | CSE_CODIGO  |
+| tb_rel_auditoria_10                 | SER_CODIGO  |
 | tb_rel_auditoria_11                 | CSE_CODIGO  |
+| tb_rel_auditoria_11                 | SER_CODIGO  |
 | tb_rel_auditoria_12                 | CSE_CODIGO  |
+| tb_rel_auditoria_12                 | SER_CODIGO  |
 | tb_rel_auditoria_13                 | CSE_CODIGO  |
+| tb_rel_auditoria_13                 | SER_CODIGO  |
 | tb_rel_auditoria_19                 | CSE_CODIGO  |
+| tb_rel_auditoria_19                 | SER_CODIGO  |
 | tb_rel_auditoria_2                  | CSE_CODIGO  |
+| tb_rel_auditoria_2                  | SER_CODIGO  |
 | tb_rel_auditoria_20                 | CSE_CODIGO  |
+| tb_rel_auditoria_20                 | SER_CODIGO  |
 | tb_rel_auditoria_21                 | CSE_CODIGO  |
+| tb_rel_auditoria_21                 | SER_CODIGO  |
 | tb_rel_auditoria_3                  | CSE_CODIGO  |
+| tb_rel_auditoria_3                  | SER_CODIGO  |
 | tb_rel_auditoria_4                  | CSE_CODIGO  |
+| tb_rel_auditoria_4                  | SER_CODIGO  |
 | tb_rel_auditoria_5                  | CSE_CODIGO  |
+| tb_rel_auditoria_5                  | SER_CODIGO  |
 | tb_rel_auditoria_6                  | CSE_CODIGO  |
+| tb_rel_auditoria_6                  | SER_CODIGO  |
 | tb_rel_auditoria_7                  | CSE_CODIGO  |
+| tb_rel_auditoria_7                  | SER_CODIGO  |
 | tb_rel_auditoria_8                  | CSE_CODIGO  |
+| tb_rel_auditoria_8                  | SER_CODIGO  |
 | tb_rel_auditoria_9                  | CSE_CODIGO  |
+| tb_rel_auditoria_9                  | SER_CODIGO  |
 | tb_rel_auditoria_matricula_especial | CSE_CODIGO  |
+| tb_rel_auditoria_matricula_especial | SER_CODIGO  |
+| tb_servidor                         | ser_codigo  |
+| tb_tmp_exportacao                   | ser_codigo  |
 | tb_usuario_cse                      | cse_codigo  |
+| tb_usuario_ser                      | ser_codigo  |
 | tb_usuario_sup                      | CSE_CODIGO  |
+| tmp_boleto_servidor                 | SER_CODIGO  |
 | tmp_consignante                     | cse_codigo  |
 | tmp_param_sist_consignante          | cse_codigo  |
+| tmp_registro_servidor               | ser_codigo  |
 | tmp_tb_consignante                  | cse_codigo  |
 | tmp_tb_param_sist_consignante       | cse_codigo  |
+| tmp_tb_tmp_exportacao               | ser_codigo  |
+| tmp_usuario_ser                     | ser_codigo  |
 +-------------------------------------+-------------+
-
+94 rows in set (0.03 sec)
 
