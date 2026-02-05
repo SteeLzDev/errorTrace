@@ -1,55 +1,72 @@
-mysql> select uc.usu_codigo, uc.cse_codigo from tb_usuario_cse uc where uc.usu_codigo = '111111';
-Empty set (0.00 sec)
+SELECT table_name, table_rows
+FROM information_schema.tables
+WHERE table_schema = DATABASE()
+ORDER BY table_rows DESC
+LIMIT 50;
 
-mysql> select us.usu_codigo, us.ser_codigo from tb_usuario_ser us where us.usu_codigo = '111111';
-+------------+------------+
-| usu_codigo | ser_codigo |
-+------------+------------+
-| 111111     | 111111     |
-+------------+------------+
-1 row in set (0.00 sec)
 
-mysql> SELECT us.usu_codigo, us.ser_codigo
-FROM tb_usuario_ser us
-WHERE us.usu_codigo = '111111';
-+------------+------------+
-| usu_codigo | ser_codigo |
-+------------+------------+
-| 111111     | 111111     |
-+------------+------------+
-1 row in set (0.00 sec)
+SELECT
+  c.table_name,
+  c.ordinal_position,
+  c.column_name,
+  c.column_type,
+  c.is_nullable,
+  c.column_key
+FROM information_schema.columns c
+WHERE c.table_schema = DATABASE()
+ORDER BY c.table_name, c.ordinal_position;
 
-mysql> SELECT ra.ser_codigo, ra.cse_codigo
-FROM tb_rel_auditoria ra
-WHERE ra.ser_codigo = '111111'
-GROUP BY ra.ser_codigo, ra.cse_codigo;
-Empty set (0.00 sec)
+SELECT table_name, COUNT(*) qtd_colunas
+FROM information_schema.columns
+WHERE table_schema = DATABASE()
+GROUP BY table_name
+ORDER BY qtd_colunas DESC;
 
-mysql> SELECT ra.cse_codigo, COUNT(*) qtd
-FROM tb_rel_auditoria ra
-WHERE ra.ser_codigo = '111111'
-GROUP BY ra.cse_codigo
-ORDER BY qtd DESC;
-Empty set (0.00 sec)
 
-mysql> SELECT r.ser_codigo, r.cse_codigo
-FROM tb_rel_auditoria_matricula_especial r
-WHERE r.ser_codigo = '111111'
-GROUP BY r.ser_codigo, r.cse_codigo;
-Empty set (0.01 sec)
+SELECT table_name
+FROM information_schema.columns
+WHERE table_schema = DATABASE()
+  AND column_name IN ('ser_codigo','SER_CODIGO','cse_codigo','CSE_CODIGO')
+GROUP BY table_name
+HAVING SUM(column_name IN ('ser_codigo','SER_CODIGO')) > 0
+   AND SUM(column_name IN ('cse_codigo','CSE_CODIGO')) > 0
+ORDER BY table_name;
 
-mysql> SELECT r.ser_codigo, r.cse_codigo
-FROM tb_rel_aud_matricula_especial r
-WHERE r.ser_codigo = '111111'
-GROUP BY r.ser_codigo, r.cse_codigo;
-Empty set (0.00 sec)
+SELECT ser_codigo, cse_codigo, COUNT(*) qtd
+FROM NOME_DA_TABELA
+GROUP BY ser_codigo, cse_codigo
+ORDER BY qtd DESC
+LIMIT 20;
 
-mysql> SELECT cse_codigo, cse_nome
-FROM tb_consignante
-WHERE cse_codigo = '<CSE_ENCONTRADO>';
-Empty set (0.01 sec)
 
-mysql> SELECT cse_codigo, cse_nome                                           
-FROM tb_consignante
-WHERE cse_codigo = '<111111>';
-Empty set (0.00 sec)
+SELECT *
+FROM NOME_DA_TABELA
+WHERE TRIM(ser_codigo) = '111111'
+   OR TRIM(SER_CODIGO) = '111111'
+LIMIT 50;
+
+
+SELECT CONCAT(
+  'SELECT ''', table_name, ''' AS tabela, COUNT(*) qtd ',
+  'FROM ', table_name, ' WHERE TRIM(ser_codigo) = ''111111'';'
+) AS q
+FROM information_schema.columns
+WHERE table_schema = DATABASE()
+  AND column_name = 'ser_codigo'
+ORDER BY table_name;
+
+
+SELECT CONCAT(
+  'SELECT ''', table_name, ''' AS tabela, COUNT(*) qtd ',
+  'FROM ', table_name, ' WHERE TRIM(usu_codigo) = ''111111'';'
+) AS q
+FROM information_schema.columns
+WHERE table_schema = DATABASE()
+  AND column_name = 'usu_codigo'
+ORDER BY table_name;
+
+
+SELECT * FROM tb_servidor WHERE ser_codigo='111111';
+SELECT * FROM tb_beneficiario WHERE ser_codigo='111111' LIMIT 50;
+
+
