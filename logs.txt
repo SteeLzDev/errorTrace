@@ -1,33 +1,55 @@
-SELECT us.usu_codigo, us.ser_codigo
+mysql> select uc.usu_codigo, uc.cse_codigo from tb_usuario_cse uc where uc.usu_codigo = '111111';
+Empty set (0.00 sec)
+
+mysql> select us.usu_codigo, us.ser_codigo from tb_usuario_ser us where us.usu_codigo = '111111';
++------------+------------+
+| usu_codigo | ser_codigo |
++------------+------------+
+| 111111     | 111111     |
++------------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT us.usu_codigo, us.ser_codigo
 FROM tb_usuario_ser us
 WHERE us.usu_codigo = '111111';
++------------+------------+
+| usu_codigo | ser_codigo |
++------------+------------+
+| 111111     | 111111     |
++------------+------------+
+1 row in set (0.00 sec)
 
-
-SELECT ra.ser_codigo, ra.cse_codigo
+mysql> SELECT ra.ser_codigo, ra.cse_codigo
 FROM tb_rel_auditoria ra
 WHERE ra.ser_codigo = '111111'
 GROUP BY ra.ser_codigo, ra.cse_codigo;
+Empty set (0.00 sec)
 
-
-SELECT ra.cse_codigo, COUNT(*) qtd
+mysql> SELECT ra.cse_codigo, COUNT(*) qtd
 FROM tb_rel_auditoria ra
 WHERE ra.ser_codigo = '111111'
 GROUP BY ra.cse_codigo
 ORDER BY qtd DESC;
+Empty set (0.00 sec)
 
-
-SELECT r.ser_codigo, r.cse_codigo
+mysql> SELECT r.ser_codigo, r.cse_codigo
 FROM tb_rel_auditoria_matricula_especial r
 WHERE r.ser_codigo = '111111'
 GROUP BY r.ser_codigo, r.cse_codigo;
+Empty set (0.01 sec)
 
-
-SELECT r.ser_codigo, r.cse_codigo
+mysql> SELECT r.ser_codigo, r.cse_codigo
 FROM tb_rel_aud_matricula_especial r
 WHERE r.ser_codigo = '111111'
 GROUP BY r.ser_codigo, r.cse_codigo;
+Empty set (0.00 sec)
 
-
-SELECT cse_codigo, cse_nome
+mysql> SELECT cse_codigo, cse_nome
 FROM tb_consignante
 WHERE cse_codigo = '<CSE_ENCONTRADO>';
+Empty set (0.01 sec)
+
+mysql> SELECT cse_codigo, cse_nome                                           
+FROM tb_consignante
+WHERE cse_codigo = '<111111>';
+Empty set (0.00 sec)
