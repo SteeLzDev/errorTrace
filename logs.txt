@@ -47,3 +47,61 @@ mysql> select table_name, column_name from information_schema.columns where tabl
 | tmp_tb_tmp_exportacao               | ser_codigo  |
 | tmp_usuario_ser                     | ser_codigo  |
 +-------------------------------------+-------------+
+
+mysql> select table_name, column_name from information_schema.columns where table_schema = database() and column_name like '%cse_codigo%';
++-------------------------------------+-------------+
+| TABLE_NAME                          | COLUMN_NAME |
++-------------------------------------+-------------+
+| tb_auditoria_cse                    | CSE_CODIGO  |
+| tb_auditoria_sup                    | CSE_CODIGO  |
+| tb_calendario_beneficio_cse         | CSE_CODIGO  |
+| tb_calendario_folha_cse             | CSE_CODIGO  |
+| tb_comunicacao_cse                  | CSE_CODIGO  |
+| tb_consignante                      | cse_codigo  |
+| tb_cse                              | cse_codigo  |
+| tb_dados_consignante                | CSE_CODIGO  |
+| tb_destinatario_email_cse           | CSE_CODIGO  |
+| tb_estabelecimento                  | cse_codigo  |
+| tb_funcao_auditavel_cse             | CSE_CODIGO  |
+| tb_funcao_auditavel_sup             | CSE_CODIGO  |
+| tb_funcao_perfil_cse                | cse_codigo  |
+| tb_funcao_perfil_sup                | CSE_CODIGO  |
+| tb_historico_arquivo_cse            | CSE_CODIGO  |
+| tb_historico_proc_margem_cse        | CSE_CODIGO  |
+| tb_ocorrencia_consignante           | CSE_CODIGO  |
+| tb_ocorrencia_param_sist_cse        | CSE_CODIGO  |
+| tb_param_sist_consignante           | cse_codigo  |
+| tb_param_svc_consignante            | cse_codigo  |
+| tb_param_tarif_consignante          | cse_codigo  |
+| tb_param_validacao_arq_cse          | CSE_CODIGO  |
+| tb_perfil_cse                       | cse_codigo  |
+| tb_perfil_sup                       | CSE_CODIGO  |
+| tb_rel_aud_matricula_especial       | CSE_CODIGO  |
+| tb_rel_auditoria                    | CSE_CODIGO  |
+| tb_rel_auditoria_0                  | CSE_CODIGO  |
+| tb_rel_auditoria_1                  | CSE_CODIGO  |
+| tb_rel_auditoria_10                 | CSE_CODIGO  |
+| tb_rel_auditoria_11                 | CSE_CODIGO  |
+| tb_rel_auditoria_12                 | CSE_CODIGO  |
+| tb_rel_auditoria_13                 | CSE_CODIGO  |
+| tb_rel_auditoria_19                 | CSE_CODIGO  |
+| tb_rel_auditoria_2                  | CSE_CODIGO  |
+| tb_rel_auditoria_20                 | CSE_CODIGO  |
+| tb_rel_auditoria_21                 | CSE_CODIGO  |
+| tb_rel_auditoria_3                  | CSE_CODIGO  |
+| tb_rel_auditoria_4                  | CSE_CODIGO  |
+| tb_rel_auditoria_5                  | CSE_CODIGO  |
+| tb_rel_auditoria_6                  | CSE_CODIGO  |
+| tb_rel_auditoria_7                  | CSE_CODIGO  |
+| tb_rel_auditoria_8                  | CSE_CODIGO  |
+| tb_rel_auditoria_9                  | CSE_CODIGO  |
+| tb_rel_auditoria_matricula_especial | CSE_CODIGO  |
+| tb_usuario_cse                      | cse_codigo  |
+| tb_usuario_sup                      | CSE_CODIGO  |
+| tmp_consignante                     | cse_codigo  |
+| tmp_param_sist_consignante          | cse_codigo  |
+| tmp_tb_consignante                  | cse_codigo  |
+| tmp_tb_param_sist_consignante       | cse_codigo  |
++-------------------------------------+-------------+
+
+
