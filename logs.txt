@@ -1,80 +1,72 @@
-eConsig - Atualizar biblioteca Owasp Java Encoder para versão 1.4.0
+package com.zetra.econsig.config;
 
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-Atualizar biblioteca Owasp Java Encoder para versão 1.4.0, segue o link para download da biblioteca:
-https://github.com/OWASP/owasp-java-encoder/releases/tag/v1.4.0
+@Service
+public class SysConfig implements InitializingBean {
+    private static SysConfig instance;
 
-Hoje usamos a versão 1.3.0. O precesso de atualização é realizado atráves da troca da biblioteca para a versão mais recente e o teste deve ser realizado em todo o sistema eConsig.
+    @Value("${spring.application.name}")
+    private String applicationName;
 
-Qualquer dúvida, estou à disposição.
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
 
+    @Value("${server.servlet.session.time-to-live-hours}")
+    private int sessionTimeToLiveHours;
 
-FOCO - Relatório de vulnerabilidades encontradas no teste SCA (VeraCode)
+    @Value("${zenvia.url}")
+    private String zenviaApiUrl;
 
-Detalhes do Item
-Tipo: Tarefa
-Resolução:Não Resolvido
-Prioridade: Alta
-Versões Corrigidas:Nenhum
-Versões Afetadas:Nenhum
-Componente(s):Nenhum
-Nível de Segurança:Interna
-Rótulos:
-EPICO_MELHORIAS_SEGURANCA SCA_Salt_eConsig squad_econsig_produto squad_econsig_produto_seguranca squad_econsig_produto_seguranca_acelerar
-AA Sistema eConsig:
-eNomina - Mexico | 009999
-Tipo Desenvolvimento:Modificação
-Release Notes:<release_notes>
-Quais sistemas sofrem impacto?:
-Serviço FoCo
-Complexidade Considerada:Não preenchidos
-Criticidade:Altíssima
-Empresa:Salt
-Área Solicitante:Desenvolvimento
-Classificar:Maintenance
-Descrição
-Vulnerabilidade listada nas dependências abaixo:
+	@Value("${zenvia.api.token}")
+    private String zenviaApiToken;
 
-11/30/25 tomcat-embed-core-10.1.44.jar
+	@Value("${zenvia.sms.from}")
+    private String zenviaSmsFrom;
 
-11/30/25 tomcat-juli-10.1.41.jar
+	@Value("${zenvia.csv.header}")
+    private String zenviaCsvHeader;
 
+	@Override
+    public void afterPropertiesSet() throws Exception {
+        instance = this;
+    }
 
-SYSADMIN - Relatório de vulnerabilidades encontradas no teste SCA VeraCode
+    public static SysConfig get() {
+        return instance;
+    }
 
- Tarefa
-Resolução:Não Resolvido
-Prioridade: Alta
-Versões Corrigidas:Nenhum
-Versões Afetadas:Nenhum
-Componente(s):Nenhum
-Nível de Segurança:Interna
-Rótulos:
-SCA_Salt_eConsig squad_econsig_produto squad_econsig_produto_seguranca squad_econsig_produto_seguranca_acelerar
-AA Sistema eConsig:
-Geral |
-Tipo Desenvolvimento:Modificação interna
-Release Notes:<release_notes>
-Quais sistemas sofrem impacto?:
-SysAdmin
-Complexidade Considerada:Não preenchidos
-Possível Erro no Sistema?:Não
-Empresa:Serasa
-Área Solicitante:Segurança
-Classificar:Maintenance
-Descrição
-O relatório apresenta vulnerabilidades SCA do VeraCode identificadas em bibliotecas utilizadas no ambiente analisado. As falhas variam em criticidade e podem impactar a segurança do sistema, exigindo ações corretivas.
+    public String getApplicationName() {
+        return applicationName;
+    }
 
+    public String getActiveProfile() {
+        return activeProfile;
+    }
 
+    public static boolean isTestProfile() {
+        return "test".equals(get().getActiveProfile());
+    }
 
-Anexos
+    public int getSessionTimeToLiveHours() {
+        return sessionTimeToLiveHours;
+    }
 
-Opções
-Solte os arquivos para anexá-los ou procurar.
-Item Relacionado
-Clone
-Task - A task that needs to be done. DESENV-23627 SYSADMIN - Relatório de vulnerabilidades encontradas no teste SCA (D-check)	Alta - Bugs no sistema, perda de dados, problemas de infra-estrutura do sistema Testado
-Excluir este link
-Adicionar Link
-Atividade
+	public String getZenviaApiUrl() {
+		return zenviaApiUrl;
+	}
 
+	public String getZenviaApiToken() {
+		return zenviaApiToken;
+	}
+
+	public String getZenviaSmsFrom() {
+		return zenviaSmsFrom;
+	}
+
+	public String getZenviaCsvHeader() {
+		return zenviaCsvHeader;
+	}
+}
