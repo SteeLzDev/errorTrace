@@ -60,3 +60,6 @@ tb_arquivo_movimento_validacao
 - MysqlHistoricoMovFinDao (funções: atualizarCamposTabelaArquivo, atualizarCamposTabelaArquivo, )
 
 
+
+ALTER TABLE tb_arquivo_movimento MODIFY RSE_MATRICULA varchar(35) NULL;
+ALTER TABLE tb_arquivo_movimento_validacao MODIFY RSE_MATRICULA varchar(35) NULL;
