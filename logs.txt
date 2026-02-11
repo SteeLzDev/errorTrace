@@ -1,11 +1,62 @@
-Comentário
-Migração completa do provedor de SMS de Twilio para Zenvia API. A implementação:
+eConsig - Alterar o campo matricula na tb_arquivo_movimento e tb_arquivo_movimento_validacao
+ Editar
+ Adicionar comentário
+Atribuir
+Mais
+Aguardando Teste
+SLA Report
+Compartilhar este item
+ Exportar
+Detalhes do Item
+Tipo: Tarefa
+Resolução:Não Resolvido
+Prioridade: Alta
+Versões Corrigidas:
+eConsig_70.1554.0
+Versões Afetadas:
+eConsig_70.1515.0
+Componente(s):Nenhum
+Nível de Segurança:Interna
+Rótulos:
+FY26Q04 credito_trabalhador squad_econsig_produto squad_econsig_produto_acelerar
+AA Sistema eConsig:
+Geral |
+Tipo Desenvolvimento:Correção de erro
+Release Notes:Correção do tamanho do campo da coluna RSE_MATRICULA nas tabelas tb_arquivo_movimento e tb_arquivo_movimento_validao para atender integração com o Crédito do Trabalhador
+Alterações no Banco de Dados:
+ALTER TABLE tb_arquivo_movimento MODIFY RSE_MATRICULA varchar(35) NULL;
 
-Utiliza RestTemplate para chamadas HTTP à API REST da Zenvia (POST /v2/channels/sms/messages)
-Centraliza configurações via SysConfig (@Value), compatível com application.properties (dev) e KeyVault Docker (produção)
-Adiciona suporte a caracteres especiais via encodingStrategy: MORE_CHARACTER_SUPPORT
-Registra cada envio de SMS em tb_ocorrencia_usuario (TOC 266) com dados do destinatário e mensagem
-Implementa controle de cotas mensais por consignante via tb_dados_consignante (TDA 115/116/117/118)
-Verifica limites inferior (TPC 1016) e superior (TPC 1017) antes de cada envio
-Envia alertas automáticos por e-mail quando limites são atingidos
-Segue princípios SOLID: SMSHelper (envio + controle), SmsRequest (DTO), SysConfig (configuração), EnviaSMSHelper (orquestração)
+ALTER TABLE tb_arquivo_movimento_validacao MODIFY RSE_MATRICULA varchar(35) NULL;
+Arquivos Alterados:
+src/main/resources/db/0.0.0/ddl_mysql_20260122_DESENV-24915.sql
+src/main/resources/db/0.0.0/ddl_oracle_20260122_DESENV-24915.sql
+Quais sistemas sofrem impacto?:
+eConsig
+Complexidade Considerada:Não preenchidos
+Causa Raiz:
+DESENV-24303: os campos da tabela tb_arquivo_movimento e tb_arquivo_movimento_validacao não foram mapeados durante alteração do chamado.
+Solução:Alterar o tamanho dos campos RSE_MATRICULA das tabelas tb_arquivo_movimento e tb_arquivo_movimento_validacao
+Avaliação de Impacto:
+tb_arquivo_movimento
+- classe de exportação Exercito (função: gravaArquivoDiferencas)
+- classe de exportação GovRJ3 (função: gravaArquivoDiferencas)
+- classe de exportacao Serasa (função: gravaTabelaExportacao)
+- historico de integração (classe: GenericHistoricoIntegracaoDAO, função: gravarTabelaExportacao)
+- ListaMovimentoFinanceiroQuery
+
+tb_arquivo_movimento_validacao
+- Regra (Regra de validação de movimento, na função getAmvCamposPreenchidos)
+- RegraAlteracaoExclusãoSemRetorno (funções: buscaQtdLinhasInvalidas, buscaLinhasInvalidas)
+- Regra Alteracao Invalida (função: buscaLinhasInvalidas)
+- RegraConciliacao (função buscaDiferencasValidadoExportado)
+- RegrasContratosIndevidamentoExportados (função: buscaContratosIndevidamenteExportados)
+- RegraContratosNaoExportados (função: buscaContratosNaoExportados)
+- RegraContratosSemMargem (função: buscaQtdLinhasInvalidas)
+- RegraConveniosBloqueados (função buscaLinhasInvalidas)
+- RegraInclusaoMesAnteriorCodReg6 (função: buscaQtdLinhasInvalidas
+- RegraIndicesInvalidos (função buscaLinhasInvalidas)
+- RegraMatriculasBloqueadas (funcao buscaQtdLinhasInvalidas e buscaLinhasInvalidas)
+- RegraNaoEnviadosComMargem (função buscaContratosNaoExportados)
+- MysqlHistoricoMovFinDao (funções: atualizarCamposTabelaArquivo, atualizarCamposTabelaArquivo, )
+
+
