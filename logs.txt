@@ -1,20 +1,7 @@
-1. Na classe ComunicacaoControllerBean existem imports não utilizados. Exemplo: ApplicationContextProvider e Environment
-2. No Log.Warn da classe ComunicacaoControllerBean, alterar o texto para que fique claro o ajuste que precisa ser feito no properties, pois não é mais via parâmetro de sistema.
-3. Não há necessidade do ddl_all_20250121_DESENV-24681.sql e do dml_all_20250120_DESENV-24681, pois já foi liberado na DESENV-24681, remover este arquivo do commit
-4. Alterar o ten_codigo do dml_all_20260202_DESENV-24832 que está inserindo o tipo dado adicional para o ten_Codigo 1 que é de consignante, pois está 2, que é referente ao estabelecimento.
-5. Na criação dos parâmetros, o valor default deve ser 0, pois 0 é considerado como desabilitado ou sem limite, pelo menos assim deve ser. Se deixar com valor default desta forma, o sistema aplicará o limite automaticamente, neste caso não podemos fazer isso, pois é uma definição de negócio.
-6. Ainda sobre o parâmetro de sistema, por padrão deixamos o papel que altera ou consulta tudo como 'N', pois também não definimos qual papel irá poder mexer no parâmetro.
-7. 0 editorMsgs.js não deve fazer parte do seu commit, pois é uma alteração do envio de SMS em MASSA. Gentileza remover esta alteração
-8. As mesmas observações colocadas nos item 1 e 2 aplicar na classe EnviaEmailHelper
-9. As mesams observações colocadas nos items 1 e 2 aplicar na classe EnviarResumoAdeParaServidorWebController
-10. O método enviarSmsNovoBoleto está duplicado no EnviaSMSHelper, pois não parece ser uma sobrecarga
-11. No método enviarSMS, linha 141, internacionalizar a mensagem de erro similar a linha 148 e 168. Assim a mensagem deve ser inserida no ApplicationResources.properties
-12. As mesams observações colocadas nos items 1 e 2 aplicar na classe ServidorControllerBean
-13. NO Método Send, o código do consignante (CSE_CODIGO) é sempre 1. Ele existe no CodedValues.CSE_CODIGO_SISTEMA Sendo assim, não precisa da verificação de envio sem limite se não informar o cseCodigo.
-13.1 Todos os Logs warn, devem ser alterados para Log.error
-13.2 Alterar a lógica para que, se o valor do parâmetor for 0(Zero) o envio é sem controle de limites. Digo alterar a lógica porque já alteramos o default do parâmetro.
-13.3 Utilizar ApplicationContext para importar um Controller , ao invés de chamar uma entidade Home direto no Helper. No método que busca os dados do consignante, importar o controller ConsignanteController e usar o método findDadoAdicionalConsignante, que você já irá conseguir pegar o dado adicional.
-13.4 No Método registrarOcorrenciaUsuario tem um catch sem throw, somente log de erro. NEcessário adicionar um throw ali para dê erro ao registrar ocorrência.
-13.5 No Método executarEnvioSms alterar o throw para ser ZetraException, para se manter coerente com o método que o chama, que é asinado com este tipo de throw
-13.6 Criar no ConsignanteController o método para criar dadosConsignante e então utilizar no SMSHelper, ao invés de usar DadosConsignanteHome.create direto na classe Helper
-13.7 Todos os try catch que o catch não tem thorow de exception, precisa ser ajustado, pois o SMS não será enviado, e não saberemos o motivo para ajuste, pois o erro nunca chegará para o usuário. Ou para o método que o chamou para execução. Então precisamos retornar o throw e então na camada de negócio já tem o passo se irá ignorar ou não o erro, porém o envio precisa ter, não podemos deixar um try/catch "cala boca".
+mysql> select * from tb_tipo_dado_adicional where tda_codigo = 116;
++------------+------------+---------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
+| TDA_CODIGO | TEN_CODIGO | TDA_DESCRICAO             | TDA_EXPORTA | TDA_SUP_CONSULTA | TDA_CSE_CONSULTA | TDA_CSA_CONSULTA | TDA_SER_CONSULTA | TDA_SUP_ALTERA | TDA_CSE_ALTERA | TDA_CSA_ALTERA | TDA_SER_ALTERA | TDA_DOMINIO | TDA_ORDENACAO |
++------------+------------+---------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
+| 116        |            | Quantidade envios SMS mes | N           | N                | N                | N                | N                | N              | N              | N              | N              |             |             0 |
++------------+------------+---------------------------+-------------+------------------+------------------+------------------+------------------+----------------+----------------+----------------+----------------+-------------+---------------+
+1 row in set, 3 warnings (0.00 sec)
