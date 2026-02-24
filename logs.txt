@@ -1,9 +1,15 @@
-Hibernate: select u1_0.usu_codigo,u1_0.stu_codigo,u1_0.usu_autentica_sso,u1_0.usu_autoriza_email_marketing,u1_0.usu_centralizador,u1_0.usu_chave_recuperar_senha,u1_0.usu_chave_validacao_email,u1_0.usu_chave_validacao_totp,u1_0.usu_cpf,u1_0.usu_data_cad,u1_0.usu_data_exp_senha,u1_0.usu_data_exp_senha_2,u1_0.usu_data_exp_senha_app,u1_0.usu_data_fim_vig,u1_0.usu_data_rec_senha,u1_0.usu_data_ult_acesso,u1_0.usu_data_validacao_email,u1_0.usu_ddns_acesso,u1_0.usu_deficiente_visual,u1_0.usu_dica_senha,u1_0.usu_email,u1_0.usu_exige_certificado,u1_0.usu_ip_acesso,u1_0.usu_login,u1_0.usu_matricula_inst,u1_0.usu_nome,u1_0.usu_nova_senha,u1_0.usu_operacoes_senha_2,u1_0.usu_operacoes_validacao_totp,u1_0.usu_otp_chave_seguranca,u1_0.usu_otp_codigo,u1_0.usu_otp_data_cadastro,u1_0.usu_permite_validacao_totp,u1_0.usu_qtd_consultas_margem,u1_0.usu_senha,u1_0.usu_senha_2,u1_0.usu_senha_app,u1_0.usu_tel,u1_0.usu_tipo_bloq,u1_0.usu_visivel from tb_usuario u1_0 where u1_0.usu_codigo=?
-Hibernate: select ta1_0.tad_codigo,ta1_0.fun_codigo,ta1_0.tad_classe_acao,ta1_0.tad_data,ta1_0.tad_envia_api_consentimento,ta1_0.tad_exibe_apos_leitura,ta1_0.tad_exibe_cor,ta1_0.tad_exibe_csa,ta1_0.tad_exibe_cse,ta1_0.tad_exibe_org,ta1_0.tad_exibe_ser,ta1_0.tad_exibe_sup,ta1_0.tad_html,ta1_0.tad_permite_ler_depois,ta1_0.tad_permite_recusar,ta1_0.tad_sequencia,ta1_0.tad_texto,ta1_0.tad_titulo,ta1_0.tad_versao_termo,ta1_0.usu_codigo from tb_termo_adesao ta1_0 left join tb_leitura_termo_usuario ltus1_0 on ta1_0.tad_codigo=ltus1_0.tad_codigo and (ta1_0.tad_data<=ltus1_0.ltu_data and ltus1_0.usu_codigo=? and ltus1_0.ltu_termo_aceito in ('S','N')) where 1=1 and ltus1_0.ltu_codigo is null and ta1_0.tad_exibe_cse='S' and ta1_0.fun_codigo is null order by ta1_0.tad_sequencia
-Hibernate: select ta1_0.tad_codigo,ta1_0.fun_codigo,ta1_0.tad_classe_acao,ta1_0.tad_data,ta1_0.tad_envia_api_consentimento,ta1_0.tad_exibe_apos_leitura,ta1_0.tad_exibe_cor,ta1_0.tad_exibe_csa,ta1_0.tad_exibe_cse,ta1_0.tad_exibe_org,ta1_0.tad_exibe_ser,ta1_0.tad_exibe_sup,ta1_0.tad_html,ta1_0.tad_permite_ler_depois,ta1_0.tad_permite_recusar,ta1_0.tad_sequencia,ta1_0.tad_texto,ta1_0.tad_titulo,ta1_0.tad_versao_termo,ta1_0.usu_codigo from tb_termo_adesao ta1_0 where ta1_0.fun_codigo is null and ta1_0.tad_exibe_ser='S'
-Hibernate: update tb_acesso_usuario au1_0 set acu_nro_acesso=(au1_0.acu_nro_acesso+1) where au1_0.usu_codigo=? and au1_0.acr_codigo=?
+select s.ser_codigo, s.ser_nome, s.ser_celular, s.ser_matricula, us.usu_codigo from tb_servidor s left join tb_usuario_ser us on us.ser_codigo - s.ser_codigo where s.ser_matricula = '123456'
+LIMIT 0, 200
+
+SQL Error [1054] [42S22]: Unknown column 's.ser_matricula' in 'field list'
 
 
+select count (*) as total_antes from tb_ocorrencia_usuario where toc_codigo = '266'
+LIMIT 0, 200
+
+SQL Error [1064] [42000]: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) as total_antes from tb_ocorrencia_usuario where toc_codigo = '266'
+LIMIT 0, 2' at line 1
 
 
-Usuário não tem permissão para habilitar código de segurança.
+select ous_codigo, usu_codigo, ous_usu_codigo, toc_codigo, ous_data, ous_descricao from tb_ocorrencia_usuario where toc_codigo = '266' order by ous_data desc limit 5
+SQL Error [1054] [42S22]: Unknown column 'ous_descricao' in 'field list'
